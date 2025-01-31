@@ -40,8 +40,26 @@ pub mod native {
 
 type ContextCore = wgc::global::Global; 
 
+pub enum UserCallback {
+    WGPUAdapterRequestDeviceCallback(native::WGPUAdapterRequestDeviceCallback),
+    WGPUBufferMapAsyncCallback(native::WGPUBufferMapAsyncCallback),
+    WGPUErrorCallback(native::WGPUErrorCallback),
+    WGPUInstanceRequestAdapterCallback(native::WGPUInstanceRequestAdapterCallback),
+}
+
+pub struct VirtualState {
+    pub callback_queue: Vec<UserCallback>,
+}
+
+impl VirtualState {
+    pub fn new() -> Self {
+        Self { callback_queue: Vec::new() }
+    }
+}
+
 pub struct Context {
-    core: ContextCore,
+    pub core: ContextCore,
+    pub virtual_state: VirtualState,
 }
 
 pub struct WGPUAdapterImpl {
@@ -639,7 +657,8 @@ pub unsafe extern "C" fn wgpuCreateInstance(
 
     Arc::into_raw(Arc::new(WGPUInstanceImpl {
         context: Arc::new(Context {
-            core: ContextCore::new("wgpu", instance_desc)
+            core: ContextCore::new("wgpu", instance_desc),
+            virtual_state: VirtualState::new(),
         }),
     }))
 }

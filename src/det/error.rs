@@ -122,7 +122,7 @@ fn handle_error_underqualified_device_failure(
     }
 
     // TODO: is it okay to panic here?
-    panic!("{}", message);
+    panic!("{message}");
 }
 
 enum ErrorCategory {

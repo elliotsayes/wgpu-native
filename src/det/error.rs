@@ -133,19 +133,19 @@ enum ErrorCategory {
     Deterministic,
 }
 
-struct ErrorWithCategory(ErrorCategory, Box<dyn Error + Send + Sync + 'static>);
+type CategoryAndError = (ErrorCategory, Box<dyn Error + Send + Sync + 'static>);
 
-fn device_error_helper(device_error: DeviceError, operation: &'static str) -> ErrorWithCategory {
+fn device_error_helper(device_error: DeviceError, operation: &'static str) -> CategoryAndError {
     match device_error {
         DeviceError::Invalid(resource_error_ident) => todo!(),
         DeviceError::Lost => {
             // Lost devices can happen due to it being `.destroy()`ed by the API
             // However, a lost device in `check_determinism_issue` implies it was a system issue
-            ErrorWithCategory(ErrorCategory::SystemNonDeterministic, device_error.into())
+            (ErrorCategory::SystemNonDeterministic, device_error.into())
         },
         DeviceError::OutOfMemory => {
             // Out Of Memory can occur due to load on the physical device
-            ErrorWithCategory(ErrorCategory::SystemNonDeterministic, device_error.into())
+            (ErrorCategory::SystemNonDeterministic, device_error.into())
         },
         DeviceError::ResourceCreationFailed => todo!(),
         DeviceError::InvalidDeviceId => todo!(),
@@ -157,7 +157,7 @@ fn device_error_helper(device_error: DeviceError, operation: &'static str) -> Er
 fn command_encoder_error_helper(
     command_encoder_error: CommandEncoderError,
     operation: &'static str,
-) -> ErrorWithCategory {
+) -> CategoryAndError {
     match command_encoder_error {
         CommandEncoderError::Invalid => todo!(),
         CommandEncoderError::NotRecording => todo!(),
@@ -175,41 +175,41 @@ fn command_encoder_error_helper(
 fn missing_features_helper(
     missing_features: MissingFeatures,
     operation: &'static str,
-) -> ErrorWithCategory {
+) -> CategoryAndError {
     todo!()
 }
 
 fn missing_downlevel_flags_helper(
     missing_downlevel_flags: MissingDownlevelFlags,
     operation: &'static str,
-) -> ErrorWithCategory {
+) -> CategoryAndError {
     todo!()
 }
 
-fn get_error_category(error: RuntimeErrors, operation: &'static str) -> ErrorWithCategory {
+fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> CategoryAndError {
     match error {
         RuntimeErrors::InvalidAdapter(invalid_adapter) => todo!(),
         RuntimeErrors::RequestDeviceError(request_device_error) => match request_device_error {
             RequestDeviceError::InvalidAdapter => {
-                ErrorWithCategory(ErrorCategory::Deterministic, request_device_error.into())
+                (ErrorCategory::Deterministic, request_device_error.into())
             }
             RequestDeviceError::DeviceLost => {
                 // Device cannot be destroyed while requesting, so any errors must come from non-deterministic system behavior
-                ErrorWithCategory(ErrorCategory::SystemNonDeterministic, request_device_error.into())
+                (ErrorCategory::SystemNonDeterministic, request_device_error.into())
             }
             RequestDeviceError::Internal => {
-                ErrorWithCategory(ErrorCategory::SystemNonDeterministic, request_device_error.into())
+                (ErrorCategory::SystemNonDeterministic, request_device_error.into())
             }
             RequestDeviceError::LimitsExceeded(_) => {
                 // Limits should be checked earlier to make sure they are within bounds
-                ErrorWithCategory(ErrorCategory::UnderqualifiedDeviceFailure, request_device_error.into())
+                (ErrorCategory::UnderqualifiedDeviceFailure, request_device_error.into())
             }
             RequestDeviceError::NoGraphicsQueue => {
-                ErrorWithCategory(ErrorCategory::UnderqualifiedDeviceFailure, request_device_error.into())
+                (ErrorCategory::UnderqualifiedDeviceFailure, request_device_error.into())
             }
             RequestDeviceError::OutOfMemory => {
                 // Out Of Memory can occur due to load on the physical device
-                ErrorWithCategory(ErrorCategory::SystemNonDeterministic, request_device_error.into())
+                (ErrorCategory::SystemNonDeterministic, request_device_error.into())
             }
             RequestDeviceError::UnsupportedFeature(features) => todo!(),
             _ => todo!(),
@@ -638,23 +638,23 @@ fn get_error_category(error: RuntimeErrors, operation: &'static str) -> ErrorWit
 }
 
 pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
-    let ErrorWithCategory(category, error) = get_error_category(error, operation);
+    let (category, dyn_error) = get_category_and_dyn_error(error, operation);
 
     match category {
         ErrorCategory::Unknown => {
-            warn!("Unknown error in {operation}: {error:?}")
+            warn!("Unknown error in {operation}: {dyn_error:?}")
         }
         ErrorCategory::Disallowed => {
-            panic!("Disallowed error in {operation}: {error:?}")
+            panic!("Disallowed error in {operation}: {dyn_error:?}")
         }
         ErrorCategory::UnderqualifiedDeviceFailure => {
-            handle_error_underqualified_device_failure(error, operation)
+            handle_error_underqualified_device_failure(dyn_error, operation)
         }
         ErrorCategory::SystemNonDeterministic => {
-            handle_error_non_determinism(error, operation)
+            handle_error_non_determinism(dyn_error, operation)
         }
         ErrorCategory::Deterministic => {
-            info!("Deterministic error in {operation}: {error:?}")
+            info!("Deterministic error in {operation}: {dyn_error:?}")
         }
     }
 }

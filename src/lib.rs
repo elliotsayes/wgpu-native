@@ -654,15 +654,7 @@ pub unsafe extern "C" fn ext_determinism_configure(
     non_determinism_error_callback: OnSystemNonDeterminismErrorCallback,
     underqualified_device_failure_callback: OnUnderqualifiedDeviceFailureCallback,
 ) {
-    let mut state_ref = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
-
-    let state = match state_ref.as_mut() {
-        Some(state) => state,
-        None => {
-            *state_ref = Some(DeterminismExtensionGlobalState::default());
-            state_ref.as_mut().unwrap()
-        }
-    };
+    let mut state = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
     state.non_determinism_error_callback = non_determinism_error_callback;
     state.underqualified_device_failure_callback = underqualified_device_failure_callback;
 }

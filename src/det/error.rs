@@ -90,11 +90,9 @@ pub fn handle_error_non_determinism(
     );
 
     let state = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
-    if let Some(state) = state.as_ref() {
         if let Some(callback) = state.non_determinism_error_callback {
             let message_c = CString::new(message.clone()).unwrap();
             unsafe { callback(message_c.as_ptr()) };
-        }
     }
 
     // TODO: is it okay to panic here?
@@ -113,11 +111,9 @@ fn handle_error_underqualified_device_failure(
     );
 
     let state = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
-    if let Some(state) = state.as_ref() {
         if let Some(callback) = state.underqualified_device_failure_callback {
             let message_c = CString::new(message.clone()).unwrap();
             unsafe { callback(message_c.as_ptr()) };
-        }
     }
 
     // TODO: is it okay to panic here?

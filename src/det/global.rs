@@ -11,14 +11,8 @@ pub struct DeterminismExtensionGlobalState {
     pub underqualified_device_failure_callback: OnUnderqualifiedDeviceFailureCallback,
 }
 
-impl DeterminismExtensionGlobalState {
-    pub fn default() -> Self {
-        Self {
-            non_determinism_error_callback: None,
-            underqualified_device_failure_callback: None,
-        }
-    }
-}
-
-pub static DETERMINISM_EXTENSION_GLOBAL_STATE: Mutex<Option<DeterminismExtensionGlobalState>> =
-    Mutex::new(None);
+pub static DETERMINISM_EXTENSION_GLOBAL_STATE: Mutex<DeterminismExtensionGlobalState> =
+    Mutex::new(DeterminismExtensionGlobalState {
+        non_determinism_error_callback: None,
+        underqualified_device_failure_callback: None,
+    });

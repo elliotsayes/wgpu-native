@@ -51,55 +51,29 @@ pub enum RuntimeErrors {
 impl Into<Box<dyn error::Error + Send + Sync + 'static>> for RuntimeErrors {
     fn into(self) -> Box<dyn error::Error + Send + Sync + 'static> {
         match self {
-            RuntimeErrors::RequestDeviceError(request_device_error) => {
-                Box::new(request_device_error)
-            }
-            RuntimeErrors::BufferAccessError(buffer_access_error) => Box::new(buffer_access_error),
-            RuntimeErrors::CommandEncoderError(command_encoder_error) => {
-                Box::new(command_encoder_error)
-            }
-            RuntimeErrors::ClearError(clear_error) => Box::new(clear_error),
-            RuntimeErrors::CopyError(copy_error) => Box::new(copy_error),
-            RuntimeErrors::QueryError(query_error) => Box::new(query_error),
-            RuntimeErrors::ComputePassError(compute_pass_error) => Box::new(compute_pass_error),
-            RuntimeErrors::GetBindGroupLayoutError(get_bind_group_layout_error) => {
-                Box::new(get_bind_group_layout_error)
-            }
-            RuntimeErrors::CreateBindGroupError(create_bind_group_error) => {
-                Box::new(create_bind_group_error)
-            }
-            RuntimeErrors::CreateBindGroupLayoutError(create_bind_group_layout_error) => {
-                Box::new(create_bind_group_layout_error)
-            }
-            RuntimeErrors::CreateBufferError(create_buffer_error) => Box::new(create_buffer_error),
-            RuntimeErrors::DeviceError(device_error) => Box::new(device_error),
-            RuntimeErrors::CreateComputePipelineError(create_compute_pipeline_error) => {
-                Box::new(create_compute_pipeline_error)
-            }
-            RuntimeErrors::CreatePipelineLayoutError(create_pipeline_layout_error) => {
-                Box::new(create_pipeline_layout_error)
-            }
-            RuntimeErrors::CreateQuerySetError(create_query_set_error) => {
-                Box::new(create_query_set_error)
-            }
-            RuntimeErrors::CreateRenderPipelineError(create_render_pipeline_error) => {
-                Box::new(create_render_pipeline_error)
-            }
-            RuntimeErrors::CreateSamplerError(create_sampler_error) => {
-                Box::new(create_sampler_error)
-            }
-            RuntimeErrors::ShaderParseError(shader_parse_error) => Box::new(shader_parse_error),
-            RuntimeErrors::CreateShaderModuleError(create_shader_module_error) => {
-                Box::new(create_shader_module_error)
-            }
-            RuntimeErrors::CreateTextureError(create_texture_error) => {
-                Box::new(create_texture_error)
-            }
-            RuntimeErrors::QueueWriteError(queue_write_error) => Box::new(queue_write_error),
-            RuntimeErrors::RenderPassError(render_pass_error) => Box::new(render_pass_error),
-            RuntimeErrors::CreateTextureViewError(create_texture_view_error) => {
-                Box::new(create_texture_view_error)
-            }
+            RuntimeErrors::RequestDeviceError(err) => Box::new(err),
+            RuntimeErrors::BufferAccessError(err) => Box::new(err),
+            RuntimeErrors::CommandEncoderError(err) => Box::new(err),
+            RuntimeErrors::ClearError(err) => Box::new(err),
+            RuntimeErrors::CopyError(err) => Box::new(err),
+            RuntimeErrors::QueryError(err) => Box::new(err),
+            RuntimeErrors::ComputePassError(err) => Box::new(err),
+            RuntimeErrors::GetBindGroupLayoutError(err) => Box::new(err),
+            RuntimeErrors::CreateBindGroupError(err) => Box::new(err),
+            RuntimeErrors::CreateBindGroupLayoutError(err) => Box::new(err),
+            RuntimeErrors::CreateBufferError(err) => Box::new(err),
+            RuntimeErrors::DeviceError(err) => Box::new(err),
+            RuntimeErrors::CreateComputePipelineError(err) => Box::new(err),
+            RuntimeErrors::CreatePipelineLayoutError(err) => Box::new(err),
+            RuntimeErrors::CreateQuerySetError(err) => Box::new(err),
+            RuntimeErrors::CreateRenderPipelineError(err) => Box::new(err),
+            RuntimeErrors::CreateSamplerError(err) => Box::new(err),
+            RuntimeErrors::ShaderParseError(err) => Box::new(err),
+            RuntimeErrors::CreateShaderModuleError(err) => Box::new(err),
+            RuntimeErrors::CreateTextureError(err) => Box::new(err),
+            RuntimeErrors::QueueWriteError(err) => Box::new(err),
+            RuntimeErrors::RenderPassError(err) => Box::new(err),
+            RuntimeErrors::CreateTextureViewError(err) => Box::new(err),
         }
     }
 }

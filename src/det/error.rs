@@ -8,7 +8,7 @@ use wgc::{
     command::{
         ClearError, CommandEncoderError, ComputePassError, CopyError, QueryError, RenderPassError,
     },
-    device::{queue::QueueWriteError, DeviceError},
+    device::{queue::QueueWriteError, DeviceError, MissingDownlevelFlags, MissingFeatures},
     instance::RequestDeviceError,
     pipeline::{CreateComputePipelineError, CreateRenderPipelineError, CreateShaderModuleError},
     resource::{
@@ -97,7 +97,7 @@ pub fn handle_error_non_determinism(
         }
     }
 
-    // TODO: is ot okay to panic here?
+    // TODO: is it okay to panic here?
     panic!("{}", message);
 }
 
@@ -120,11 +120,11 @@ fn handle_error_underqualified_device_failure(
         }
     }
 
-    // TODO: is ot okay to panic here?
+    // TODO: is it okay to panic here?
     panic!("{}", message);
 }
 
-fn check_device_error_helper(device_error: DeviceError, operation: &'static str) {
+fn device_error_helper(device_error: DeviceError, operation: &'static str) {
     match device_error {
         DeviceError::Invalid(resource_error_ident) => todo!(),
         DeviceError::Lost => todo!(),
@@ -136,8 +136,30 @@ fn check_device_error_helper(device_error: DeviceError, operation: &'static str)
     }
 }
 
-fn check_command_encoder_error_helper(
+fn command_encoder_error_helper(
     command_encoder_error: CommandEncoderError,
+    operation: &'static str,
+) {
+    match command_encoder_error {
+        CommandEncoderError::Invalid => todo!(),
+        CommandEncoderError::NotRecording => todo!(),
+        CommandEncoderError::Device(device_error) => device_error_helper(device_error, operation),
+        CommandEncoderError::Locked => todo!(),
+        CommandEncoderError::InvalidTimestampWritesQuerySetId(id) => todo!(),
+        CommandEncoderError::InvalidAttachmentId(id) => todo!(),
+        CommandEncoderError::InvalidResolveTargetId(id) => todo!(),
+        CommandEncoderError::InvalidDepthStencilAttachmentId(id) => todo!(),
+        CommandEncoderError::InvalidOcclusionQuerySetId(id) => todo!(),
+        _ => todo!(),
+    }
+}
+
+fn missing_features_helper(missing_features: MissingFeatures, operation: &'static str) {
+    todo!()
+}
+
+fn missing_downlevel_flags_helper(
+    missing_downlevel_flags: MissingDownlevelFlags,
     operation: &'static str,
 ) {
     todo!()
@@ -156,9 +178,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
             _ => todo!(),
         },
         RuntimeErrors::BufferAccessError(buffer_access_error) => match buffer_access_error {
-            BufferAccessError::Device(device_error) => {
-                check_device_error_helper(device_error, operation)
-            }
+            BufferAccessError::Device(device_error) => device_error_helper(device_error, operation),
             BufferAccessError::Failed => todo!(),
             BufferAccessError::InvalidBufferId(id) => todo!(),
             BufferAccessError::DestroyedResource(destroyed_resource_error) => todo!(),
@@ -176,7 +196,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
             _ => todo!(),
         },
         RuntimeErrors::CommandEncoderError(command_encoder_error) => {
-            check_command_encoder_error_helper(command_encoder_error, operation)
+            command_encoder_error_helper(command_encoder_error, operation)
         }
         RuntimeErrors::ClearError(clear_error) => match clear_error {
             ClearError::MissingClearTextureFeature => todo!(),
@@ -210,26 +230,28 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
                 subresource_base_array_layer,
                 subresource_array_layer_count,
             } => todo!(),
-            ClearError::Device(device_error) => check_device_error_helper(device_error, operation),
+            ClearError::Device(device_error) => device_error_helper(device_error, operation),
             ClearError::CommandEncoderError(command_encoder_error) => {
-                check_command_encoder_error_helper(command_encoder_error, operation)
+                command_encoder_error_helper(command_encoder_error, operation)
             }
             _ => todo!(),
         },
         RuntimeErrors::CopyError(copy_error) => match copy_error {
             CopyError::Encoder(command_encoder_error) => {
-                check_command_encoder_error_helper(command_encoder_error, operation)
+                command_encoder_error_helper(command_encoder_error, operation)
             }
             CopyError::Transfer(transfer_error) => todo!(),
             CopyError::DestroyedResource(destroyed_resource_error) => todo!(),
             _ => todo!(),
         },
         RuntimeErrors::QueryError(query_error) => match query_error {
-            QueryError::Device(device_error) => check_device_error_helper(device_error, operation),
+            QueryError::Device(device_error) => device_error_helper(device_error, operation),
             QueryError::Encoder(command_encoder_error) => {
-                check_command_encoder_error_helper(command_encoder_error, operation)
+                command_encoder_error_helper(command_encoder_error, operation)
             }
-            QueryError::MissingFeature(missing_features) => todo!(),
+            QueryError::MissingFeature(missing_features) => {
+                missing_features_helper(missing_features, operation)
+            }
             QueryError::Use(query_use_error) => todo!(),
             QueryError::Resolve(resolve_error) => todo!(),
             QueryError::InvalidBufferId(id) => todo!(),
@@ -248,7 +270,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
         RuntimeErrors::CreateBindGroupError(create_bind_group_error) => {
             match create_bind_group_error {
                 CreateBindGroupError::Device(device_error) => {
-                    check_device_error_helper(device_error, operation)
+                    device_error_helper(device_error, operation)
                 }
                 CreateBindGroupError::InvalidLayout => todo!(),
                 CreateBindGroupError::InvalidBufferId(id) => todo!(),
@@ -333,7 +355,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
         RuntimeErrors::CreateBindGroupLayoutError(create_bind_group_layout_error) => {
             match create_bind_group_layout_error {
                 CreateBindGroupLayoutError::Device(device_error) => {
-                    check_device_error_helper(device_error, operation)
+                    device_error_helper(device_error, operation)
                 }
                 CreateBindGroupLayoutError::ConflictBinding(_) => todo!(),
                 CreateBindGroupLayoutError::Entry { binding, error } => todo!(),
@@ -346,15 +368,15 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
             }
         }
         RuntimeErrors::CreateBufferError(create_buffer_error) => match create_buffer_error {
-            CreateBufferError::Device(device_error) => {
-                check_device_error_helper(device_error, operation)
-            }
+            CreateBufferError::Device(device_error) => device_error_helper(device_error, operation),
             CreateBufferError::AccessError(buffer_access_error) => todo!(),
             CreateBufferError::UnalignedSize => todo!(),
             CreateBufferError::InvalidUsage(buffer_usages) => todo!(),
             CreateBufferError::UsageMismatch(buffer_usages) => todo!(),
             CreateBufferError::MaxBufferSize { requested, maximum } => todo!(),
-            CreateBufferError::MissingDownlevelFlags(missing_downlevel_flags) => todo!(),
+            CreateBufferError::MissingDownlevelFlags(missing_downlevel_flags) => {
+                missing_downlevel_flags_helper(missing_downlevel_flags, operation)
+            }
             _ => todo!(),
         },
         RuntimeErrors::DeviceError(device_error) => match device_error {
@@ -369,7 +391,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
         RuntimeErrors::CreateComputePipelineError(create_compute_pipeline_error) => {
             match create_compute_pipeline_error {
                 CreateComputePipelineError::Device(device_error) => {
-                    check_device_error_helper(device_error, operation)
+                    device_error_helper(device_error, operation)
                 }
                 CreateComputePipelineError::InvalidLayout => todo!(),
                 CreateComputePipelineError::InvalidCache => todo!(),
@@ -377,7 +399,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
                 CreateComputePipelineError::Stage(stage_error) => todo!(),
                 CreateComputePipelineError::Internal(_) => todo!(),
                 CreateComputePipelineError::MissingDownlevelFlags(missing_downlevel_flags) => {
-                    todo!()
+                    missing_downlevel_flags_helper(missing_downlevel_flags, operation)
                 }
                 _ => todo!(),
             }
@@ -385,11 +407,13 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
         RuntimeErrors::CreatePipelineLayoutError(create_pipeline_layout_error) => {
             match create_pipeline_layout_error {
                 CreatePipelineLayoutError::Device(device_error) => {
-                    check_device_error_helper(device_error, operation)
+                    device_error_helper(device_error, operation)
                 }
                 CreatePipelineLayoutError::InvalidBindGroupLayoutId(id) => todo!(),
                 CreatePipelineLayoutError::MisalignedPushConstantRange { index, bound } => todo!(),
-                CreatePipelineLayoutError::MissingFeatures(missing_features) => todo!(),
+                CreatePipelineLayoutError::MissingFeatures(missing_features) => {
+                    missing_features_helper(missing_features, operation)
+                }
                 CreatePipelineLayoutError::MoreThanOnePushConstantRangePerStage {
                     index,
                     provided,
@@ -406,11 +430,13 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
         RuntimeErrors::CreateQuerySetError(create_query_set_error) => {
             match create_query_set_error {
                 CreateQuerySetError::Device(device_error) => {
-                    check_device_error_helper(device_error, operation)
+                    device_error_helper(device_error, operation)
                 }
                 CreateQuerySetError::ZeroCount => todo!(),
                 CreateQuerySetError::TooManyQueries { count, maximum } => todo!(),
-                CreateQuerySetError::MissingFeatures(missing_features) => todo!(),
+                CreateQuerySetError::MissingFeatures(missing_features) => {
+                    missing_features_helper(missing_features, operation)
+                }
                 _ => todo!(),
             }
         }
@@ -418,7 +444,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
             match create_render_pipeline_error {
                 CreateRenderPipelineError::ColorAttachment(color_attachment_error) => todo!(),
                 CreateRenderPipelineError::Device(device_error) => {
-                    check_device_error_helper(device_error, operation)
+                    device_error_helper(device_error, operation)
                 }
                 CreateRenderPipelineError::InvalidLayout => todo!(),
                 CreateRenderPipelineError::InvalidCache => todo!(),
@@ -443,9 +469,11 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
                     topology,
                 } => todo!(),
                 CreateRenderPipelineError::ConservativeRasterizationNonFillPolygonMode => todo!(),
-                CreateRenderPipelineError::MissingFeatures(missing_features) => todo!(),
+                CreateRenderPipelineError::MissingFeatures(missing_features) => {
+                    missing_features_helper(missing_features, operation)
+                }
                 CreateRenderPipelineError::MissingDownlevelFlags(missing_downlevel_flags) => {
-                    todo!()
+                    missing_downlevel_flags_helper(missing_downlevel_flags, operation)
                 }
                 CreateRenderPipelineError::Stage { stage, error } => todo!(),
                 CreateRenderPipelineError::Internal { stage, error } => todo!(),
@@ -465,7 +493,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
         }
         RuntimeErrors::CreateSamplerError(create_sampler_error) => match create_sampler_error {
             CreateSamplerError::Device(device_error) => {
-                check_device_error_helper(device_error, operation)
+                device_error_helper(device_error, operation)
             }
             CreateSamplerError::InvalidLodMinClamp(_) => todo!(),
             CreateSamplerError::InvalidLodMaxClamp {
@@ -479,7 +507,9 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
                 anisotropic_clamp,
             } => todo!(),
             CreateSamplerError::TooManyObjects => todo!(),
-            CreateSamplerError::MissingFeatures(missing_features) => todo!(),
+            CreateSamplerError::MissingFeatures(missing_features) => {
+                missing_features_helper(missing_features, operation)
+            }
             _ => todo!(),
         },
         RuntimeErrors::ShaderParseError(shader_parse_error) => match shader_parse_error {
@@ -493,17 +523,19 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
                 CreateShaderModuleError::ParsingSpirV(shader_error) => todo!(),
                 CreateShaderModuleError::Generation => todo!(),
                 CreateShaderModuleError::Device(device_error) => {
-                    check_device_error_helper(device_error, operation)
+                    device_error_helper(device_error, operation)
                 }
                 CreateShaderModuleError::Validation(shader_error) => todo!(),
-                CreateShaderModuleError::MissingFeatures(missing_features) => todo!(),
+                CreateShaderModuleError::MissingFeatures(missing_features) => {
+                    missing_features_helper(missing_features, operation)
+                }
                 CreateShaderModuleError::InvalidGroupIndex { bind, group, limit } => todo!(),
                 _ => todo!(),
             }
         }
         RuntimeErrors::CreateTextureError(create_texture_error) => match create_texture_error {
             CreateTextureError::Device(device_error) => {
-                check_device_error_helper(device_error, operation)
+                device_error_helper(device_error, operation)
             }
             CreateTextureError::CreateTextureView(create_texture_view_error) => todo!(),
             CreateTextureError::InvalidUsage(texture_usages) => todo!(),
@@ -523,14 +555,14 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
             CreateTextureError::InvalidSampleCount(_, texture_format, items, items1) => todo!(),
             CreateTextureError::MultisampledNotRenderAttachment => todo!(),
             CreateTextureError::MissingFeatures(texture_format, missing_features) => todo!(),
-            CreateTextureError::MissingDownlevelFlags(missing_downlevel_flags) => todo!(),
+            CreateTextureError::MissingDownlevelFlags(missing_downlevel_flags) => {
+                missing_downlevel_flags_helper(missing_downlevel_flags, operation)
+            }
             _ => todo!(),
         },
         RuntimeErrors::QueueWriteError(queue_write_error) => match queue_write_error {
             QueueWriteError::InvalidQueueId => todo!(),
-            QueueWriteError::Queue(device_error) => {
-                check_device_error_helper(device_error, operation)
-            }
+            QueueWriteError::Queue(device_error) => device_error_helper(device_error, operation),
             QueueWriteError::Transfer(transfer_error) => todo!(),
             QueueWriteError::MemoryInitFailure(clear_error) => todo!(),
             QueueWriteError::DestroyedResource(destroyed_resource_error) => todo!(),
@@ -540,7 +572,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
         RuntimeErrors::CreateTextureViewError(create_texture_view_error) => {
             match create_texture_view_error {
                 CreateTextureViewError::Device(device_error) => {
-                    check_device_error_helper(device_error, operation)
+                    device_error_helper(device_error, operation)
                 }
                 CreateTextureViewError::InvalidTextureId(id) => todo!(),
                 CreateTextureViewError::DestroyedResource(destroyed_resource_error) => todo!(),

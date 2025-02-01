@@ -1,11 +1,17 @@
 use conv::{
-    map_bind_group_entry, map_bind_group_layout_entry,
-    map_device_descriptor, map_instance_backend_flags, map_instance_descriptor,
-    map_pipeline_layout_descriptor, map_primitive_state, map_query_set_descriptor,
-    map_query_set_index, map_shader_module, map_surface, map_surface_configuration,
-    CreateSurfaceParams,
+    map_bind_group_entry, map_bind_group_layout_entry, map_device_descriptor,
+    map_instance_backend_flags, map_instance_descriptor, map_pipeline_layout_descriptor,
+    map_primitive_state, map_query_set_descriptor, map_query_set_index, map_shader_module,
+    map_surface, map_surface_configuration, CreateSurfaceParams,
 };
-use det::{callback::{BufferMapAsyncCallbackArgs, QueueOnSubmittedWorkDoneCallbackArgs, QueuedBufferMapAsyncCallback, QueuedQueueOnSubmittedWorkDoneCallback, UserCallback}, polling::run_polling_strategy, virtual_state::VirtualState};
+use det::{
+    callback::{
+        BufferMapAsyncCallbackArgs, QueueOnSubmittedWorkDoneCallbackArgs,
+        QueuedBufferMapAsyncCallback, QueuedQueueOnSubmittedWorkDoneCallback, UserCallback,
+    },
+    polling::run_polling_strategy,
+    virtual_state::VirtualState,
+};
 use future_handles::sync as future_handle;
 use parking_lot::Mutex;
 use smallvec::SmallVec;
@@ -28,10 +34,10 @@ use wgc::{
 };
 
 pub mod conv;
+pub mod det;
 pub mod logging;
 pub mod unimplemented;
 pub mod utils;
-pub mod det;
 
 pub mod native {
     #![allow(non_upper_case_globals)]
@@ -41,7 +47,7 @@ pub mod native {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 }
 
-type ContextCore = wgc::global::Global; 
+type ContextCore = wgc::global::Global;
 
 pub struct Context {
     pub core: ContextCore,
@@ -660,7 +666,8 @@ pub unsafe extern "C" fn wgpuAdapterEnumerateFeatures(
         let adapter = adapter.as_ref().expect("invalid adapter");
         (adapter.id, &adapter.context)
     };
-    let adapter_features = match gfx_select!(adapter_id => context.core.adapter_features(adapter_id)) {
+    let adapter_features = match gfx_select!(adapter_id => context.core.adapter_features(adapter_id))
+    {
         Ok(features) => features,
         Err(err) => handle_error_fatal(err, "wgpuAdapterEnumerateFeatures"),
     };
@@ -708,12 +715,14 @@ pub unsafe extern "C" fn wgpuAdapterGetInfo(
     if let Err(err) = result {
         handle_error_fatal(err, "wgpuAdapterGetInfo");
     };
-    
+
     // TODO: Update this info to spoof initial baseline architecture
     info.vendor = CString::new("Forward Research").unwrap().into_raw();
     info.architecture = CString::new("Deterministic GPU").unwrap().into_raw();
     info.device = CString::new("Deterministic GPU").unwrap().into_raw();
-    info.description = CString::new("Powered by AO The Computer").unwrap().into_raw();
+    info.description = CString::new("Powered by AO The Computer")
+        .unwrap()
+        .into_raw();
     info.backendType = native::WGPUBackendType_Vulkan;
     info.adapterType = native::WGPUAdapterType_DiscreteGPU;
     info.vendorID = 0;
@@ -729,7 +738,8 @@ pub unsafe extern "C" fn wgpuAdapterHasFeature(
         let adapter = adapter.as_ref().expect("invalid adapter");
         (adapter.id, &adapter.context)
     };
-    let adapter_features = match gfx_select!(adapter_id => context.core.adapter_features(adapter_id)) {
+    let adapter_features = match gfx_select!(adapter_id => context.core.adapter_features(adapter_id))
+    {
         Ok(features) => features,
         Err(err) => handle_error_fatal(err, "wgpuAdapterHasFeature"),
     };
@@ -994,13 +1004,12 @@ pub unsafe extern "C" fn wgpuBufferMapAsync(
     let callback = callback.expect("invalid callback");
     let userdata = utils::Userdata::new(userdata);
 
-    let (callback_args_future, callback_args_handle) = future_handle::create::<BufferMapAsyncCallbackArgs>();
-    let item = UserCallback::WGPUBufferMapAsyncCallback(
-        QueuedBufferMapAsyncCallback::new(
-            Some(callback), 
-            callback_args_future,
-        ),
-    );
+    let (callback_args_future, callback_args_handle) =
+        future_handle::create::<BufferMapAsyncCallbackArgs>();
+    let item = UserCallback::WGPUBufferMapAsyncCallback(QueuedBufferMapAsyncCallback::new(
+        Some(callback),
+        callback_args_future,
+    ));
     context.virtual_state.lock().callbacks.enqueue(item);
 
     let operation = wgc::resource::BufferMapOperation {
@@ -1607,7 +1616,11 @@ pub unsafe extern "C" fn wgpuComputePassEncoderDispatchWorkgroupsIndirect(
 
     let encoder = pass.encoder.as_mut().unwrap();
 
-    match encoder.dispatch_workgroups_indirect(&pass.context.core, indirect_buffer_id, indirect_offset) {
+    match encoder.dispatch_workgroups_indirect(
+        &pass.context.core,
+        indirect_buffer_id,
+        indirect_offset,
+    ) {
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
@@ -1873,8 +1886,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateBindGroupLayout(
         label: ptr_into_label(descriptor.label),
         entries: Cow::Borrowed(&entries),
     };
-    let (bind_group_layout_id, error) =
-        gfx_select!(device_id => context.core.device_create_bind_group_layout(device_id, &desc, None));
+    let (bind_group_layout_id, error) = gfx_select!(device_id => context.core.device_create_bind_group_layout(device_id, &desc, None));
     if let Some(cause) = error {
         handle_error(
             error_sink,
@@ -1940,8 +1952,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateCommandEncoder(
         },
         None => wgt::CommandEncoderDescriptor::default(),
     };
-    let (command_encoder_id, error) =
-        gfx_select!(device_id => context.core.device_create_command_encoder(device_id, &desc, None));
+    let (command_encoder_id, error) = gfx_select!(device_id => context.core.device_create_command_encoder(device_id, &desc, None));
     if let Some(cause) = error {
         handle_error(
             error_sink,
@@ -2051,8 +2062,7 @@ pub unsafe extern "C" fn wgpuDeviceCreatePipelineLayout(
             (descriptor),
             WGPUSType_PipelineLayoutExtras => native::WGPUPipelineLayoutExtras)
     );
-    let (pipeline_layout_id, error) =
-        gfx_select!(device_id => context.core.device_create_pipeline_layout(device_id, &desc, None));
+    let (pipeline_layout_id, error) = gfx_select!(device_id => context.core.device_create_pipeline_layout(device_id, &desc, None));
     if let Some(cause) = error {
         handle_error(
             error_sink,
@@ -2897,19 +2907,17 @@ pub unsafe extern "C" fn wgpuQueueOnSubmittedWorkDone(
     let callback = callback.expect("invalid callback");
     let userdata = utils::Userdata::new(userdata);
 
-    let (callback_args_future, callback_args_handle) = future_handle::create::<QueueOnSubmittedWorkDoneCallbackArgs>();
+    let (callback_args_future, callback_args_handle) =
+        future_handle::create::<QueueOnSubmittedWorkDoneCallbackArgs>();
     let item = UserCallback::WGPUQueueOnSubmittedWorkDoneCallback(
-        QueuedQueueOnSubmittedWorkDoneCallback::new(
-            Some(callback), 
-            callback_args_future,
-        ),
+        QueuedQueueOnSubmittedWorkDoneCallback::new(Some(callback), callback_args_future),
     );
     context.virtual_state.lock().callbacks.enqueue(item);
 
     let closure = wgc::device::queue::SubmittedWorkDoneClosure::from_rust(Box::new(move || {
         callback_args_handle.complete(QueueOnSubmittedWorkDoneCallbackArgs {
-            status: native::WGPUQueueWorkDoneStatus_Success, 
-            userdata: userdata.as_ptr()
+            status: native::WGPUQueueWorkDoneStatus_Success,
+            userdata: userdata.as_ptr(),
         });
     }));
 
@@ -2940,7 +2948,9 @@ pub unsafe extern "C" fn wgpuQueueSubmit(
         })
         .collect::<SmallVec<[_; 4]>>();
 
-    if let Err(cause) = gfx_select!(queue_id => context.core.queue_submit(queue_id, &command_buffers)) {
+    if let Err(cause) =
+        gfx_select!(queue_id => context.core.queue_submit(queue_id, &command_buffers))
+    {
         handle_error_fatal(cause, "wgpuQueueSubmit");
     }
 }
@@ -3719,7 +3729,15 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetViewport(
     let pass = pass.as_ref().expect("invalid render pass");
     let encoder = pass.encoder.as_mut().unwrap();
 
-    match encoder.set_viewport(&pass.context.core, x, y, width, height, min_depth, max_depth) {
+    match encoder.set_viewport(
+        &pass.context.core,
+        x,
+        y,
+        width,
+        height,
+        min_depth,
+        max_depth,
+    ) {
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
@@ -4272,16 +4290,19 @@ pub unsafe extern "C" fn wgpuDevicePoll(
         false => wgt::Maintain::Poll,
     };
 
-    let run_poll_fn = |maintain: wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>| {
-        match gfx_select!(device_id => context.core.device_poll(device_id, maintain)) {
-            Ok(queue_empty) => queue_empty,
-            Err(cause) => {
-                handle_error_fatal(cause, "wgpuDevicePoll");
-            }
+    let run_poll_fn = |maintain: wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>| match gfx_select!(device_id => context.core.device_poll(device_id, maintain))
+    {
+        Ok(queue_empty) => queue_empty,
+        Err(cause) => {
+            handle_error_fatal(cause, "wgpuDevicePoll");
         }
     };
-    
-    run_polling_strategy(&mut context.virtual_state.lock(), maintain_requested, run_poll_fn)
+
+    run_polling_strategy(
+        &mut context.virtual_state.lock(),
+        maintain_requested,
+        run_poll_fn,
+    )
 }
 
 #[no_mangle]
@@ -4357,7 +4378,11 @@ pub unsafe extern "C" fn wgpuComputePassEncoderSetPushConstants(
     let pass = pass.as_ref().expect("invalid compute pass");
     let encoder = pass.encoder.as_mut().unwrap();
 
-    match encoder.set_push_constants(&pass.context.core, offset, make_slice(data, size_bytes as usize)) {
+    match encoder.set_push_constants(
+        &pass.context.core,
+        offset,
+        make_slice(data, size_bytes as usize),
+    ) {
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,

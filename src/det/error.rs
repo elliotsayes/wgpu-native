@@ -14,7 +14,7 @@ use wgc::{
     pipeline::{CreateComputePipelineError, CreateRenderPipelineError, CreateShaderModuleError},
     resource::{
         BufferAccessError, CreateBufferError, CreateQuerySetError, CreateSamplerError,
-        CreateTextureError, CreateTextureViewError,
+        CreateTextureError, CreateTextureViewError, DestroyedResourceError,
     },
 };
 
@@ -53,30 +53,30 @@ pub enum RuntimeErrors {
 impl Into<Box<dyn Error + Send + Sync + 'static>> for RuntimeErrors {
     fn into(self) -> Box<dyn Error + Send + Sync + 'static> {
         match self {
-            RuntimeErrors::InvalidAdapter(err) => Box::new(err),
-            RuntimeErrors::RequestDeviceError(err) => Box::new(err),
-            RuntimeErrors::BufferAccessError(err) => Box::new(err),
-            RuntimeErrors::CommandEncoderError(err) => Box::new(err),
-            RuntimeErrors::ClearError(err) => Box::new(err),
-            RuntimeErrors::CopyError(err) => Box::new(err),
-            RuntimeErrors::QueryError(err) => Box::new(err),
-            RuntimeErrors::ComputePassError(err) => Box::new(err),
-            RuntimeErrors::GetBindGroupLayoutError(err) => Box::new(err),
-            RuntimeErrors::CreateBindGroupError(err) => Box::new(err),
-            RuntimeErrors::CreateBindGroupLayoutError(err) => Box::new(err),
-            RuntimeErrors::CreateBufferError(err) => Box::new(err),
-            RuntimeErrors::DeviceError(err) => Box::new(err),
-            RuntimeErrors::CreateComputePipelineError(err) => Box::new(err),
-            RuntimeErrors::CreatePipelineLayoutError(err) => Box::new(err),
-            RuntimeErrors::CreateQuerySetError(err) => Box::new(err),
-            RuntimeErrors::CreateRenderPipelineError(err) => Box::new(err),
-            RuntimeErrors::CreateSamplerError(err) => Box::new(err),
-            RuntimeErrors::ShaderParseError(err) => Box::new(err),
-            RuntimeErrors::CreateShaderModuleError(err) => Box::new(err),
-            RuntimeErrors::CreateTextureError(err) => Box::new(err),
-            RuntimeErrors::QueueWriteError(err) => Box::new(err),
-            RuntimeErrors::RenderPassError(err) => Box::new(err),
-            RuntimeErrors::CreateTextureViewError(err) => Box::new(err),
+            RuntimeErrors::InvalidAdapter(err) => err.into(),
+            RuntimeErrors::RequestDeviceError(err) => err.into(),
+            RuntimeErrors::BufferAccessError(err) => err.into(),
+            RuntimeErrors::CommandEncoderError(err) => err.into(),
+            RuntimeErrors::ClearError(err) => err.into(),
+            RuntimeErrors::CopyError(err) => err.into(),
+            RuntimeErrors::QueryError(err) => err.into(),
+            RuntimeErrors::ComputePassError(err) => err.into(),
+            RuntimeErrors::GetBindGroupLayoutError(err) => err.into(),
+            RuntimeErrors::CreateBindGroupError(err) => err.into(),
+            RuntimeErrors::CreateBindGroupLayoutError(err) => err.into(),
+            RuntimeErrors::CreateBufferError(err) => err.into(),
+            RuntimeErrors::DeviceError(err) => err.into(),
+            RuntimeErrors::CreateComputePipelineError(err) => err.into(),
+            RuntimeErrors::CreatePipelineLayoutError(err) => err.into(),
+            RuntimeErrors::CreateQuerySetError(err) => err.into(),
+            RuntimeErrors::CreateRenderPipelineError(err) => err.into(),
+            RuntimeErrors::CreateSamplerError(err) => err.into(),
+            RuntimeErrors::ShaderParseError(err) => err.into(),
+            RuntimeErrors::CreateShaderModuleError(err) => err.into(),
+            RuntimeErrors::CreateTextureError(err) => err.into(),
+            RuntimeErrors::QueueWriteError(err) => err.into(),
+            RuntimeErrors::RenderPassError(err) => err.into(),
+            RuntimeErrors::CreateTextureViewError(err) => err.into(),
         }
     }
 }
@@ -135,18 +135,18 @@ enum ErrorCategory {
 
 type CategoryAndError = (ErrorCategory, Box<dyn Error + Send + Sync + 'static>);
 
-fn device_error_helper(device_error: DeviceError, operation: &'static str) -> CategoryAndError {
+fn device_error_helper(device_error: DeviceError) -> CategoryAndError {
     match device_error {
         DeviceError::Invalid(resource_error_ident) => todo!(),
         DeviceError::Lost => {
             // Lost devices can happen due to it being `.destroy()`ed by the API
             // However, a lost device in `check_determinism_issue` implies it was a system issue
             (ErrorCategory::SystemNonDeterministic, device_error.into())
-        },
+        }
         DeviceError::OutOfMemory => {
             // Out Of Memory can occur due to load on the physical device
             (ErrorCategory::SystemNonDeterministic, device_error.into())
-        },
+        }
         DeviceError::ResourceCreationFailed => todo!(),
         DeviceError::InvalidDeviceId => todo!(),
         DeviceError::DeviceMismatch(device_mismatch) => todo!(),
@@ -154,14 +154,11 @@ fn device_error_helper(device_error: DeviceError, operation: &'static str) -> Ca
     }
 }
 
-fn command_encoder_error_helper(
-    command_encoder_error: CommandEncoderError,
-    operation: &'static str,
-) -> CategoryAndError {
+fn command_encoder_error_helper(command_encoder_error: CommandEncoderError) -> CategoryAndError {
     match command_encoder_error {
         CommandEncoderError::Invalid => todo!(),
         CommandEncoderError::NotRecording => todo!(),
-        CommandEncoderError::Device(device_error) => device_error_helper(device_error, operation),
+        CommandEncoderError::Device(device_error) => device_error_helper(device_error),
         CommandEncoderError::Locked => todo!(),
         CommandEncoderError::InvalidTimestampWritesQuerySetId(id) => todo!(),
         CommandEncoderError::InvalidAttachmentId(id) => todo!(),
@@ -172,21 +169,26 @@ fn command_encoder_error_helper(
     }
 }
 
-fn missing_features_helper(
-    missing_features: MissingFeatures,
-    operation: &'static str,
+fn destroyed_resource_error_helper(
+    destroyed_resource_error: DestroyedResourceError,
 ) -> CategoryAndError {
+    (
+        ErrorCategory::Deterministic,
+        destroyed_resource_error.into(),
+    )
+}
+
+fn missing_features_helper(missing_features: MissingFeatures) -> CategoryAndError {
     todo!()
 }
 
 fn missing_downlevel_flags_helper(
     missing_downlevel_flags: MissingDownlevelFlags,
-    operation: &'static str,
 ) -> CategoryAndError {
     todo!()
 }
 
-fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> CategoryAndError {
+fn get_category_and_dyn_error(error: RuntimeErrors) -> CategoryAndError {
     match error {
         RuntimeErrors::InvalidAdapter(invalid_adapter) => todo!(),
         RuntimeErrors::RequestDeviceError(request_device_error) => match request_device_error {
@@ -195,30 +197,43 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
             }
             RequestDeviceError::DeviceLost => {
                 // Device cannot be destroyed while requesting, so any errors must come from non-deterministic system behavior
-                (ErrorCategory::SystemNonDeterministic, request_device_error.into())
+                (
+                    ErrorCategory::SystemNonDeterministic,
+                    request_device_error.into(),
+                )
             }
-            RequestDeviceError::Internal => {
-                (ErrorCategory::SystemNonDeterministic, request_device_error.into())
-            }
+            RequestDeviceError::Internal => (
+                ErrorCategory::SystemNonDeterministic,
+                request_device_error.into(),
+            ),
             RequestDeviceError::LimitsExceeded(_) => {
                 // Limits should be checked earlier to make sure they are within bounds
-                (ErrorCategory::UnderqualifiedDeviceFailure, request_device_error.into())
+                (
+                    ErrorCategory::UnderqualifiedDeviceFailure,
+                    request_device_error.into(),
+                )
             }
-            RequestDeviceError::NoGraphicsQueue => {
-                (ErrorCategory::UnderqualifiedDeviceFailure, request_device_error.into())
-            }
+            RequestDeviceError::NoGraphicsQueue => (
+                ErrorCategory::UnderqualifiedDeviceFailure,
+                request_device_error.into(),
+            ),
             RequestDeviceError::OutOfMemory => {
                 // Out Of Memory can occur due to load on the physical device
-                (ErrorCategory::SystemNonDeterministic, request_device_error.into())
+                (
+                    ErrorCategory::SystemNonDeterministic,
+                    request_device_error.into(),
+                )
             }
             RequestDeviceError::UnsupportedFeature(features) => todo!(),
             _ => todo!(),
         },
         RuntimeErrors::BufferAccessError(buffer_access_error) => match buffer_access_error {
-            BufferAccessError::Device(device_error) => device_error_helper(device_error, operation),
+            BufferAccessError::Device(device_error) => device_error_helper(device_error),
             BufferAccessError::Failed => todo!(),
             BufferAccessError::InvalidBufferId(id) => todo!(),
-            BufferAccessError::DestroyedResource(destroyed_resource_error) => todo!(),
+            BufferAccessError::DestroyedResource(destroyed_resource_error) => {
+                destroyed_resource_error_helper(destroyed_resource_error)
+            }
             BufferAccessError::AlreadyMapped => todo!(),
             BufferAccessError::MapAlreadyPending => todo!(),
             BufferAccessError::MissingBufferUsage(missing_buffer_usage_error) => todo!(),
@@ -233,13 +248,15 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
             _ => todo!(),
         },
         RuntimeErrors::CommandEncoderError(command_encoder_error) => {
-            command_encoder_error_helper(command_encoder_error, operation)
+            command_encoder_error_helper(command_encoder_error)
         }
         RuntimeErrors::ClearError(clear_error) => match clear_error {
             ClearError::MissingClearTextureFeature => todo!(),
             ClearError::InvalidBufferId(id) => todo!(),
             ClearError::InvalidTextureId(id) => todo!(),
-            ClearError::DestroyedResource(destroyed_resource_error) => todo!(),
+            ClearError::DestroyedResource(destroyed_resource_error) => {
+                destroyed_resource_error_helper(destroyed_resource_error)
+            }
             ClearError::NoValidTextureClearMode(resource_error_ident) => todo!(),
             ClearError::UnalignedFillSize(_) => todo!(),
             ClearError::UnalignedBufferOffset(_) => todo!(),
@@ -267,32 +284,36 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
                 subresource_base_array_layer,
                 subresource_array_layer_count,
             } => todo!(),
-            ClearError::Device(device_error) => device_error_helper(device_error, operation),
+            ClearError::Device(device_error) => device_error_helper(device_error),
             ClearError::CommandEncoderError(command_encoder_error) => {
-                command_encoder_error_helper(command_encoder_error, operation)
+                command_encoder_error_helper(command_encoder_error)
             }
             _ => todo!(),
         },
         RuntimeErrors::CopyError(copy_error) => match copy_error {
             CopyError::Encoder(command_encoder_error) => {
-                command_encoder_error_helper(command_encoder_error, operation)
+                command_encoder_error_helper(command_encoder_error)
             }
             CopyError::Transfer(transfer_error) => todo!(),
-            CopyError::DestroyedResource(destroyed_resource_error) => todo!(),
+            CopyError::DestroyedResource(destroyed_resource_error) => {
+                destroyed_resource_error_helper(destroyed_resource_error)
+            }
             _ => todo!(),
         },
         RuntimeErrors::QueryError(query_error) => match query_error {
-            QueryError::Device(device_error) => device_error_helper(device_error, operation),
+            QueryError::Device(device_error) => device_error_helper(device_error),
             QueryError::Encoder(command_encoder_error) => {
-                command_encoder_error_helper(command_encoder_error, operation)
+                command_encoder_error_helper(command_encoder_error)
             }
             QueryError::MissingFeature(missing_features) => {
-                missing_features_helper(missing_features, operation)
+                missing_features_helper(missing_features)
             }
             QueryError::Use(query_use_error) => todo!(),
             QueryError::Resolve(resolve_error) => todo!(),
             QueryError::InvalidBufferId(id) => todo!(),
-            QueryError::DestroyedResource(destroyed_resource_error) => todo!(),
+            QueryError::DestroyedResource(destroyed_resource_error) => {
+                destroyed_resource_error_helper(destroyed_resource_error)
+            }
             QueryError::InvalidQuerySetId(id) => todo!(),
             _ => todo!(),
         },
@@ -306,14 +327,14 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
         }
         RuntimeErrors::CreateBindGroupError(create_bind_group_error) => {
             match create_bind_group_error {
-                CreateBindGroupError::Device(device_error) => {
-                    device_error_helper(device_error, operation)
-                }
+                CreateBindGroupError::Device(device_error) => device_error_helper(device_error),
                 CreateBindGroupError::InvalidLayout => todo!(),
                 CreateBindGroupError::InvalidBufferId(id) => todo!(),
                 CreateBindGroupError::InvalidTextureViewId(id) => todo!(),
                 CreateBindGroupError::InvalidSamplerId(id) => todo!(),
-                CreateBindGroupError::DestroyedResource(destroyed_resource_error) => todo!(),
+                CreateBindGroupError::DestroyedResource(destroyed_resource_error) => {
+                    destroyed_resource_error_helper(destroyed_resource_error)
+                }
                 CreateBindGroupError::BindingArrayPartialLengthMismatch { actual, expected } => {
                     todo!()
                 }
@@ -392,7 +413,7 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
         RuntimeErrors::CreateBindGroupLayoutError(create_bind_group_layout_error) => {
             match create_bind_group_layout_error {
                 CreateBindGroupLayoutError::Device(device_error) => {
-                    device_error_helper(device_error, operation)
+                    device_error_helper(device_error)
                 }
                 CreateBindGroupLayoutError::ConflictBinding(_) => todo!(),
                 CreateBindGroupLayoutError::Entry { binding, error } => todo!(),
@@ -405,14 +426,14 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
             }
         }
         RuntimeErrors::CreateBufferError(create_buffer_error) => match create_buffer_error {
-            CreateBufferError::Device(device_error) => device_error_helper(device_error, operation),
+            CreateBufferError::Device(device_error) => device_error_helper(device_error),
             CreateBufferError::AccessError(buffer_access_error) => todo!(),
             CreateBufferError::UnalignedSize => todo!(),
             CreateBufferError::InvalidUsage(buffer_usages) => todo!(),
             CreateBufferError::UsageMismatch(buffer_usages) => todo!(),
             CreateBufferError::MaxBufferSize { requested, maximum } => todo!(),
             CreateBufferError::MissingDownlevelFlags(missing_downlevel_flags) => {
-                missing_downlevel_flags_helper(missing_downlevel_flags, operation)
+                missing_downlevel_flags_helper(missing_downlevel_flags)
             }
             _ => todo!(),
         },
@@ -428,7 +449,7 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
         RuntimeErrors::CreateComputePipelineError(create_compute_pipeline_error) => {
             match create_compute_pipeline_error {
                 CreateComputePipelineError::Device(device_error) => {
-                    device_error_helper(device_error, operation)
+                    device_error_helper(device_error)
                 }
                 CreateComputePipelineError::InvalidLayout => todo!(),
                 CreateComputePipelineError::InvalidCache => todo!(),
@@ -436,7 +457,7 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
                 CreateComputePipelineError::Stage(stage_error) => todo!(),
                 CreateComputePipelineError::Internal(_) => todo!(),
                 CreateComputePipelineError::MissingDownlevelFlags(missing_downlevel_flags) => {
-                    missing_downlevel_flags_helper(missing_downlevel_flags, operation)
+                    missing_downlevel_flags_helper(missing_downlevel_flags)
                 }
                 _ => todo!(),
             }
@@ -444,12 +465,12 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
         RuntimeErrors::CreatePipelineLayoutError(create_pipeline_layout_error) => {
             match create_pipeline_layout_error {
                 CreatePipelineLayoutError::Device(device_error) => {
-                    device_error_helper(device_error, operation)
+                    device_error_helper(device_error)
                 }
                 CreatePipelineLayoutError::InvalidBindGroupLayoutId(id) => todo!(),
                 CreatePipelineLayoutError::MisalignedPushConstantRange { index, bound } => todo!(),
                 CreatePipelineLayoutError::MissingFeatures(missing_features) => {
-                    missing_features_helper(missing_features, operation)
+                    missing_features_helper(missing_features)
                 }
                 CreatePipelineLayoutError::MoreThanOnePushConstantRangePerStage {
                     index,
@@ -466,13 +487,11 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
         }
         RuntimeErrors::CreateQuerySetError(create_query_set_error) => {
             match create_query_set_error {
-                CreateQuerySetError::Device(device_error) => {
-                    device_error_helper(device_error, operation)
-                }
+                CreateQuerySetError::Device(device_error) => device_error_helper(device_error),
                 CreateQuerySetError::ZeroCount => todo!(),
                 CreateQuerySetError::TooManyQueries { count, maximum } => todo!(),
                 CreateQuerySetError::MissingFeatures(missing_features) => {
-                    missing_features_helper(missing_features, operation)
+                    missing_features_helper(missing_features)
                 }
                 _ => todo!(),
             }
@@ -481,7 +500,7 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
             match create_render_pipeline_error {
                 CreateRenderPipelineError::ColorAttachment(color_attachment_error) => todo!(),
                 CreateRenderPipelineError::Device(device_error) => {
-                    device_error_helper(device_error, operation)
+                    device_error_helper(device_error)
                 }
                 CreateRenderPipelineError::InvalidLayout => todo!(),
                 CreateRenderPipelineError::InvalidCache => todo!(),
@@ -507,10 +526,10 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
                 } => todo!(),
                 CreateRenderPipelineError::ConservativeRasterizationNonFillPolygonMode => todo!(),
                 CreateRenderPipelineError::MissingFeatures(missing_features) => {
-                    missing_features_helper(missing_features, operation)
+                    missing_features_helper(missing_features)
                 }
                 CreateRenderPipelineError::MissingDownlevelFlags(missing_downlevel_flags) => {
-                    missing_downlevel_flags_helper(missing_downlevel_flags, operation)
+                    missing_downlevel_flags_helper(missing_downlevel_flags)
                 }
                 CreateRenderPipelineError::Stage { stage, error } => todo!(),
                 CreateRenderPipelineError::Internal { stage, error } => todo!(),
@@ -529,9 +548,7 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
             }
         }
         RuntimeErrors::CreateSamplerError(create_sampler_error) => match create_sampler_error {
-            CreateSamplerError::Device(device_error) => {
-                device_error_helper(device_error, operation)
-            }
+            CreateSamplerError::Device(device_error) => device_error_helper(device_error),
             CreateSamplerError::InvalidLodMinClamp(_) => todo!(),
             CreateSamplerError::InvalidLodMaxClamp {
                 lod_min_clamp,
@@ -545,7 +562,7 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
             } => todo!(),
             CreateSamplerError::TooManyObjects => todo!(),
             CreateSamplerError::MissingFeatures(missing_features) => {
-                missing_features_helper(missing_features, operation)
+                missing_features_helper(missing_features)
             }
             _ => todo!(),
         },
@@ -559,21 +576,17 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
                 CreateShaderModuleError::ParsingGlsl(shader_error) => todo!(),
                 CreateShaderModuleError::ParsingSpirV(shader_error) => todo!(),
                 CreateShaderModuleError::Generation => todo!(),
-                CreateShaderModuleError::Device(device_error) => {
-                    device_error_helper(device_error, operation)
-                }
+                CreateShaderModuleError::Device(device_error) => device_error_helper(device_error),
                 CreateShaderModuleError::Validation(shader_error) => todo!(),
                 CreateShaderModuleError::MissingFeatures(missing_features) => {
-                    missing_features_helper(missing_features, operation)
+                    missing_features_helper(missing_features)
                 }
                 CreateShaderModuleError::InvalidGroupIndex { bind, group, limit } => todo!(),
                 _ => todo!(),
             }
         }
         RuntimeErrors::CreateTextureError(create_texture_error) => match create_texture_error {
-            CreateTextureError::Device(device_error) => {
-                device_error_helper(device_error, operation)
-            }
+            CreateTextureError::Device(device_error) => device_error_helper(device_error),
             CreateTextureError::CreateTextureView(create_texture_view_error) => todo!(),
             CreateTextureError::InvalidUsage(texture_usages) => todo!(),
             CreateTextureError::InvalidDimension(texture_dimension_error) => todo!(),
@@ -593,26 +606,28 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
             CreateTextureError::MultisampledNotRenderAttachment => todo!(),
             CreateTextureError::MissingFeatures(texture_format, missing_features) => todo!(),
             CreateTextureError::MissingDownlevelFlags(missing_downlevel_flags) => {
-                missing_downlevel_flags_helper(missing_downlevel_flags, operation)
+                missing_downlevel_flags_helper(missing_downlevel_flags)
             }
             _ => todo!(),
         },
         RuntimeErrors::QueueWriteError(queue_write_error) => match queue_write_error {
             QueueWriteError::InvalidQueueId => todo!(),
-            QueueWriteError::Queue(device_error) => device_error_helper(device_error, operation),
+            QueueWriteError::Queue(device_error) => device_error_helper(device_error),
             QueueWriteError::Transfer(transfer_error) => todo!(),
             QueueWriteError::MemoryInitFailure(clear_error) => todo!(),
-            QueueWriteError::DestroyedResource(destroyed_resource_error) => todo!(),
+            QueueWriteError::DestroyedResource(destroyed_resource_error) => {
+                destroyed_resource_error_helper(destroyed_resource_error)
+            }
             _ => todo!(),
         },
         RuntimeErrors::RenderPassError(render_pass_error) => todo!(),
         RuntimeErrors::CreateTextureViewError(create_texture_view_error) => {
             match create_texture_view_error {
-                CreateTextureViewError::Device(device_error) => {
-                    device_error_helper(device_error, operation)
-                }
+                CreateTextureViewError::Device(device_error) => device_error_helper(device_error),
                 CreateTextureViewError::InvalidTextureId(id) => todo!(),
-                CreateTextureViewError::DestroyedResource(destroyed_resource_error) => todo!(),
+                CreateTextureViewError::DestroyedResource(destroyed_resource_error) => {
+                    destroyed_resource_error_helper(destroyed_resource_error)
+                }
                 CreateTextureViewError::OutOfMemory => todo!(),
                 CreateTextureViewError::InvalidTextureViewDimension { view, texture } => todo!(),
                 CreateTextureViewError::InvalidMultisampledTextureViewDimension(
@@ -638,7 +653,7 @@ fn get_category_and_dyn_error(error: RuntimeErrors, operation: &'static str) -> 
 }
 
 pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
-    let (category, dyn_error) = get_category_and_dyn_error(error, operation);
+    let (category, dyn_error) = get_category_and_dyn_error(error);
 
     match category {
         ErrorCategory::Unknown => {
@@ -650,9 +665,7 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
         ErrorCategory::UnderqualifiedDeviceFailure => {
             handle_error_underqualified_device_failure(dyn_error, operation)
         }
-        ErrorCategory::SystemNonDeterministic => {
-            handle_error_non_determinism(dyn_error, operation)
-        }
+        ErrorCategory::SystemNonDeterministic => handle_error_non_determinism(dyn_error, operation),
         ErrorCategory::Deterministic => {
             info!("Deterministic error in {operation}: {dyn_error:?}")
         }

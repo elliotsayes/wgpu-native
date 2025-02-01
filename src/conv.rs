@@ -564,7 +564,7 @@ pub fn map_required_limits(
     wgt_limits
 }
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Clone, Debug, thiserror::Error)]
 pub enum ShaderParseError {
     #[cfg(feature = "spirv")]
     #[error(transparent)]

@@ -2,8 +2,6 @@ use std::{
     borrow::Cow, error, ffi::CStr, fmt::Display, path::{Path, PathBuf}
 };
 
-use wgc::{binding_model::CreateBindGroupLayoutError, resource::CreateBufferError};
-
 // A dummy wrapper that is `Send` + `Sync` to store userdata pointer
 // to be usable across Rust callbacks.
 pub(crate) struct Userdata(*mut std::ffi::c_void);
@@ -489,4 +487,3 @@ impl std::error::Error for WrappedError {
 
 unsafe impl Send for WrappedError {}
 unsafe impl Sync for WrappedError {}
-

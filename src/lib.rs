@@ -541,7 +541,7 @@ impl ErrorSinkRaw {
             crate::Error::OutOfMemory { .. } => handle_error_non_determinism(
                 utils::WrappedError {
                     source: Box::new(err),
-                },
+                }.into(),
                 "unknown",
             ),
             crate::Error::Validation { .. } => (
@@ -572,7 +572,7 @@ impl ErrorSinkRaw {
     }
 }
 
-fn format_error(err: &(impl error::Error + 'static)) -> String {
+fn format_error(err: &(dyn error::Error + 'static)) -> String {
     let mut output = String::new();
     let mut level = 1;
 
@@ -608,14 +608,12 @@ fn handle_error_fatal(
     panic!("Error in {operation}: {f}", f = format_error(&cause));
 }
 
-fn handle_error(
+fn handle_error_no_check(
     sink_mutex: &Mutex<ErrorSinkRaw>,
     source: RuntimeErrors,
     label: Label<'_>,
     fn_ident: &'static str,
 ) {
-    check_determinism_issue(source.clone(), fn_ident);
-
     let error = wgc::error::ContextError {
         fn_ident,
         source: source.into(),
@@ -645,6 +643,17 @@ fn handle_error(
         description: format_error(&error),
         source: Box::new(error),
     });
+}
+
+fn handle_error(
+    sink_mutex: &Mutex<ErrorSinkRaw>,
+    source: RuntimeErrors,
+    label: Label<'_>,
+    fn_ident: &'static str,
+) {
+    check_determinism_issue(source.clone(), fn_ident);
+
+    handle_error_no_check(sink_mutex, source, label, fn_ident);
 }
 
 // Determinism extension interface

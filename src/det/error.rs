@@ -1,5 +1,6 @@
-use std::{error, ffi::CString};
+use std::{error::Error, ffi::CString};
 
+use log::{error, info, warn};
 use wgc::{
     binding_model::{
         CreateBindGroupError, CreateBindGroupLayoutError, CreatePipelineLayoutError,
@@ -49,8 +50,8 @@ pub enum RuntimeErrors {
     CreateTextureViewError(CreateTextureViewError),
 }
 
-impl Into<Box<dyn error::Error + Send + Sync + 'static>> for RuntimeErrors {
-    fn into(self) -> Box<dyn error::Error + Send + Sync + 'static> {
+impl Into<Box<dyn Error + Send + Sync + 'static>> for RuntimeErrors {
+    fn into(self) -> Box<dyn Error + Send + Sync + 'static> {
         match self {
             RuntimeErrors::InvalidAdapter(err) => Box::new(err),
             RuntimeErrors::RequestDeviceError(err) => Box::new(err),
@@ -83,50 +84,69 @@ impl Into<Box<dyn error::Error + Send + Sync + 'static>> for RuntimeErrors {
 // This indicates that the generated error happened due to non-deterministic behavior
 // of the system, e.g. due to the physical GPU running out of resources
 pub fn handle_error_non_determinism(
-    cause: impl error::Error + Send + Sync + 'static,
+    cause: Box<dyn Error + Send + Sync + 'static>,
     operation: &'static str,
 ) -> ! {
     let message = format!(
         "Non-determinism error in {operation}: {f}",
-        f = format_error(&cause)
+        f = format_error(cause.as_ref())
     );
+    error!("{message}");
 
     let state = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
-        if let Some(callback) = state.non_determinism_error_callback {
-            let message_c = CString::new(message.clone()).unwrap();
-            unsafe { callback(message_c.as_ptr()) };
+    if let Some(callback) = state.non_determinism_error_callback {
+        let message_c = CString::new(message.clone()).unwrap();
+        unsafe { callback(message_c.as_ptr()) };
     }
 
     // TODO: is it okay to panic here?
-    panic!("{}", message);
+    panic!("{message}");
 }
 
 // This indicates that the generated error happened due to the requirements
 // of the virtual device not being met by the system.
 fn handle_error_underqualified_device_failure(
-    cause: impl error::Error + Send + Sync + 'static,
+    cause: Box<dyn Error + Send + Sync + 'static>,
     operation: &'static str,
 ) -> ! {
     let message = format!(
         "Underqualified device failure in {operation}: {f}",
-        f = format_error(&cause)
+        f = format_error(&*cause)
     );
+    error!("{message}");
 
     let state = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
-        if let Some(callback) = state.underqualified_device_failure_callback {
-            let message_c = CString::new(message.clone()).unwrap();
-            unsafe { callback(message_c.as_ptr()) };
+    if let Some(callback) = state.underqualified_device_failure_callback {
+        let message_c = CString::new(message.clone()).unwrap();
+        unsafe { callback(message_c.as_ptr()) };
     }
 
     // TODO: is it okay to panic here?
     panic!("{}", message);
 }
 
-fn device_error_helper(device_error: DeviceError, operation: &'static str) {
+enum ErrorCategory {
+    Unknown,
+    Disallowed,
+    UnderqualifiedDeviceFailure,
+    SystemNonDeterministic,
+    Deterministic,
+}
+
+struct ErrorWithCategory(ErrorCategory, Box<dyn Error + Send + Sync + 'static>);
+
+fn device_error_helper(device_error: DeviceError, operation: &'static str) -> ErrorWithCategory {
     match device_error {
         DeviceError::Invalid(resource_error_ident) => todo!(),
-        DeviceError::Lost => todo!(),
-        DeviceError::OutOfMemory => todo!(),
+        DeviceError::Lost => {
+            // Lost devices can happen due to it being `.destroy()`ed by the API
+            // However, a lost device in `check_determinism_issue` implies it was a system issue
+            ErrorWithCategory(ErrorCategory::SystemNonDeterministic, device_error.into())
+        },
+        DeviceError::OutOfMemory => {
+            // Out Of Memory can occur due to load on the physical device
+            ErrorWithCategory(ErrorCategory::SystemNonDeterministic, device_error.into())
+        },
         DeviceError::ResourceCreationFailed => todo!(),
         DeviceError::InvalidDeviceId => todo!(),
         DeviceError::DeviceMismatch(device_mismatch) => todo!(),
@@ -137,7 +157,7 @@ fn device_error_helper(device_error: DeviceError, operation: &'static str) {
 fn command_encoder_error_helper(
     command_encoder_error: CommandEncoderError,
     operation: &'static str,
-) {
+) -> ErrorWithCategory {
     match command_encoder_error {
         CommandEncoderError::Invalid => todo!(),
         CommandEncoderError::NotRecording => todo!(),
@@ -152,27 +172,45 @@ fn command_encoder_error_helper(
     }
 }
 
-fn missing_features_helper(missing_features: MissingFeatures, operation: &'static str) {
+fn missing_features_helper(
+    missing_features: MissingFeatures,
+    operation: &'static str,
+) -> ErrorWithCategory {
     todo!()
 }
 
 fn missing_downlevel_flags_helper(
     missing_downlevel_flags: MissingDownlevelFlags,
     operation: &'static str,
-) {
+) -> ErrorWithCategory {
     todo!()
 }
 
-pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
+fn get_error_category(error: RuntimeErrors, operation: &'static str) -> ErrorWithCategory {
     match error {
         RuntimeErrors::InvalidAdapter(invalid_adapter) => todo!(),
         RuntimeErrors::RequestDeviceError(request_device_error) => match request_device_error {
-            RequestDeviceError::InvalidAdapter => todo!(),
-            RequestDeviceError::DeviceLost => todo!(),
-            RequestDeviceError::Internal => todo!(),
-            RequestDeviceError::LimitsExceeded(failed_limit) => todo!(),
-            RequestDeviceError::NoGraphicsQueue => todo!(),
-            RequestDeviceError::OutOfMemory => todo!(),
+            RequestDeviceError::InvalidAdapter => {
+                ErrorWithCategory(ErrorCategory::Deterministic, request_device_error.into())
+            }
+            RequestDeviceError::DeviceLost => {
+                // Device cannot be destroyed while requesting, so any errors must come from non-deterministic system behavior
+                ErrorWithCategory(ErrorCategory::SystemNonDeterministic, request_device_error.into())
+            }
+            RequestDeviceError::Internal => {
+                ErrorWithCategory(ErrorCategory::SystemNonDeterministic, request_device_error.into())
+            }
+            RequestDeviceError::LimitsExceeded(_) => {
+                // Limits should be checked earlier to make sure they are within bounds
+                ErrorWithCategory(ErrorCategory::UnderqualifiedDeviceFailure, request_device_error.into())
+            }
+            RequestDeviceError::NoGraphicsQueue => {
+                ErrorWithCategory(ErrorCategory::UnderqualifiedDeviceFailure, request_device_error.into())
+            }
+            RequestDeviceError::OutOfMemory => {
+                // Out Of Memory can occur due to load on the physical device
+                ErrorWithCategory(ErrorCategory::SystemNonDeterministic, request_device_error.into())
+            }
             RequestDeviceError::UnsupportedFeature(features) => todo!(),
             _ => todo!(),
         },
@@ -596,5 +634,27 @@ pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
                 _ => todo!(),
             }
         }
-    };
+    }
+}
+
+pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
+    let ErrorWithCategory(category, error) = get_error_category(error, operation);
+
+    match category {
+        ErrorCategory::Unknown => {
+            warn!("Unknown error in {operation}: {error:?}")
+        }
+        ErrorCategory::Disallowed => {
+            panic!("Disallowed error in {operation}: {error:?}")
+        }
+        ErrorCategory::UnderqualifiedDeviceFailure => {
+            handle_error_underqualified_device_failure(error, operation)
+        }
+        ErrorCategory::SystemNonDeterministic => {
+            handle_error_non_determinism(error, operation)
+        }
+        ErrorCategory::Deterministic => {
+            info!("Deterministic error in {operation}: {error:?}")
+        }
+    }
 }

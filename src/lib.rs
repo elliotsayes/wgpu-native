@@ -1,5 +1,5 @@
 use conv::{
-    map_adapter_type, map_backend_type, map_bind_group_entry, map_bind_group_layout_entry,
+    map_bind_group_entry, map_bind_group_layout_entry,
     map_device_descriptor, map_instance_backend_flags, map_instance_descriptor,
     map_pipeline_layout_descriptor, map_primitive_state, map_query_set_descriptor,
     map_query_set_index, map_shader_module, map_surface, map_surface_configuration,
@@ -705,19 +705,19 @@ pub unsafe extern "C" fn wgpuAdapterGetInfo(
     let adapter_id = adapter.id;
 
     let result = gfx_select!(adapter_id => context.core.adapter_get_info(adapter_id));
-    let result = match result {
-        Ok(info) => info,
-        Err(err) => handle_error_fatal(err, "wgpuAdapterGetInfo"),
+    if let Err(err) = result {
+        handle_error_fatal(err, "wgpuAdapterGetInfo");
     };
-
-    info.vendor = CString::new(result.driver).unwrap().into_raw();
-    info.architecture = CString::default().into_raw(); // TODO(webgpu.h)
-    info.device = CString::new(result.name).unwrap().into_raw();
-    info.description = CString::new(result.driver_info).unwrap().into_raw();
-    info.backendType = map_backend_type(result.backend);
-    info.adapterType = map_adapter_type(result.device_type);
-    info.vendorID = result.vendor;
-    info.deviceID = result.device;
+    
+    // TODO: Update this info to spoof initial baseline architecture
+    info.vendor = CString::new("Forward Research").unwrap().into_raw();
+    info.architecture = CString::new("Deterministic GPU").unwrap().into_raw();
+    info.device = CString::new("Deterministic GPU").unwrap().into_raw();
+    info.description = CString::new("Powered by AO The Computer").unwrap().into_raw();
+    info.backendType = native::WGPUBackendType_Vulkan;
+    info.adapterType = native::WGPUAdapterType_DiscreteGPU;
+    info.vendorID = 0;
+    info.deviceID = 0;
 }
 
 #[no_mangle]

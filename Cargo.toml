@@ -157,6 +157,8 @@ log = "0.4"
 thiserror = "1"
 parking_lot = "0.12"
 smallvec = "1"
+future_handles = { version = "0.2.0", features = ["sync"] }
+pollster = "0.4.0"
 
 [build-dependencies]
 bindgen = "0.70"

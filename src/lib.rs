@@ -5,6 +5,8 @@ use conv::{
     map_query_set_index, map_shader_module, map_surface, map_surface_configuration,
     CreateSurfaceParams,
 };
+use det::{callback::{BufferMapAsyncCallbackArgs, QueueOnSubmittedWorkDoneCallbackArgs, QueuedBufferMapAsyncCallback, QueuedQueueOnSubmittedWorkDoneCallback, UserCallback}, polling::run_polling_strategy, virtual_state::VirtualState};
+use future_handles::sync as future_handle;
 use parking_lot::Mutex;
 use smallvec::SmallVec;
 use std::{
@@ -29,6 +31,7 @@ pub mod conv;
 pub mod logging;
 pub mod unimplemented;
 pub mod utils;
+pub mod det;
 
 pub mod native {
     #![allow(non_upper_case_globals)]
@@ -40,26 +43,9 @@ pub mod native {
 
 type ContextCore = wgc::global::Global; 
 
-pub enum UserCallback {
-    WGPUAdapterRequestDeviceCallback(native::WGPUAdapterRequestDeviceCallback),
-    WGPUBufferMapAsyncCallback(native::WGPUBufferMapAsyncCallback),
-    WGPUErrorCallback(native::WGPUErrorCallback),
-    WGPUInstanceRequestAdapterCallback(native::WGPUInstanceRequestAdapterCallback),
-}
-
-pub struct VirtualState {
-    pub callback_queue: Vec<UserCallback>,
-}
-
-impl VirtualState {
-    pub fn new() -> Self {
-        Self { callback_queue: Vec::new() }
-    }
-}
-
 pub struct Context {
     pub core: ContextCore,
-    pub virtual_state: VirtualState,
+    pub virtual_state: Mutex<VirtualState>,
 }
 
 pub struct WGPUAdapterImpl {
@@ -658,7 +644,7 @@ pub unsafe extern "C" fn wgpuCreateInstance(
     Arc::into_raw(Arc::new(WGPUInstanceImpl {
         context: Arc::new(Context {
             core: ContextCore::new("wgpu", instance_desc),
-            virtual_state: VirtualState::new(),
+            virtual_state: Mutex::new(VirtualState::new()),
         }),
     }))
 }
@@ -772,6 +758,8 @@ pub unsafe extern "C" fn wgpuAdapterInfoFreeMembers(adapter_info: native::WGPUAd
     ));
 }
 
+// Determinism note:
+// `WGPUAdapterRequestDeviceCallback` is always called immediately, so no need to defer
 #[no_mangle]
 pub unsafe extern "C" fn wgpuAdapterRequestDevice(
     adapter: native::WGPUAdapter,
@@ -785,6 +773,7 @@ pub unsafe extern "C" fn wgpuAdapterRequestDevice(
     };
     let callback = callback.expect("invalid callback");
 
+    // TODO: Revise legality of `adapter_limits`
     let adapter_limits = match gfx_select!(adapter_id => context.core.adapter_limits(adapter_id)) {
         Ok(adapter_limits) => adapter_limits,
         Err(cause) => {
@@ -986,6 +975,9 @@ pub unsafe extern "C" fn wgpuBufferGetUsage(
     buffer.data.usage
 }
 
+// Determinism note:
+// `WGPUAdapterRequestDeviceCallback` is called some time in the future,
+// so always defer the callback until `wgpuDevicePoll`
 #[no_mangle]
 pub unsafe extern "C" fn wgpuBufferMapAsync(
     buffer: native::WGPUBuffer,
@@ -1001,6 +993,15 @@ pub unsafe extern "C" fn wgpuBufferMapAsync(
     };
     let callback = callback.expect("invalid callback");
     let userdata = utils::Userdata::new(userdata);
+
+    let (callback_args_future, callback_args_handle) = future_handle::create::<BufferMapAsyncCallbackArgs>();
+    let item = UserCallback::WGPUBufferMapAsyncCallback(
+        QueuedBufferMapAsyncCallback::new(
+            Some(callback), 
+            callback_args_future,
+        ),
+    );
+    context.virtual_state.lock().callbacks.enqueue(item);
 
     let operation = wgc::resource::BufferMapOperation {
         host: match mode as native::WGPUMapMode {
@@ -1027,7 +1028,10 @@ pub unsafe extern "C" fn wgpuBufferMapAsync(
                     // TODO: WGPUBufferMapAsyncStatus_SizeOutOfRange
                 };
 
-                callback(status, userdata.as_ptr());
+                callback_args_handle.complete(BufferMapAsyncCallbackArgs {
+                    status,
+                    userdata: userdata.as_ptr(),
+                });
             },
         ))),
     };
@@ -2576,6 +2580,10 @@ pub unsafe extern "C" fn wgpuDeviceHasFeature(
     device_features.contains(feature) as native::WGPUBool
 }
 
+// Determinism note:
+// It seems that the `WGPUErrorCallback` is always called immediately,
+// so there is no need to defer it.
+// TODO: Confirm this
 #[no_mangle]
 pub unsafe extern "C" fn wgpuDevicePopErrorScope(
     device: native::WGPUDevice,
@@ -2683,6 +2691,8 @@ pub unsafe extern "C" fn wgpuInstanceCreateSurface(
     }))
 }
 
+// Determinism note:
+// `WGPUInstanceRequestAdapterCallback` is always called immediately, so no need to defer
 #[no_mangle]
 pub unsafe extern "C" fn wgpuInstanceRequestAdapter(
     instance: native::WGPUInstance,
@@ -2871,6 +2881,9 @@ pub unsafe extern "C" fn wgpuQuerySetRelease(query_set: native::WGPUQuerySet) {
 
 // Queue methods
 
+// Determinism note:
+// `WGPUQueueOnSubmittedWorkDoneCallback` is called some time in the future,
+// so always defer the callback until `wgpuDevicePoll`
 #[no_mangle]
 pub unsafe extern "C" fn wgpuQueueOnSubmittedWorkDone(
     queue: native::WGPUQueue,
@@ -2884,8 +2897,20 @@ pub unsafe extern "C" fn wgpuQueueOnSubmittedWorkDone(
     let callback = callback.expect("invalid callback");
     let userdata = utils::Userdata::new(userdata);
 
+    let (callback_args_future, callback_args_handle) = future_handle::create::<QueueOnSubmittedWorkDoneCallbackArgs>();
+    let item = UserCallback::WGPUQueueOnSubmittedWorkDoneCallback(
+        QueuedQueueOnSubmittedWorkDoneCallback::new(
+            Some(callback), 
+            callback_args_future,
+        ),
+    );
+    context.virtual_state.lock().callbacks.enqueue(item);
+
     let closure = wgc::device::queue::SubmittedWorkDoneClosure::from_rust(Box::new(move || {
-        callback(native::WGPUQueueWorkDoneStatus_Success, userdata.as_ptr());
+        callback_args_handle.complete(QueueOnSubmittedWorkDoneCallbackArgs {
+            status: native::WGPUQueueWorkDoneStatus_Success, 
+            userdata: userdata.as_ptr()
+        });
     }));
 
     if let Err(cause) =
@@ -4229,7 +4254,7 @@ pub unsafe extern "C" fn wgpuDevicePoll(
         (device.id, &device.context)
     };
 
-    let maintain = match wait {
+    let maintain_requested = match wait {
         true => match wrapped_submission_index {
             Some(index) => {
                 wgt::Maintain::WaitForSubmissionIndex(wgc::device::queue::WrappedSubmissionIndex {
@@ -4247,12 +4272,16 @@ pub unsafe extern "C" fn wgpuDevicePoll(
         false => wgt::Maintain::Poll,
     };
 
-    match gfx_select!(device_id => context.core.device_poll(device_id, maintain)) {
-        Ok(queue_empty) => queue_empty,
-        Err(cause) => {
-            handle_error_fatal(cause, "wgpuDevicePoll");
+    let run_poll_fn = |maintain: wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>| {
+        match gfx_select!(device_id => context.core.device_poll(device_id, maintain)) {
+            Ok(queue_empty) => queue_empty,
+            Err(cause) => {
+                handle_error_fatal(cause, "wgpuDevicePoll");
+            }
         }
-    }
+    };
+    
+    run_polling_strategy(&mut context.virtual_state.lock(), maintain_requested, run_poll_fn)
 }
 
 #[no_mangle]

@@ -10,9 +10,11 @@ use det::{
         QueuedBufferMapAsyncCallback, QueuedQueueOnSubmittedWorkDoneCallback, UserCallback,
     },
     polling::run_polling_strategy,
+    validation::validate_instance_descriptor,
     virtual_state::VirtualState,
 };
 use future_handles::sync as future_handle;
+use log::warn;
 use parking_lot::Mutex;
 use smallvec::SmallVec;
 use std::{
@@ -22,6 +24,7 @@ use std::{
     fmt::Display,
     mem,
     num::NonZeroU64,
+    ptr::null_mut,
     sync::{atomic, Arc},
     thread,
 };
@@ -30,7 +33,9 @@ use utils::{
 };
 use wgc::{
     command::{bundle_ffi, DynComputePass, DynRenderPass},
-    gfx_select, id, resource, Label,
+    gfx_select, id,
+    instance::RequestDeviceError,
+    resource, Label,
 };
 
 pub mod conv;
@@ -528,9 +533,11 @@ impl ErrorSinkRaw {
                 }
                 return;
             }
-            crate::Error::OutOfMemory { .. } => (
-                native::WGPUErrorType_OutOfMemory,
-                crate::ErrorFilter::OutOfMemory,
+            crate::Error::OutOfMemory { .. } => handle_error_non_determinism(
+                utils::WrappedError {
+                    source: Box::new(err),
+                },
+                "unknown",
             ),
             crate::Error::Validation { .. } => (
                 native::WGPUErrorType_Validation,
@@ -604,7 +611,7 @@ fn handle_error(
 ) {
     let error = wgc::error::ContextError {
         fn_ident,
-        source: Box::new(source),
+        source: source.into(),
         label: label.unwrap_or_default().to_string(),
     };
     let mut sink = sink_mutex.lock();
@@ -633,6 +640,107 @@ fn handle_error(
     });
 }
 
+// Determinism extension interface
+
+type MessageCallback =
+    ::std::option::Option<unsafe extern "C" fn(message: *const ::std::os::raw::c_char)>;
+
+type OnSystemNonDeterminismErrorCallback = MessageCallback;
+type OnUnderqualifiedDeviceFailureCallback = MessageCallback;
+
+pub struct DeterminismExtensionGlobalState {
+    pub non_determinism_error_callback: OnSystemNonDeterminismErrorCallback,
+    pub underqualified_device_failure_callback: OnUnderqualifiedDeviceFailureCallback,
+}
+
+impl DeterminismExtensionGlobalState {
+    pub fn default() -> Self {
+        Self {
+            non_determinism_error_callback: None,
+            underqualified_device_failure_callback: None,
+        }
+    }
+}
+
+static DETERMINISM_EXTENSION_GLOBAL_STATE: Mutex<Option<DeterminismExtensionGlobalState>> =
+    Mutex::new(None);
+
+#[no_mangle]
+pub unsafe extern "C" fn ext_determinism_configure(
+    non_determinism_error_callback: OnSystemNonDeterminismErrorCallback,
+    underqualified_device_failure_callback: OnUnderqualifiedDeviceFailureCallback,
+) {
+    let mut state_ref = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
+
+    let state = match state_ref.as_mut() {
+        Some(state) => state,
+        None => {
+            *state_ref = Some(DeterminismExtensionGlobalState::default());
+            state_ref.as_mut().unwrap()
+        }
+    };
+    state.non_determinism_error_callback = non_determinism_error_callback;
+    state.underqualified_device_failure_callback = underqualified_device_failure_callback;
+}
+
+// This indicates that the generated error happened due to non-deterministic behavior
+// of the system, e.g. due to the physical GPU running out of resources
+fn handle_error_non_determinism(
+    cause: impl error::Error + Send + Sync + 'static,
+    operation: &'static str,
+) -> ! {
+    let message = format!(
+        "Non-determinism error in {operation}: {f}",
+        f = format_error(&cause)
+    );
+
+    let state = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
+    if let Some(state) = state.as_ref() {
+        if let Some(callback) = state.non_determinism_error_callback {
+            let message_c = CString::new(message.clone()).unwrap();
+            unsafe { callback(message_c.as_ptr()) };
+        }
+    }
+
+    // TODO: is ot okay to panic here?
+    panic!("{}", message);
+}
+
+// This indicates that the generated error happened due to the requirements
+// of the virtual device not being met by the system.
+fn handle_error_underqualified_device_failure(
+    cause: impl error::Error + Send + Sync + 'static,
+    operation: &'static str,
+) -> ! {
+    let message = format!(
+        "Underqualified device failure in {operation}: {f}",
+        f = format_error(&cause)
+    );
+
+    let state = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
+    if let Some(state) = state.as_ref() {
+        if let Some(callback) = state.underqualified_device_failure_callback {
+            let message_c = CString::new(message.clone()).unwrap();
+            unsafe { callback(message_c.as_ptr()) };
+        }
+    }
+
+    // TODO: is ot okay to panic here?
+    panic!("{}", message);
+}
+
+fn maybe_handle_device_error_helper(
+    device_error: wgc::device::DeviceError,
+    operation: &'static str,
+) {
+    match device_error {
+        wgc::device::DeviceError::OutOfMemory => {
+            handle_error_non_determinism(device_error, operation);
+        }
+        _ => (),
+    }
+}
+
 // webgpu.h functions
 
 #[no_mangle]
@@ -640,10 +748,19 @@ pub unsafe extern "C" fn wgpuCreateInstance(
     descriptor: Option<&native::WGPUInstanceDescriptor>,
 ) -> native::WGPUInstance {
     let instance_desc = match descriptor {
-        Some(descriptor) => follow_chain!(map_instance_descriptor(
-            (descriptor),
-            WGPUSType_InstanceExtras => native::WGPUInstanceExtras
-        )),
+        Some(descriptor) => {
+            if !follow_chain!(validate_instance_descriptor(
+                (descriptor),
+                WGPUSType_InstanceExtras => native::WGPUInstanceExtras
+            )) {
+                warn!("Invalid instance descriptor");
+                return null_mut();
+            }
+            follow_chain!(map_instance_descriptor(
+                (descriptor),
+                WGPUSType_InstanceExtras => native::WGPUInstanceExtras
+            ))
+        }
         None => wgt::InstanceDescriptor::default(),
     };
 
@@ -657,6 +774,7 @@ pub unsafe extern "C" fn wgpuCreateInstance(
 
 // Adapter methods
 
+// Determinism TODO: standardize features
 #[no_mangle]
 pub unsafe extern "C" fn wgpuAdapterEnumerateFeatures(
     adapter: native::WGPUAdapter,
@@ -718,8 +836,8 @@ pub unsafe extern "C" fn wgpuAdapterGetInfo(
 
     // TODO: Update this info to spoof initial baseline architecture
     info.vendor = CString::new("Forward Research").unwrap().into_raw();
-    info.architecture = CString::new("Deterministic GPU").unwrap().into_raw();
-    info.device = CString::new("Deterministic GPU").unwrap().into_raw();
+    info.architecture = CString::new("Deterministic").unwrap().into_raw();
+    info.device = CString::new("Virtual Device").unwrap().into_raw();
     info.description = CString::new("Powered by AO The Computer")
         .unwrap()
         .into_raw();
@@ -729,6 +847,7 @@ pub unsafe extern "C" fn wgpuAdapterGetInfo(
     info.deviceID = 0;
 }
 
+// Determinism TODO: standardize features
 #[no_mangle]
 pub unsafe extern "C" fn wgpuAdapterHasFeature(
     adapter: native::WGPUAdapter,
@@ -770,6 +889,7 @@ pub unsafe extern "C" fn wgpuAdapterInfoFreeMembers(adapter_info: native::WGPUAd
 
 // Determinism note:
 // `WGPUAdapterRequestDeviceCallback` is always called immediately, so no need to defer
+// Determinism TODO: standardize features
 #[no_mangle]
 pub unsafe extern "C" fn wgpuAdapterRequestDevice(
     adapter: native::WGPUAdapter,
@@ -854,15 +974,27 @@ pub unsafe extern "C" fn wgpuAdapterRequestDevice(
                 userdata,
             );
         }
-        Some(err) => {
-            let message = CString::new(format_error(&err)).unwrap();
-            callback(
-                native::WGPURequestDeviceStatus_Error,
-                std::ptr::null_mut(),
-                message.as_ptr(),
-                userdata,
-            );
-        }
+        Some(err) => match err {
+            RequestDeviceError::DeviceLost
+            | RequestDeviceError::Internal
+            | RequestDeviceError::OutOfMemory => {
+                handle_error_non_determinism(err, "wgpuAdapterRequestDevice")
+            }
+            RequestDeviceError::LimitsExceeded(_)
+            | RequestDeviceError::NoGraphicsQueue
+            | RequestDeviceError::UnsupportedFeature(_) => {
+                handle_error_underqualified_device_failure(err, "wgpuAdapterRequestDevice")
+            }
+            RequestDeviceError::InvalidAdapter | _ => {
+                let message = CString::new(format_error(&err)).unwrap();
+                callback(
+                    native::WGPURequestDeviceStatus_Error,
+                    std::ptr::null_mut(),
+                    message.as_ptr(),
+                    userdata,
+                );
+            }
+        },
     }
 }
 
@@ -1022,7 +1154,8 @@ pub unsafe extern "C" fn wgpuBufferMapAsync(
             move |result: resource::BufferAccessResult| {
                 let status = match result {
                     Ok(()) => native::WGPUBufferMapAsyncStatus_Success,
-                    Err(resource::BufferAccessError::Device(_)) => {
+                    Err(resource::BufferAccessError::Device(err)) => {
+                        maybe_handle_device_error_helper(err, "wgpuBufferMapAsync");
                         native::WGPUBufferMapAsyncStatus_DeviceLost
                     }
                     Err(resource::BufferAccessError::MapAlreadyPending) => {
@@ -1853,6 +1986,12 @@ pub unsafe extern "C" fn wgpuDeviceCreateBindGroup(
     let (bind_group_id, error) =
         gfx_select!(device_id => context.core.device_create_bind_group(device_id, &desc, None));
     if let Some(cause) = error {
+        match cause.clone() {
+            wgc::binding_model::CreateBindGroupError::Device(device_error) => {
+                maybe_handle_device_error_helper(device_error, "wgpuDeviceCreateBindGroup")
+            }
+            _ => (),
+        };
         handle_error(error_sink, cause, desc.label, "wgpuDeviceCreateBindGroup");
     }
 
@@ -2975,6 +3114,23 @@ pub unsafe extern "C" fn wgpuQueueWriteBuffer(
         buffer_offset,
         make_slice(data, data_size)
     )) {
+        match cause.clone() {
+            wgc::device::queue::QueueWriteError::InvalidQueueId => (),
+            wgc::device::queue::QueueWriteError::Queue(device_error) => {
+                maybe_handle_device_error_helper(device_error, "wgpuQueueWriteBuffer");
+            }
+            wgc::device::queue::QueueWriteError::Transfer(_) => (),
+            wgc::device::queue::QueueWriteError::MemoryInitFailure(clear_error) => {
+                match clear_error {
+                    wgc::command::ClearError::Device(device_error) => {
+                        maybe_handle_device_error_helper(device_error, "wgpuQueueWriteBuffer")
+                    }
+                    _ => (),
+                }
+            }
+            wgc::device::queue::QueueWriteError::DestroyedResource(_) => (),
+            _ => (),
+        }
         handle_error(error_sink, cause, None, "wgpuQueueWriteBuffer");
     }
 }

@@ -9,7 +9,7 @@ use wgc::{
         ClearError, CommandEncoderError, ComputePassError, CopyError, QueryError, RenderPassError,
     },
     device::{queue::QueueWriteError, DeviceError, MissingDownlevelFlags, MissingFeatures},
-    instance::RequestDeviceError,
+    instance::{InvalidAdapter, RequestDeviceError},
     pipeline::{CreateComputePipelineError, CreateRenderPipelineError, CreateShaderModuleError},
     resource::{
         BufferAccessError, CreateBufferError, CreateQuerySetError, CreateSamplerError,
@@ -23,6 +23,7 @@ use crate::{
 
 #[derive(Clone)]
 pub enum RuntimeErrors {
+    InvalidAdapter(InvalidAdapter),
     RequestDeviceError(RequestDeviceError),
     BufferAccessError(BufferAccessError),
     CommandEncoderError(CommandEncoderError),
@@ -51,6 +52,7 @@ pub enum RuntimeErrors {
 impl Into<Box<dyn error::Error + Send + Sync + 'static>> for RuntimeErrors {
     fn into(self) -> Box<dyn error::Error + Send + Sync + 'static> {
         match self {
+            RuntimeErrors::InvalidAdapter(err) => Box::new(err),
             RuntimeErrors::RequestDeviceError(err) => Box::new(err),
             RuntimeErrors::BufferAccessError(err) => Box::new(err),
             RuntimeErrors::CommandEncoderError(err) => Box::new(err),
@@ -163,6 +165,7 @@ fn missing_downlevel_flags_helper(
 
 pub fn check_determinism_issue(error: RuntimeErrors, operation: &'static str) {
     match error {
+        RuntimeErrors::InvalidAdapter(invalid_adapter) => todo!(),
         RuntimeErrors::RequestDeviceError(request_device_error) => match request_device_error {
             RequestDeviceError::InvalidAdapter => todo!(),
             RequestDeviceError::DeviceLost => todo!(),

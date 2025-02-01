@@ -825,6 +825,10 @@ pub unsafe extern "C" fn wgpuAdapterRequestDevice(
     let adapter_limits = match gfx_select!(adapter_id => context.core.adapter_limits(adapter_id)) {
         Ok(adapter_limits) => adapter_limits,
         Err(cause) => {
+            check_determinism_issue(
+                RuntimeErrors::InvalidAdapter(cause.clone()),
+                "wgpuAdapterRequestDevice",
+            );
             let msg = CString::new(format_error(&cause)).unwrap();
             callback(
                 native::WGPURequestDeviceStatus_Error,

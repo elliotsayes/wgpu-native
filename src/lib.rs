@@ -11,7 +11,7 @@ use det::{
     },
     error::{check_determinism_issue, handle_error_non_determinism, RuntimeErrors},
     global::{
-        DeterminismExtensionGlobalState, OnSystemNonDeterminismErrorCallback,
+        OnSystemNonDeterminismErrorCallback,
         OnUnderqualifiedDeviceFailureCallback, DETERMINISM_EXTENSION_GLOBAL_STATE,
     },
     polling::run_polling_strategy,
@@ -39,7 +39,6 @@ use utils::{
 use wgc::{
     command::{bundle_ffi, DynComputePass, DynRenderPass},
     gfx_select, id,
-    instance::RequestDeviceError,
     resource, Label,
 };
 
@@ -1077,7 +1076,7 @@ pub unsafe extern "C" fn wgpuBufferMapAsync(
             move |result: resource::BufferAccessResult| {
                 let status = match result {
                     Ok(()) => native::WGPUBufferMapAsyncStatus_Success,
-                    Err(resource::BufferAccessError::Device(err)) => {
+                    Err(resource::BufferAccessError::Device(_)) => {
                         native::WGPUBufferMapAsyncStatus_DeviceLost
                     }
                     Err(resource::BufferAccessError::MapAlreadyPending) => {

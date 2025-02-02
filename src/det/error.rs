@@ -125,6 +125,8 @@ fn handle_error_underqualified_device_failure(
     panic!("{message}");
 }
 
+// TODO: Review this
+#[allow(dead_code)]
 enum ErrorCategory {
     Unknown,
     Disallowed,
@@ -135,6 +137,8 @@ enum ErrorCategory {
 
 type CategoryAndError = (ErrorCategory, Box<dyn Error + Send + Sync + 'static>);
 
+// TODO: Complete this
+#[allow(unused_variables)]
 fn device_error_helper(device_error: DeviceError) -> CategoryAndError {
     match device_error {
         DeviceError::Invalid(resource_error_ident) => todo!(),
@@ -154,6 +158,8 @@ fn device_error_helper(device_error: DeviceError) -> CategoryAndError {
     }
 }
 
+// TODO: Complete this
+#[allow(unused_variables)]
 fn command_encoder_error_helper(command_encoder_error: CommandEncoderError) -> CategoryAndError {
     match command_encoder_error {
         CommandEncoderError::Invalid => todo!(),
@@ -169,6 +175,8 @@ fn command_encoder_error_helper(command_encoder_error: CommandEncoderError) -> C
     }
 }
 
+// TODO: Complete this
+#[allow(unused_variables)]
 fn destroyed_resource_error_helper(
     destroyed_resource_error: DestroyedResourceError,
 ) -> CategoryAndError {
@@ -178,16 +186,22 @@ fn destroyed_resource_error_helper(
     )
 }
 
+// TODO: Complete this
+#[allow(unused_variables)]
 fn missing_features_helper(missing_features: MissingFeatures) -> CategoryAndError {
     todo!()
 }
 
+// TODO: Complete this
+#[allow(unused_variables)]
 fn missing_downlevel_flags_helper(
     missing_downlevel_flags: MissingDownlevelFlags,
 ) -> CategoryAndError {
     todo!()
 }
 
+// TODO: Complete this
+#[allow(unused_variables)]
 fn get_category_and_dyn_error(error: RuntimeErrors) -> CategoryAndError {
     match error {
         RuntimeErrors::InvalidAdapter(invalid_adapter) => todo!(),

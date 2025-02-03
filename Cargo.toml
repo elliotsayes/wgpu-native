@@ -155,9 +155,10 @@ parking_lot = "0.12"
 smallvec = "1"
 future_handles = { version = "0.2.0", features = ["sync"] }
 pollster = "0.4.0"
-wgsl-to-json = { git = "https://github.com/elliotsayes/wgsl-to-json", branch = "lib" }
 serde = { version = "1.0.138", features = ["derive"] }
 serde_json = "1.0.138"
+wgsl-to-json = { git = "https://github.com/elliotsayes/wgsl-to-json", branch = "lib" }
+faial-sys = { git = "https://github.com/elliotsayes/faial", branch = "lib-shared-rustlib" }
 
 [build-dependencies]
 bindgen = "0.70"

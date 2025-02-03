@@ -1,30 +1,5 @@
-use std::ffi::{CStr, CString};
-
+use faial_sys::faial_drf_call_wgsl_rust;
 use serde::{Deserialize, Serialize};
-
-unsafe extern "C" {
-    unsafe fn faial_drf_call_wgsl(
-        wgsl_json_str: *const ::std::os::raw::c_char,
-    ) -> *const ::std::os::raw::c_char;
-}
-
-fn faial_drf_call_wgsl_rust(wgsl_json_string: String) -> Result<String, String> {
-    let wgsl_json_str = CString::new(wgsl_json_string).expect("CString::new failed");
-    let wgsl_json_str_ptr = wgsl_json_str.as_ptr();
-    let wgsl_json_str_ptr = wgsl_json_str_ptr as *const ::std::os::raw::c_char;
-
-    let result: *const i8;
-    let result_str: String;
-    unsafe {
-        result = faial_drf_call_wgsl(wgsl_json_str_ptr);
-        result_str = CStr::from_ptr(result)
-            .to_str()
-            .expect("CStr::to_str failed")
-            .to_string();
-    }
-
-    Ok(result_str)
-}
 
 #[derive(Serialize, Deserialize)]
 pub struct FaialResult {
@@ -59,11 +34,14 @@ pub fn faial_drf_check_all_kernels_drf(wgsl_json_string: String) -> Result<(), S
                             .filter(|x| x.status != "drf")
                             .map(|x| x.kernel_name.clone())
                             .collect::<Vec<String>>();
-                        Err(format!("Faial found racy kernel(s): {}", racy_kernels.join(", ")))
+                        Err(format!(
+                            "Faial found racy kernel(s): {}",
+                            racy_kernels.join(", ")
+                        ))
                     }
                 }
                 Err(faial_result) => {
-                    Err(format!("Failed to parse Faial result: {:#?}", faial_result))
+                    Err(format!("Failed to parse faial_result: {:#?}", faial_result))
                 }
             }
         }

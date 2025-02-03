@@ -4,11 +4,9 @@ use super::faial::faial_drf_check_all_kernels_drf;
 
 pub fn validate_shader_source_wgsl(source: &str) -> Result<(), String> {
     match wgsl_to_json(source) {
-        Ok(wgsl_json_str) => {
-            match faial_drf_check_all_kernels_drf(wgsl_json_str) {
-                Ok(_) => Ok(()),
-                Err(err) => Err(format!("Failed to validate wgsl: {}", err)),
-            }
+        Ok(wgsl_json_str) => match faial_drf_check_all_kernels_drf(wgsl_json_str) {
+            Ok(_) => Ok(()),
+            Err(err) => Err(format!("Failed to validate wgsl: {}", err)),
         },
         Err(err) => Err(format!("Failed to parse wgsl: {}", err)),
     }

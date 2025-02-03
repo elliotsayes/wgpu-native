@@ -9,12 +9,13 @@ use det::{
         BufferMapAsyncCallbackArgs, QueueOnSubmittedWorkDoneCallbackArgs,
         QueuedBufferMapAsyncCallback, QueuedQueueOnSubmittedWorkDoneCallback, UserCallback,
     },
-    error::{check_determinism_issue, handle_error_non_determinism, RuntimeErrors},
+    error::{check_determinism_issue, handle_error_non_determinism, CoreError, DeterminismError},
     global::{
-        OnSystemNonDeterminismErrorCallback,
-        OnUnderqualifiedDeviceFailureCallback, DETERMINISM_EXTENSION_GLOBAL_STATE,
+        OnSystemNonDeterminismErrorCallback, OnUnderqualifiedDeviceFailureCallback,
+        DETERMINISM_EXTENSION_GLOBAL_STATE,
     },
     polling::run_polling_strategy,
+    shader::validate_shader_source_wgsl,
     validation::validate_instance_descriptor,
     virtual_state::VirtualState,
 };
@@ -38,8 +39,7 @@ use utils::{
 };
 use wgc::{
     command::{bundle_ffi, DynComputePass, DynRenderPass},
-    gfx_select, id,
-    resource, Label,
+    gfx_select, id, resource, Label,
 };
 
 pub mod conv;
@@ -540,7 +540,8 @@ impl ErrorSinkRaw {
             crate::Error::OutOfMemory { .. } => handle_error_non_determinism(
                 utils::WrappedError {
                     source: Box::new(err),
-                }.into(),
+                }
+                .into(),
                 "unknown",
             ),
             crate::Error::Validation { .. } => (
@@ -609,7 +610,7 @@ fn handle_error_fatal(
 
 fn handle_error_no_check(
     sink_mutex: &Mutex<ErrorSinkRaw>,
-    source: RuntimeErrors,
+    source: Box<dyn error::Error + Send + Sync + 'static>,
     label: Label<'_>,
     fn_ident: &'static str,
 ) {
@@ -646,13 +647,13 @@ fn handle_error_no_check(
 
 fn handle_error(
     sink_mutex: &Mutex<ErrorSinkRaw>,
-    source: RuntimeErrors,
+    source: CoreError,
     label: Label<'_>,
     fn_ident: &'static str,
 ) {
-    check_determinism_issue(source.clone(), fn_ident);
+    let source_dyn = check_determinism_issue(source, fn_ident);
 
-    handle_error_no_check(sink_mutex, source, label, fn_ident);
+    handle_error_no_check(sink_mutex, source_dyn.into(), label, fn_ident);
 }
 
 // Determinism extension interface
@@ -834,7 +835,7 @@ pub unsafe extern "C" fn wgpuAdapterRequestDevice(
         Ok(adapter_limits) => adapter_limits,
         Err(cause) => {
             check_determinism_issue(
-                RuntimeErrors::InvalidAdapter(cause.clone()),
+                CoreError::InvalidAdapter(cause.clone()),
                 "wgpuAdapterRequestDevice",
             );
             let msg = CString::new(format_error(&cause)).unwrap();
@@ -906,7 +907,7 @@ pub unsafe extern "C" fn wgpuAdapterRequestDevice(
         }
         Some(err) => {
             check_determinism_issue(
-                RuntimeErrors::RequestDeviceError(err.clone()),
+                CoreError::RequestDeviceError(err.clone()),
                 "wgpuAdapterRequestDevice",
             );
             let message = CString::new(format_error(&err)).unwrap();
@@ -1107,7 +1108,7 @@ pub unsafe extern "C" fn wgpuBufferMapAsync(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::BufferAccessError(cause),
+            CoreError::BufferAccessError(cause),
             None,
             "wgpuBufferMapAsync",
         );
@@ -1124,7 +1125,7 @@ pub unsafe extern "C" fn wgpuBufferUnmap(buffer: native::WGPUBuffer) {
     if let Err(cause) = gfx_select!(buffer_id => context.core.buffer_unmap(buffer_id)) {
         handle_error(
             error_sink,
-            RuntimeErrors::BufferAccessError(cause),
+            CoreError::BufferAccessError(cause),
             None,
             "wgpuBufferUnmap",
         );
@@ -1199,7 +1200,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderBeginComputePass(
     if let Some(cause) = err {
         handle_error(
             error_sink,
-            RuntimeErrors::CommandEncoderError(cause),
+            CoreError::CommandEncoderError(cause),
             desc.label,
             "wgpuCommandEncoderBeginComputePass",
         );
@@ -1301,7 +1302,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderBeginRenderPass(
     if let Some(cause) = err {
         handle_error(
             error_sink,
-            RuntimeErrors::CommandEncoderError(cause),
+            CoreError::CommandEncoderError(cause),
             desc.label,
             "wgpuCommandEncoderBeginRenderPass",
         );
@@ -1342,7 +1343,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderClearBuffer(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::ClearError(cause),
+            CoreError::ClearError(cause),
             None,
             "wgpuCommandEncoderClearBuffer",
         );
@@ -1379,7 +1380,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderCopyBufferToBuffer(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::CopyError(cause),
+            CoreError::CopyError(cause),
             None,
             "wgpuCommandEncoderCopyBufferToBuffer",
         );
@@ -1410,7 +1411,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderCopyBufferToTexture(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::CopyError(cause),
+            CoreError::CopyError(cause),
             None,
             "wgpuCommandEncoderCopyBufferToTexture",
         );
@@ -1441,7 +1442,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderCopyTextureToBuffer(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::CopyError(cause),
+            CoreError::CopyError(cause),
             None,
             "wgpuCommandEncoderCopyTextureToBuffer",
         );
@@ -1472,7 +1473,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderCopyTextureToTexture(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::CopyError(cause),
+            CoreError::CopyError(cause),
             None,
             "wgpuCommandEncoderCopyTextureToTexture",
         );
@@ -1503,7 +1504,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderFinish(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CommandEncoderError(cause),
+            CoreError::CommandEncoderError(cause),
             None,
             "wgpuCommandEncoderFinish",
         );
@@ -1534,7 +1535,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderInsertDebugMarker(
     {
         handle_error(
             error_sink,
-            RuntimeErrors::CommandEncoderError(cause),
+            CoreError::CommandEncoderError(cause),
             None,
             "wgpuCommandEncoderInsertDebugMarker",
         );
@@ -1558,7 +1559,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderPopDebugGroup(
     {
         handle_error(
             error_sink,
-            RuntimeErrors::CommandEncoderError(cause),
+            CoreError::CommandEncoderError(cause),
             None,
             "wgpuCommandEncoderPopDebugGroup",
         );
@@ -1583,7 +1584,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderPushDebugGroup(
     {
         handle_error(
             error_sink,
-            RuntimeErrors::CommandEncoderError(cause),
+            CoreError::CommandEncoderError(cause),
             None,
             "wgpuCommandEncoderPushDebugGroup",
         );
@@ -1620,7 +1621,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderResolveQuerySet(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::QueryError(cause),
+            CoreError::QueryError(cause),
             None,
             "wgpuCommandEncoderResolveQuerySet",
         );
@@ -1650,7 +1651,7 @@ pub unsafe extern "C" fn wgpuCommandEncoderWriteTimestamp(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::QueryError(cause),
+            CoreError::QueryError(cause),
             None,
             "wgpuCommandEncoderWriteTimestamp",
         );
@@ -1689,7 +1690,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderDispatchWorkgroups(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderDispatchWorkgroups",
         ),
@@ -1718,7 +1719,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderDispatchWorkgroupsIndirect(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderDispatchWorkgroupsIndirect",
         ),
@@ -1734,7 +1735,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderEnd(pass: native::WGPUComputePass
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderEnd",
         ),
@@ -1757,7 +1758,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderInsertDebugMarker(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderInsertDebugMarker",
         ),
@@ -1773,7 +1774,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderPopDebugGroup(pass: native::WGPUC
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderPopDebugGroup",
         ),
@@ -1796,7 +1797,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderPushDebugGroup(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderPushDebugGroup",
         ),
@@ -1825,7 +1826,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderSetBindGroup(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderSetBindGroup",
         ),
@@ -1848,7 +1849,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderSetPipeline(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderSetPipeline",
         ),
@@ -1892,7 +1893,7 @@ pub unsafe extern "C" fn wgpuComputePipelineGetBindGroupLayout(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::GetBindGroupLayoutError(cause),
+            CoreError::GetBindGroupLayoutError(cause),
             None,
             "wgpuComputePipelineGetBindGroupLayout",
         );
@@ -1954,7 +1955,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateBindGroup(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateBindGroupError(cause),
+            CoreError::CreateBindGroupError(cause),
             desc.label,
             "wgpuDeviceCreateBindGroup",
         );
@@ -1994,7 +1995,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateBindGroupLayout(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateBindGroupLayoutError(cause),
+            CoreError::CreateBindGroupLayoutError(cause),
             desc.label,
             "wgpuDeviceCreateBindGroupLayout",
         );
@@ -2029,7 +2030,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateBuffer(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateBufferError(cause),
+            CoreError::CreateBufferError(cause),
             desc.label,
             "wgpuDeviceCreateBuffer",
         );
@@ -2065,7 +2066,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateCommandEncoder(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::DeviceError(cause),
+            CoreError::DeviceError(cause),
             desc.label,
             "wgpuDeviceCreateCommandEncoder",
         );
@@ -2142,7 +2143,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateComputePipeline(
         }
         handle_error(
             error_sink,
-            RuntimeErrors::CreateComputePipelineError(cause),
+            CoreError::CreateComputePipelineError(cause),
             desc.label,
             "wgpuDeviceCreateComputePipeline",
         );
@@ -2175,7 +2176,7 @@ pub unsafe extern "C" fn wgpuDeviceCreatePipelineLayout(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreatePipelineLayoutError(cause),
+            CoreError::CreatePipelineLayoutError(cause),
             desc.label,
             "wgpuDeviceCreatePipelineLayout",
         );
@@ -2209,7 +2210,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateQuerySet(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateQuerySetError(cause),
+            CoreError::CreateQuerySetError(cause),
             desc.label,
             "wgpuDeviceCreateQuerySet",
         );
@@ -2441,7 +2442,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateRenderPipeline(
         }
         handle_error(
             error_sink,
-            RuntimeErrors::CreateRenderPipelineError(cause),
+            CoreError::CreateRenderPipelineError(cause),
             desc.label,
             "wgpuDeviceCreateRenderPipeline",
         );
@@ -2508,7 +2509,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateSampler(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateSamplerError(cause),
+            CoreError::CreateSamplerError(cause),
             desc.label,
             "wgpuDeviceCreateSampler",
         );
@@ -2546,7 +2547,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateShaderModule(
         Err(cause) => {
             handle_error(
                 error_sink,
-                RuntimeErrors::ShaderParseError(cause),
+                CoreError::ShaderParseError(cause),
                 desc.label,
                 "wgpuDeviceCreateShaderModule",
             );
@@ -2558,11 +2559,45 @@ pub unsafe extern "C" fn wgpuDeviceCreateShaderModule(
         }
     };
 
+    let is_valid = match source {
+        wgc::pipeline::ShaderModuleSource::Wgsl(ref cow) => match validate_shader_source_wgsl(&cow)
+        {
+            Ok(_) => true,
+            Err(cause) => {
+                handle_error_no_check(
+                    error_sink,
+                    Box::new(cause),
+                    desc.label.clone(),
+                    "wgpuDeviceCreateShaderModule",
+                );
+                false
+            }
+        },
+        _ => {
+            handle_error_no_check(
+                error_sink,
+                Box::new(DeterminismError::UnsupportedShaderLanguage(String::from(
+                    "Unsupported shader language",
+                ))),
+                desc.label.clone(),
+                "wgpuDeviceCreateShaderModule",
+            );
+            false
+        }
+    };
+
+    if !is_valid {
+        return Arc::into_raw(Arc::new(WGPUShaderModuleImpl {
+            context: context.clone(),
+            id: None,
+        }));
+    }
+
     let (shader_module_id, error) = gfx_select!(device_id => context.core.device_create_shader_module(device_id, &desc, source, None));
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateShaderModuleError(cause),
+            CoreError::CreateShaderModuleError(cause),
             desc.label,
             "wgpuDeviceCreateShaderModule",
         );
@@ -2608,7 +2643,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateTexture(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateTextureError(cause),
+            CoreError::CreateTextureError(cause),
             desc.label,
             "wgpuDeviceCreateTexture",
         );
@@ -3101,7 +3136,7 @@ pub unsafe extern "C" fn wgpuQueueWriteBuffer(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::QueueWriteError(cause),
+            CoreError::QueueWriteError(cause),
             None,
             "wgpuQueueWriteBuffer",
         );
@@ -3131,7 +3166,7 @@ pub unsafe extern "C" fn wgpuQueueWriteTexture(
     )) {
         handle_error(
             error_sink,
-            RuntimeErrors::QueueWriteError(cause),
+            CoreError::QueueWriteError(cause),
             None,
             "wgpuQueueWriteTexture",
         );
@@ -3445,7 +3480,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderBeginOcclusionQuery(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderBeginOcclusionQuery",
         ),
@@ -3473,7 +3508,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderDraw(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderDraw",
         ),
@@ -3503,7 +3538,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderDrawIndexed(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderDrawIndexed",
         ),
@@ -3527,7 +3562,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderDrawIndexedIndirect(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderDrawIndexedIndirect",
         ),
@@ -3551,7 +3586,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderDrawIndirect(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderDrawIndirect",
         ),
@@ -3567,7 +3602,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderEnd(pass: native::WGPURenderPassEn
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderEnd",
         ),
@@ -3585,7 +3620,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderEndOcclusionQuery(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderEndOcclusionQuery",
         ),
@@ -3609,7 +3644,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderExecuteBundles(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderExecuteBundles",
         ),
@@ -3632,7 +3667,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderInsertDebugMarker(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderInsertDebugMarker",
         ),
@@ -3648,7 +3683,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderPopDebugGroup(pass: native::WGPURe
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderPopDebugGroup",
         ),
@@ -3671,7 +3706,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderPushDebugGroup(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderPushDebugGroup",
         ),
@@ -3700,7 +3735,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetBindGroup(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetBindGroup",
         ),
@@ -3722,7 +3757,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetBlendConstant(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetBlendConstant",
         ),
@@ -3755,7 +3790,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetIndexBuffer(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetIndexBuffer",
         ),
@@ -3778,7 +3813,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetPipeline(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetPipeline",
         ),
@@ -3800,7 +3835,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetScissorRect(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetPipeline",
         ),
@@ -3819,7 +3854,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetStencilReference(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetStencilReference",
         ),
@@ -3853,7 +3888,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetVertexBuffer(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetVertexBuffer",
         ),
@@ -3885,7 +3920,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetViewport(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetViewport",
         ),
@@ -3932,7 +3967,7 @@ pub unsafe extern "C" fn wgpuRenderPipelineGetBindGroupLayout(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::GetBindGroupLayoutError(cause),
+            CoreError::GetBindGroupLayoutError(cause),
             None,
             "wgpuRenderPipelineGetBindGroupLayout",
         );
@@ -4271,7 +4306,7 @@ pub unsafe extern "C" fn wgpuTextureCreateView(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateTextureViewError(cause),
+            CoreError::CreateTextureViewError(cause),
             None,
             "wgpuTextureCreateView",
         );
@@ -4454,6 +4489,9 @@ pub unsafe extern "C" fn wgpuDevicePoll(
     )
 }
 
+// Determinism note:
+// There is no DRF checker available for SpirV shaders, so we cannot check
+// determinism for the shader module.
 #[no_mangle]
 pub unsafe extern "C" fn wgpuDeviceCreateShaderModuleSpirV(
     device: native::WGPUDevice,
@@ -4478,7 +4516,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateShaderModuleSpirV(
     if let Some(cause) = error {
         handle_error(
             error_sink,
-            RuntimeErrors::CreateShaderModuleError(cause),
+            CoreError::CreateShaderModuleError(cause),
             desc.label,
             "wgpuDeviceCreateShaderModuleSpirV",
         );
@@ -4510,7 +4548,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderSetPushConstants(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderSetPushConstants",
         ),
@@ -4535,7 +4573,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderSetPushConstants(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderSetPushConstants",
         ),
@@ -4579,7 +4617,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderMultiDrawIndirect(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderMultiDrawIndirect",
         ),
@@ -4601,7 +4639,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderMultiDrawIndexedIndirect(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderMultiDrawIndexedIndirect",
         ),
@@ -4633,7 +4671,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderMultiDrawIndirectCount(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderMultiDrawIndirectCount",
         ),
@@ -4665,7 +4703,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderMultiDrawIndexedIndirectCount(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderMultiDrawIndexedIndirectCount",
         ),
@@ -4686,7 +4724,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderBeginPipelineStatisticsQuery(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderBeginPipelineStatisticsQuery",
         ),
@@ -4704,7 +4742,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderEndPipelineStatisticsQuery(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderEndPipelineStatisticsQuery",
         ),
@@ -4725,7 +4763,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderBeginPipelineStatisticsQuery(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderBeginPipelineStatisticsQuery",
         ),
@@ -4743,7 +4781,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderEndPipelineStatisticsQuery(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderEndPipelineStatisticsQuery",
         ),
@@ -4764,7 +4802,7 @@ pub unsafe extern "C" fn wgpuComputePassEncoderWriteTimestamp(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::ComputePassError(cause),
+            CoreError::ComputePassError(cause),
             None,
             "wgpuComputePassEncoderWriteTimestamp",
         ),
@@ -4785,7 +4823,7 @@ pub unsafe extern "C" fn wgpuRenderPassEncoderWriteTimestamp(
         Ok(()) => (),
         Err(cause) => handle_error(
             &pass.error_sink,
-            RuntimeErrors::RenderPassError(cause),
+            CoreError::RenderPassError(cause),
             None,
             "wgpuRenderPassEncoderWriteTimestamp",
         ),

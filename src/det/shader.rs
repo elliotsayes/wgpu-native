@@ -1,14 +1,18 @@
 use wgsl_to_json::wgsl_to_json;
 
-use super::faial::faial_drf_check_all_kernels_drf;
+use super::{error::DeterminismError, faial::faial_drf_check_all_kernels_drf};
 
-pub fn validate_shader_source_wgsl(source: &str) -> Result<(), String> {
+pub fn validate_shader_source_wgsl(source: &str) -> Result<(), DeterminismError> {
     match wgsl_to_json(source) {
         Ok(wgsl_json_str) => match faial_drf_check_all_kernels_drf(wgsl_json_str) {
             Ok(_) => Ok(()),
-            Err(err) => Err(format!("Failed to validate wgsl: {}", err)),
+            Err(msg) => Err(DeterminismError::NonProvablySafeShaderSource(String::from(
+                format!("Error proving DRF in WGSL kernels: {}", msg),
+            ))),
         },
-        Err(err) => Err(format!("Failed to parse wgsl: {}", err)),
+        Err(msg) => Err(DeterminismError::NonProvablySafeShaderSource(String::from(
+            format!("Error parsing WGSL to JSON: {}", msg),
+        ))),
     }
 }
 

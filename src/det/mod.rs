@@ -1,5 +1,6 @@
 pub mod callback;
 pub mod error;
+pub mod error_check;
 pub mod faial;
 pub mod global;
 pub mod polling;

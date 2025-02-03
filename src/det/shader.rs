@@ -16,8 +16,13 @@ pub fn validate_shader_source_wgsl(source: &str) -> Result<(), String> {
 mod tests {
     use super::*;
 
+    // TODO: The library errors when running multiple tests with `cargo test`
+    // However, sequential calls pose no problem
+
     #[test]
-    fn test_validate_drf() {
+    fn test_validate_all() {
+        // #[test]
+        // fn test_validate_drf() {
         let shader_drf = r#"
         @group(0) @binding(0) var<storage, read_write> data: array<f32>;
 
@@ -32,10 +37,10 @@ mod tests {
         }
         "#;
         assert!(validate_shader_source_wgsl(shader_drf).is_ok());
-    }
+        // }
 
-    #[test]
-    fn test_validate_racy() {
+        // #[test]
+        // fn test_validate_racy() {
         let shader_racy = r#"
         // specify a global of floats array called `data`
         @group(0) @binding(0) var<storage, read_write> data: array<f32>;
@@ -48,10 +53,10 @@ mod tests {
         }
         "#;
         assert!(validate_shader_source_wgsl(shader_racy).is_err());
-    }
+        // }
 
-    #[test]
-    fn test_validate_invalid() {
+        // #[test]
+        // fn test_validate_invalid() {
         let shader_invalid = r#"
         iM nOt A vAlId ShAdEr
         "#;

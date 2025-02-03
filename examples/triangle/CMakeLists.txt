@@ -25,4 +25,4 @@ elseif(APPLE)
     set(OS_LIBRARIES "-framework CoreFoundation -framework QuartzCore -framework Metal")
 endif()
 
-target_link_libraries(triangle framework glfw ${WGPU_LIBRARY} ${OS_LIBRARIES})
+target_link_libraries(triangle framework glfw ${WGPU_LIBRARY} ${DRF_API_LIBRARY} ${OS_LIBRARIES})

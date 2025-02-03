@@ -264,7 +264,7 @@ checksum = "5443807d6dff69373d433ab9ef5378ad8df50ca6298caf15de6e52e24aaf54d5"
 [[package]]
 name = "faial-sys"
 version = "0.0.0"
-source = "git+https://github.com/elliotsayes/faial?branch=lib-shared-rustlib#3b194fe430f94e28b80075acbcbe4e19f87e23c9"
+source = "git+https://github.com/elliotsayes/faial?branch=lib-shared-rustlib#6b7d736fb5ab950a2cf2c476c84d40ca860b1dd9"
 dependencies = [
  "log",
  "parking_lot",

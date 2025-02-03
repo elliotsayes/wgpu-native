@@ -27,6 +27,14 @@ find_library(
     REQUIRED
 )
 
+set(FAIAL_DIR ${WGPU_NATIVE_LIB_DIR}/build/faial-sys-6cb79ac45d74ca9c)
+
+find_library(
+    DRF_API_LIBRARY NAMES libdrf_api.so
+    HINTS ${FAIAL_DIR}/out/install/default/lib/faial
+    REQUIRED
+)
+
 add_subdirectory(framework)
 
 add_subdirectory(capture)

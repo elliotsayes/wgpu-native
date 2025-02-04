@@ -158,7 +158,7 @@ pollster = "0.4.0"
 serde = { version = "1.0.138", features = ["derive"] }
 serde_json = "1.0.138"
 wgsl-to-json = { git = "https://github.com/elliotsayes/wgsl-to-json", branch = "lib" }
-faial-sys = { git = "https://github.com/elliotsayes/faial", branch = "lib-shared-rustlib" }
+faial-sys = { git = "https://github.com/elliotsayes/faial", branch = "lib-static-cargo" }
 
 [build-dependencies]
 bindgen = "0.70"

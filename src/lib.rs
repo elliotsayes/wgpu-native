@@ -656,10 +656,10 @@ fn handle_error(
     handle_error_no_check(sink_mutex, source_dyn.into(), label, fn_ident);
 }
 
-// Determinism extension interface
+// wgpu-det.h functions
 
 #[no_mangle]
-pub unsafe extern "C" fn ext_determinism_configure(
+pub unsafe extern "C" fn wgpuExtensionDeterminismConfigure(
     non_determinism_error_callback: OnSystemNonDeterminismErrorCallback,
     underqualified_device_failure_callback: OnUnderqualifiedDeviceFailureCallback,
 ) {

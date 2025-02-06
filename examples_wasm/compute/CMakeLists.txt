@@ -3,22 +3,16 @@ project(compute LANGUAGES C)
 
 add_executable(compute main.c)
 
-if (MSVC)
-    add_compile_options(/W4)
-else()
-    add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
-
 include_directories(${CMAKE_SOURCE_DIR}/../ffi)
-include_directories(${CMAKE_SOURCE_DIR}/../ffi/webgpu-headers)
-include_directories(${CMAKE_SOURCE_DIR}/framework)
 
-if (WIN32)
-    set(OS_LIBRARIES d3dcompiler ws2_32 userenv bcrypt ntdll opengl32)
-elseif(UNIX AND NOT APPLE)
-    set(OS_LIBRARIES "-lstdc++ -lm -ldl")
-elseif(APPLE)
-    set(OS_LIBRARIES "-lstdc++ -framework CoreFoundation -framework QuartzCore -framework Metal")
-endif()
+# Compiler warnings
+add_compile_options(-Wall -Wextra -Wpedantic)
 
-target_link_libraries(compute framework ${WGPU_LIBRARY} ${OS_LIBRARIES})
+# Include Emscripten's WebGPU headers
+# include_directories("${EMSCRIPTEN_ROOT_PATH}/cache/sysroot/include")
+include_directories("${EMSCRIPTEN_ROOT_PATH}/cache/sysroot/include/webgpu")
+
+# Set Emscripten linker flags
+set_target_properties(compute PROPERTIES
+    LINK_FLAGS "${EMSCRIPTEN_LINK_FLAGS} -sEXPORTED_FUNCTIONS=_main,_handle -sEXPORTED_RUNTIME_METHODS=ccall,cwrap --js-library ${CMAKE_SOURCE_DIR}/stubs.js"
+)

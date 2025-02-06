@@ -191,3 +191,11 @@ example-triangle-release: examples-release
 
 run-example-triangle-release: example-triangle-release
 	cd examples/triangle && "../build/RelWithDebInfo/triangle/triangle"
+
+# No need for `lib-native`, we are using emscripten built-in WebGPU API
+examples-wasm-debug:
+	cd examples_wasm && $(MKDIR_CMD) "build/Debug" && cd build/Debug && emcmake cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ../..
+
+example-wasm-compute: examples-wasm-debug
+	cd examples_wasm/build/Debug && cmake --build . --target compute
+	# "Output file in examples_wasm/build/Debug/compute/compute.wasm"

@@ -3,38 +3,20 @@ project(examples LANGUAGES C)
 
 set(CMAKE_C_STANDARD 99)
 
-if(APPLE)
-    add_compile_options(-x objective-c)
+# Ensure we're using Emscripten
+if(NOT EMSCRIPTEN)
+    message(FATAL_ERROR "This project must be compiled with Emscripten")
 endif()
 
-cmake_path(GET CMAKE_SOURCE_DIR PARENT_PATH PROJECT_ROOT_DIR)
+# Set Emscripten specific flags
+set(CMAKE_EXECUTABLE_SUFFIX ".html")
+set(EMSCRIPTEN_LINK_FLAGS "-s USE_WEBGPU=1 -s WASM=1 -s ASYNCIFY")
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(WGPU_NATIVE_LIB_TYPE debug)
-else()
-    set(WGPU_NATIVE_LIB_TYPE release)
-endif()
-
-if(DEFINED ENV{CARGO_BUILD_TARGET})
-    set(WGPU_NATIVE_LIB_DIR ${PROJECT_ROOT_DIR}/target/$ENV{CARGO_BUILD_TARGET}/${WGPU_NATIVE_LIB_TYPE})
-else()
-    set(WGPU_NATIVE_LIB_DIR ${PROJECT_ROOT_DIR}/target/${WGPU_NATIVE_LIB_TYPE})
-endif()
-
-find_library(
-    WGPU_LIBRARY NAMES libwgpu_native.a wgpu_native.lib wgpu_native
-    HINTS ${WGPU_NATIVE_LIB_DIR}
-    REQUIRED
+# Get Emscripten root path
+execute_process(
+    COMMAND em-config EMSCRIPTEN_ROOT
+    OUTPUT_VARIABLE EMSCRIPTEN_ROOT_PATH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-add_subdirectory(framework)
-
-add_subdirectory(capture)
 add_subdirectory(compute)
-add_subdirectory(enumerate_adapters)
-add_subdirectory(push_constants)
-add_subdirectory(texture_arrays)
-add_subdirectory(triangle)
-
-set(GLFW_BUILD_DOCS OFF)
-add_subdirectory(vendor/glfw)

@@ -1,6 +1,6 @@
 #include "webgpu.h"
 #include <stdbool.h>
-// #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "wgpu.h"
@@ -26,40 +26,16 @@ extern WGPUBool wgpuDevicePoll(WGPUDevice device, WGPUBool wait, WGPU_NULLABLE W
 const char *shader_src = "\
 @group(0)\
 @binding(0)\
-var<storage, read_write> v_indices: array<u32>; // this is used as both input and output for convenience\
-\
-// The Collatz Conjecture states that for any integer n:\
-// If n is even, n = n/2\
-// If n is odd, n = 3n+1\
-// And repeat this process for each new n, you will always eventually reach 1.\
-// Though the conjecture has not been proven, no counterexample has ever been found.\
-// This function returns how many times this recurrence needs to be applied to reach 1.\
-fn collatz_iterations(n_base: u32) -> u32{\
-    var n: u32 = n_base;\
-    var i: u32 = 0u;\
-    loop {\
-        if (n <= 1u) {\
-            break;\
-        }\
-        if (n % 2u == 0u) {\
-            n = n / 2u;\
-        }\
-        else {\
-            // Overflow? (i.e. 3*n + 1 > 0xffffffffu?)\
-            if (n >= 1431655765u) {   // 0x55555555u\
-                return 4294967295u;   // 0xffffffffu\
-            }\
-            n = 3u * n + 1u;\
-        }\
-        i = i + 1u;\
-    }\
-    return i;\
-}\
+var<storage, read_write> v_indices: array<u32>;\
 \
 @compute\
-@workgroup_size(1)\
-fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {\
-    v_indices[global_id.x] = collatz_iterations(v_indices[global_id.x]);\
+@workgroup_size(1, 1, 1)\
+fn main(\
+    @builtin(global_invocation_id) global_id: vec3<u32>,\
+    @builtin(num_workgroups) gridDim : vec3<u32>,\
+) {\
+    if (gridDim.y != 1 || gridDim.z != 1) { return ; }\
+    v_indices[global_id.x] = v_indices[global_id.x] * 2u;\
 }\
 ";
 
@@ -82,11 +58,11 @@ static void handle_buffer_map(WGPUBufferMapAsyncStatus status, void *userdata) {
   LOG(LOG_PREFIX " buffer_map status=%#.8x\n", status);
 }
 
-void handle(char *env, char *msg) {
+char* handle(char *env, char *msg) {
   UNUSED(env)
   UNUSED(msg)
 
-  uint32_t numbers[] = {1, 2, 3, 4};
+  uint32_t numbers[] = {1, 2, 3, 100, 200, 300};
   uint32_t numbers_size = sizeof(numbers);
   uint32_t numbers_length = numbers_size / sizeof(uint32_t);
 
@@ -231,21 +207,24 @@ void handle(char *env, char *msg) {
       (uint32_t *)wgpuBufferGetMappedRange(staging_buffer, 0, numbers_size);
   assert(buf);
 
-  LOG("times: [%d, %d, %d, %d]\n", buf[0], buf[1], buf[2], buf[3]);
+//   LOG("times: [%d, %d, %d, %d]\n", buf[0], buf[1], buf[2], buf[3]);
+    char *out = malloc(100);
+    sprintf(out, "times: [%d, %d, %d, %d, %d, %d]\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
+    return out;
 
-  wgpuBufferUnmap(staging_buffer);
-  wgpuCommandBufferRelease(command_buffer);
-  wgpuCommandEncoderRelease(command_encoder);
-  wgpuBindGroupRelease(bind_group);
-  wgpuBindGroupLayoutRelease(bind_group_layout);
-  wgpuComputePipelineRelease(compute_pipeline);
-  wgpuBufferRelease(storage_buffer);
-  wgpuBufferRelease(staging_buffer);
-  wgpuShaderModuleRelease(shader_module);
-  wgpuQueueRelease(queue);
-  wgpuDeviceRelease(device);
-  wgpuAdapterRelease(adapter);
-  wgpuInstanceRelease(instance);
+//   wgpuBufferUnmap(staging_buffer);
+//   wgpuCommandBufferRelease(command_buffer);
+//   wgpuCommandEncoderRelease(command_encoder);
+//   wgpuBindGroupRelease(bind_group);
+//   wgpuBindGroupLayoutRelease(bind_group_layout);
+//   wgpuComputePipelineRelease(compute_pipeline);
+//   wgpuBufferRelease(storage_buffer);
+//   wgpuBufferRelease(staging_buffer);
+//   wgpuShaderModuleRelease(shader_module);
+//   wgpuQueueRelease(queue);
+//   wgpuDeviceRelease(device);
+//   wgpuAdapterRelease(adapter);
+//   wgpuInstanceRelease(instance);
 }
 
 int main(int argc, char *argv[]) {

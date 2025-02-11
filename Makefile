@@ -95,6 +95,7 @@ package: lib-native lib-native-release
 clean:
 	cargo clean
 	rm -Rf examples/build
+	rm -Rf examples_wasm/build
 
 check:
 	cargo check --all

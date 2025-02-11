@@ -9,7 +9,7 @@ extern "C" {
 
 void wgpuExtensionDeterminismConfigure(
     WGPUExtDetMessageCallback non_determinism_error_callback,
-    WGPUExtDetMessageCallback underqualified_device_failure_callback,
+    WGPUExtDetMessageCallback underqualified_device_failure_callback
 );
 
 #ifdef __cplusplus

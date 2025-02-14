@@ -115,6 +115,9 @@ lib-native: Cargo.lock Cargo.toml Makefile $(WILDCARD_SOURCE)
 lib-native-release: Cargo.lock Cargo.toml Makefile $(WILDCARD_SOURCE)
 	cargo build --release $(EXTRA_BUILD_ARGS)
 
+ffi-wasm:
+	./ffi_wasm_c_api/gen.sh
+
 examples-debug: lib-native
 	cd examples && $(MKDIR_CMD) "build/Debug" && cd build/Debug && cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ../..
 

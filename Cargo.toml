@@ -16,7 +16,7 @@ keywords = ["graphics"]
 license = "MIT OR Apache-2.0"
 
 [workspace]
-members = ["."]
+members = [".", "ffi_wasm_c_api"]
 default-members = ["."]
 resolver = "2"
 

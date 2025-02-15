@@ -24,15 +24,63 @@ macro_rules! n {
 
 #[macro_export]
 macro_rules! i {
-    ($gen:expr) => {
-        $gen.indent()
+    ($gen:expr, $fmt:literal) => {
+        $gen.add(format!($fmt));
+        $gen.indent();
+    };
+    ($gen:expr, $fmt:literal, $($arg:tt)*) => {
+        $gen.add(format!($fmt, $($arg)*));
+        $gen.indent();
+    };
+}
+
+#[macro_export]
+macro_rules! i2 {
+    ($gen:expr, $fmt:literal) => {
+        $gen.add(format!($fmt));
+        $gen.indent(); $gen.indent();
+    };
+    ($gen:expr, $fmt:literal, $($arg:tt)*) => {
+        $gen.add(format!($fmt, $($arg)*));
+        $gen.indent(); $gen.indent();
     };
 }
 
 #[macro_export]
 macro_rules! o {
-    ($gen:expr) => {
-        $gen.outdent()
+    ($gen:expr, $fmt:literal) => {
+        $gen.outdent();
+        $gen.add(format!($fmt));
+    };
+    ($gen:expr, $fmt:literal, $($arg:tt)*) => {
+        $gen.outdent();
+        $gen.add(format!($fmt, $($arg)*));
+    };
+}
+
+#[macro_export]
+macro_rules! o2 {
+    ($gen:expr, $fmt:literal) => {
+        $gen.outdent(); $gen.outdent();
+        $gen.add(format!($fmt));
+    };
+    ($gen:expr, $fmt:literal, $($arg:tt)*) => {
+        $gen.outdent(); $gen.outdent();
+        $gen.add(format!($fmt, $($arg)*));
+    };
+}
+
+#[macro_export]
+macro_rules! oi {
+    ($gen:expr, $fmt:literal) => {
+        $gen.outdent();
+        $gen.add(format!($fmt));
+        $gen.indent();
+    };
+    ($gen:expr, $fmt:literal, $($arg:tt)*) => {
+        $gen.outdent();
+        $gen.add(format!($fmt, $($arg)*));
+        $gen.indent();
     };
 }
 

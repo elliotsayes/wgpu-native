@@ -2,7 +2,7 @@ use std::io::Write;
 
 use crate::model::{MemberCategory, MemberModel, MemberTypeMode, SpecModel, StructModel};
 use crate::src::{CodeGenerator, GeneratedLine};
-use crate::{a, i, n, o};
+use crate::{a, i, n, o, oi, o2};
 use crate::{c, spec};
 
 pub fn write_wasm_c_api(
@@ -122,8 +122,7 @@ fn gen_footer(gen: &mut CodeGenerator) {
 fn gen_registry(gen: &mut CodeGenerator, model: &SpecModel) {
     a!(gen, "/* Object Registries Definition */");
 
-    a!(gen, "typedef struct BindWGPUObjectMappingRegistry {{");
-    i!(gen);
+    i!(gen, "typedef struct BindWGPUObjectMappingRegistry {{");
     for object in &model.objects {
         a!(
             gen,
@@ -131,8 +130,7 @@ fn gen_registry(gen: &mut CodeGenerator, model: &SpecModel) {
             object.name_member_plural
         );
     }
-    o!(gen);
-    a!(gen, "}} BindWGPUObjectMappingRegistry;");
+    o!(gen, "}} BindWGPUObjectMappingRegistry;");
 }
 
 fn gen_all_struct_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
@@ -147,8 +145,7 @@ fn gen_all_struct_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
     a!(gen, "/* Struct Definitions */");
 
     for struct_ in &model.structs_all() {
-        a!(gen, "typedef struct {0} {{", struct_.name_wasm_type);
-        i!(gen);
+        i!(gen, "typedef struct {0} {{", struct_.name_wasm_type);
         for member_group in &struct_.member_groups {
             for member in &member_group.members {
                 let c_type = member.wasm_c_type();
@@ -165,8 +162,7 @@ fn gen_all_struct_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
             }
             // ln!(gen);
         }
-        o!(gen);
-        a!(gen, "}} {0};", struct_.name_wasm_type);
+        o!(gen, "}} {0};", struct_.name_wasm_type);
         n!(gen);
     }
 }
@@ -180,14 +176,12 @@ fn gen_all_extract_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
         // let wasm_type = &struct_.name_wasm_type;
         let wgpu_type = &struct_.name_wgpu_type;
 
-        a!(gen, "int {fn_name}(");
-        i!(gen);
+        i!(gen, "int {fn_name}(");
         a!(gen, "BindWGPUObjectMappingRegistry *registry,");
         a!(gen, "wasm_memory_t *memory,");
         a!(gen, "byte_t *wa_wasm_struct_offset,");
         a!(gen, "{wgpu_type} **out_ha_host_struct_ptr");
-        o!(gen);
-        a!(gen, ");");
+        o!(gen, ");");
     }
 }
 
@@ -219,37 +213,30 @@ fn gen_extract_fn_definition_template(
     let wasm_type = &struct_.name_wasm_type;
     let wgpu_type: &String = &struct_.name_wgpu_type;
 
-    a!(gen, "int {fn_name}(");
-    i!(gen);
+    i!(gen, "int {fn_name}(");
     a!(gen, "BindWGPUObjectMappingRegistry *registry,");
     a!(gen, "wasm_memory_t *memory,");
     a!(gen, "byte_t *wa_wasm_struct_offset,");
     a!(gen, "{wgpu_type} **out_ha_host_struct_ptr");
-    o!(gen);
-    a!(gen, ") {{");
-    i!(gen);
+    oi!(gen, ") {{");
     c!(gen, "Log input parameters");
     a!(gen, "LOG_TRACE(\"{fn_name}: params [WMAS.WWST] (%p), [*HMAS.WWST] (%p)\", (void *)wa_wasm_struct_offset, (void *)out_ha_host_struct_ptr);");
     n!(gen);
 
     c!(gen, "Verify out_ha_host_struct_ptr is not NULL");
-    a!(gen, "if (out_ha_host_struct_ptr == NULL) {{");
-    i!(gen);
+    i!(gen, "if (out_ha_host_struct_ptr == NULL) {{");
     a!(gen, "FATAL(\"{fn_name}: [*HMAS.WWST] is NULL\");");
     a!(gen, "return 0;");
-    o!(gen);
-    a!(gen, "}}");
+    o!(gen, "}}");
     n!(gen);
 
     c!(gen, "Verify wasm-address is not NULL");
-    a!(gen, "if (wa_wasm_struct_offset == NULL) {{");
-    i!(gen);
+    i!(gen, "if (wa_wasm_struct_offset == NULL) {{");
     // a!(gen, "FATAL(\"{fn_name}: [WMAS.WWST] is NULL\");");
     a!(gen, "LOG_WARN(\"{fn_name}: [WMAS.WWST] is NULL\");");
     a!(gen, "*out_ha_host_struct_ptr = NULL;");
     a!(gen, "return 0;");
-    o!(gen);
-    a!(gen, "}}");
+    o!(gen, "}}");
     n!(gen);
 
     c!(gen, "Trace wasm-address wasm-struct member pointers");
@@ -282,8 +269,7 @@ fn gen_extract_fn_definition_template(
     inner_fn(gen, model, struct_);
 
     a!(gen, "return 0;");
-    o!(gen);
-    a!(gen, "}}");
+    o!(gen, "}}");
 }
 
 fn gen_extract_chained_struct_inner(
@@ -298,18 +284,14 @@ fn gen_extract_chained_struct_inner(
     c!(gen, "Resolve SType");
     a!(gen, "WGPUSType sType = ha_wasm_struct_ptr->sType;");
     a!(gen, "LOG_DEBUG(\"{fn_name}: sType value: %d\", sType);");
-    a!(gen, "switch (sType) {{");
-    i!(gen);
+    i!(gen, "switch (sType) {{");
 
-    a!(gen, "case WGPUSType_Invalid:");
-    i!(gen);
+    i!(gen, "case WGPUSType_Invalid:");
     a!(gen, "FATAL(\"{fn_name}: sType: WGPUSType_Invalid\");");
     a!(gen, "break;");
-    o!(gen);
     n!(gen);
 
-    a!(gen, "case WGPUSType_ShaderModuleWGSLDescriptor:");
-    i!(gen);
+    oi!(gen, "case WGPUSType_ShaderModuleWGSLDescriptor:");
     a!(
         gen,
         "LOG_DEBUG(\"{fn_name}: sType: WGPUSType_ShaderModuleWGSLDescriptor\");"
@@ -322,14 +304,10 @@ fn gen_extract_chained_struct_inner(
     );
     a!(gen, "extract_shader_module_WGSL_descriptor(registry, memory, wa_wasm_struct_offset, out_ha_host_struct_ptr);");
     a!(gen, "break;");
-    o!(gen);
-    a!(gen, "default:");
-    i!(gen);
+    oi!(gen, "default:");
     a!(gen, "FATAL(\"Unsupported sType: %d\", sType);");
     a!(gen, "break;");
-    o!(gen);
-    o!(gen);
-    a!(gen, "}}");
+    o2!(gen, "}}");
     n!(gen);
     a!(gen, "(*out_ha_host_struct_ptr)->sType = sType;");
     n!(gen);
@@ -347,31 +325,25 @@ fn gen_extract_struct_inner(gen: &mut CodeGenerator, model: &SpecModel, struct_:
     n!(gen);
 
     c!(gen, "Allocate ha_host_struct_ptr if it is NULL");
-    a!(gen, "if (ha_host_struct_ptr == NULL) {{");
-    i!(gen);
+    i!(gen, "if (ha_host_struct_ptr == NULL) {{");
     a!(gen, "LOG_DEBUG(\"{fn_name}: allocating [*HMAS.HS] (%p) as {wgpu_type}\", (void *)out_ha_host_struct_ptr);");
     a!(
         gen,
         "*out_ha_host_struct_ptr = calloc(1, sizeof({wgpu_type}));"
     );
-    a!(gen, "if (*out_ha_host_struct_ptr == NULL) {{");
-    i!(gen);
+    i!(gen, "if (*out_ha_host_struct_ptr == NULL) {{");
     a!(
         gen,
         "FATAL(\"{fn_name}: failed to allocate [*HMAS.HS] (%p)\", (void *)out_ha_host_struct_ptr);"
     );
     a!(gen, "return 0;");
-    o!(gen);
-    a!(gen, "}}");
+    o!(gen, "}}");
     a!(gen, "ha_host_struct_ptr = *out_ha_host_struct_ptr;");
-    o!(gen);
-    a!(gen, "}} else {{");
-    i!(gen);
+    oi!(gen, "}} else {{");
     a!(gen, "LOG_DEBUG(\"{fn_name}: [*HMAS.HS] is not NULL\");");
     // a!(gen, "FATAL(\"{fn_name}: [*HMAS.HS] is not NULL\");");
     // a!(gen, "return 0;");
-    o!(gen);
-    a!(gen, "}}");
+    o!(gen, "}}");
     n!(gen);
 
     c!(
@@ -413,14 +385,12 @@ fn gen_extract_chain(
     let wgpu_type = "WGPUChainedStruct";
     let wasm_type = "WasmWGPUChainedStruct";
 
-    a!(gen, "if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->{m_member_name}.next, &ha_host_struct_ptr->{m_member_name}.next)) {{");
-    i!(gen);
+    i!(gen, "if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->{m_member_name}.next, &ha_host_struct_ptr->{m_member_name}.next)) {{");
     a!(
         gen,
         "LOG_WARN(\"{fn_name}: extract_chained_struct failed\");"
     );
-    o!(gen);
-    a!(gen, "}}");
+    o!(gen, "}}");
 }
 
 fn gen_extract_embedded(
@@ -453,11 +423,9 @@ fn gen_extract_embedded(
             )
         }
         crate::model::MemberCategory::String => {
-            a!(gen, "if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name}, 65534)) {{");
-            i!(gen);
+            i!(gen, "if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name}, 65534)) {{");
             a!(gen, "LOG_WARN(\"{fn_name}: wasm_safe_copy_string_null_terminated failed for {m_name}\");");
-            o!(gen);
-            a!(gen, "}}");
+            o!(gen, "}}");
         }
         crate::model::MemberCategory::Object(o_name) => {
             let obj = model.object_by_name(&o_name).unwrap();
@@ -473,11 +441,9 @@ fn gen_extract_embedded(
                 gen,
                 "{s_wgpu_type} *{m_name}_ptr = &ha_host_struct_ptr->{m_member_name};"
             );
-            a!(gen, "if (extract_{s_name}(registry, memory, wa_wasm_struct_offset + offsetof({wasm_type}, {m_member_name}), &{m_name}_ptr)) {{");
-            i!(gen);
+            i!(gen, "if (extract_{s_name}(registry, memory, wa_wasm_struct_offset + offsetof({wasm_type}, {m_member_name}), &{m_name}_ptr)) {{");
             a!(gen, "LOG_WARN(\"{fn_name}: extract_{s_name} failed\");");
-            o!(gen);
-            a!(gen, "}}");
+            o!(gen, "}}");
         }
         crate::model::MemberCategory::FunctionType(_) => {
             c!(gen, "TODO: Create native callback function");
@@ -512,11 +478,9 @@ fn gen_extract_pointer(
             let wgpu_type = &ref_s.name_wgpu_type;
             let wasm_type = &ref_s.name_wasm_type;
 
-            a!(gen, "if (extract_{s_name}(registry, memory, (byte_t *)ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name})) {{");
-            i!(gen);
+            i!(gen, "if (extract_{s_name}(registry, memory, (byte_t *)ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name})) {{");
             a!(gen, "LOG_WARN(\"{fn_name}: extract_{s_name} failed\");");
-            o!(gen);
-            a!(gen, "}}");
+            o!(gen, "}}");
         }
         MemberCategory::CVoid => {
             println!("TODO: Confirm c_void pointer copy is safe");
@@ -554,21 +518,17 @@ fn gen_extract_array(
             let proto_name = format!("{}_array_proto", e_name);
             let wgpu_type = crate::model::to_wgpu_type(&e_name);
             a!(gen, "{wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof(int *));");
-            a!(gen, "if ({proto_name} == NULL) {{");
-            i!(gen);
+            i!(gen, "if ({proto_name} == NULL) {{");
             a!(gen, "LOG_ERROR(\"{fn_name}: malloc failed\");");
-            o!(gen);
-            a!(gen, "}}");
-            a!(
+            o!(gen, "}}");
+            i!(
                 gen,
                 "for (int i = 0; i < ha_host_struct_ptr->{a_count_member}; i++) {{"
             );
-            i!(gen);
             a!(gen, "byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->{m_member_name} + i * sizeof(WASM_POINTER_ENUM_C_TYPE);");
             a!(gen, "LOG_TRACE(\"{fn_name}: copying data at %p into {proto_name}[%d]\", ha_wasm_ptr_i, i);");
             a!(gen, "{proto_name}[i] = (int)*ha_wasm_ptr_i;");
-            o!(gen);
-            a!(gen, "}}");
+            o!(gen, "}}");
             a!(gen, "ha_host_struct_ptr->{m_member_name} = {proto_name};");
         }
         MemberCategory::Object(o_name) => {
@@ -577,21 +537,17 @@ fn gen_extract_array(
             let obj_wgpu_type = &ref_o.name_wgpu_type;
             let obj_registry = &ref_o.name_member_plural;
             a!(gen, "{obj_wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof({obj_wgpu_type} *));");
-            a!(gen, "if ({proto_name} == NULL) {{");
-            i!(gen);
+            i!(gen, "if ({proto_name} == NULL) {{");
             a!(gen, "LOG_ERROR(\"{fn_name}: malloc failed\");");
-            o!(gen);
-            a!(gen, "}}");
-            a!(
+            o!(gen, "}}");
+            i!(
                 gen,
                 "for (int i = 0; i < ha_host_struct_ptr->{a_count_member}; i++) {{"
             );
-            i!(gen);
             a!(gen, "WASM_POINTER_OBJECT_C_TYPE *ha_wasm_ptr_i = (WASM_POINTER_OBJECT_C_TYPE *)ha_wasm_struct_ptr->{m_member_name} + i * sizeof(WASM_POINTER_OBJECT_C_TYPE);");
             a!(gen, "LOG_TRACE(\"{fn_name}: copying data at %p into {proto_name}[%d]\", ha_wasm_ptr_i, i);");
             a!(gen, "{proto_name}[i] = ({obj_wgpu_type})registry_item_get_mapping(&registry->{obj_registry}, *ha_wasm_ptr_i);");
-            o!(gen);
-            a!(gen, "}}");
+            o!(gen, "}}");
             a!(gen, "ha_host_struct_ptr->{m_member_name} = {proto_name};");
         }
         MemberCategory::Struct(s_name) => {
@@ -601,32 +557,26 @@ fn gen_extract_array(
             let wgpu_type = &ref_s.name_wgpu_type;
 
             a!(gen, "{wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof({wgpu_type}));");
-            a!(gen, "if ({proto_name} == NULL) {{");
-            i!(gen);
+            i!(gen, "if ({proto_name} == NULL) {{");
             a!(gen, "LOG_ERROR(\"{fn_name}: malloc failed\");");
-            o!(gen);
-            a!(gen, "}}");
-            a!(
+            o!(gen, "}}");
+            i!(
                 gen,
                 "for (int i = 0; i < ha_host_struct_ptr->{a_count_member}; i++) {{"
             );
-            i!(gen);
             a!(gen, "byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->{m_member_name} + i * sizeof({wasm_type});");
             a!(gen, "LOG_TRACE(\"{fn_name}: copying struct at wasm-address %p into {proto_name}[%d]\", wa_wasm_offset_i, i);");
             a!(gen, "{wgpu_type} *proto_i_ptr = &{proto_name}[i];");
-            a!(
+            i!(
                 gen,
                 "if (extract_{s_name}(registry, memory, wa_wasm_offset_i, &proto_i_ptr)) {{"
             );
-            i!(gen);
             a!(
                 gen,
                 "LOG_WARN(\"{fn_name}: extract_{s_name} at index %d failed\", i);"
             );
-            o!(gen);
-            a!(gen, "}}");
-            o!(gen);
-            a!(gen, "}}");
+            o!(gen, "}}");
+            o!(gen, "}}");
             a!(gen, "ha_host_struct_ptr->{m_member_name} = {proto_name};");
         }
         _ => unimplemented!(

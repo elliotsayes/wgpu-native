@@ -110,7 +110,537 @@ struct WasmWGPUSurfaceDescriptorFromXcbWindow;
 struct WasmWGPUSurfaceDescriptorFromXlibWindow;
 struct WasmWGPUSurfaceDescriptorFromWaylandSurface;
 
+/* Extract Struct Function Declarations */
+int extract_chained_struct(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUChainedStruct **out_ha_host_struct_ptr
+);
+int extract_chained_struct_out(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUChainedStructOut **out_ha_host_struct_ptr
+);
+int extract_limits(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPULimits **out_ha_host_struct_ptr
+);
+int extract_blend_component(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUBlendComponent **out_ha_host_struct_ptr
+);
+int extract_color(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUColor **out_ha_host_struct_ptr
+);
+int extract_compute_pass_timestamp_writes(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUComputePassTimestampWrites **out_ha_host_struct_ptr
+);
+int extract_extent_3D(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUExtent3D **out_ha_host_struct_ptr
+);
+int extract_vertex_attribute(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUVertexAttribute **out_ha_host_struct_ptr
+);
+int extract_vertex_buffer_layout(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUVertexBufferLayout **out_ha_host_struct_ptr
+);
+int extract_origin_3D(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUOrigin3D **out_ha_host_struct_ptr
+);
+int extract_render_pass_depth_stencil_attachment(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURenderPassDepthStencilAttachment **out_ha_host_struct_ptr
+);
+int extract_render_pass_timestamp_writes(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURenderPassTimestampWrites **out_ha_host_struct_ptr
+);
+int extract_blend_state(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUBlendState **out_ha_host_struct_ptr
+);
+int extract_stencil_face_state(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUStencilFaceState **out_ha_host_struct_ptr
+);
+int extract_surface_texture(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceTexture **out_ha_host_struct_ptr
+);
+int extract_uncaptured_error_callback_info(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUUncapturedErrorCallbackInfo **out_ha_host_struct_ptr
+);
+int extract_texture_data_layout(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUTextureDataLayout **out_ha_host_struct_ptr
+);
+int extract_queue_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUQueueDescriptor **out_ha_host_struct_ptr
+);
+int extract_programmable_stage_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUProgrammableStageDescriptor **out_ha_host_struct_ptr
+);
+int extract_request_adapter_options(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURequestAdapterOptions **out_ha_host_struct_ptr
+);
+int extract_device_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUDeviceDescriptor **out_ha_host_struct_ptr
+);
+int extract_bind_group_entry(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUBindGroupEntry **out_ha_host_struct_ptr
+);
+int extract_bind_group_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUBindGroupDescriptor **out_ha_host_struct_ptr
+);
+int extract_buffer_binding_layout(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUBufferBindingLayout **out_ha_host_struct_ptr
+);
+int extract_sampler_binding_layout(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSamplerBindingLayout **out_ha_host_struct_ptr
+);
+int extract_texture_binding_layout(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUTextureBindingLayout **out_ha_host_struct_ptr
+);
+int extract_surface_configuration(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceConfiguration **out_ha_host_struct_ptr
+);
+int extract_storage_texture_binding_layout(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUStorageTextureBindingLayout **out_ha_host_struct_ptr
+);
+int extract_bind_group_layout_entry(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUBindGroupLayoutEntry **out_ha_host_struct_ptr
+);
+int extract_bind_group_layout_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUBindGroupLayoutDescriptor **out_ha_host_struct_ptr
+);
+int extract_buffer_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUBufferDescriptor **out_ha_host_struct_ptr
+);
+int extract_constant_entry(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUConstantEntry **out_ha_host_struct_ptr
+);
+int extract_command_buffer_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUCommandBufferDescriptor **out_ha_host_struct_ptr
+);
+int extract_command_encoder_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUCommandEncoderDescriptor **out_ha_host_struct_ptr
+);
+int extract_compilation_info(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUCompilationInfo **out_ha_host_struct_ptr
+);
+int extract_compilation_message(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUCompilationMessage **out_ha_host_struct_ptr
+);
+int extract_compute_pass_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUComputePassDescriptor **out_ha_host_struct_ptr
+);
+int extract_compute_pipeline_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUComputePipelineDescriptor **out_ha_host_struct_ptr
+);
+int extract_required_limits(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURequiredLimits **out_ha_host_struct_ptr
+);
+int extract_image_copy_buffer(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUImageCopyBuffer **out_ha_host_struct_ptr
+);
+int extract_image_copy_texture(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUImageCopyTexture **out_ha_host_struct_ptr
+);
+int extract_instance_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUInstanceDescriptor **out_ha_host_struct_ptr
+);
+int extract_pipeline_layout_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUPipelineLayoutDescriptor **out_ha_host_struct_ptr
+);
+int extract_query_set_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUQuerySetDescriptor **out_ha_host_struct_ptr
+);
+int extract_render_bundle_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURenderBundleDescriptor **out_ha_host_struct_ptr
+);
+int extract_render_bundle_encoder_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURenderBundleEncoderDescriptor **out_ha_host_struct_ptr
+);
+int extract_render_pass_color_attachment(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURenderPassColorAttachment **out_ha_host_struct_ptr
+);
+int extract_render_pass_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURenderPassDescriptor **out_ha_host_struct_ptr
+);
+int extract_vertex_state(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUVertexState **out_ha_host_struct_ptr
+);
+int extract_primitive_state(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUPrimitiveState **out_ha_host_struct_ptr
+);
+int extract_depth_stencil_state(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUDepthStencilState **out_ha_host_struct_ptr
+);
+int extract_multisample_state(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUMultisampleState **out_ha_host_struct_ptr
+);
+int extract_fragment_state(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUFragmentState **out_ha_host_struct_ptr
+);
+int extract_color_target_state(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUColorTargetState **out_ha_host_struct_ptr
+);
+int extract_render_pipeline_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURenderPipelineDescriptor **out_ha_host_struct_ptr
+);
+int extract_sampler_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSamplerDescriptor **out_ha_host_struct_ptr
+);
+int extract_shader_module_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUShaderModuleDescriptor **out_ha_host_struct_ptr
+);
+int extract_shader_module_compilation_hint(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUShaderModuleCompilationHint **out_ha_host_struct_ptr
+);
+int extract_surface_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceDescriptor **out_ha_host_struct_ptr
+);
+int extract_texture_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUTextureDescriptor **out_ha_host_struct_ptr
+);
+int extract_texture_view_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUTextureViewDescriptor **out_ha_host_struct_ptr
+);
+int extract_adapter_info(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUAdapterInfo **out_ha_host_struct_ptr
+);
+int extract_surface_capabilities(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceCapabilities **out_ha_host_struct_ptr
+);
+int extract_supported_limits(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSupportedLimits **out_ha_host_struct_ptr
+);
+int extract_render_pass_descriptor_max_draw_count(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPURenderPassDescriptorMaxDrawCount **out_ha_host_struct_ptr
+);
+int extract_primitive_depth_clip_control(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUPrimitiveDepthClipControl **out_ha_host_struct_ptr
+);
+int extract_shader_module_SPIRV_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUShaderModuleSPIRVDescriptor **out_ha_host_struct_ptr
+);
+int extract_shader_module_WGSL_descriptor(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUShaderModuleWGSLDescriptor **out_ha_host_struct_ptr
+);
+int extract_surface_descriptor_from_android_native_window(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceDescriptorFromAndroidNativeWindow **out_ha_host_struct_ptr
+);
+int extract_surface_descriptor_from_canvas_HTML_selector(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceDescriptorFromCanvasHTMLSelector **out_ha_host_struct_ptr
+);
+int extract_surface_descriptor_from_metal_layer(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceDescriptorFromMetalLayer **out_ha_host_struct_ptr
+);
+int extract_surface_descriptor_from_windows_HWND(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceDescriptorFromWindowsHWND **out_ha_host_struct_ptr
+);
+int extract_surface_descriptor_from_xcb_window(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceDescriptorFromXcbWindow **out_ha_host_struct_ptr
+);
+int extract_surface_descriptor_from_xlib_window(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceDescriptorFromXlibWindow **out_ha_host_struct_ptr
+);
+int extract_surface_descriptor_from_wayland_surface(
+    BindWGPUObjectMappingRegistry *registry,
+    wasm_memory_t *memory,
+    byte_t *wa_wasm_struct_offset,
+    WGPUSurfaceDescriptorFromWaylandSurface **out_ha_host_struct_ptr
+);
+
+/* Free Struct Function Declarations */
+int free_chained_struct(WGPUChainedStruct *struct_ptr);
+int free_chained_struct_out(WGPUChainedStructOut *struct_ptr);
+int free_limits(WGPULimits *struct_ptr);
+int free_blend_component(WGPUBlendComponent *struct_ptr);
+int free_color(WGPUColor *struct_ptr);
+int free_compute_pass_timestamp_writes(WGPUComputePassTimestampWrites *struct_ptr);
+int free_extent_3D(WGPUExtent3D *struct_ptr);
+int free_vertex_attribute(WGPUVertexAttribute *struct_ptr);
+int free_vertex_buffer_layout(WGPUVertexBufferLayout *struct_ptr);
+int free_origin_3D(WGPUOrigin3D *struct_ptr);
+int free_render_pass_depth_stencil_attachment(WGPURenderPassDepthStencilAttachment *struct_ptr);
+int free_render_pass_timestamp_writes(WGPURenderPassTimestampWrites *struct_ptr);
+int free_blend_state(WGPUBlendState *struct_ptr);
+int free_stencil_face_state(WGPUStencilFaceState *struct_ptr);
+int free_surface_texture(WGPUSurfaceTexture *struct_ptr);
+int free_uncaptured_error_callback_info(WGPUUncapturedErrorCallbackInfo *struct_ptr);
+int free_texture_data_layout(WGPUTextureDataLayout *struct_ptr);
+int free_queue_descriptor(WGPUQueueDescriptor *struct_ptr);
+int free_programmable_stage_descriptor(WGPUProgrammableStageDescriptor *struct_ptr);
+int free_request_adapter_options(WGPURequestAdapterOptions *struct_ptr);
+int free_device_descriptor(WGPUDeviceDescriptor *struct_ptr);
+int free_bind_group_entry(WGPUBindGroupEntry *struct_ptr);
+int free_bind_group_descriptor(WGPUBindGroupDescriptor *struct_ptr);
+int free_buffer_binding_layout(WGPUBufferBindingLayout *struct_ptr);
+int free_sampler_binding_layout(WGPUSamplerBindingLayout *struct_ptr);
+int free_texture_binding_layout(WGPUTextureBindingLayout *struct_ptr);
+int free_surface_configuration(WGPUSurfaceConfiguration *struct_ptr);
+int free_storage_texture_binding_layout(WGPUStorageTextureBindingLayout *struct_ptr);
+int free_bind_group_layout_entry(WGPUBindGroupLayoutEntry *struct_ptr);
+int free_bind_group_layout_descriptor(WGPUBindGroupLayoutDescriptor *struct_ptr);
+int free_buffer_descriptor(WGPUBufferDescriptor *struct_ptr);
+int free_constant_entry(WGPUConstantEntry *struct_ptr);
+int free_command_buffer_descriptor(WGPUCommandBufferDescriptor *struct_ptr);
+int free_command_encoder_descriptor(WGPUCommandEncoderDescriptor *struct_ptr);
+int free_compilation_info(WGPUCompilationInfo *struct_ptr);
+int free_compilation_message(WGPUCompilationMessage *struct_ptr);
+int free_compute_pass_descriptor(WGPUComputePassDescriptor *struct_ptr);
+int free_compute_pipeline_descriptor(WGPUComputePipelineDescriptor *struct_ptr);
+int free_required_limits(WGPURequiredLimits *struct_ptr);
+int free_image_copy_buffer(WGPUImageCopyBuffer *struct_ptr);
+int free_image_copy_texture(WGPUImageCopyTexture *struct_ptr);
+int free_instance_descriptor(WGPUInstanceDescriptor *struct_ptr);
+int free_pipeline_layout_descriptor(WGPUPipelineLayoutDescriptor *struct_ptr);
+int free_query_set_descriptor(WGPUQuerySetDescriptor *struct_ptr);
+int free_render_bundle_descriptor(WGPURenderBundleDescriptor *struct_ptr);
+int free_render_bundle_encoder_descriptor(WGPURenderBundleEncoderDescriptor *struct_ptr);
+int free_render_pass_color_attachment(WGPURenderPassColorAttachment *struct_ptr);
+int free_render_pass_descriptor(WGPURenderPassDescriptor *struct_ptr);
+int free_vertex_state(WGPUVertexState *struct_ptr);
+int free_primitive_state(WGPUPrimitiveState *struct_ptr);
+int free_depth_stencil_state(WGPUDepthStencilState *struct_ptr);
+int free_multisample_state(WGPUMultisampleState *struct_ptr);
+int free_fragment_state(WGPUFragmentState *struct_ptr);
+int free_color_target_state(WGPUColorTargetState *struct_ptr);
+int free_render_pipeline_descriptor(WGPURenderPipelineDescriptor *struct_ptr);
+int free_sampler_descriptor(WGPUSamplerDescriptor *struct_ptr);
+int free_shader_module_descriptor(WGPUShaderModuleDescriptor *struct_ptr);
+int free_shader_module_compilation_hint(WGPUShaderModuleCompilationHint *struct_ptr);
+int free_surface_descriptor(WGPUSurfaceDescriptor *struct_ptr);
+int free_texture_descriptor(WGPUTextureDescriptor *struct_ptr);
+int free_texture_view_descriptor(WGPUTextureViewDescriptor *struct_ptr);
+int free_adapter_info(WGPUAdapterInfo *struct_ptr);
+int free_surface_capabilities(WGPUSurfaceCapabilities *struct_ptr);
+int free_supported_limits(WGPUSupportedLimits *struct_ptr);
+int free_render_pass_descriptor_max_draw_count(WGPURenderPassDescriptorMaxDrawCount *struct_ptr);
+int free_primitive_depth_clip_control(WGPUPrimitiveDepthClipControl *struct_ptr);
+int free_shader_module_SPIRV_descriptor(WGPUShaderModuleSPIRVDescriptor *struct_ptr);
+int free_shader_module_WGSL_descriptor(WGPUShaderModuleWGSLDescriptor *struct_ptr);
+int free_surface_descriptor_from_android_native_window(WGPUSurfaceDescriptorFromAndroidNativeWindow *struct_ptr);
+int free_surface_descriptor_from_canvas_HTML_selector(WGPUSurfaceDescriptorFromCanvasHTMLSelector *struct_ptr);
+int free_surface_descriptor_from_metal_layer(WGPUSurfaceDescriptorFromMetalLayer *struct_ptr);
+int free_surface_descriptor_from_windows_HWND(WGPUSurfaceDescriptorFromWindowsHWND *struct_ptr);
+int free_surface_descriptor_from_xcb_window(WGPUSurfaceDescriptorFromXcbWindow *struct_ptr);
+int free_surface_descriptor_from_xlib_window(WGPUSurfaceDescriptorFromXlibWindow *struct_ptr);
+int free_surface_descriptor_from_wayland_surface(WGPUSurfaceDescriptorFromWaylandSurface *struct_ptr);
+
 /* Struct Definitions */
+
 typedef struct WasmWGPUChainedStruct {
     WASM_POINTER_STRUCT_C_TYPE /* WasmWGPUChainedStruct */ next;
     WASM_ENUM_C_TYPE /* WGPUStype */ sType;
@@ -699,460 +1229,7 @@ typedef struct WasmWGPUSurfaceDescriptorFromWaylandSurface {
 } WasmWGPUSurfaceDescriptorFromWaylandSurface;
 
 
-/* Struct Extract Function */
-
-int extract_chained_struct(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUChainedStruct **out_ha_host_struct_ptr
-);
-int extract_chained_struct_out(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUChainedStructOut **out_ha_host_struct_ptr
-);
-int extract_limits(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPULimits **out_ha_host_struct_ptr
-);
-int extract_blend_component(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUBlendComponent **out_ha_host_struct_ptr
-);
-int extract_color(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUColor **out_ha_host_struct_ptr
-);
-int extract_compute_pass_timestamp_writes(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUComputePassTimestampWrites **out_ha_host_struct_ptr
-);
-int extract_extent_3D(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUExtent3D **out_ha_host_struct_ptr
-);
-int extract_vertex_attribute(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUVertexAttribute **out_ha_host_struct_ptr
-);
-int extract_vertex_buffer_layout(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUVertexBufferLayout **out_ha_host_struct_ptr
-);
-int extract_origin_3D(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUOrigin3D **out_ha_host_struct_ptr
-);
-int extract_render_pass_depth_stencil_attachment(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURenderPassDepthStencilAttachment **out_ha_host_struct_ptr
-);
-int extract_render_pass_timestamp_writes(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURenderPassTimestampWrites **out_ha_host_struct_ptr
-);
-int extract_blend_state(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUBlendState **out_ha_host_struct_ptr
-);
-int extract_stencil_face_state(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUStencilFaceState **out_ha_host_struct_ptr
-);
-int extract_surface_texture(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceTexture **out_ha_host_struct_ptr
-);
-int extract_uncaptured_error_callback_info(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUUncapturedErrorCallbackInfo **out_ha_host_struct_ptr
-);
-int extract_texture_data_layout(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUTextureDataLayout **out_ha_host_struct_ptr
-);
-int extract_queue_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUQueueDescriptor **out_ha_host_struct_ptr
-);
-int extract_programmable_stage_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUProgrammableStageDescriptor **out_ha_host_struct_ptr
-);
-int extract_request_adapter_options(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURequestAdapterOptions **out_ha_host_struct_ptr
-);
-int extract_device_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUDeviceDescriptor **out_ha_host_struct_ptr
-);
-int extract_bind_group_entry(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUBindGroupEntry **out_ha_host_struct_ptr
-);
-int extract_bind_group_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUBindGroupDescriptor **out_ha_host_struct_ptr
-);
-int extract_buffer_binding_layout(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUBufferBindingLayout **out_ha_host_struct_ptr
-);
-int extract_sampler_binding_layout(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSamplerBindingLayout **out_ha_host_struct_ptr
-);
-int extract_texture_binding_layout(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUTextureBindingLayout **out_ha_host_struct_ptr
-);
-int extract_surface_configuration(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceConfiguration **out_ha_host_struct_ptr
-);
-int extract_storage_texture_binding_layout(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUStorageTextureBindingLayout **out_ha_host_struct_ptr
-);
-int extract_bind_group_layout_entry(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUBindGroupLayoutEntry **out_ha_host_struct_ptr
-);
-int extract_bind_group_layout_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUBindGroupLayoutDescriptor **out_ha_host_struct_ptr
-);
-int extract_buffer_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUBufferDescriptor **out_ha_host_struct_ptr
-);
-int extract_constant_entry(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUConstantEntry **out_ha_host_struct_ptr
-);
-int extract_command_buffer_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUCommandBufferDescriptor **out_ha_host_struct_ptr
-);
-int extract_command_encoder_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUCommandEncoderDescriptor **out_ha_host_struct_ptr
-);
-int extract_compilation_info(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUCompilationInfo **out_ha_host_struct_ptr
-);
-int extract_compilation_message(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUCompilationMessage **out_ha_host_struct_ptr
-);
-int extract_compute_pass_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUComputePassDescriptor **out_ha_host_struct_ptr
-);
-int extract_compute_pipeline_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUComputePipelineDescriptor **out_ha_host_struct_ptr
-);
-int extract_required_limits(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURequiredLimits **out_ha_host_struct_ptr
-);
-int extract_image_copy_buffer(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUImageCopyBuffer **out_ha_host_struct_ptr
-);
-int extract_image_copy_texture(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUImageCopyTexture **out_ha_host_struct_ptr
-);
-int extract_instance_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUInstanceDescriptor **out_ha_host_struct_ptr
-);
-int extract_pipeline_layout_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUPipelineLayoutDescriptor **out_ha_host_struct_ptr
-);
-int extract_query_set_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUQuerySetDescriptor **out_ha_host_struct_ptr
-);
-int extract_render_bundle_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURenderBundleDescriptor **out_ha_host_struct_ptr
-);
-int extract_render_bundle_encoder_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURenderBundleEncoderDescriptor **out_ha_host_struct_ptr
-);
-int extract_render_pass_color_attachment(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURenderPassColorAttachment **out_ha_host_struct_ptr
-);
-int extract_render_pass_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURenderPassDescriptor **out_ha_host_struct_ptr
-);
-int extract_vertex_state(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUVertexState **out_ha_host_struct_ptr
-);
-int extract_primitive_state(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUPrimitiveState **out_ha_host_struct_ptr
-);
-int extract_depth_stencil_state(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUDepthStencilState **out_ha_host_struct_ptr
-);
-int extract_multisample_state(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUMultisampleState **out_ha_host_struct_ptr
-);
-int extract_fragment_state(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUFragmentState **out_ha_host_struct_ptr
-);
-int extract_color_target_state(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUColorTargetState **out_ha_host_struct_ptr
-);
-int extract_render_pipeline_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURenderPipelineDescriptor **out_ha_host_struct_ptr
-);
-int extract_sampler_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSamplerDescriptor **out_ha_host_struct_ptr
-);
-int extract_shader_module_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUShaderModuleDescriptor **out_ha_host_struct_ptr
-);
-int extract_shader_module_compilation_hint(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUShaderModuleCompilationHint **out_ha_host_struct_ptr
-);
-int extract_surface_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceDescriptor **out_ha_host_struct_ptr
-);
-int extract_texture_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUTextureDescriptor **out_ha_host_struct_ptr
-);
-int extract_texture_view_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUTextureViewDescriptor **out_ha_host_struct_ptr
-);
-int extract_adapter_info(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUAdapterInfo **out_ha_host_struct_ptr
-);
-int extract_surface_capabilities(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceCapabilities **out_ha_host_struct_ptr
-);
-int extract_supported_limits(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSupportedLimits **out_ha_host_struct_ptr
-);
-int extract_render_pass_descriptor_max_draw_count(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPURenderPassDescriptorMaxDrawCount **out_ha_host_struct_ptr
-);
-int extract_primitive_depth_clip_control(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUPrimitiveDepthClipControl **out_ha_host_struct_ptr
-);
-int extract_shader_module_SPIRV_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUShaderModuleSPIRVDescriptor **out_ha_host_struct_ptr
-);
-int extract_shader_module_WGSL_descriptor(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUShaderModuleWGSLDescriptor **out_ha_host_struct_ptr
-);
-int extract_surface_descriptor_from_android_native_window(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceDescriptorFromAndroidNativeWindow **out_ha_host_struct_ptr
-);
-int extract_surface_descriptor_from_canvas_HTML_selector(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceDescriptorFromCanvasHTMLSelector **out_ha_host_struct_ptr
-);
-int extract_surface_descriptor_from_metal_layer(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceDescriptorFromMetalLayer **out_ha_host_struct_ptr
-);
-int extract_surface_descriptor_from_windows_HWND(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceDescriptorFromWindowsHWND **out_ha_host_struct_ptr
-);
-int extract_surface_descriptor_from_xcb_window(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceDescriptorFromXcbWindow **out_ha_host_struct_ptr
-);
-int extract_surface_descriptor_from_xlib_window(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceDescriptorFromXlibWindow **out_ha_host_struct_ptr
-);
-int extract_surface_descriptor_from_wayland_surface(
-    BindWGPUObjectMappingRegistry *registry,
-    wasm_memory_t *memory,
-    byte_t *wa_wasm_struct_offset,
-    WGPUSurfaceDescriptorFromWaylandSurface **out_ha_host_struct_ptr
-);
-
-/* Struct Extract Function */
+/* Extract Struct Function Definitions */
 
 int extract_chained_struct(
     BindWGPUObjectMappingRegistry *registry,
@@ -7435,6 +7512,384 @@ int extract_surface_descriptor_from_wayland_surface(
     /* TODO: Is this safe? */
     ha_host_struct_ptr->surface = (void *)ha_wasm_struct_ptr->surface;
 
+    return 0;
+}
+
+
+/* Free Struct Function Definitions */
+
+int free_chained_struct(WGPUChainedStruct *struct_ptr) {
+    LOG_WARN("free_chained_struct: TODO");
+    return 0;
+}
+
+int free_chained_struct_out(WGPUChainedStructOut *struct_ptr) {
+    LOG_WARN("free_chained_struct_out: TODO");
+    return 0;
+}
+
+int free_limits(WGPULimits *struct_ptr) {
+    LOG_WARN("free_limits: TODO");
+    return 0;
+}
+
+int free_blend_component(WGPUBlendComponent *struct_ptr) {
+    LOG_WARN("free_blend_component: TODO");
+    return 0;
+}
+
+int free_color(WGPUColor *struct_ptr) {
+    LOG_WARN("free_color: TODO");
+    return 0;
+}
+
+int free_compute_pass_timestamp_writes(WGPUComputePassTimestampWrites *struct_ptr) {
+    LOG_WARN("free_compute_pass_timestamp_writes: TODO");
+    return 0;
+}
+
+int free_extent_3D(WGPUExtent3D *struct_ptr) {
+    LOG_WARN("free_extent_3D: TODO");
+    return 0;
+}
+
+int free_vertex_attribute(WGPUVertexAttribute *struct_ptr) {
+    LOG_WARN("free_vertex_attribute: TODO");
+    return 0;
+}
+
+int free_vertex_buffer_layout(WGPUVertexBufferLayout *struct_ptr) {
+    LOG_WARN("free_vertex_buffer_layout: TODO");
+    return 0;
+}
+
+int free_origin_3D(WGPUOrigin3D *struct_ptr) {
+    LOG_WARN("free_origin_3D: TODO");
+    return 0;
+}
+
+int free_render_pass_depth_stencil_attachment(WGPURenderPassDepthStencilAttachment *struct_ptr) {
+    LOG_WARN("free_render_pass_depth_stencil_attachment: TODO");
+    return 0;
+}
+
+int free_render_pass_timestamp_writes(WGPURenderPassTimestampWrites *struct_ptr) {
+    LOG_WARN("free_render_pass_timestamp_writes: TODO");
+    return 0;
+}
+
+int free_blend_state(WGPUBlendState *struct_ptr) {
+    LOG_WARN("free_blend_state: TODO");
+    return 0;
+}
+
+int free_stencil_face_state(WGPUStencilFaceState *struct_ptr) {
+    LOG_WARN("free_stencil_face_state: TODO");
+    return 0;
+}
+
+int free_surface_texture(WGPUSurfaceTexture *struct_ptr) {
+    LOG_WARN("free_surface_texture: TODO");
+    return 0;
+}
+
+int free_uncaptured_error_callback_info(WGPUUncapturedErrorCallbackInfo *struct_ptr) {
+    LOG_WARN("free_uncaptured_error_callback_info: TODO");
+    return 0;
+}
+
+int free_texture_data_layout(WGPUTextureDataLayout *struct_ptr) {
+    LOG_WARN("free_texture_data_layout: TODO");
+    return 0;
+}
+
+int free_queue_descriptor(WGPUQueueDescriptor *struct_ptr) {
+    LOG_WARN("free_queue_descriptor: TODO");
+    return 0;
+}
+
+int free_programmable_stage_descriptor(WGPUProgrammableStageDescriptor *struct_ptr) {
+    LOG_WARN("free_programmable_stage_descriptor: TODO");
+    return 0;
+}
+
+int free_request_adapter_options(WGPURequestAdapterOptions *struct_ptr) {
+    LOG_WARN("free_request_adapter_options: TODO");
+    return 0;
+}
+
+int free_device_descriptor(WGPUDeviceDescriptor *struct_ptr) {
+    LOG_WARN("free_device_descriptor: TODO");
+    return 0;
+}
+
+int free_bind_group_entry(WGPUBindGroupEntry *struct_ptr) {
+    LOG_WARN("free_bind_group_entry: TODO");
+    return 0;
+}
+
+int free_bind_group_descriptor(WGPUBindGroupDescriptor *struct_ptr) {
+    LOG_WARN("free_bind_group_descriptor: TODO");
+    return 0;
+}
+
+int free_buffer_binding_layout(WGPUBufferBindingLayout *struct_ptr) {
+    LOG_WARN("free_buffer_binding_layout: TODO");
+    return 0;
+}
+
+int free_sampler_binding_layout(WGPUSamplerBindingLayout *struct_ptr) {
+    LOG_WARN("free_sampler_binding_layout: TODO");
+    return 0;
+}
+
+int free_texture_binding_layout(WGPUTextureBindingLayout *struct_ptr) {
+    LOG_WARN("free_texture_binding_layout: TODO");
+    return 0;
+}
+
+int free_surface_configuration(WGPUSurfaceConfiguration *struct_ptr) {
+    LOG_WARN("free_surface_configuration: TODO");
+    return 0;
+}
+
+int free_storage_texture_binding_layout(WGPUStorageTextureBindingLayout *struct_ptr) {
+    LOG_WARN("free_storage_texture_binding_layout: TODO");
+    return 0;
+}
+
+int free_bind_group_layout_entry(WGPUBindGroupLayoutEntry *struct_ptr) {
+    LOG_WARN("free_bind_group_layout_entry: TODO");
+    return 0;
+}
+
+int free_bind_group_layout_descriptor(WGPUBindGroupLayoutDescriptor *struct_ptr) {
+    LOG_WARN("free_bind_group_layout_descriptor: TODO");
+    return 0;
+}
+
+int free_buffer_descriptor(WGPUBufferDescriptor *struct_ptr) {
+    LOG_WARN("free_buffer_descriptor: TODO");
+    return 0;
+}
+
+int free_constant_entry(WGPUConstantEntry *struct_ptr) {
+    LOG_WARN("free_constant_entry: TODO");
+    return 0;
+}
+
+int free_command_buffer_descriptor(WGPUCommandBufferDescriptor *struct_ptr) {
+    LOG_WARN("free_command_buffer_descriptor: TODO");
+    return 0;
+}
+
+int free_command_encoder_descriptor(WGPUCommandEncoderDescriptor *struct_ptr) {
+    LOG_WARN("free_command_encoder_descriptor: TODO");
+    return 0;
+}
+
+int free_compilation_info(WGPUCompilationInfo *struct_ptr) {
+    LOG_WARN("free_compilation_info: TODO");
+    return 0;
+}
+
+int free_compilation_message(WGPUCompilationMessage *struct_ptr) {
+    LOG_WARN("free_compilation_message: TODO");
+    return 0;
+}
+
+int free_compute_pass_descriptor(WGPUComputePassDescriptor *struct_ptr) {
+    LOG_WARN("free_compute_pass_descriptor: TODO");
+    return 0;
+}
+
+int free_compute_pipeline_descriptor(WGPUComputePipelineDescriptor *struct_ptr) {
+    LOG_WARN("free_compute_pipeline_descriptor: TODO");
+    return 0;
+}
+
+int free_required_limits(WGPURequiredLimits *struct_ptr) {
+    LOG_WARN("free_required_limits: TODO");
+    return 0;
+}
+
+int free_image_copy_buffer(WGPUImageCopyBuffer *struct_ptr) {
+    LOG_WARN("free_image_copy_buffer: TODO");
+    return 0;
+}
+
+int free_image_copy_texture(WGPUImageCopyTexture *struct_ptr) {
+    LOG_WARN("free_image_copy_texture: TODO");
+    return 0;
+}
+
+int free_instance_descriptor(WGPUInstanceDescriptor *struct_ptr) {
+    LOG_WARN("free_instance_descriptor: TODO");
+    return 0;
+}
+
+int free_pipeline_layout_descriptor(WGPUPipelineLayoutDescriptor *struct_ptr) {
+    LOG_WARN("free_pipeline_layout_descriptor: TODO");
+    return 0;
+}
+
+int free_query_set_descriptor(WGPUQuerySetDescriptor *struct_ptr) {
+    LOG_WARN("free_query_set_descriptor: TODO");
+    return 0;
+}
+
+int free_render_bundle_descriptor(WGPURenderBundleDescriptor *struct_ptr) {
+    LOG_WARN("free_render_bundle_descriptor: TODO");
+    return 0;
+}
+
+int free_render_bundle_encoder_descriptor(WGPURenderBundleEncoderDescriptor *struct_ptr) {
+    LOG_WARN("free_render_bundle_encoder_descriptor: TODO");
+    return 0;
+}
+
+int free_render_pass_color_attachment(WGPURenderPassColorAttachment *struct_ptr) {
+    LOG_WARN("free_render_pass_color_attachment: TODO");
+    return 0;
+}
+
+int free_render_pass_descriptor(WGPURenderPassDescriptor *struct_ptr) {
+    LOG_WARN("free_render_pass_descriptor: TODO");
+    return 0;
+}
+
+int free_vertex_state(WGPUVertexState *struct_ptr) {
+    LOG_WARN("free_vertex_state: TODO");
+    return 0;
+}
+
+int free_primitive_state(WGPUPrimitiveState *struct_ptr) {
+    LOG_WARN("free_primitive_state: TODO");
+    return 0;
+}
+
+int free_depth_stencil_state(WGPUDepthStencilState *struct_ptr) {
+    LOG_WARN("free_depth_stencil_state: TODO");
+    return 0;
+}
+
+int free_multisample_state(WGPUMultisampleState *struct_ptr) {
+    LOG_WARN("free_multisample_state: TODO");
+    return 0;
+}
+
+int free_fragment_state(WGPUFragmentState *struct_ptr) {
+    LOG_WARN("free_fragment_state: TODO");
+    return 0;
+}
+
+int free_color_target_state(WGPUColorTargetState *struct_ptr) {
+    LOG_WARN("free_color_target_state: TODO");
+    return 0;
+}
+
+int free_render_pipeline_descriptor(WGPURenderPipelineDescriptor *struct_ptr) {
+    LOG_WARN("free_render_pipeline_descriptor: TODO");
+    return 0;
+}
+
+int free_sampler_descriptor(WGPUSamplerDescriptor *struct_ptr) {
+    LOG_WARN("free_sampler_descriptor: TODO");
+    return 0;
+}
+
+int free_shader_module_descriptor(WGPUShaderModuleDescriptor *struct_ptr) {
+    LOG_WARN("free_shader_module_descriptor: TODO");
+    return 0;
+}
+
+int free_shader_module_compilation_hint(WGPUShaderModuleCompilationHint *struct_ptr) {
+    LOG_WARN("free_shader_module_compilation_hint: TODO");
+    return 0;
+}
+
+int free_surface_descriptor(WGPUSurfaceDescriptor *struct_ptr) {
+    LOG_WARN("free_surface_descriptor: TODO");
+    return 0;
+}
+
+int free_texture_descriptor(WGPUTextureDescriptor *struct_ptr) {
+    LOG_WARN("free_texture_descriptor: TODO");
+    return 0;
+}
+
+int free_texture_view_descriptor(WGPUTextureViewDescriptor *struct_ptr) {
+    LOG_WARN("free_texture_view_descriptor: TODO");
+    return 0;
+}
+
+int free_adapter_info(WGPUAdapterInfo *struct_ptr) {
+    LOG_WARN("free_adapter_info: TODO");
+    return 0;
+}
+
+int free_surface_capabilities(WGPUSurfaceCapabilities *struct_ptr) {
+    LOG_WARN("free_surface_capabilities: TODO");
+    return 0;
+}
+
+int free_supported_limits(WGPUSupportedLimits *struct_ptr) {
+    LOG_WARN("free_supported_limits: TODO");
+    return 0;
+}
+
+int free_render_pass_descriptor_max_draw_count(WGPURenderPassDescriptorMaxDrawCount *struct_ptr) {
+    LOG_WARN("free_render_pass_descriptor_max_draw_count: TODO");
+    return 0;
+}
+
+int free_primitive_depth_clip_control(WGPUPrimitiveDepthClipControl *struct_ptr) {
+    LOG_WARN("free_primitive_depth_clip_control: TODO");
+    return 0;
+}
+
+int free_shader_module_SPIRV_descriptor(WGPUShaderModuleSPIRVDescriptor *struct_ptr) {
+    LOG_WARN("free_shader_module_SPIRV_descriptor: TODO");
+    return 0;
+}
+
+int free_shader_module_WGSL_descriptor(WGPUShaderModuleWGSLDescriptor *struct_ptr) {
+    LOG_WARN("free_shader_module_WGSL_descriptor: TODO");
+    return 0;
+}
+
+int free_surface_descriptor_from_android_native_window(WGPUSurfaceDescriptorFromAndroidNativeWindow *struct_ptr) {
+    LOG_WARN("free_surface_descriptor_from_android_native_window: TODO");
+    return 0;
+}
+
+int free_surface_descriptor_from_canvas_HTML_selector(WGPUSurfaceDescriptorFromCanvasHTMLSelector *struct_ptr) {
+    LOG_WARN("free_surface_descriptor_from_canvas_HTML_selector: TODO");
+    return 0;
+}
+
+int free_surface_descriptor_from_metal_layer(WGPUSurfaceDescriptorFromMetalLayer *struct_ptr) {
+    LOG_WARN("free_surface_descriptor_from_metal_layer: TODO");
+    return 0;
+}
+
+int free_surface_descriptor_from_windows_HWND(WGPUSurfaceDescriptorFromWindowsHWND *struct_ptr) {
+    LOG_WARN("free_surface_descriptor_from_windows_HWND: TODO");
+    return 0;
+}
+
+int free_surface_descriptor_from_xcb_window(WGPUSurfaceDescriptorFromXcbWindow *struct_ptr) {
+    LOG_WARN("free_surface_descriptor_from_xcb_window: TODO");
+    return 0;
+}
+
+int free_surface_descriptor_from_xlib_window(WGPUSurfaceDescriptorFromXlibWindow *struct_ptr) {
+    LOG_WARN("free_surface_descriptor_from_xlib_window: TODO");
+    return 0;
+}
+
+int free_surface_descriptor_from_wayland_surface(WGPUSurfaceDescriptorFromWaylandSurface *struct_ptr) {
+    LOG_WARN("free_surface_descriptor_from_wayland_surface: TODO");
     return 0;
 }
 

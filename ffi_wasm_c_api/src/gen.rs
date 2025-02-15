@@ -2,7 +2,7 @@ use std::io::Write;
 
 use crate::model::{MemberCategory, MemberModel, MemberTypeMode, SpecModel, StructModel};
 use crate::src::{CodeGenerator, GeneratedLine};
-use crate::{a, i, n, o, oi, o2};
+use crate::{a, i, n, o, o2, oi};
 use crate::{c, spec};
 
 pub fn write_wasm_c_api(
@@ -38,11 +38,13 @@ const PRIORITY_NAMES: &[&str] = &[
 
 fn order_all(model: &mut SpecModel) -> () {
     model.structs_spec.sort_by(|a, b| {
+        // Standalone, then Base*, then Extension*
         if a.type_field < b.type_field {
             return std::cmp::Ordering::Less;
         } else if a.type_field > b.type_field {
             return std::cmp::Ordering::Greater;
         }
+        // Some special cases that are referenced early
         if PRIORITY_NAMES.contains(&a.name_orig.as_str()) {
             return std::cmp::Ordering::Less;
         } else if PRIORITY_NAMES.contains(&b.name_orig.as_str()) {
@@ -59,21 +61,25 @@ fn gen_all(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
     n!(gen);
 
     // gen_defines(&mut gen);
-    // ln!(gen);
+    // n!(gen);
 
     gen_registry(&mut gen, model);
     n!(gen);
 
+    // Declarations
     gen_all_struct_declarations(&mut gen, model);
     n!(gen);
-
-    gen_all_struct_definitions(&mut gen, model);
-    n!(gen);
-
     gen_all_extract_fn_declarations(&mut gen, model);
     n!(gen);
+    gen_all_free_fn_declarations(&mut gen, model);
+    n!(gen);
 
+    // Definitions
+    gen_all_struct_definitions(&mut gen, model);
+    n!(gen);
     gen_all_extract_fn_definitions(&mut gen, model);
+    n!(gen);
+    gen_all_free_fn_definitions(&mut gen, model);
     n!(gen);
 
     gen_footer(&mut gen);
@@ -97,27 +103,29 @@ fn gen_footer(gen: &mut CodeGenerator) {
     a!(gen, "#endif // {HEADER_GUARD}",);
 }
 
-// const C_TYPES: &[&str] = &[
-//     "WASM_INT_C_TYPE",
-//     "WASM_SIZE_C_TYPE",
-//     "WASM_ENUM_C_TYPE",
-//     "WASM_BITFLAG_C_TYPE",
-//     "WASM_POINTER_VOID_C_TYPE",
-//     "WASM_POINTER_UINT32_C_TYPE",
-//     "WASM_POINTER_OBJECT_C_TYPE",
-//     "WASM_POINTER_STRING_C_TYPE",
-//     "WASM_POINTER_ARRAY_C_TYPE",
-//     "WASM_POINTER_STRUCT_C_TYPE",
-//     "WASM_POINTER_FUNCTION_C_TYPE",
-// ];
-// fn gen_defines(gen: &mut CodeGenerator) {
-//     a!(gen, "/* Define native WASM types */");
-//     a!(gen, "#define WASM_C_TYPE uint32_t");
-
-//     for name in C_TYPES {
-//         a!(gen, "#define {name} uint32_t");
-//     }
-// }
+// These are copied to `wasm_helpers.h`
+#[allow(unused)]
+const C_TYPES: &[&str] = &[
+    "WASM_INT_C_TYPE",
+    "WASM_SIZE_C_TYPE",
+    "WASM_ENUM_C_TYPE",
+    "WASM_BITFLAG_C_TYPE",
+    "WASM_POINTER_VOID_C_TYPE",
+    "WASM_POINTER_UINT32_C_TYPE",
+    "WASM_POINTER_OBJECT_C_TYPE",
+    "WASM_POINTER_STRING_C_TYPE",
+    "WASM_POINTER_ARRAY_C_TYPE",
+    "WASM_POINTER_STRUCT_C_TYPE",
+    "WASM_POINTER_FUNCTION_C_TYPE",
+];
+#[allow(unused)]
+fn gen_defines(gen: &mut CodeGenerator) {
+    a!(gen, "/* Define native WASM types */");
+    a!(gen, "#define WASM_C_TYPE uint32_t");
+    for name in C_TYPES {
+        a!(gen, "#define {name} uint32_t");
+    }
+}
 
 fn gen_registry(gen: &mut CodeGenerator, model: &SpecModel) {
     a!(gen, "/* Object Registries Definition */");
@@ -143,6 +151,7 @@ fn gen_all_struct_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
 
 fn gen_all_struct_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
     a!(gen, "/* Struct Definitions */");
+    n!(gen);
 
     for struct_ in &model.structs_all() {
         i!(gen, "typedef struct {0} {{", struct_.name_wasm_type);
@@ -168,8 +177,7 @@ fn gen_all_struct_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
 }
 
 fn gen_all_extract_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Struct Extract Function */");
-    n!(gen);
+    a!(gen, "/* Extract Struct Function Declarations */");
 
     for struct_ in &model.structs_all() {
         let fn_name: String = format!("extract_{}", struct_.name_orig);
@@ -186,7 +194,7 @@ fn gen_all_extract_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
 }
 
 fn gen_all_extract_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Struct Extract Function */");
+    a!(gen, "/* Extract Struct Function Definitions */");
     n!(gen);
 
     gen_extract_fn_definition_template(
@@ -585,5 +593,32 @@ fn gen_extract_array(
             member.name_orig,
             struct_.name_orig
         ),
+    }
+}
+
+fn gen_all_free_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
+    a!(gen, "/* Free Struct Function Declarations */");
+
+    for struct_ in &model.structs_all() {
+        let fn_name: String = format!("free_{}", struct_.name_orig);
+        let wgpu_type = &struct_.name_wgpu_type;
+
+        a!(gen, "int {fn_name}({wgpu_type} *struct_ptr);");
+    }
+}
+
+fn gen_all_free_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
+    a!(gen, "/* Free Struct Function Definitions */");
+    n!(gen);
+
+    for struct_ in &model.structs_all() {
+        let fn_name: String = format!("free_{}", struct_.name_orig);
+        let wgpu_type = &struct_.name_wgpu_type;
+
+        i!(gen, "int {fn_name}({wgpu_type} *struct_ptr) {{");
+        a!(gen, "LOG_WARN(\"{fn_name}: TODO\");");
+        a!(gen, "return 0;");
+        o!(gen, "}}");
+        n!(gen);
     }
 }

@@ -8,7 +8,7 @@
 #include <string>
 
 // Encode texture as png
-unsigned char *encodeTexturePng(wgpu::Device device, wgpu::Texture texture, int *len);
+unsigned char *encodeTextureBmp(wgpu::Device device, wgpu::Texture texture, int *len);
 
 // Saving a texture view requires to blit it into another texture, because only textures can be retrieved
 // bool saveTextureView(const std::filesystem::path path, wgpu::Device device, wgpu::TextureView textureView, uint32_t width, uint32_t height);
@@ -206,12 +206,47 @@ unsigned char *FileRenderer::render(wgpu::Texture texture, int *len) const
 		}
 		unsigned char* pixelData = (unsigned char*)pixelBuffer.getConstMappedRange(0, pixelBufferDesc.size);
 
-		//STBIWDEF int stbi_write_png_to_func(stbi_write_func *func, void *context, int x, int y, int comp, const void *data, int stride_bytes)
-		//STBIWDEF unsigned char *stbi_write_png_to_mem(const unsigned char *pixels, int stride_bytes, int x, int y, int n, int *out_len)
-		int bytesPerRow = 4 * width;
-		png = stbi_write_png_to_mem(pixelData, bytesPerRow, (int)width, (int)height, 4, len);
+		// Structure to hold the BMP data
+		struct BmpWriteContext {
+			unsigned char* data;
+			size_t size;
+			size_t capacity;
+		};
 
-		std::cout << "PNG size: " << len << "B" << std::endl;
+		// Callback function for stbi_write_bmp_to_func
+		auto write_func = [](void* context, void* data, int size) {
+			BmpWriteContext* ctx = static_cast<BmpWriteContext*>(context);
+			size_t new_size = ctx->size + size;
+			
+			// If we need more space, reallocate
+			if (new_size > ctx->capacity) {
+				size_t new_capacity = new_size * 2;
+				unsigned char* new_data = (unsigned char*)realloc(ctx->data, new_capacity);
+				if (!new_data) return;
+				ctx->data = new_data;
+				ctx->capacity = new_capacity;
+			}
+			
+			// Copy the new data
+			memcpy(ctx->data + ctx->size, data, size);
+			ctx->size = new_size;
+		};
+
+		// Initialize the context
+		BmpWriteContext ctx = {
+			.data = (unsigned char*)malloc(4 * width * height), // Initial capacity
+			.size = 0,
+			.capacity = 4 * width * height
+		};
+
+		// int bytesPerRow = 4 * width;
+		stbi_write_bmp_to_func(write_func, &ctx, (int)width, (int)height, 4, pixelData);
+		std::cout << "BMP size: " << ctx.size << "B" << std::endl;
+
+		// Set the output length
+		*len = static_cast<int>(ctx.size);
+
+		png = ctx.data;
 
 		pixelBuffer.unmap();
 
@@ -293,7 +328,7 @@ unsigned char *FileRenderer::render(wgpu::Texture texture, int *len) const
 // 	return render(path, renderTexture);
 // }
 
-unsigned char *encodeTexturePng(wgpu::Device device, wgpu::Texture texture, int *len)
+unsigned char *encodeTextureBmp(wgpu::Device device, wgpu::Texture texture, int *len)
 {
 	using namespace wgpu;
 	uint32_t width = texture.getWidth();

@@ -78,7 +78,7 @@ unsigned char * hello_triangle() {
 	targetTextureDesc.label = "Render texture";
 	targetTextureDesc.dimension = TextureDimension::_2D;
 	// Any size works here, this is the equivalent of the window size
-	targetTextureDesc.size = { 640, 480, 1 };
+	targetTextureDesc.size = { 320, 240, 1 };
 	// Use the same format here and in the render pipeline's color target
 	targetTextureDesc.format = swapChainFormat;
 	// No need for MIP maps
@@ -277,7 +277,7 @@ fn fs_main() -> @location(0) vec4f {
 
 	// Instead of swapChain.present()
 	int len;
-	unsigned char *png = encodeTexturePng(device, targetTexture, &len);
+	unsigned char *png = encodeTextureBmp(device, targetTexture, &len);
 	//saveTextureView("output.png", device, nextTexture, targetTexture.getWidth(), targetTexture.getHeight());
 
 	// pipeline.release();

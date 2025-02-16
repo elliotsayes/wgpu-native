@@ -1431,114 +1431,114 @@ int extract_limits(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_limits: allocating [*HMAS.HS] (%p) as WGPULimits", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_limits: allocating [*HMAS.HWST] (%p) as WGPULimits", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPULimits));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_limits: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_limits: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_limits: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_limits: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_limits: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_limits: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxTextureDimension1D: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxTextureDimension1D, (void *)&ha_host_struct_ptr->maxTextureDimension1D);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxTextureDimension1D: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxTextureDimension1D, (void *)&ha_host_struct_ptr->maxTextureDimension1D);
     ha_host_struct_ptr->maxTextureDimension1D = ha_wasm_struct_ptr->maxTextureDimension1D;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxTextureDimension2D: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxTextureDimension2D, (void *)&ha_host_struct_ptr->maxTextureDimension2D);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxTextureDimension2D: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxTextureDimension2D, (void *)&ha_host_struct_ptr->maxTextureDimension2D);
     ha_host_struct_ptr->maxTextureDimension2D = ha_wasm_struct_ptr->maxTextureDimension2D;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxTextureDimension3D: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxTextureDimension3D, (void *)&ha_host_struct_ptr->maxTextureDimension3D);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxTextureDimension3D: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxTextureDimension3D, (void *)&ha_host_struct_ptr->maxTextureDimension3D);
     ha_host_struct_ptr->maxTextureDimension3D = ha_wasm_struct_ptr->maxTextureDimension3D;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxTextureArrayLayers: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxTextureArrayLayers, (void *)&ha_host_struct_ptr->maxTextureArrayLayers);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxTextureArrayLayers: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxTextureArrayLayers, (void *)&ha_host_struct_ptr->maxTextureArrayLayers);
     ha_host_struct_ptr->maxTextureArrayLayers = ha_wasm_struct_ptr->maxTextureArrayLayers;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxBindGroups: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxBindGroups, (void *)&ha_host_struct_ptr->maxBindGroups);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxBindGroups: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxBindGroups, (void *)&ha_host_struct_ptr->maxBindGroups);
     ha_host_struct_ptr->maxBindGroups = ha_wasm_struct_ptr->maxBindGroups;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxBindGroupsPlusVertexBuffers: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxBindGroupsPlusVertexBuffers, (void *)&ha_host_struct_ptr->maxBindGroupsPlusVertexBuffers);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxBindGroupsPlusVertexBuffers: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxBindGroupsPlusVertexBuffers, (void *)&ha_host_struct_ptr->maxBindGroupsPlusVertexBuffers);
     ha_host_struct_ptr->maxBindGroupsPlusVertexBuffers = ha_wasm_struct_ptr->maxBindGroupsPlusVertexBuffers;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxBindingsPerBindGroup: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxBindingsPerBindGroup, (void *)&ha_host_struct_ptr->maxBindingsPerBindGroup);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxBindingsPerBindGroup: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxBindingsPerBindGroup, (void *)&ha_host_struct_ptr->maxBindingsPerBindGroup);
     ha_host_struct_ptr->maxBindingsPerBindGroup = ha_wasm_struct_ptr->maxBindingsPerBindGroup;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxDynamicUniformBuffersPerPipelineLayout: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxDynamicUniformBuffersPerPipelineLayout, (void *)&ha_host_struct_ptr->maxDynamicUniformBuffersPerPipelineLayout);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxDynamicUniformBuffersPerPipelineLayout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxDynamicUniformBuffersPerPipelineLayout, (void *)&ha_host_struct_ptr->maxDynamicUniformBuffersPerPipelineLayout);
     ha_host_struct_ptr->maxDynamicUniformBuffersPerPipelineLayout = ha_wasm_struct_ptr->maxDynamicUniformBuffersPerPipelineLayout;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxDynamicStorageBuffersPerPipelineLayout: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxDynamicStorageBuffersPerPipelineLayout, (void *)&ha_host_struct_ptr->maxDynamicStorageBuffersPerPipelineLayout);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxDynamicStorageBuffersPerPipelineLayout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxDynamicStorageBuffersPerPipelineLayout, (void *)&ha_host_struct_ptr->maxDynamicStorageBuffersPerPipelineLayout);
     ha_host_struct_ptr->maxDynamicStorageBuffersPerPipelineLayout = ha_wasm_struct_ptr->maxDynamicStorageBuffersPerPipelineLayout;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxSampledTexturesPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxSampledTexturesPerShaderStage, (void *)&ha_host_struct_ptr->maxSampledTexturesPerShaderStage);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxSampledTexturesPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxSampledTexturesPerShaderStage, (void *)&ha_host_struct_ptr->maxSampledTexturesPerShaderStage);
     ha_host_struct_ptr->maxSampledTexturesPerShaderStage = ha_wasm_struct_ptr->maxSampledTexturesPerShaderStage;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxSamplersPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxSamplersPerShaderStage, (void *)&ha_host_struct_ptr->maxSamplersPerShaderStage);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxSamplersPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxSamplersPerShaderStage, (void *)&ha_host_struct_ptr->maxSamplersPerShaderStage);
     ha_host_struct_ptr->maxSamplersPerShaderStage = ha_wasm_struct_ptr->maxSamplersPerShaderStage;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxStorageBuffersPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxStorageBuffersPerShaderStage, (void *)&ha_host_struct_ptr->maxStorageBuffersPerShaderStage);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxStorageBuffersPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxStorageBuffersPerShaderStage, (void *)&ha_host_struct_ptr->maxStorageBuffersPerShaderStage);
     ha_host_struct_ptr->maxStorageBuffersPerShaderStage = ha_wasm_struct_ptr->maxStorageBuffersPerShaderStage;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxStorageTexturesPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxStorageTexturesPerShaderStage, (void *)&ha_host_struct_ptr->maxStorageTexturesPerShaderStage);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxStorageTexturesPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxStorageTexturesPerShaderStage, (void *)&ha_host_struct_ptr->maxStorageTexturesPerShaderStage);
     ha_host_struct_ptr->maxStorageTexturesPerShaderStage = ha_wasm_struct_ptr->maxStorageTexturesPerShaderStage;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxUniformBuffersPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxUniformBuffersPerShaderStage, (void *)&ha_host_struct_ptr->maxUniformBuffersPerShaderStage);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxUniformBuffersPerShaderStage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxUniformBuffersPerShaderStage, (void *)&ha_host_struct_ptr->maxUniformBuffersPerShaderStage);
     ha_host_struct_ptr->maxUniformBuffersPerShaderStage = ha_wasm_struct_ptr->maxUniformBuffersPerShaderStage;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint64>] maxUniformBufferBindingSize: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxUniformBufferBindingSize, (void *)&ha_host_struct_ptr->maxUniformBufferBindingSize);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint64>] maxUniformBufferBindingSize: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxUniformBufferBindingSize, (void *)&ha_host_struct_ptr->maxUniformBufferBindingSize);
     ha_host_struct_ptr->maxUniformBufferBindingSize = ha_wasm_struct_ptr->maxUniformBufferBindingSize;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint64>] maxStorageBufferBindingSize: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxStorageBufferBindingSize, (void *)&ha_host_struct_ptr->maxStorageBufferBindingSize);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint64>] maxStorageBufferBindingSize: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxStorageBufferBindingSize, (void *)&ha_host_struct_ptr->maxStorageBufferBindingSize);
     ha_host_struct_ptr->maxStorageBufferBindingSize = ha_wasm_struct_ptr->maxStorageBufferBindingSize;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] minUniformBufferOffsetAlignment: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->minUniformBufferOffsetAlignment, (void *)&ha_host_struct_ptr->minUniformBufferOffsetAlignment);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] minUniformBufferOffsetAlignment: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->minUniformBufferOffsetAlignment, (void *)&ha_host_struct_ptr->minUniformBufferOffsetAlignment);
     ha_host_struct_ptr->minUniformBufferOffsetAlignment = ha_wasm_struct_ptr->minUniformBufferOffsetAlignment;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] minStorageBufferOffsetAlignment: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->minStorageBufferOffsetAlignment, (void *)&ha_host_struct_ptr->minStorageBufferOffsetAlignment);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] minStorageBufferOffsetAlignment: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->minStorageBufferOffsetAlignment, (void *)&ha_host_struct_ptr->minStorageBufferOffsetAlignment);
     ha_host_struct_ptr->minStorageBufferOffsetAlignment = ha_wasm_struct_ptr->minStorageBufferOffsetAlignment;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxVertexBuffers: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxVertexBuffers, (void *)&ha_host_struct_ptr->maxVertexBuffers);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxVertexBuffers: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxVertexBuffers, (void *)&ha_host_struct_ptr->maxVertexBuffers);
     ha_host_struct_ptr->maxVertexBuffers = ha_wasm_struct_ptr->maxVertexBuffers;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint64>] maxBufferSize: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxBufferSize, (void *)&ha_host_struct_ptr->maxBufferSize);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint64>] maxBufferSize: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxBufferSize, (void *)&ha_host_struct_ptr->maxBufferSize);
     ha_host_struct_ptr->maxBufferSize = ha_wasm_struct_ptr->maxBufferSize;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxVertexAttributes: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxVertexAttributes, (void *)&ha_host_struct_ptr->maxVertexAttributes);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxVertexAttributes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxVertexAttributes, (void *)&ha_host_struct_ptr->maxVertexAttributes);
     ha_host_struct_ptr->maxVertexAttributes = ha_wasm_struct_ptr->maxVertexAttributes;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxVertexBufferArrayStride: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxVertexBufferArrayStride, (void *)&ha_host_struct_ptr->maxVertexBufferArrayStride);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxVertexBufferArrayStride: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxVertexBufferArrayStride, (void *)&ha_host_struct_ptr->maxVertexBufferArrayStride);
     ha_host_struct_ptr->maxVertexBufferArrayStride = ha_wasm_struct_ptr->maxVertexBufferArrayStride;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxInterStageShaderComponents: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxInterStageShaderComponents, (void *)&ha_host_struct_ptr->maxInterStageShaderComponents);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxInterStageShaderComponents: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxInterStageShaderComponents, (void *)&ha_host_struct_ptr->maxInterStageShaderComponents);
     ha_host_struct_ptr->maxInterStageShaderComponents = ha_wasm_struct_ptr->maxInterStageShaderComponents;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxInterStageShaderVariables: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxInterStageShaderVariables, (void *)&ha_host_struct_ptr->maxInterStageShaderVariables);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxInterStageShaderVariables: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxInterStageShaderVariables, (void *)&ha_host_struct_ptr->maxInterStageShaderVariables);
     ha_host_struct_ptr->maxInterStageShaderVariables = ha_wasm_struct_ptr->maxInterStageShaderVariables;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxColorAttachments: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxColorAttachments, (void *)&ha_host_struct_ptr->maxColorAttachments);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxColorAttachments: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxColorAttachments, (void *)&ha_host_struct_ptr->maxColorAttachments);
     ha_host_struct_ptr->maxColorAttachments = ha_wasm_struct_ptr->maxColorAttachments;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxColorAttachmentBytesPerSample: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxColorAttachmentBytesPerSample, (void *)&ha_host_struct_ptr->maxColorAttachmentBytesPerSample);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxColorAttachmentBytesPerSample: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxColorAttachmentBytesPerSample, (void *)&ha_host_struct_ptr->maxColorAttachmentBytesPerSample);
     ha_host_struct_ptr->maxColorAttachmentBytesPerSample = ha_wasm_struct_ptr->maxColorAttachmentBytesPerSample;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupStorageSize: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupStorageSize, (void *)&ha_host_struct_ptr->maxComputeWorkgroupStorageSize);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupStorageSize: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupStorageSize, (void *)&ha_host_struct_ptr->maxComputeWorkgroupStorageSize);
     ha_host_struct_ptr->maxComputeWorkgroupStorageSize = ha_wasm_struct_ptr->maxComputeWorkgroupStorageSize;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeInvocationsPerWorkgroup: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeInvocationsPerWorkgroup, (void *)&ha_host_struct_ptr->maxComputeInvocationsPerWorkgroup);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeInvocationsPerWorkgroup: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeInvocationsPerWorkgroup, (void *)&ha_host_struct_ptr->maxComputeInvocationsPerWorkgroup);
     ha_host_struct_ptr->maxComputeInvocationsPerWorkgroup = ha_wasm_struct_ptr->maxComputeInvocationsPerWorkgroup;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupSizeX: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupSizeX, (void *)&ha_host_struct_ptr->maxComputeWorkgroupSizeX);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupSizeX: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupSizeX, (void *)&ha_host_struct_ptr->maxComputeWorkgroupSizeX);
     ha_host_struct_ptr->maxComputeWorkgroupSizeX = ha_wasm_struct_ptr->maxComputeWorkgroupSizeX;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupSizeY: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupSizeY, (void *)&ha_host_struct_ptr->maxComputeWorkgroupSizeY);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupSizeY: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupSizeY, (void *)&ha_host_struct_ptr->maxComputeWorkgroupSizeY);
     ha_host_struct_ptr->maxComputeWorkgroupSizeY = ha_wasm_struct_ptr->maxComputeWorkgroupSizeY;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupSizeZ: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupSizeZ, (void *)&ha_host_struct_ptr->maxComputeWorkgroupSizeZ);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupSizeZ: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupSizeZ, (void *)&ha_host_struct_ptr->maxComputeWorkgroupSizeZ);
     ha_host_struct_ptr->maxComputeWorkgroupSizeZ = ha_wasm_struct_ptr->maxComputeWorkgroupSizeZ;
 
-    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupsPerDimension: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupsPerDimension, (void *)&ha_host_struct_ptr->maxComputeWorkgroupsPerDimension);
+    LOG_TRACE("extract_limits: extracting [Embedded<uint32>] maxComputeWorkgroupsPerDimension: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxComputeWorkgroupsPerDimension, (void *)&ha_host_struct_ptr->maxComputeWorkgroupsPerDimension);
     ha_host_struct_ptr->maxComputeWorkgroupsPerDimension = ha_wasm_struct_ptr->maxComputeWorkgroupsPerDimension;
 
     return 0;
@@ -1587,27 +1587,27 @@ int extract_blend_component(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_blend_component: allocating [*HMAS.HS] (%p) as WGPUBlendComponent", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_blend_component: allocating [*HMAS.HWST] (%p) as WGPUBlendComponent", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBlendComponent));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_blend_component: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_blend_component: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_blend_component: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_blend_component: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_blend_component: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_blend_component: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_blend_component: extracting [Embedded<enum>] operation: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->operation, (void *)&ha_host_struct_ptr->operation);
+    LOG_TRACE("extract_blend_component: extracting [Embedded<enum>] operation: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->operation, (void *)&ha_host_struct_ptr->operation);
     ha_host_struct_ptr->operation = ha_wasm_struct_ptr->operation;
 
-    LOG_TRACE("extract_blend_component: extracting [Embedded<enum>] srcFactor: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->srcFactor, (void *)&ha_host_struct_ptr->srcFactor);
+    LOG_TRACE("extract_blend_component: extracting [Embedded<enum>] srcFactor: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->srcFactor, (void *)&ha_host_struct_ptr->srcFactor);
     ha_host_struct_ptr->srcFactor = ha_wasm_struct_ptr->srcFactor;
 
-    LOG_TRACE("extract_blend_component: extracting [Embedded<enum>] dstFactor: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->dstFactor, (void *)&ha_host_struct_ptr->dstFactor);
+    LOG_TRACE("extract_blend_component: extracting [Embedded<enum>] dstFactor: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->dstFactor, (void *)&ha_host_struct_ptr->dstFactor);
     ha_host_struct_ptr->dstFactor = ha_wasm_struct_ptr->dstFactor;
 
     return 0;
@@ -1658,30 +1658,30 @@ int extract_color(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_color: allocating [*HMAS.HS] (%p) as WGPUColor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_color: allocating [*HMAS.HWST] (%p) as WGPUColor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUColor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_color: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_color: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_color: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_color: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_color: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_color: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_color: extracting [Embedded<float64>] r: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->r, (void *)&ha_host_struct_ptr->r);
+    LOG_TRACE("extract_color: extracting [Embedded<float64>] r: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->r, (void *)&ha_host_struct_ptr->r);
     ha_host_struct_ptr->r = ha_wasm_struct_ptr->r;
 
-    LOG_TRACE("extract_color: extracting [Embedded<float64>] g: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->g, (void *)&ha_host_struct_ptr->g);
+    LOG_TRACE("extract_color: extracting [Embedded<float64>] g: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->g, (void *)&ha_host_struct_ptr->g);
     ha_host_struct_ptr->g = ha_wasm_struct_ptr->g;
 
-    LOG_TRACE("extract_color: extracting [Embedded<float64>] b: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->b, (void *)&ha_host_struct_ptr->b);
+    LOG_TRACE("extract_color: extracting [Embedded<float64>] b: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->b, (void *)&ha_host_struct_ptr->b);
     ha_host_struct_ptr->b = ha_wasm_struct_ptr->b;
 
-    LOG_TRACE("extract_color: extracting [Embedded<float64>] a: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->a, (void *)&ha_host_struct_ptr->a);
+    LOG_TRACE("extract_color: extracting [Embedded<float64>] a: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->a, (void *)&ha_host_struct_ptr->a);
     ha_host_struct_ptr->a = ha_wasm_struct_ptr->a;
 
     return 0;
@@ -1730,27 +1730,27 @@ int extract_compute_pass_timestamp_writes(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_compute_pass_timestamp_writes: allocating [*HMAS.HS] (%p) as WGPUComputePassTimestampWrites", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_compute_pass_timestamp_writes: allocating [*HMAS.HWST] (%p) as WGPUComputePassTimestampWrites", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUComputePassTimestampWrites));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_compute_pass_timestamp_writes: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_compute_pass_timestamp_writes: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_compute_pass_timestamp_writes: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_compute_pass_timestamp_writes: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_compute_pass_timestamp_writes: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_compute_pass_timestamp_writes: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_compute_pass_timestamp_writes: extracting [Embedded<object>] querySet: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->querySet, (void *)&ha_host_struct_ptr->querySet);
+    LOG_TRACE("extract_compute_pass_timestamp_writes: extracting [Embedded<object>] querySet: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->querySet, (void *)&ha_host_struct_ptr->querySet);
     ha_host_struct_ptr->querySet = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, ha_wasm_struct_ptr->querySet);
 
-    LOG_TRACE("extract_compute_pass_timestamp_writes: extracting [Embedded<uint32>] beginningOfPassWriteIndex: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->beginningOfPassWriteIndex, (void *)&ha_host_struct_ptr->beginningOfPassWriteIndex);
+    LOG_TRACE("extract_compute_pass_timestamp_writes: extracting [Embedded<uint32>] beginningOfPassWriteIndex: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->beginningOfPassWriteIndex, (void *)&ha_host_struct_ptr->beginningOfPassWriteIndex);
     ha_host_struct_ptr->beginningOfPassWriteIndex = ha_wasm_struct_ptr->beginningOfPassWriteIndex;
 
-    LOG_TRACE("extract_compute_pass_timestamp_writes: extracting [Embedded<uint32>] endOfPassWriteIndex: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->endOfPassWriteIndex, (void *)&ha_host_struct_ptr->endOfPassWriteIndex);
+    LOG_TRACE("extract_compute_pass_timestamp_writes: extracting [Embedded<uint32>] endOfPassWriteIndex: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->endOfPassWriteIndex, (void *)&ha_host_struct_ptr->endOfPassWriteIndex);
     ha_host_struct_ptr->endOfPassWriteIndex = ha_wasm_struct_ptr->endOfPassWriteIndex;
 
     return 0;
@@ -1799,27 +1799,27 @@ int extract_extent_3D(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_extent_3D: allocating [*HMAS.HS] (%p) as WGPUExtent3D", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_extent_3D: allocating [*HMAS.HWST] (%p) as WGPUExtent3D", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUExtent3D));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_extent_3D: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_extent_3D: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_extent_3D: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_extent_3D: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_extent_3D: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_extent_3D: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_extent_3D: extracting [Embedded<uint32>] width: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->width, (void *)&ha_host_struct_ptr->width);
+    LOG_TRACE("extract_extent_3D: extracting [Embedded<uint32>] width: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->width, (void *)&ha_host_struct_ptr->width);
     ha_host_struct_ptr->width = ha_wasm_struct_ptr->width;
 
-    LOG_TRACE("extract_extent_3D: extracting [Embedded<uint32>] height: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->height, (void *)&ha_host_struct_ptr->height);
+    LOG_TRACE("extract_extent_3D: extracting [Embedded<uint32>] height: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->height, (void *)&ha_host_struct_ptr->height);
     ha_host_struct_ptr->height = ha_wasm_struct_ptr->height;
 
-    LOG_TRACE("extract_extent_3D: extracting [Embedded<uint32>] depthOrArrayLayers: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthOrArrayLayers, (void *)&ha_host_struct_ptr->depthOrArrayLayers);
+    LOG_TRACE("extract_extent_3D: extracting [Embedded<uint32>] depthOrArrayLayers: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthOrArrayLayers, (void *)&ha_host_struct_ptr->depthOrArrayLayers);
     ha_host_struct_ptr->depthOrArrayLayers = ha_wasm_struct_ptr->depthOrArrayLayers;
 
     return 0;
@@ -1868,27 +1868,27 @@ int extract_vertex_attribute(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_vertex_attribute: allocating [*HMAS.HS] (%p) as WGPUVertexAttribute", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_vertex_attribute: allocating [*HMAS.HWST] (%p) as WGPUVertexAttribute", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUVertexAttribute));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_vertex_attribute: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_vertex_attribute: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_vertex_attribute: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_vertex_attribute: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_vertex_attribute: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_vertex_attribute: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_vertex_attribute: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
+    LOG_TRACE("extract_vertex_attribute: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
     ha_host_struct_ptr->format = ha_wasm_struct_ptr->format;
 
-    LOG_TRACE("extract_vertex_attribute: extracting [Embedded<uint64>] offset: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->offset, (void *)&ha_host_struct_ptr->offset);
+    LOG_TRACE("extract_vertex_attribute: extracting [Embedded<uint64>] offset: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->offset, (void *)&ha_host_struct_ptr->offset);
     ha_host_struct_ptr->offset = ha_wasm_struct_ptr->offset;
 
-    LOG_TRACE("extract_vertex_attribute: extracting [Embedded<uint32>] shaderLocation: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->shaderLocation, (void *)&ha_host_struct_ptr->shaderLocation);
+    LOG_TRACE("extract_vertex_attribute: extracting [Embedded<uint32>] shaderLocation: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->shaderLocation, (void *)&ha_host_struct_ptr->shaderLocation);
     ha_host_struct_ptr->shaderLocation = ha_wasm_struct_ptr->shaderLocation;
 
     return 0;
@@ -1939,30 +1939,30 @@ int extract_vertex_buffer_layout(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_vertex_buffer_layout: allocating [*HMAS.HS] (%p) as WGPUVertexBufferLayout", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_vertex_buffer_layout: allocating [*HMAS.HWST] (%p) as WGPUVertexBufferLayout", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUVertexBufferLayout));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_vertex_buffer_layout: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_vertex_buffer_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_vertex_buffer_layout: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_vertex_buffer_layout: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_vertex_buffer_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_vertex_buffer_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_vertex_buffer_layout: extracting [Embedded<uint64>] arrayStride: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->arrayStride, (void *)&ha_host_struct_ptr->arrayStride);
+    LOG_TRACE("extract_vertex_buffer_layout: extracting [Embedded<uint64>] arrayStride: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->arrayStride, (void *)&ha_host_struct_ptr->arrayStride);
     ha_host_struct_ptr->arrayStride = ha_wasm_struct_ptr->arrayStride;
 
-    LOG_TRACE("extract_vertex_buffer_layout: extracting [Embedded<enum>] stepMode: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stepMode, (void *)&ha_host_struct_ptr->stepMode);
+    LOG_TRACE("extract_vertex_buffer_layout: extracting [Embedded<enum>] stepMode: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stepMode, (void *)&ha_host_struct_ptr->stepMode);
     ha_host_struct_ptr->stepMode = ha_wasm_struct_ptr->stepMode;
 
-    LOG_TRACE("extract_vertex_buffer_layout: extracting [Embedded<count>] attributeCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->attributeCount, (void *)&ha_host_struct_ptr->attributeCount);
+    LOG_TRACE("extract_vertex_buffer_layout: extracting [Embedded<count>] attributeCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->attributeCount, (void *)&ha_host_struct_ptr->attributeCount);
     ha_host_struct_ptr->attributeCount = ha_wasm_struct_ptr->attributeCount;
 
-    LOG_TRACE("extract_vertex_buffer_layout: extracting [Array<struct>] attributes: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->attributes, (void *)&ha_host_struct_ptr->attributes);
+    LOG_TRACE("extract_vertex_buffer_layout: extracting [Array<struct>] attributes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->attributes, (void *)&ha_host_struct_ptr->attributes);
     /* TODO: Implement SAFE pointer extraction */
     WGPUVertexAttribute *vertex_attribute_array_proto = calloc(ha_host_struct_ptr->attributeCount, sizeof(WGPUVertexAttribute));
     if (vertex_attribute_array_proto == NULL) {
@@ -2024,27 +2024,27 @@ int extract_origin_3D(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_origin_3D: allocating [*HMAS.HS] (%p) as WGPUOrigin3D", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_origin_3D: allocating [*HMAS.HWST] (%p) as WGPUOrigin3D", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUOrigin3D));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_origin_3D: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_origin_3D: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_origin_3D: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_origin_3D: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_origin_3D: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_origin_3D: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_origin_3D: extracting [Embedded<uint32>] x: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->x, (void *)&ha_host_struct_ptr->x);
+    LOG_TRACE("extract_origin_3D: extracting [Embedded<uint32>] x: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->x, (void *)&ha_host_struct_ptr->x);
     ha_host_struct_ptr->x = ha_wasm_struct_ptr->x;
 
-    LOG_TRACE("extract_origin_3D: extracting [Embedded<uint32>] y: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->y, (void *)&ha_host_struct_ptr->y);
+    LOG_TRACE("extract_origin_3D: extracting [Embedded<uint32>] y: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->y, (void *)&ha_host_struct_ptr->y);
     ha_host_struct_ptr->y = ha_wasm_struct_ptr->y;
 
-    LOG_TRACE("extract_origin_3D: extracting [Embedded<uint32>] z: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->z, (void *)&ha_host_struct_ptr->z);
+    LOG_TRACE("extract_origin_3D: extracting [Embedded<uint32>] z: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->z, (void *)&ha_host_struct_ptr->z);
     ha_host_struct_ptr->z = ha_wasm_struct_ptr->z;
 
     return 0;
@@ -2105,45 +2105,45 @@ int extract_render_pass_depth_stencil_attachment(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_render_pass_depth_stencil_attachment: allocating [*HMAS.HS] (%p) as WGPURenderPassDepthStencilAttachment", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_render_pass_depth_stencil_attachment: allocating [*HMAS.HWST] (%p) as WGPURenderPassDepthStencilAttachment", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassDepthStencilAttachment));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_render_pass_depth_stencil_attachment: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_render_pass_depth_stencil_attachment: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_render_pass_depth_stencil_attachment: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_render_pass_depth_stencil_attachment: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<object>] view: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->view, (void *)&ha_host_struct_ptr->view);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<object>] view: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->view, (void *)&ha_host_struct_ptr->view);
     ha_host_struct_ptr->view = (WGPUTextureView)registry_item_get_mapping(&registry->textureViews, ha_wasm_struct_ptr->view);
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<enum>] depthLoadOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthLoadOp, (void *)&ha_host_struct_ptr->depthLoadOp);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<enum>] depthLoadOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthLoadOp, (void *)&ha_host_struct_ptr->depthLoadOp);
     ha_host_struct_ptr->depthLoadOp = ha_wasm_struct_ptr->depthLoadOp;
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<enum>] depthStoreOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthStoreOp, (void *)&ha_host_struct_ptr->depthStoreOp);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<enum>] depthStoreOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthStoreOp, (void *)&ha_host_struct_ptr->depthStoreOp);
     ha_host_struct_ptr->depthStoreOp = ha_wasm_struct_ptr->depthStoreOp;
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<float32>] depthClearValue: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthClearValue, (void *)&ha_host_struct_ptr->depthClearValue);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<float32>] depthClearValue: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthClearValue, (void *)&ha_host_struct_ptr->depthClearValue);
     ha_host_struct_ptr->depthClearValue = ha_wasm_struct_ptr->depthClearValue;
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<bool>] depthReadOnly: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthReadOnly, (void *)&ha_host_struct_ptr->depthReadOnly);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<bool>] depthReadOnly: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthReadOnly, (void *)&ha_host_struct_ptr->depthReadOnly);
     ha_host_struct_ptr->depthReadOnly = ha_wasm_struct_ptr->depthReadOnly;
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<enum>] stencilLoadOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilLoadOp, (void *)&ha_host_struct_ptr->stencilLoadOp);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<enum>] stencilLoadOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilLoadOp, (void *)&ha_host_struct_ptr->stencilLoadOp);
     ha_host_struct_ptr->stencilLoadOp = ha_wasm_struct_ptr->stencilLoadOp;
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<enum>] stencilStoreOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilStoreOp, (void *)&ha_host_struct_ptr->stencilStoreOp);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<enum>] stencilStoreOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilStoreOp, (void *)&ha_host_struct_ptr->stencilStoreOp);
     ha_host_struct_ptr->stencilStoreOp = ha_wasm_struct_ptr->stencilStoreOp;
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<uint32>] stencilClearValue: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilClearValue, (void *)&ha_host_struct_ptr->stencilClearValue);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<uint32>] stencilClearValue: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilClearValue, (void *)&ha_host_struct_ptr->stencilClearValue);
     ha_host_struct_ptr->stencilClearValue = ha_wasm_struct_ptr->stencilClearValue;
 
-    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<bool>] stencilReadOnly: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilReadOnly, (void *)&ha_host_struct_ptr->stencilReadOnly);
+    LOG_TRACE("extract_render_pass_depth_stencil_attachment: extracting [Embedded<bool>] stencilReadOnly: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilReadOnly, (void *)&ha_host_struct_ptr->stencilReadOnly);
     ha_host_struct_ptr->stencilReadOnly = ha_wasm_struct_ptr->stencilReadOnly;
 
     return 0;
@@ -2192,27 +2192,27 @@ int extract_render_pass_timestamp_writes(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_render_pass_timestamp_writes: allocating [*HMAS.HS] (%p) as WGPURenderPassTimestampWrites", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_render_pass_timestamp_writes: allocating [*HMAS.HWST] (%p) as WGPURenderPassTimestampWrites", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassTimestampWrites));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_render_pass_timestamp_writes: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_render_pass_timestamp_writes: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_render_pass_timestamp_writes: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_render_pass_timestamp_writes: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_render_pass_timestamp_writes: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_render_pass_timestamp_writes: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_render_pass_timestamp_writes: extracting [Embedded<object>] querySet: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->querySet, (void *)&ha_host_struct_ptr->querySet);
+    LOG_TRACE("extract_render_pass_timestamp_writes: extracting [Embedded<object>] querySet: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->querySet, (void *)&ha_host_struct_ptr->querySet);
     ha_host_struct_ptr->querySet = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, ha_wasm_struct_ptr->querySet);
 
-    LOG_TRACE("extract_render_pass_timestamp_writes: extracting [Embedded<uint32>] beginningOfPassWriteIndex: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->beginningOfPassWriteIndex, (void *)&ha_host_struct_ptr->beginningOfPassWriteIndex);
+    LOG_TRACE("extract_render_pass_timestamp_writes: extracting [Embedded<uint32>] beginningOfPassWriteIndex: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->beginningOfPassWriteIndex, (void *)&ha_host_struct_ptr->beginningOfPassWriteIndex);
     ha_host_struct_ptr->beginningOfPassWriteIndex = ha_wasm_struct_ptr->beginningOfPassWriteIndex;
 
-    LOG_TRACE("extract_render_pass_timestamp_writes: extracting [Embedded<uint32>] endOfPassWriteIndex: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->endOfPassWriteIndex, (void *)&ha_host_struct_ptr->endOfPassWriteIndex);
+    LOG_TRACE("extract_render_pass_timestamp_writes: extracting [Embedded<uint32>] endOfPassWriteIndex: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->endOfPassWriteIndex, (void *)&ha_host_struct_ptr->endOfPassWriteIndex);
     ha_host_struct_ptr->endOfPassWriteIndex = ha_wasm_struct_ptr->endOfPassWriteIndex;
 
     return 0;
@@ -2259,27 +2259,27 @@ int extract_blend_state(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_blend_state: allocating [*HMAS.HS] (%p) as WGPUBlendState", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_blend_state: allocating [*HMAS.HWST] (%p) as WGPUBlendState", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBlendState));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_blend_state: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_blend_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_blend_state: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_blend_state: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_blend_state: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_blend_state: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_blend_state: extracting [Embedded<struct>] color: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->color, (void *)&ha_host_struct_ptr->color);
+    LOG_TRACE("extract_blend_state: extracting [Embedded<struct>] color: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->color, (void *)&ha_host_struct_ptr->color);
     WGPUBlendComponent *color_ptr = &ha_host_struct_ptr->color;
     if (extract_blend_component(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUBlendState, color), &color_ptr)) {
         LOG_WARN("extract_blend_state: extract_blend_component failed");
     }
 
-    LOG_TRACE("extract_blend_state: extracting [Embedded<struct>] alpha: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->alpha, (void *)&ha_host_struct_ptr->alpha);
+    LOG_TRACE("extract_blend_state: extracting [Embedded<struct>] alpha: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->alpha, (void *)&ha_host_struct_ptr->alpha);
     WGPUBlendComponent *alpha_ptr = &ha_host_struct_ptr->alpha;
     if (extract_blend_component(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUBlendState, alpha), &alpha_ptr)) {
         LOG_WARN("extract_blend_state: extract_blend_component failed");
@@ -2333,30 +2333,30 @@ int extract_stencil_face_state(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_stencil_face_state: allocating [*HMAS.HS] (%p) as WGPUStencilFaceState", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_stencil_face_state: allocating [*HMAS.HWST] (%p) as WGPUStencilFaceState", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUStencilFaceState));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_stencil_face_state: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_stencil_face_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_stencil_face_state: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_stencil_face_state: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_stencil_face_state: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_stencil_face_state: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_stencil_face_state: extracting [Embedded<enum>] compare: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->compare, (void *)&ha_host_struct_ptr->compare);
+    LOG_TRACE("extract_stencil_face_state: extracting [Embedded<enum>] compare: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->compare, (void *)&ha_host_struct_ptr->compare);
     ha_host_struct_ptr->compare = ha_wasm_struct_ptr->compare;
 
-    LOG_TRACE("extract_stencil_face_state: extracting [Embedded<enum>] failOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->failOp, (void *)&ha_host_struct_ptr->failOp);
+    LOG_TRACE("extract_stencil_face_state: extracting [Embedded<enum>] failOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->failOp, (void *)&ha_host_struct_ptr->failOp);
     ha_host_struct_ptr->failOp = ha_wasm_struct_ptr->failOp;
 
-    LOG_TRACE("extract_stencil_face_state: extracting [Embedded<enum>] depthFailOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthFailOp, (void *)&ha_host_struct_ptr->depthFailOp);
+    LOG_TRACE("extract_stencil_face_state: extracting [Embedded<enum>] depthFailOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthFailOp, (void *)&ha_host_struct_ptr->depthFailOp);
     ha_host_struct_ptr->depthFailOp = ha_wasm_struct_ptr->depthFailOp;
 
-    LOG_TRACE("extract_stencil_face_state: extracting [Embedded<enum>] passOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->passOp, (void *)&ha_host_struct_ptr->passOp);
+    LOG_TRACE("extract_stencil_face_state: extracting [Embedded<enum>] passOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->passOp, (void *)&ha_host_struct_ptr->passOp);
     ha_host_struct_ptr->passOp = ha_wasm_struct_ptr->passOp;
 
     return 0;
@@ -2405,27 +2405,27 @@ int extract_surface_texture(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_texture: allocating [*HMAS.HS] (%p) as WGPUSurfaceTexture", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_texture: allocating [*HMAS.HWST] (%p) as WGPUSurfaceTexture", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceTexture));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_texture: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_texture: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_texture: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_texture: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_texture: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_texture: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_texture: extracting [Embedded<object>] texture: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->texture, (void *)&ha_host_struct_ptr->texture);
+    LOG_TRACE("extract_surface_texture: extracting [Embedded<object>] texture: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->texture, (void *)&ha_host_struct_ptr->texture);
     ha_host_struct_ptr->texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, ha_wasm_struct_ptr->texture);
 
-    LOG_TRACE("extract_surface_texture: extracting [Embedded<bool>] suboptimal: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->suboptimal, (void *)&ha_host_struct_ptr->suboptimal);
+    LOG_TRACE("extract_surface_texture: extracting [Embedded<bool>] suboptimal: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->suboptimal, (void *)&ha_host_struct_ptr->suboptimal);
     ha_host_struct_ptr->suboptimal = ha_wasm_struct_ptr->suboptimal;
 
-    LOG_TRACE("extract_surface_texture: extracting [Embedded<enum>] status: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->status, (void *)&ha_host_struct_ptr->status);
+    LOG_TRACE("extract_surface_texture: extracting [Embedded<enum>] status: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->status, (void *)&ha_host_struct_ptr->status);
     ha_host_struct_ptr->status = ha_wasm_struct_ptr->status;
 
     return 0;
@@ -2474,30 +2474,30 @@ int extract_uncaptured_error_callback_info(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_uncaptured_error_callback_info: allocating [*HMAS.HS] (%p) as WGPUUncapturedErrorCallbackInfo", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_uncaptured_error_callback_info: allocating [*HMAS.HWST] (%p) as WGPUUncapturedErrorCallbackInfo", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUUncapturedErrorCallbackInfo));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_uncaptured_error_callback_info: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_uncaptured_error_callback_info: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_uncaptured_error_callback_info: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_uncaptured_error_callback_info: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_uncaptured_error_callback_info: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_uncaptured_error_callback_info: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_uncaptured_error_callback_info: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_uncaptured_error_callback_info: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_uncaptured_error_callback_info: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_uncaptured_error_callback_info: extracting [Embedded<function_type>] callback: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->callback, (void *)&ha_host_struct_ptr->callback);
+    LOG_TRACE("extract_uncaptured_error_callback_info: extracting [Embedded<function_type>] callback: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->callback, (void *)&ha_host_struct_ptr->callback);
     /* TODO: Create native callback function */
     ha_host_struct_ptr->callback = NULL;
 
-    LOG_TRACE("extract_uncaptured_error_callback_info: extracting [Pointer<c_void>] userdata: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->userdata, (void *)&ha_host_struct_ptr->userdata);
+    LOG_TRACE("extract_uncaptured_error_callback_info: extracting [Pointer<c_void>] userdata: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->userdata, (void *)&ha_host_struct_ptr->userdata);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->userdata = (void *)ha_wasm_struct_ptr->userdata;
 
@@ -2549,32 +2549,32 @@ int extract_texture_data_layout(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_texture_data_layout: allocating [*HMAS.HS] (%p) as WGPUTextureDataLayout", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_texture_data_layout: allocating [*HMAS.HWST] (%p) as WGPUTextureDataLayout", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUTextureDataLayout));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_texture_data_layout: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_texture_data_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_texture_data_layout: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_texture_data_layout: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_texture_data_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_texture_data_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_texture_data_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_texture_data_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_texture_data_layout: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_texture_data_layout: extracting [Embedded<uint64>] offset: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->offset, (void *)&ha_host_struct_ptr->offset);
+    LOG_TRACE("extract_texture_data_layout: extracting [Embedded<uint64>] offset: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->offset, (void *)&ha_host_struct_ptr->offset);
     ha_host_struct_ptr->offset = ha_wasm_struct_ptr->offset;
 
-    LOG_TRACE("extract_texture_data_layout: extracting [Embedded<uint32>] bytesPerRow: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->bytesPerRow, (void *)&ha_host_struct_ptr->bytesPerRow);
+    LOG_TRACE("extract_texture_data_layout: extracting [Embedded<uint32>] bytesPerRow: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->bytesPerRow, (void *)&ha_host_struct_ptr->bytesPerRow);
     ha_host_struct_ptr->bytesPerRow = ha_wasm_struct_ptr->bytesPerRow;
 
-    LOG_TRACE("extract_texture_data_layout: extracting [Embedded<uint32>] rowsPerImage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->rowsPerImage, (void *)&ha_host_struct_ptr->rowsPerImage);
+    LOG_TRACE("extract_texture_data_layout: extracting [Embedded<uint32>] rowsPerImage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->rowsPerImage, (void *)&ha_host_struct_ptr->rowsPerImage);
     ha_host_struct_ptr->rowsPerImage = ha_wasm_struct_ptr->rowsPerImage;
 
     return 0;
@@ -2621,26 +2621,26 @@ int extract_queue_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_queue_descriptor: allocating [*HMAS.HS] (%p) as WGPUQueueDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_queue_descriptor: allocating [*HMAS.HWST] (%p) as WGPUQueueDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUQueueDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_queue_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_queue_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_queue_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_queue_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_queue_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_queue_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_queue_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_queue_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_queue_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_queue_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_queue_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_queue_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
@@ -2695,37 +2695,37 @@ int extract_programmable_stage_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_programmable_stage_descriptor: allocating [*HMAS.HS] (%p) as WGPUProgrammableStageDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_programmable_stage_descriptor: allocating [*HMAS.HWST] (%p) as WGPUProgrammableStageDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUProgrammableStageDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_programmable_stage_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_programmable_stage_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_programmable_stage_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_programmable_stage_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_programmable_stage_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_programmable_stage_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_programmable_stage_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Embedded<object>] module: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->module, (void *)&ha_host_struct_ptr->module);
+    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Embedded<object>] module: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->module, (void *)&ha_host_struct_ptr->module);
     ha_host_struct_ptr->module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, ha_wasm_struct_ptr->module);
 
-    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
+    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
         LOG_WARN("extract_programmable_stage_descriptor: wasm_safe_copy_string_null_terminated failed for entry_point");
     }
 
-    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
+    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
     ha_host_struct_ptr->constantCount = ha_wasm_struct_ptr->constantCount;
 
-    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
+    LOG_TRACE("extract_programmable_stage_descriptor: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
     /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
@@ -2791,35 +2791,35 @@ int extract_request_adapter_options(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_request_adapter_options: allocating [*HMAS.HS] (%p) as WGPURequestAdapterOptions", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_request_adapter_options: allocating [*HMAS.HWST] (%p) as WGPURequestAdapterOptions", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURequestAdapterOptions));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_request_adapter_options: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_request_adapter_options: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_request_adapter_options: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_request_adapter_options: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_request_adapter_options: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_request_adapter_options: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_request_adapter_options: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_request_adapter_options: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_request_adapter_options: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_request_adapter_options: extracting [Embedded<object>] compatibleSurface: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->compatibleSurface, (void *)&ha_host_struct_ptr->compatibleSurface);
+    LOG_TRACE("extract_request_adapter_options: extracting [Embedded<object>] compatibleSurface: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->compatibleSurface, (void *)&ha_host_struct_ptr->compatibleSurface);
     ha_host_struct_ptr->compatibleSurface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, ha_wasm_struct_ptr->compatibleSurface);
 
-    LOG_TRACE("extract_request_adapter_options: extracting [Embedded<enum>] powerPreference: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->powerPreference, (void *)&ha_host_struct_ptr->powerPreference);
+    LOG_TRACE("extract_request_adapter_options: extracting [Embedded<enum>] powerPreference: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->powerPreference, (void *)&ha_host_struct_ptr->powerPreference);
     ha_host_struct_ptr->powerPreference = ha_wasm_struct_ptr->powerPreference;
 
-    LOG_TRACE("extract_request_adapter_options: extracting [Embedded<enum>] backendType: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->backendType, (void *)&ha_host_struct_ptr->backendType);
+    LOG_TRACE("extract_request_adapter_options: extracting [Embedded<enum>] backendType: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->backendType, (void *)&ha_host_struct_ptr->backendType);
     ha_host_struct_ptr->backendType = ha_wasm_struct_ptr->backendType;
 
-    LOG_TRACE("extract_request_adapter_options: extracting [Embedded<bool>] forceFallbackAdapter: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->forceFallbackAdapter, (void *)&ha_host_struct_ptr->forceFallbackAdapter);
+    LOG_TRACE("extract_request_adapter_options: extracting [Embedded<bool>] forceFallbackAdapter: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->forceFallbackAdapter, (void *)&ha_host_struct_ptr->forceFallbackAdapter);
     ha_host_struct_ptr->forceFallbackAdapter = ha_wasm_struct_ptr->forceFallbackAdapter;
 
     return 0;
@@ -2880,34 +2880,34 @@ int extract_device_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_device_descriptor: allocating [*HMAS.HS] (%p) as WGPUDeviceDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_device_descriptor: allocating [*HMAS.HWST] (%p) as WGPUDeviceDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUDeviceDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_device_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_device_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_device_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_device_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_device_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_device_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_device_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_device_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_device_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_device_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_device_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_device_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_device_descriptor: extracting [Embedded<count>] requiredFeatureCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->requiredFeatureCount, (void *)&ha_host_struct_ptr->requiredFeatureCount);
+    LOG_TRACE("extract_device_descriptor: extracting [Embedded<count>] requiredFeatureCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->requiredFeatureCount, (void *)&ha_host_struct_ptr->requiredFeatureCount);
     ha_host_struct_ptr->requiredFeatureCount = ha_wasm_struct_ptr->requiredFeatureCount;
 
-    LOG_TRACE("extract_device_descriptor: extracting [Array<enum>] requiredFeatures: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->requiredFeatures, (void *)&ha_host_struct_ptr->requiredFeatures);
+    LOG_TRACE("extract_device_descriptor: extracting [Array<enum>] requiredFeatures: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->requiredFeatures, (void *)&ha_host_struct_ptr->requiredFeatures);
     /* TODO: Implement SAFE pointer extraction */
     WGPUFeatureName *feature_name_array_proto = calloc(ha_host_struct_ptr->requiredFeatureCount, sizeof(int *));
     if (feature_name_array_proto == NULL) {
@@ -2920,26 +2920,26 @@ int extract_device_descriptor(
     }
     ha_host_struct_ptr->requiredFeatures = feature_name_array_proto;
 
-    LOG_TRACE("extract_device_descriptor: extracting [Pointer<struct>] requiredLimits: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->requiredLimits, (void *)&ha_host_struct_ptr->requiredLimits);
+    LOG_TRACE("extract_device_descriptor: extracting [Pointer<struct>] requiredLimits: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->requiredLimits, (void *)&ha_host_struct_ptr->requiredLimits);
     if (extract_required_limits(registry, memory, (byte_t *)ha_wasm_struct_ptr->requiredLimits, &ha_host_struct_ptr->requiredLimits)) {
         LOG_WARN("extract_device_descriptor: extract_required_limits failed");
     }
 
-    LOG_TRACE("extract_device_descriptor: extracting [Embedded<struct>] defaultQueue: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->defaultQueue, (void *)&ha_host_struct_ptr->defaultQueue);
+    LOG_TRACE("extract_device_descriptor: extracting [Embedded<struct>] defaultQueue: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->defaultQueue, (void *)&ha_host_struct_ptr->defaultQueue);
     WGPUQueueDescriptor *default_queue_ptr = &ha_host_struct_ptr->defaultQueue;
     if (extract_queue_descriptor(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUDeviceDescriptor, defaultQueue), &default_queue_ptr)) {
         LOG_WARN("extract_device_descriptor: extract_queue_descriptor failed");
     }
 
-    LOG_TRACE("extract_device_descriptor: extracting [Embedded<function_type>] deviceLostCallback: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->deviceLostCallback, (void *)&ha_host_struct_ptr->deviceLostCallback);
+    LOG_TRACE("extract_device_descriptor: extracting [Embedded<function_type>] deviceLostCallback: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->deviceLostCallback, (void *)&ha_host_struct_ptr->deviceLostCallback);
     /* TODO: Create native callback function */
     ha_host_struct_ptr->deviceLostCallback = NULL;
 
-    LOG_TRACE("extract_device_descriptor: extracting [Pointer<c_void>] deviceLostUserdata: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->deviceLostUserdata, (void *)&ha_host_struct_ptr->deviceLostUserdata);
+    LOG_TRACE("extract_device_descriptor: extracting [Pointer<c_void>] deviceLostUserdata: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->deviceLostUserdata, (void *)&ha_host_struct_ptr->deviceLostUserdata);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->deviceLostUserdata = (void *)ha_wasm_struct_ptr->deviceLostUserdata;
 
-    LOG_TRACE("extract_device_descriptor: extracting [Embedded<struct>] uncapturedErrorCallbackInfo: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->uncapturedErrorCallbackInfo, (void *)&ha_host_struct_ptr->uncapturedErrorCallbackInfo);
+    LOG_TRACE("extract_device_descriptor: extracting [Embedded<struct>] uncapturedErrorCallbackInfo: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->uncapturedErrorCallbackInfo, (void *)&ha_host_struct_ptr->uncapturedErrorCallbackInfo);
     WGPUUncapturedErrorCallbackInfo *uncaptured_error_callback_info_ptr = &ha_host_struct_ptr->uncapturedErrorCallbackInfo;
     if (extract_uncaptured_error_callback_info(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUDeviceDescriptor, uncapturedErrorCallbackInfo), &uncaptured_error_callback_info_ptr)) {
         LOG_WARN("extract_device_descriptor: extract_uncaptured_error_callback_info failed");
@@ -2999,41 +2999,41 @@ int extract_bind_group_entry(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_bind_group_entry: allocating [*HMAS.HS] (%p) as WGPUBindGroupEntry", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_bind_group_entry: allocating [*HMAS.HWST] (%p) as WGPUBindGroupEntry", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBindGroupEntry));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_bind_group_entry: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_bind_group_entry: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_bind_group_entry: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_bind_group_entry: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_bind_group_entry: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_bind_group_entry: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_bind_group_entry: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_bind_group_entry: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_bind_group_entry: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<uint32>] binding: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->binding, (void *)&ha_host_struct_ptr->binding);
+    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<uint32>] binding: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->binding, (void *)&ha_host_struct_ptr->binding);
     ha_host_struct_ptr->binding = ha_wasm_struct_ptr->binding;
 
-    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<object>] buffer: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->buffer, (void *)&ha_host_struct_ptr->buffer);
+    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<object>] buffer: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->buffer, (void *)&ha_host_struct_ptr->buffer);
     ha_host_struct_ptr->buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, ha_wasm_struct_ptr->buffer);
 
-    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<uint64>] offset: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->offset, (void *)&ha_host_struct_ptr->offset);
+    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<uint64>] offset: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->offset, (void *)&ha_host_struct_ptr->offset);
     ha_host_struct_ptr->offset = ha_wasm_struct_ptr->offset;
 
-    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<uint64>] size: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->size, (void *)&ha_host_struct_ptr->size);
+    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<uint64>] size: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->size, (void *)&ha_host_struct_ptr->size);
     ha_host_struct_ptr->size = ha_wasm_struct_ptr->size;
 
-    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<object>] sampler: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->sampler, (void *)&ha_host_struct_ptr->sampler);
+    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<object>] sampler: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->sampler, (void *)&ha_host_struct_ptr->sampler);
     ha_host_struct_ptr->sampler = (WGPUSampler)registry_item_get_mapping(&registry->samplers, ha_wasm_struct_ptr->sampler);
 
-    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<object>] textureView: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->textureView, (void *)&ha_host_struct_ptr->textureView);
+    LOG_TRACE("extract_bind_group_entry: extracting [Embedded<object>] textureView: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->textureView, (void *)&ha_host_struct_ptr->textureView);
     ha_host_struct_ptr->textureView = (WGPUTextureView)registry_item_get_mapping(&registry->textureViews, ha_wasm_struct_ptr->textureView);
 
     return 0;
@@ -3086,37 +3086,37 @@ int extract_bind_group_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_bind_group_descriptor: allocating [*HMAS.HS] (%p) as WGPUBindGroupDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_bind_group_descriptor: allocating [*HMAS.HWST] (%p) as WGPUBindGroupDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBindGroupDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_bind_group_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_bind_group_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_bind_group_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_bind_group_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_bind_group_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_bind_group_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_bind_group_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_bind_group_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_bind_group_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_bind_group_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_bind_group_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_bind_group_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_bind_group_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
+    LOG_TRACE("extract_bind_group_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
     ha_host_struct_ptr->layout = (WGPUBindGroupLayout)registry_item_get_mapping(&registry->bindGroupLayouts, ha_wasm_struct_ptr->layout);
 
-    LOG_TRACE("extract_bind_group_descriptor: extracting [Embedded<count>] entryCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->entryCount, (void *)&ha_host_struct_ptr->entryCount);
+    LOG_TRACE("extract_bind_group_descriptor: extracting [Embedded<count>] entryCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryCount, (void *)&ha_host_struct_ptr->entryCount);
     ha_host_struct_ptr->entryCount = ha_wasm_struct_ptr->entryCount;
 
-    LOG_TRACE("extract_bind_group_descriptor: extracting [Array<struct>] entries: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->entries, (void *)&ha_host_struct_ptr->entries);
+    LOG_TRACE("extract_bind_group_descriptor: extracting [Array<struct>] entries: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entries, (void *)&ha_host_struct_ptr->entries);
     /* TODO: Implement SAFE pointer extraction */
     WGPUBindGroupEntry *bind_group_entry_array_proto = calloc(ha_host_struct_ptr->entryCount, sizeof(WGPUBindGroupEntry));
     if (bind_group_entry_array_proto == NULL) {
@@ -3180,32 +3180,32 @@ int extract_buffer_binding_layout(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_buffer_binding_layout: allocating [*HMAS.HS] (%p) as WGPUBufferBindingLayout", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_buffer_binding_layout: allocating [*HMAS.HWST] (%p) as WGPUBufferBindingLayout", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBufferBindingLayout));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_buffer_binding_layout: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_buffer_binding_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_buffer_binding_layout: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_buffer_binding_layout: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_buffer_binding_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_buffer_binding_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_buffer_binding_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_buffer_binding_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_buffer_binding_layout: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_buffer_binding_layout: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
+    LOG_TRACE("extract_buffer_binding_layout: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
     ha_host_struct_ptr->type = ha_wasm_struct_ptr->type;
 
-    LOG_TRACE("extract_buffer_binding_layout: extracting [Embedded<bool>] hasDynamicOffset: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->hasDynamicOffset, (void *)&ha_host_struct_ptr->hasDynamicOffset);
+    LOG_TRACE("extract_buffer_binding_layout: extracting [Embedded<bool>] hasDynamicOffset: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hasDynamicOffset, (void *)&ha_host_struct_ptr->hasDynamicOffset);
     ha_host_struct_ptr->hasDynamicOffset = ha_wasm_struct_ptr->hasDynamicOffset;
 
-    LOG_TRACE("extract_buffer_binding_layout: extracting [Embedded<uint64>] minBindingSize: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->minBindingSize, (void *)&ha_host_struct_ptr->minBindingSize);
+    LOG_TRACE("extract_buffer_binding_layout: extracting [Embedded<uint64>] minBindingSize: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->minBindingSize, (void *)&ha_host_struct_ptr->minBindingSize);
     ha_host_struct_ptr->minBindingSize = ha_wasm_struct_ptr->minBindingSize;
 
     return 0;
@@ -3252,26 +3252,26 @@ int extract_sampler_binding_layout(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_sampler_binding_layout: allocating [*HMAS.HS] (%p) as WGPUSamplerBindingLayout", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_sampler_binding_layout: allocating [*HMAS.HWST] (%p) as WGPUSamplerBindingLayout", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSamplerBindingLayout));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_sampler_binding_layout: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_sampler_binding_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_sampler_binding_layout: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_sampler_binding_layout: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_sampler_binding_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_sampler_binding_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_sampler_binding_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_sampler_binding_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_sampler_binding_layout: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_sampler_binding_layout: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
+    LOG_TRACE("extract_sampler_binding_layout: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
     ha_host_struct_ptr->type = ha_wasm_struct_ptr->type;
 
     return 0;
@@ -3322,32 +3322,32 @@ int extract_texture_binding_layout(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_texture_binding_layout: allocating [*HMAS.HS] (%p) as WGPUTextureBindingLayout", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_texture_binding_layout: allocating [*HMAS.HWST] (%p) as WGPUTextureBindingLayout", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUTextureBindingLayout));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_texture_binding_layout: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_texture_binding_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_texture_binding_layout: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_texture_binding_layout: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_texture_binding_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_texture_binding_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_texture_binding_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_texture_binding_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_texture_binding_layout: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_texture_binding_layout: extracting [Embedded<enum>] sampleType: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->sampleType, (void *)&ha_host_struct_ptr->sampleType);
+    LOG_TRACE("extract_texture_binding_layout: extracting [Embedded<enum>] sampleType: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->sampleType, (void *)&ha_host_struct_ptr->sampleType);
     ha_host_struct_ptr->sampleType = ha_wasm_struct_ptr->sampleType;
 
-    LOG_TRACE("extract_texture_binding_layout: extracting [Embedded<enum>] viewDimension: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->viewDimension, (void *)&ha_host_struct_ptr->viewDimension);
+    LOG_TRACE("extract_texture_binding_layout: extracting [Embedded<enum>] viewDimension: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewDimension, (void *)&ha_host_struct_ptr->viewDimension);
     ha_host_struct_ptr->viewDimension = ha_wasm_struct_ptr->viewDimension;
 
-    LOG_TRACE("extract_texture_binding_layout: extracting [Embedded<bool>] multisampled: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->multisampled, (void *)&ha_host_struct_ptr->multisampled);
+    LOG_TRACE("extract_texture_binding_layout: extracting [Embedded<bool>] multisampled: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->multisampled, (void *)&ha_host_struct_ptr->multisampled);
     ha_host_struct_ptr->multisampled = ha_wasm_struct_ptr->multisampled;
 
     return 0;
@@ -3410,38 +3410,38 @@ int extract_surface_configuration(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_configuration: allocating [*HMAS.HS] (%p) as WGPUSurfaceConfiguration", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_configuration: allocating [*HMAS.HWST] (%p) as WGPUSurfaceConfiguration", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceConfiguration));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_configuration: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_configuration: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_configuration: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_configuration: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_configuration: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_configuration: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_configuration: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_surface_configuration: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_surface_configuration: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_configuration: extracting [Embedded<object>] device: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->device, (void *)&ha_host_struct_ptr->device);
+    LOG_TRACE("extract_surface_configuration: extracting [Embedded<object>] device: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->device, (void *)&ha_host_struct_ptr->device);
     ha_host_struct_ptr->device = (WGPUDevice)registry_item_get_mapping(&registry->devices, ha_wasm_struct_ptr->device);
 
-    LOG_TRACE("extract_surface_configuration: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
+    LOG_TRACE("extract_surface_configuration: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
     ha_host_struct_ptr->format = ha_wasm_struct_ptr->format;
 
-    LOG_TRACE("extract_surface_configuration: extracting [Embedded<bitflag>] usage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->usage, (void *)&ha_host_struct_ptr->usage);
+    LOG_TRACE("extract_surface_configuration: extracting [Embedded<bitflag>] usage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->usage, (void *)&ha_host_struct_ptr->usage);
     ha_host_struct_ptr->usage = ha_wasm_struct_ptr->usage;
 
-    LOG_TRACE("extract_surface_configuration: extracting [Embedded<count>] viewFormatCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->viewFormatCount, (void *)&ha_host_struct_ptr->viewFormatCount);
+    LOG_TRACE("extract_surface_configuration: extracting [Embedded<count>] viewFormatCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewFormatCount, (void *)&ha_host_struct_ptr->viewFormatCount);
     ha_host_struct_ptr->viewFormatCount = ha_wasm_struct_ptr->viewFormatCount;
 
-    LOG_TRACE("extract_surface_configuration: extracting [Array<enum>] viewFormats: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->viewFormats, (void *)&ha_host_struct_ptr->viewFormats);
+    LOG_TRACE("extract_surface_configuration: extracting [Array<enum>] viewFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewFormats, (void *)&ha_host_struct_ptr->viewFormats);
     /* TODO: Implement SAFE pointer extraction */
     WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->viewFormatCount, sizeof(int *));
     if (texture_format_array_proto == NULL) {
@@ -3454,16 +3454,16 @@ int extract_surface_configuration(
     }
     ha_host_struct_ptr->viewFormats = texture_format_array_proto;
 
-    LOG_TRACE("extract_surface_configuration: extracting [Embedded<enum>] alphaMode: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->alphaMode, (void *)&ha_host_struct_ptr->alphaMode);
+    LOG_TRACE("extract_surface_configuration: extracting [Embedded<enum>] alphaMode: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->alphaMode, (void *)&ha_host_struct_ptr->alphaMode);
     ha_host_struct_ptr->alphaMode = ha_wasm_struct_ptr->alphaMode;
 
-    LOG_TRACE("extract_surface_configuration: extracting [Embedded<uint32>] width: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->width, (void *)&ha_host_struct_ptr->width);
+    LOG_TRACE("extract_surface_configuration: extracting [Embedded<uint32>] width: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->width, (void *)&ha_host_struct_ptr->width);
     ha_host_struct_ptr->width = ha_wasm_struct_ptr->width;
 
-    LOG_TRACE("extract_surface_configuration: extracting [Embedded<uint32>] height: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->height, (void *)&ha_host_struct_ptr->height);
+    LOG_TRACE("extract_surface_configuration: extracting [Embedded<uint32>] height: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->height, (void *)&ha_host_struct_ptr->height);
     ha_host_struct_ptr->height = ha_wasm_struct_ptr->height;
 
-    LOG_TRACE("extract_surface_configuration: extracting [Embedded<enum>] presentMode: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->presentMode, (void *)&ha_host_struct_ptr->presentMode);
+    LOG_TRACE("extract_surface_configuration: extracting [Embedded<enum>] presentMode: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->presentMode, (void *)&ha_host_struct_ptr->presentMode);
     ha_host_struct_ptr->presentMode = ha_wasm_struct_ptr->presentMode;
 
     return 0;
@@ -3514,32 +3514,32 @@ int extract_storage_texture_binding_layout(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_storage_texture_binding_layout: allocating [*HMAS.HS] (%p) as WGPUStorageTextureBindingLayout", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_storage_texture_binding_layout: allocating [*HMAS.HWST] (%p) as WGPUStorageTextureBindingLayout", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUStorageTextureBindingLayout));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_storage_texture_binding_layout: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_storage_texture_binding_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_storage_texture_binding_layout: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_storage_texture_binding_layout: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_storage_texture_binding_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_storage_texture_binding_layout: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_storage_texture_binding_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_storage_texture_binding_layout: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_storage_texture_binding_layout: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_storage_texture_binding_layout: extracting [Embedded<enum>] access: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->access, (void *)&ha_host_struct_ptr->access);
+    LOG_TRACE("extract_storage_texture_binding_layout: extracting [Embedded<enum>] access: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->access, (void *)&ha_host_struct_ptr->access);
     ha_host_struct_ptr->access = ha_wasm_struct_ptr->access;
 
-    LOG_TRACE("extract_storage_texture_binding_layout: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
+    LOG_TRACE("extract_storage_texture_binding_layout: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
     ha_host_struct_ptr->format = ha_wasm_struct_ptr->format;
 
-    LOG_TRACE("extract_storage_texture_binding_layout: extracting [Embedded<enum>] viewDimension: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->viewDimension, (void *)&ha_host_struct_ptr->viewDimension);
+    LOG_TRACE("extract_storage_texture_binding_layout: extracting [Embedded<enum>] viewDimension: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewDimension, (void *)&ha_host_struct_ptr->viewDimension);
     ha_host_struct_ptr->viewDimension = ha_wasm_struct_ptr->viewDimension;
 
     return 0;
@@ -3596,50 +3596,50 @@ int extract_bind_group_layout_entry(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_bind_group_layout_entry: allocating [*HMAS.HS] (%p) as WGPUBindGroupLayoutEntry", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_bind_group_layout_entry: allocating [*HMAS.HWST] (%p) as WGPUBindGroupLayoutEntry", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBindGroupLayoutEntry));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_bind_group_layout_entry: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_bind_group_layout_entry: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_bind_group_layout_entry: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_bind_group_layout_entry: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_bind_group_layout_entry: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_bind_group_layout_entry: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_bind_group_layout_entry: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_bind_group_layout_entry: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_bind_group_layout_entry: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<uint32>] binding: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->binding, (void *)&ha_host_struct_ptr->binding);
+    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<uint32>] binding: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->binding, (void *)&ha_host_struct_ptr->binding);
     ha_host_struct_ptr->binding = ha_wasm_struct_ptr->binding;
 
-    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<bitflag>] visibility: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->visibility, (void *)&ha_host_struct_ptr->visibility);
+    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<bitflag>] visibility: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->visibility, (void *)&ha_host_struct_ptr->visibility);
     ha_host_struct_ptr->visibility = ha_wasm_struct_ptr->visibility;
 
-    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<struct>] buffer: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->buffer, (void *)&ha_host_struct_ptr->buffer);
+    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<struct>] buffer: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->buffer, (void *)&ha_host_struct_ptr->buffer);
     WGPUBufferBindingLayout *buffer_ptr = &ha_host_struct_ptr->buffer;
     if (extract_buffer_binding_layout(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUBindGroupLayoutEntry, buffer), &buffer_ptr)) {
         LOG_WARN("extract_bind_group_layout_entry: extract_buffer_binding_layout failed");
     }
 
-    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<struct>] sampler: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->sampler, (void *)&ha_host_struct_ptr->sampler);
+    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<struct>] sampler: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->sampler, (void *)&ha_host_struct_ptr->sampler);
     WGPUSamplerBindingLayout *sampler_ptr = &ha_host_struct_ptr->sampler;
     if (extract_sampler_binding_layout(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUBindGroupLayoutEntry, sampler), &sampler_ptr)) {
         LOG_WARN("extract_bind_group_layout_entry: extract_sampler_binding_layout failed");
     }
 
-    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<struct>] texture: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->texture, (void *)&ha_host_struct_ptr->texture);
+    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<struct>] texture: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->texture, (void *)&ha_host_struct_ptr->texture);
     WGPUTextureBindingLayout *texture_ptr = &ha_host_struct_ptr->texture;
     if (extract_texture_binding_layout(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUBindGroupLayoutEntry, texture), &texture_ptr)) {
         LOG_WARN("extract_bind_group_layout_entry: extract_texture_binding_layout failed");
     }
 
-    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<struct>] storageTexture: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->storageTexture, (void *)&ha_host_struct_ptr->storageTexture);
+    LOG_TRACE("extract_bind_group_layout_entry: extracting [Embedded<struct>] storageTexture: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->storageTexture, (void *)&ha_host_struct_ptr->storageTexture);
     WGPUStorageTextureBindingLayout *storage_texture_ptr = &ha_host_struct_ptr->storageTexture;
     if (extract_storage_texture_binding_layout(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUBindGroupLayoutEntry, storageTexture), &storage_texture_ptr)) {
         LOG_WARN("extract_bind_group_layout_entry: extract_storage_texture_binding_layout failed");
@@ -3693,34 +3693,34 @@ int extract_bind_group_layout_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_bind_group_layout_descriptor: allocating [*HMAS.HS] (%p) as WGPUBindGroupLayoutDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_bind_group_layout_descriptor: allocating [*HMAS.HWST] (%p) as WGPUBindGroupLayoutDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBindGroupLayoutDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_bind_group_layout_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_bind_group_layout_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_bind_group_layout_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_bind_group_layout_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_bind_group_layout_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_bind_group_layout_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Embedded<count>] entryCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->entryCount, (void *)&ha_host_struct_ptr->entryCount);
+    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Embedded<count>] entryCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryCount, (void *)&ha_host_struct_ptr->entryCount);
     ha_host_struct_ptr->entryCount = ha_wasm_struct_ptr->entryCount;
 
-    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Array<struct>] entries: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->entries, (void *)&ha_host_struct_ptr->entries);
+    LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Array<struct>] entries: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entries, (void *)&ha_host_struct_ptr->entries);
     /* TODO: Implement SAFE pointer extraction */
     WGPUBindGroupLayoutEntry *bind_group_layout_entry_array_proto = calloc(ha_host_struct_ptr->entryCount, sizeof(WGPUBindGroupLayoutEntry));
     if (bind_group_layout_entry_array_proto == NULL) {
@@ -3786,37 +3786,37 @@ int extract_buffer_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_buffer_descriptor: allocating [*HMAS.HS] (%p) as WGPUBufferDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_buffer_descriptor: allocating [*HMAS.HWST] (%p) as WGPUBufferDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBufferDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_buffer_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_buffer_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_buffer_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_buffer_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_buffer_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_buffer_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_buffer_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_buffer_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_buffer_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_buffer_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<bitflag>] usage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->usage, (void *)&ha_host_struct_ptr->usage);
+    LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<bitflag>] usage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->usage, (void *)&ha_host_struct_ptr->usage);
     ha_host_struct_ptr->usage = ha_wasm_struct_ptr->usage;
 
-    LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<uint64>] size: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->size, (void *)&ha_host_struct_ptr->size);
+    LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<uint64>] size: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->size, (void *)&ha_host_struct_ptr->size);
     ha_host_struct_ptr->size = ha_wasm_struct_ptr->size;
 
-    LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<bool>] mappedAtCreation: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->mappedAtCreation, (void *)&ha_host_struct_ptr->mappedAtCreation);
+    LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<bool>] mappedAtCreation: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->mappedAtCreation, (void *)&ha_host_struct_ptr->mappedAtCreation);
     ha_host_struct_ptr->mappedAtCreation = ha_wasm_struct_ptr->mappedAtCreation;
 
     return 0;
@@ -3865,31 +3865,31 @@ int extract_constant_entry(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_constant_entry: allocating [*HMAS.HS] (%p) as WGPUConstantEntry", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_constant_entry: allocating [*HMAS.HWST] (%p) as WGPUConstantEntry", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUConstantEntry));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_constant_entry: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_constant_entry: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_constant_entry: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_constant_entry: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_constant_entry: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_constant_entry: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_constant_entry: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_constant_entry: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_constant_entry: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_constant_entry: extracting [Embedded<string>] key: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->key, (void *)&ha_host_struct_ptr->key);
+    LOG_TRACE("extract_constant_entry: extracting [Embedded<string>] key: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->key, (void *)&ha_host_struct_ptr->key);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->key, &ha_host_struct_ptr->key, 65534)) {
         LOG_WARN("extract_constant_entry: wasm_safe_copy_string_null_terminated failed for key");
     }
 
-    LOG_TRACE("extract_constant_entry: extracting [Embedded<float64>] value: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->value, (void *)&ha_host_struct_ptr->value);
+    LOG_TRACE("extract_constant_entry: extracting [Embedded<float64>] value: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->value, (void *)&ha_host_struct_ptr->value);
     ha_host_struct_ptr->value = ha_wasm_struct_ptr->value;
 
     return 0;
@@ -3936,26 +3936,26 @@ int extract_command_buffer_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_command_buffer_descriptor: allocating [*HMAS.HS] (%p) as WGPUCommandBufferDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_command_buffer_descriptor: allocating [*HMAS.HWST] (%p) as WGPUCommandBufferDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUCommandBufferDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_command_buffer_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_command_buffer_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_command_buffer_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_command_buffer_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_command_buffer_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_command_buffer_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_command_buffer_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_command_buffer_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_command_buffer_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_command_buffer_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_command_buffer_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_command_buffer_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
@@ -4004,26 +4004,26 @@ int extract_command_encoder_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_command_encoder_descriptor: allocating [*HMAS.HS] (%p) as WGPUCommandEncoderDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_command_encoder_descriptor: allocating [*HMAS.HWST] (%p) as WGPUCommandEncoderDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUCommandEncoderDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_command_encoder_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_command_encoder_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_command_encoder_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_command_encoder_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_command_encoder_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_command_encoder_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_command_encoder_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_command_encoder_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_command_encoder_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_command_encoder_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_command_encoder_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_command_encoder_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
@@ -4074,29 +4074,29 @@ int extract_compilation_info(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_compilation_info: allocating [*HMAS.HS] (%p) as WGPUCompilationInfo", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_compilation_info: allocating [*HMAS.HWST] (%p) as WGPUCompilationInfo", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUCompilationInfo));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_compilation_info: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_compilation_info: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_compilation_info: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_compilation_info: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_compilation_info: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_compilation_info: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_compilation_info: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_compilation_info: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_compilation_info: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_compilation_info: extracting [Embedded<count>] messageCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->messageCount, (void *)&ha_host_struct_ptr->messageCount);
+    LOG_TRACE("extract_compilation_info: extracting [Embedded<count>] messageCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->messageCount, (void *)&ha_host_struct_ptr->messageCount);
     ha_host_struct_ptr->messageCount = ha_wasm_struct_ptr->messageCount;
 
-    LOG_TRACE("extract_compilation_info: extracting [Array<struct>] messages: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->messages, (void *)&ha_host_struct_ptr->messages);
+    LOG_TRACE("extract_compilation_info: extracting [Array<struct>] messages: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->messages, (void *)&ha_host_struct_ptr->messages);
     /* TODO: Implement SAFE pointer extraction */
     WGPUCompilationMessage *compilation_message_array_proto = calloc(ha_host_struct_ptr->messageCount, sizeof(WGPUCompilationMessage));
     if (compilation_message_array_proto == NULL) {
@@ -4172,52 +4172,52 @@ int extract_compilation_message(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_compilation_message: allocating [*HMAS.HS] (%p) as WGPUCompilationMessage", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_compilation_message: allocating [*HMAS.HWST] (%p) as WGPUCompilationMessage", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUCompilationMessage));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_compilation_message: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_compilation_message: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_compilation_message: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_compilation_message: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_compilation_message: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_compilation_message: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_compilation_message: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_compilation_message: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_compilation_message: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<string>] message: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->message, (void *)&ha_host_struct_ptr->message);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<string>] message: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->message, (void *)&ha_host_struct_ptr->message);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->message, &ha_host_struct_ptr->message, 65534)) {
         LOG_WARN("extract_compilation_message: wasm_safe_copy_string_null_terminated failed for message");
     }
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
     ha_host_struct_ptr->type = ha_wasm_struct_ptr->type;
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] lineNum: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->lineNum, (void *)&ha_host_struct_ptr->lineNum);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] lineNum: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->lineNum, (void *)&ha_host_struct_ptr->lineNum);
     ha_host_struct_ptr->lineNum = ha_wasm_struct_ptr->lineNum;
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] linePos: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->linePos, (void *)&ha_host_struct_ptr->linePos);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] linePos: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->linePos, (void *)&ha_host_struct_ptr->linePos);
     ha_host_struct_ptr->linePos = ha_wasm_struct_ptr->linePos;
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] offset: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->offset, (void *)&ha_host_struct_ptr->offset);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] offset: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->offset, (void *)&ha_host_struct_ptr->offset);
     ha_host_struct_ptr->offset = ha_wasm_struct_ptr->offset;
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] length: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->length, (void *)&ha_host_struct_ptr->length);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] length: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->length, (void *)&ha_host_struct_ptr->length);
     ha_host_struct_ptr->length = ha_wasm_struct_ptr->length;
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] utf16LinePos: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->utf16LinePos, (void *)&ha_host_struct_ptr->utf16LinePos);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] utf16LinePos: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->utf16LinePos, (void *)&ha_host_struct_ptr->utf16LinePos);
     ha_host_struct_ptr->utf16LinePos = ha_wasm_struct_ptr->utf16LinePos;
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] utf16Offset: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->utf16Offset, (void *)&ha_host_struct_ptr->utf16Offset);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] utf16Offset: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->utf16Offset, (void *)&ha_host_struct_ptr->utf16Offset);
     ha_host_struct_ptr->utf16Offset = ha_wasm_struct_ptr->utf16Offset;
 
-    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] utf16Length: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->utf16Length, (void *)&ha_host_struct_ptr->utf16Length);
+    LOG_TRACE("extract_compilation_message: extracting [Embedded<uint64>] utf16Length: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->utf16Length, (void *)&ha_host_struct_ptr->utf16Length);
     ha_host_struct_ptr->utf16Length = ha_wasm_struct_ptr->utf16Length;
 
     return 0;
@@ -4266,31 +4266,31 @@ int extract_compute_pass_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_compute_pass_descriptor: allocating [*HMAS.HS] (%p) as WGPUComputePassDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_compute_pass_descriptor: allocating [*HMAS.HWST] (%p) as WGPUComputePassDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUComputePassDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_compute_pass_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_compute_pass_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_compute_pass_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_compute_pass_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_compute_pass_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_compute_pass_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_compute_pass_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_compute_pass_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_compute_pass_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_compute_pass_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_compute_pass_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_compute_pass_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_compute_pass_descriptor: extracting [Pointer<struct>] timestampWrites: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->timestampWrites, (void *)&ha_host_struct_ptr->timestampWrites);
+    LOG_TRACE("extract_compute_pass_descriptor: extracting [Pointer<struct>] timestampWrites: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->timestampWrites, (void *)&ha_host_struct_ptr->timestampWrites);
     if (extract_compute_pass_timestamp_writes(registry, memory, (byte_t *)ha_wasm_struct_ptr->timestampWrites, &ha_host_struct_ptr->timestampWrites)) {
         LOG_WARN("extract_compute_pass_descriptor: extract_compute_pass_timestamp_writes failed");
     }
@@ -4343,34 +4343,34 @@ int extract_compute_pipeline_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_compute_pipeline_descriptor: allocating [*HMAS.HS] (%p) as WGPUComputePipelineDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_compute_pipeline_descriptor: allocating [*HMAS.HWST] (%p) as WGPUComputePipelineDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUComputePipelineDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_compute_pipeline_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_compute_pipeline_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_compute_pipeline_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_compute_pipeline_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_compute_pipeline_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_compute_pipeline_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
+    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
     ha_host_struct_ptr->layout = (WGPUPipelineLayout)registry_item_get_mapping(&registry->pipelineLayouts, ha_wasm_struct_ptr->layout);
 
-    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Embedded<struct>] compute: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->compute, (void *)&ha_host_struct_ptr->compute);
+    LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Embedded<struct>] compute: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->compute, (void *)&ha_host_struct_ptr->compute);
     WGPUProgrammableStageDescriptor *compute_ptr = &ha_host_struct_ptr->compute;
     if (extract_programmable_stage_descriptor(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUComputePipelineDescriptor, compute), &compute_ptr)) {
         LOG_WARN("extract_compute_pipeline_descriptor: extract_programmable_stage_descriptor failed");
@@ -4420,26 +4420,26 @@ int extract_required_limits(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_required_limits: allocating [*HMAS.HS] (%p) as WGPURequiredLimits", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_required_limits: allocating [*HMAS.HWST] (%p) as WGPURequiredLimits", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURequiredLimits));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_required_limits: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_required_limits: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_required_limits: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_required_limits: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_required_limits: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_required_limits: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_required_limits: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_required_limits: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_required_limits: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_required_limits: extracting [Embedded<struct>] limits: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->limits, (void *)&ha_host_struct_ptr->limits);
+    LOG_TRACE("extract_required_limits: extracting [Embedded<struct>] limits: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->limits, (void *)&ha_host_struct_ptr->limits);
     WGPULimits *limits_ptr = &ha_host_struct_ptr->limits;
     if (extract_limits(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPURequiredLimits, limits), &limits_ptr)) {
         LOG_WARN("extract_required_limits: extract_limits failed");
@@ -4491,32 +4491,32 @@ int extract_image_copy_buffer(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_image_copy_buffer: allocating [*HMAS.HS] (%p) as WGPUImageCopyBuffer", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_image_copy_buffer: allocating [*HMAS.HWST] (%p) as WGPUImageCopyBuffer", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUImageCopyBuffer));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_image_copy_buffer: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_image_copy_buffer: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_image_copy_buffer: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_image_copy_buffer: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_image_copy_buffer: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_image_copy_buffer: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_image_copy_buffer: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_image_copy_buffer: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_image_copy_buffer: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_image_copy_buffer: extracting [Embedded<struct>] layout: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
+    LOG_TRACE("extract_image_copy_buffer: extracting [Embedded<struct>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
     WGPUTextureDataLayout *layout_ptr = &ha_host_struct_ptr->layout;
     if (extract_texture_data_layout(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUImageCopyBuffer, layout), &layout_ptr)) {
         LOG_WARN("extract_image_copy_buffer: extract_texture_data_layout failed");
     }
 
-    LOG_TRACE("extract_image_copy_buffer: extracting [Embedded<object>] buffer: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->buffer, (void *)&ha_host_struct_ptr->buffer);
+    LOG_TRACE("extract_image_copy_buffer: extracting [Embedded<object>] buffer: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->buffer, (void *)&ha_host_struct_ptr->buffer);
     ha_host_struct_ptr->buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, ha_wasm_struct_ptr->buffer);
 
     return 0;
@@ -4569,38 +4569,38 @@ int extract_image_copy_texture(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_image_copy_texture: allocating [*HMAS.HS] (%p) as WGPUImageCopyTexture", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_image_copy_texture: allocating [*HMAS.HWST] (%p) as WGPUImageCopyTexture", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUImageCopyTexture));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_image_copy_texture: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_image_copy_texture: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_image_copy_texture: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_image_copy_texture: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_image_copy_texture: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_image_copy_texture: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_image_copy_texture: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_image_copy_texture: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_image_copy_texture: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_image_copy_texture: extracting [Embedded<object>] texture: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->texture, (void *)&ha_host_struct_ptr->texture);
+    LOG_TRACE("extract_image_copy_texture: extracting [Embedded<object>] texture: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->texture, (void *)&ha_host_struct_ptr->texture);
     ha_host_struct_ptr->texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, ha_wasm_struct_ptr->texture);
 
-    LOG_TRACE("extract_image_copy_texture: extracting [Embedded<uint32>] mipLevel: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->mipLevel, (void *)&ha_host_struct_ptr->mipLevel);
+    LOG_TRACE("extract_image_copy_texture: extracting [Embedded<uint32>] mipLevel: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->mipLevel, (void *)&ha_host_struct_ptr->mipLevel);
     ha_host_struct_ptr->mipLevel = ha_wasm_struct_ptr->mipLevel;
 
-    LOG_TRACE("extract_image_copy_texture: extracting [Embedded<struct>] origin: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->origin, (void *)&ha_host_struct_ptr->origin);
+    LOG_TRACE("extract_image_copy_texture: extracting [Embedded<struct>] origin: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->origin, (void *)&ha_host_struct_ptr->origin);
     WGPUOrigin3D *origin_ptr = &ha_host_struct_ptr->origin;
     if (extract_origin_3D(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUImageCopyTexture, origin), &origin_ptr)) {
         LOG_WARN("extract_image_copy_texture: extract_origin_3D failed");
     }
 
-    LOG_TRACE("extract_image_copy_texture: extracting [Embedded<enum>] aspect: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->aspect, (void *)&ha_host_struct_ptr->aspect);
+    LOG_TRACE("extract_image_copy_texture: extracting [Embedded<enum>] aspect: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->aspect, (void *)&ha_host_struct_ptr->aspect);
     ha_host_struct_ptr->aspect = ha_wasm_struct_ptr->aspect;
 
     return 0;
@@ -4645,21 +4645,21 @@ int extract_instance_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_instance_descriptor: allocating [*HMAS.HS] (%p) as WGPUInstanceDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_instance_descriptor: allocating [*HMAS.HWST] (%p) as WGPUInstanceDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUInstanceDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_instance_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_instance_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_instance_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_instance_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_instance_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_instance_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_instance_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_instance_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_instance_descriptor: extract_chained_struct failed");
     }
@@ -4712,34 +4712,34 @@ int extract_pipeline_layout_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_pipeline_layout_descriptor: allocating [*HMAS.HS] (%p) as WGPUPipelineLayoutDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_pipeline_layout_descriptor: allocating [*HMAS.HWST] (%p) as WGPUPipelineLayoutDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUPipelineLayoutDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_pipeline_layout_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_pipeline_layout_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_pipeline_layout_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_pipeline_layout_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_pipeline_layout_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_pipeline_layout_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Embedded<count>] bindGroupLayoutCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->bindGroupLayoutCount, (void *)&ha_host_struct_ptr->bindGroupLayoutCount);
+    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Embedded<count>] bindGroupLayoutCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->bindGroupLayoutCount, (void *)&ha_host_struct_ptr->bindGroupLayoutCount);
     ha_host_struct_ptr->bindGroupLayoutCount = ha_wasm_struct_ptr->bindGroupLayoutCount;
 
-    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Array<object>] bindGroupLayouts: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->bindGroupLayouts, (void *)&ha_host_struct_ptr->bindGroupLayouts);
+    LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Array<object>] bindGroupLayouts: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->bindGroupLayouts, (void *)&ha_host_struct_ptr->bindGroupLayouts);
     /* TODO: Implement SAFE pointer extraction */
     WGPUBindGroupLayout *bind_group_layout_array_proto = calloc(ha_host_struct_ptr->bindGroupLayoutCount, sizeof(WGPUBindGroupLayout *));
     if (bind_group_layout_array_proto == NULL) {
@@ -4800,34 +4800,34 @@ int extract_query_set_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_query_set_descriptor: allocating [*HMAS.HS] (%p) as WGPUQuerySetDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_query_set_descriptor: allocating [*HMAS.HWST] (%p) as WGPUQuerySetDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUQuerySetDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_query_set_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_query_set_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_query_set_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_query_set_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_query_set_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_query_set_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_query_set_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_query_set_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_query_set_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_query_set_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_query_set_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_query_set_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_query_set_descriptor: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
+    LOG_TRACE("extract_query_set_descriptor: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
     ha_host_struct_ptr->type = ha_wasm_struct_ptr->type;
 
-    LOG_TRACE("extract_query_set_descriptor: extracting [Embedded<uint32>] count: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->count, (void *)&ha_host_struct_ptr->count);
+    LOG_TRACE("extract_query_set_descriptor: extracting [Embedded<uint32>] count: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->count, (void *)&ha_host_struct_ptr->count);
     ha_host_struct_ptr->count = ha_wasm_struct_ptr->count;
 
     return 0;
@@ -4874,26 +4874,26 @@ int extract_render_bundle_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_render_bundle_descriptor: allocating [*HMAS.HS] (%p) as WGPURenderBundleDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_render_bundle_descriptor: allocating [*HMAS.HWST] (%p) as WGPURenderBundleDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderBundleDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_render_bundle_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_render_bundle_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_render_bundle_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_render_bundle_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_render_bundle_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_render_bundle_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_render_bundle_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_render_bundle_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_render_bundle_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_render_bundle_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_render_bundle_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_render_bundle_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
@@ -4954,34 +4954,34 @@ int extract_render_bundle_encoder_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_render_bundle_encoder_descriptor: allocating [*HMAS.HS] (%p) as WGPURenderBundleEncoderDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_render_bundle_encoder_descriptor: allocating [*HMAS.HWST] (%p) as WGPURenderBundleEncoderDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderBundleEncoderDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_render_bundle_encoder_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_render_bundle_encoder_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_render_bundle_encoder_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_render_bundle_encoder_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_render_bundle_encoder_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_render_bundle_encoder_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<count>] colorFormatCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->colorFormatCount, (void *)&ha_host_struct_ptr->colorFormatCount);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<count>] colorFormatCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorFormatCount, (void *)&ha_host_struct_ptr->colorFormatCount);
     ha_host_struct_ptr->colorFormatCount = ha_wasm_struct_ptr->colorFormatCount;
 
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Array<enum>] colorFormats: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->colorFormats, (void *)&ha_host_struct_ptr->colorFormats);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Array<enum>] colorFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorFormats, (void *)&ha_host_struct_ptr->colorFormats);
     /* TODO: Implement SAFE pointer extraction */
     WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->colorFormatCount, sizeof(int *));
     if (texture_format_array_proto == NULL) {
@@ -4994,16 +4994,16 @@ int extract_render_bundle_encoder_descriptor(
     }
     ha_host_struct_ptr->colorFormats = texture_format_array_proto;
 
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<enum>] depthStencilFormat: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthStencilFormat, (void *)&ha_host_struct_ptr->depthStencilFormat);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<enum>] depthStencilFormat: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthStencilFormat, (void *)&ha_host_struct_ptr->depthStencilFormat);
     ha_host_struct_ptr->depthStencilFormat = ha_wasm_struct_ptr->depthStencilFormat;
 
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<uint32>] sampleCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->sampleCount, (void *)&ha_host_struct_ptr->sampleCount);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<uint32>] sampleCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->sampleCount, (void *)&ha_host_struct_ptr->sampleCount);
     ha_host_struct_ptr->sampleCount = ha_wasm_struct_ptr->sampleCount;
 
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<bool>] depthReadOnly: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthReadOnly, (void *)&ha_host_struct_ptr->depthReadOnly);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<bool>] depthReadOnly: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthReadOnly, (void *)&ha_host_struct_ptr->depthReadOnly);
     ha_host_struct_ptr->depthReadOnly = ha_wasm_struct_ptr->depthReadOnly;
 
-    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<bool>] stencilReadOnly: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilReadOnly, (void *)&ha_host_struct_ptr->stencilReadOnly);
+    LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<bool>] stencilReadOnly: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilReadOnly, (void *)&ha_host_struct_ptr->stencilReadOnly);
     ha_host_struct_ptr->stencilReadOnly = ha_wasm_struct_ptr->stencilReadOnly;
 
     return 0;
@@ -5060,41 +5060,41 @@ int extract_render_pass_color_attachment(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_render_pass_color_attachment: allocating [*HMAS.HS] (%p) as WGPURenderPassColorAttachment", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_render_pass_color_attachment: allocating [*HMAS.HWST] (%p) as WGPURenderPassColorAttachment", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassColorAttachment));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_render_pass_color_attachment: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_render_pass_color_attachment: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_render_pass_color_attachment: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_render_pass_color_attachment: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_render_pass_color_attachment: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_render_pass_color_attachment: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_render_pass_color_attachment: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_render_pass_color_attachment: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_render_pass_color_attachment: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<object>] view: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->view, (void *)&ha_host_struct_ptr->view);
+    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<object>] view: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->view, (void *)&ha_host_struct_ptr->view);
     ha_host_struct_ptr->view = (WGPUTextureView)registry_item_get_mapping(&registry->textureViews, ha_wasm_struct_ptr->view);
 
-    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<uint32>] depthSlice: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthSlice, (void *)&ha_host_struct_ptr->depthSlice);
+    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<uint32>] depthSlice: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthSlice, (void *)&ha_host_struct_ptr->depthSlice);
     ha_host_struct_ptr->depthSlice = ha_wasm_struct_ptr->depthSlice;
 
-    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<object>] resolveTarget: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->resolveTarget, (void *)&ha_host_struct_ptr->resolveTarget);
+    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<object>] resolveTarget: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->resolveTarget, (void *)&ha_host_struct_ptr->resolveTarget);
     ha_host_struct_ptr->resolveTarget = (WGPUTextureView)registry_item_get_mapping(&registry->textureViews, ha_wasm_struct_ptr->resolveTarget);
 
-    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<enum>] loadOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->loadOp, (void *)&ha_host_struct_ptr->loadOp);
+    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<enum>] loadOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->loadOp, (void *)&ha_host_struct_ptr->loadOp);
     ha_host_struct_ptr->loadOp = ha_wasm_struct_ptr->loadOp;
 
-    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<enum>] storeOp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->storeOp, (void *)&ha_host_struct_ptr->storeOp);
+    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<enum>] storeOp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->storeOp, (void *)&ha_host_struct_ptr->storeOp);
     ha_host_struct_ptr->storeOp = ha_wasm_struct_ptr->storeOp;
 
-    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<struct>] clearValue: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->clearValue, (void *)&ha_host_struct_ptr->clearValue);
+    LOG_TRACE("extract_render_pass_color_attachment: extracting [Embedded<struct>] clearValue: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->clearValue, (void *)&ha_host_struct_ptr->clearValue);
     WGPUColor *clear_value_ptr = &ha_host_struct_ptr->clearValue;
     if (extract_color(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPURenderPassColorAttachment, clearValue), &clear_value_ptr)) {
         LOG_WARN("extract_render_pass_color_attachment: extract_color failed");
@@ -5154,34 +5154,34 @@ int extract_render_pass_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_render_pass_descriptor: allocating [*HMAS.HS] (%p) as WGPURenderPassDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_render_pass_descriptor: allocating [*HMAS.HWST] (%p) as WGPURenderPassDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_render_pass_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_render_pass_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_render_pass_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_render_pass_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_render_pass_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_render_pass_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_render_pass_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_render_pass_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_render_pass_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_render_pass_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_render_pass_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_render_pass_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_render_pass_descriptor: extracting [Embedded<count>] colorAttachmentCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->colorAttachmentCount, (void *)&ha_host_struct_ptr->colorAttachmentCount);
+    LOG_TRACE("extract_render_pass_descriptor: extracting [Embedded<count>] colorAttachmentCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorAttachmentCount, (void *)&ha_host_struct_ptr->colorAttachmentCount);
     ha_host_struct_ptr->colorAttachmentCount = ha_wasm_struct_ptr->colorAttachmentCount;
 
-    LOG_TRACE("extract_render_pass_descriptor: extracting [Array<struct>] colorAttachments: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->colorAttachments, (void *)&ha_host_struct_ptr->colorAttachments);
+    LOG_TRACE("extract_render_pass_descriptor: extracting [Array<struct>] colorAttachments: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorAttachments, (void *)&ha_host_struct_ptr->colorAttachments);
     /* TODO: Implement SAFE pointer extraction */
     WGPURenderPassColorAttachment *render_pass_color_attachment_array_proto = calloc(ha_host_struct_ptr->colorAttachmentCount, sizeof(WGPURenderPassColorAttachment));
     if (render_pass_color_attachment_array_proto == NULL) {
@@ -5197,15 +5197,15 @@ int extract_render_pass_descriptor(
     }
     ha_host_struct_ptr->colorAttachments = render_pass_color_attachment_array_proto;
 
-    LOG_TRACE("extract_render_pass_descriptor: extracting [Pointer<struct>] depthStencilAttachment: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthStencilAttachment, (void *)&ha_host_struct_ptr->depthStencilAttachment);
+    LOG_TRACE("extract_render_pass_descriptor: extracting [Pointer<struct>] depthStencilAttachment: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthStencilAttachment, (void *)&ha_host_struct_ptr->depthStencilAttachment);
     if (extract_render_pass_depth_stencil_attachment(registry, memory, (byte_t *)ha_wasm_struct_ptr->depthStencilAttachment, &ha_host_struct_ptr->depthStencilAttachment)) {
         LOG_WARN("extract_render_pass_descriptor: extract_render_pass_depth_stencil_attachment failed");
     }
 
-    LOG_TRACE("extract_render_pass_descriptor: extracting [Embedded<object>] occlusionQuerySet: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->occlusionQuerySet, (void *)&ha_host_struct_ptr->occlusionQuerySet);
+    LOG_TRACE("extract_render_pass_descriptor: extracting [Embedded<object>] occlusionQuerySet: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->occlusionQuerySet, (void *)&ha_host_struct_ptr->occlusionQuerySet);
     ha_host_struct_ptr->occlusionQuerySet = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, ha_wasm_struct_ptr->occlusionQuerySet);
 
-    LOG_TRACE("extract_render_pass_descriptor: extracting [Pointer<struct>] timestampWrites: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->timestampWrites, (void *)&ha_host_struct_ptr->timestampWrites);
+    LOG_TRACE("extract_render_pass_descriptor: extracting [Pointer<struct>] timestampWrites: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->timestampWrites, (void *)&ha_host_struct_ptr->timestampWrites);
     if (extract_render_pass_timestamp_writes(registry, memory, (byte_t *)ha_wasm_struct_ptr->timestampWrites, &ha_host_struct_ptr->timestampWrites)) {
         LOG_WARN("extract_render_pass_descriptor: extract_render_pass_timestamp_writes failed");
     }
@@ -5264,37 +5264,37 @@ int extract_vertex_state(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_vertex_state: allocating [*HMAS.HS] (%p) as WGPUVertexState", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_vertex_state: allocating [*HMAS.HWST] (%p) as WGPUVertexState", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUVertexState));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_vertex_state: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_vertex_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_vertex_state: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_vertex_state: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_vertex_state: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_vertex_state: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_vertex_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_vertex_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_vertex_state: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_vertex_state: extracting [Embedded<object>] module: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->module, (void *)&ha_host_struct_ptr->module);
+    LOG_TRACE("extract_vertex_state: extracting [Embedded<object>] module: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->module, (void *)&ha_host_struct_ptr->module);
     ha_host_struct_ptr->module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, ha_wasm_struct_ptr->module);
 
-    LOG_TRACE("extract_vertex_state: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
+    LOG_TRACE("extract_vertex_state: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
         LOG_WARN("extract_vertex_state: wasm_safe_copy_string_null_terminated failed for entry_point");
     }
 
-    LOG_TRACE("extract_vertex_state: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
+    LOG_TRACE("extract_vertex_state: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
     ha_host_struct_ptr->constantCount = ha_wasm_struct_ptr->constantCount;
 
-    LOG_TRACE("extract_vertex_state: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
+    LOG_TRACE("extract_vertex_state: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
     /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
@@ -5310,10 +5310,10 @@ int extract_vertex_state(
     }
     ha_host_struct_ptr->constants = constant_entry_array_proto;
 
-    LOG_TRACE("extract_vertex_state: extracting [Embedded<count>] bufferCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->bufferCount, (void *)&ha_host_struct_ptr->bufferCount);
+    LOG_TRACE("extract_vertex_state: extracting [Embedded<count>] bufferCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->bufferCount, (void *)&ha_host_struct_ptr->bufferCount);
     ha_host_struct_ptr->bufferCount = ha_wasm_struct_ptr->bufferCount;
 
-    LOG_TRACE("extract_vertex_state: extracting [Array<struct>] buffers: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->buffers, (void *)&ha_host_struct_ptr->buffers);
+    LOG_TRACE("extract_vertex_state: extracting [Array<struct>] buffers: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->buffers, (void *)&ha_host_struct_ptr->buffers);
     /* TODO: Implement SAFE pointer extraction */
     WGPUVertexBufferLayout *vertex_buffer_layout_array_proto = calloc(ha_host_struct_ptr->bufferCount, sizeof(WGPUVertexBufferLayout));
     if (vertex_buffer_layout_array_proto == NULL) {
@@ -5379,35 +5379,35 @@ int extract_primitive_state(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_primitive_state: allocating [*HMAS.HS] (%p) as WGPUPrimitiveState", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_primitive_state: allocating [*HMAS.HWST] (%p) as WGPUPrimitiveState", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUPrimitiveState));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_primitive_state: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_primitive_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_primitive_state: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_primitive_state: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_primitive_state: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_primitive_state: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_primitive_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_primitive_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_primitive_state: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_primitive_state: extracting [Embedded<enum>] topology: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->topology, (void *)&ha_host_struct_ptr->topology);
+    LOG_TRACE("extract_primitive_state: extracting [Embedded<enum>] topology: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->topology, (void *)&ha_host_struct_ptr->topology);
     ha_host_struct_ptr->topology = ha_wasm_struct_ptr->topology;
 
-    LOG_TRACE("extract_primitive_state: extracting [Embedded<enum>] stripIndexFormat: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stripIndexFormat, (void *)&ha_host_struct_ptr->stripIndexFormat);
+    LOG_TRACE("extract_primitive_state: extracting [Embedded<enum>] stripIndexFormat: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stripIndexFormat, (void *)&ha_host_struct_ptr->stripIndexFormat);
     ha_host_struct_ptr->stripIndexFormat = ha_wasm_struct_ptr->stripIndexFormat;
 
-    LOG_TRACE("extract_primitive_state: extracting [Embedded<enum>] frontFace: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->frontFace, (void *)&ha_host_struct_ptr->frontFace);
+    LOG_TRACE("extract_primitive_state: extracting [Embedded<enum>] frontFace: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->frontFace, (void *)&ha_host_struct_ptr->frontFace);
     ha_host_struct_ptr->frontFace = ha_wasm_struct_ptr->frontFace;
 
-    LOG_TRACE("extract_primitive_state: extracting [Embedded<enum>] cullMode: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->cullMode, (void *)&ha_host_struct_ptr->cullMode);
+    LOG_TRACE("extract_primitive_state: extracting [Embedded<enum>] cullMode: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->cullMode, (void *)&ha_host_struct_ptr->cullMode);
     ha_host_struct_ptr->cullMode = ha_wasm_struct_ptr->cullMode;
 
     return 0;
@@ -5472,59 +5472,59 @@ int extract_depth_stencil_state(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_depth_stencil_state: allocating [*HMAS.HS] (%p) as WGPUDepthStencilState", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_depth_stencil_state: allocating [*HMAS.HWST] (%p) as WGPUDepthStencilState", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUDepthStencilState));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_depth_stencil_state: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_depth_stencil_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_depth_stencil_state: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_depth_stencil_state: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_depth_stencil_state: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_depth_stencil_state: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_depth_stencil_state: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
     ha_host_struct_ptr->format = ha_wasm_struct_ptr->format;
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<bool>] depthWriteEnabled: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthWriteEnabled, (void *)&ha_host_struct_ptr->depthWriteEnabled);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<bool>] depthWriteEnabled: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthWriteEnabled, (void *)&ha_host_struct_ptr->depthWriteEnabled);
     ha_host_struct_ptr->depthWriteEnabled = ha_wasm_struct_ptr->depthWriteEnabled;
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<enum>] depthCompare: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthCompare, (void *)&ha_host_struct_ptr->depthCompare);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<enum>] depthCompare: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthCompare, (void *)&ha_host_struct_ptr->depthCompare);
     ha_host_struct_ptr->depthCompare = ha_wasm_struct_ptr->depthCompare;
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<struct>] stencilFront: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilFront, (void *)&ha_host_struct_ptr->stencilFront);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<struct>] stencilFront: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilFront, (void *)&ha_host_struct_ptr->stencilFront);
     WGPUStencilFaceState *stencil_front_ptr = &ha_host_struct_ptr->stencilFront;
     if (extract_stencil_face_state(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUDepthStencilState, stencilFront), &stencil_front_ptr)) {
         LOG_WARN("extract_depth_stencil_state: extract_stencil_face_state failed");
     }
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<struct>] stencilBack: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilBack, (void *)&ha_host_struct_ptr->stencilBack);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<struct>] stencilBack: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilBack, (void *)&ha_host_struct_ptr->stencilBack);
     WGPUStencilFaceState *stencil_back_ptr = &ha_host_struct_ptr->stencilBack;
     if (extract_stencil_face_state(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUDepthStencilState, stencilBack), &stencil_back_ptr)) {
         LOG_WARN("extract_depth_stencil_state: extract_stencil_face_state failed");
     }
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<uint32>] stencilReadMask: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilReadMask, (void *)&ha_host_struct_ptr->stencilReadMask);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<uint32>] stencilReadMask: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilReadMask, (void *)&ha_host_struct_ptr->stencilReadMask);
     ha_host_struct_ptr->stencilReadMask = ha_wasm_struct_ptr->stencilReadMask;
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<uint32>] stencilWriteMask: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->stencilWriteMask, (void *)&ha_host_struct_ptr->stencilWriteMask);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<uint32>] stencilWriteMask: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->stencilWriteMask, (void *)&ha_host_struct_ptr->stencilWriteMask);
     ha_host_struct_ptr->stencilWriteMask = ha_wasm_struct_ptr->stencilWriteMask;
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<int32>] depthBias: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthBias, (void *)&ha_host_struct_ptr->depthBias);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<int32>] depthBias: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthBias, (void *)&ha_host_struct_ptr->depthBias);
     ha_host_struct_ptr->depthBias = ha_wasm_struct_ptr->depthBias;
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<float32>] depthBiasSlopeScale: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthBiasSlopeScale, (void *)&ha_host_struct_ptr->depthBiasSlopeScale);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<float32>] depthBiasSlopeScale: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthBiasSlopeScale, (void *)&ha_host_struct_ptr->depthBiasSlopeScale);
     ha_host_struct_ptr->depthBiasSlopeScale = ha_wasm_struct_ptr->depthBiasSlopeScale;
 
-    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<float32>] depthBiasClamp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthBiasClamp, (void *)&ha_host_struct_ptr->depthBiasClamp);
+    LOG_TRACE("extract_depth_stencil_state: extracting [Embedded<float32>] depthBiasClamp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthBiasClamp, (void *)&ha_host_struct_ptr->depthBiasClamp);
     ha_host_struct_ptr->depthBiasClamp = ha_wasm_struct_ptr->depthBiasClamp;
 
     return 0;
@@ -5575,32 +5575,32 @@ int extract_multisample_state(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_multisample_state: allocating [*HMAS.HS] (%p) as WGPUMultisampleState", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_multisample_state: allocating [*HMAS.HWST] (%p) as WGPUMultisampleState", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUMultisampleState));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_multisample_state: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_multisample_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_multisample_state: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_multisample_state: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_multisample_state: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_multisample_state: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_multisample_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_multisample_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_multisample_state: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_multisample_state: extracting [Embedded<uint32>] count: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->count, (void *)&ha_host_struct_ptr->count);
+    LOG_TRACE("extract_multisample_state: extracting [Embedded<uint32>] count: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->count, (void *)&ha_host_struct_ptr->count);
     ha_host_struct_ptr->count = ha_wasm_struct_ptr->count;
 
-    LOG_TRACE("extract_multisample_state: extracting [Embedded<uint32>] mask: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->mask, (void *)&ha_host_struct_ptr->mask);
+    LOG_TRACE("extract_multisample_state: extracting [Embedded<uint32>] mask: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->mask, (void *)&ha_host_struct_ptr->mask);
     ha_host_struct_ptr->mask = ha_wasm_struct_ptr->mask;
 
-    LOG_TRACE("extract_multisample_state: extracting [Embedded<bool>] alphaToCoverageEnabled: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->alphaToCoverageEnabled, (void *)&ha_host_struct_ptr->alphaToCoverageEnabled);
+    LOG_TRACE("extract_multisample_state: extracting [Embedded<bool>] alphaToCoverageEnabled: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->alphaToCoverageEnabled, (void *)&ha_host_struct_ptr->alphaToCoverageEnabled);
     ha_host_struct_ptr->alphaToCoverageEnabled = ha_wasm_struct_ptr->alphaToCoverageEnabled;
 
     return 0;
@@ -5657,37 +5657,37 @@ int extract_fragment_state(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_fragment_state: allocating [*HMAS.HS] (%p) as WGPUFragmentState", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_fragment_state: allocating [*HMAS.HWST] (%p) as WGPUFragmentState", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUFragmentState));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_fragment_state: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_fragment_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_fragment_state: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_fragment_state: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_fragment_state: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_fragment_state: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_fragment_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_fragment_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_fragment_state: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_fragment_state: extracting [Embedded<object>] module: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->module, (void *)&ha_host_struct_ptr->module);
+    LOG_TRACE("extract_fragment_state: extracting [Embedded<object>] module: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->module, (void *)&ha_host_struct_ptr->module);
     ha_host_struct_ptr->module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, ha_wasm_struct_ptr->module);
 
-    LOG_TRACE("extract_fragment_state: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
+    LOG_TRACE("extract_fragment_state: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
         LOG_WARN("extract_fragment_state: wasm_safe_copy_string_null_terminated failed for entry_point");
     }
 
-    LOG_TRACE("extract_fragment_state: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
+    LOG_TRACE("extract_fragment_state: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
     ha_host_struct_ptr->constantCount = ha_wasm_struct_ptr->constantCount;
 
-    LOG_TRACE("extract_fragment_state: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
+    LOG_TRACE("extract_fragment_state: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
     /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
@@ -5703,10 +5703,10 @@ int extract_fragment_state(
     }
     ha_host_struct_ptr->constants = constant_entry_array_proto;
 
-    LOG_TRACE("extract_fragment_state: extracting [Embedded<count>] targetCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->targetCount, (void *)&ha_host_struct_ptr->targetCount);
+    LOG_TRACE("extract_fragment_state: extracting [Embedded<count>] targetCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->targetCount, (void *)&ha_host_struct_ptr->targetCount);
     ha_host_struct_ptr->targetCount = ha_wasm_struct_ptr->targetCount;
 
-    LOG_TRACE("extract_fragment_state: extracting [Array<struct>] targets: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->targets, (void *)&ha_host_struct_ptr->targets);
+    LOG_TRACE("extract_fragment_state: extracting [Array<struct>] targets: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->targets, (void *)&ha_host_struct_ptr->targets);
     /* TODO: Implement SAFE pointer extraction */
     WGPUColorTargetState *color_target_state_array_proto = calloc(ha_host_struct_ptr->targetCount, sizeof(WGPUColorTargetState));
     if (color_target_state_array_proto == NULL) {
@@ -5770,34 +5770,34 @@ int extract_color_target_state(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_color_target_state: allocating [*HMAS.HS] (%p) as WGPUColorTargetState", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_color_target_state: allocating [*HMAS.HWST] (%p) as WGPUColorTargetState", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUColorTargetState));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_color_target_state: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_color_target_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_color_target_state: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_color_target_state: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_color_target_state: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_color_target_state: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_color_target_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_color_target_state: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_color_target_state: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_color_target_state: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
+    LOG_TRACE("extract_color_target_state: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
     ha_host_struct_ptr->format = ha_wasm_struct_ptr->format;
 
-    LOG_TRACE("extract_color_target_state: extracting [Pointer<struct>] blend: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->blend, (void *)&ha_host_struct_ptr->blend);
+    LOG_TRACE("extract_color_target_state: extracting [Pointer<struct>] blend: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->blend, (void *)&ha_host_struct_ptr->blend);
     if (extract_blend_state(registry, memory, (byte_t *)ha_wasm_struct_ptr->blend, &ha_host_struct_ptr->blend)) {
         LOG_WARN("extract_color_target_state: extract_blend_state failed");
     }
 
-    LOG_TRACE("extract_color_target_state: extracting [Embedded<bitflag>] writeMask: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->writeMask, (void *)&ha_host_struct_ptr->writeMask);
+    LOG_TRACE("extract_color_target_state: extracting [Embedded<bitflag>] writeMask: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->writeMask, (void *)&ha_host_struct_ptr->writeMask);
     ha_host_struct_ptr->writeMask = ha_wasm_struct_ptr->writeMask;
 
     return 0;
@@ -5856,57 +5856,57 @@ int extract_render_pipeline_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_render_pipeline_descriptor: allocating [*HMAS.HS] (%p) as WGPURenderPipelineDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_render_pipeline_descriptor: allocating [*HMAS.HWST] (%p) as WGPURenderPipelineDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPipelineDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_render_pipeline_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_render_pipeline_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_render_pipeline_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_render_pipeline_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_render_pipeline_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_render_pipeline_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
     ha_host_struct_ptr->layout = (WGPUPipelineLayout)registry_item_get_mapping(&registry->pipelineLayouts, ha_wasm_struct_ptr->layout);
 
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<struct>] vertex: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->vertex, (void *)&ha_host_struct_ptr->vertex);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<struct>] vertex: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->vertex, (void *)&ha_host_struct_ptr->vertex);
     WGPUVertexState *vertex_ptr = &ha_host_struct_ptr->vertex;
     if (extract_vertex_state(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPURenderPipelineDescriptor, vertex), &vertex_ptr)) {
         LOG_WARN("extract_render_pipeline_descriptor: extract_vertex_state failed");
     }
 
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<struct>] primitive: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->primitive, (void *)&ha_host_struct_ptr->primitive);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<struct>] primitive: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->primitive, (void *)&ha_host_struct_ptr->primitive);
     WGPUPrimitiveState *primitive_ptr = &ha_host_struct_ptr->primitive;
     if (extract_primitive_state(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPURenderPipelineDescriptor, primitive), &primitive_ptr)) {
         LOG_WARN("extract_render_pipeline_descriptor: extract_primitive_state failed");
     }
 
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Pointer<struct>] depthStencil: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->depthStencil, (void *)&ha_host_struct_ptr->depthStencil);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Pointer<struct>] depthStencil: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->depthStencil, (void *)&ha_host_struct_ptr->depthStencil);
     if (extract_depth_stencil_state(registry, memory, (byte_t *)ha_wasm_struct_ptr->depthStencil, &ha_host_struct_ptr->depthStencil)) {
         LOG_WARN("extract_render_pipeline_descriptor: extract_depth_stencil_state failed");
     }
 
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<struct>] multisample: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->multisample, (void *)&ha_host_struct_ptr->multisample);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<struct>] multisample: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->multisample, (void *)&ha_host_struct_ptr->multisample);
     WGPUMultisampleState *multisample_ptr = &ha_host_struct_ptr->multisample;
     if (extract_multisample_state(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPURenderPipelineDescriptor, multisample), &multisample_ptr)) {
         LOG_WARN("extract_render_pipeline_descriptor: extract_multisample_state failed");
     }
 
-    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Pointer<struct>] fragment: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->fragment, (void *)&ha_host_struct_ptr->fragment);
+    LOG_TRACE("extract_render_pipeline_descriptor: extracting [Pointer<struct>] fragment: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->fragment, (void *)&ha_host_struct_ptr->fragment);
     if (extract_fragment_state(registry, memory, (byte_t *)ha_wasm_struct_ptr->fragment, &ha_host_struct_ptr->fragment)) {
         LOG_WARN("extract_render_pipeline_descriptor: extract_fragment_state failed");
     }
@@ -5975,58 +5975,58 @@ int extract_sampler_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_sampler_descriptor: allocating [*HMAS.HS] (%p) as WGPUSamplerDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_sampler_descriptor: allocating [*HMAS.HWST] (%p) as WGPUSamplerDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSamplerDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_sampler_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_sampler_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_sampler_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_sampler_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_sampler_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_sampler_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_sampler_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_sampler_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] addressModeU: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->addressModeU, (void *)&ha_host_struct_ptr->addressModeU);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] addressModeU: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->addressModeU, (void *)&ha_host_struct_ptr->addressModeU);
     ha_host_struct_ptr->addressModeU = ha_wasm_struct_ptr->addressModeU;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] addressModeV: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->addressModeV, (void *)&ha_host_struct_ptr->addressModeV);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] addressModeV: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->addressModeV, (void *)&ha_host_struct_ptr->addressModeV);
     ha_host_struct_ptr->addressModeV = ha_wasm_struct_ptr->addressModeV;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] addressModeW: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->addressModeW, (void *)&ha_host_struct_ptr->addressModeW);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] addressModeW: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->addressModeW, (void *)&ha_host_struct_ptr->addressModeW);
     ha_host_struct_ptr->addressModeW = ha_wasm_struct_ptr->addressModeW;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] magFilter: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->magFilter, (void *)&ha_host_struct_ptr->magFilter);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] magFilter: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->magFilter, (void *)&ha_host_struct_ptr->magFilter);
     ha_host_struct_ptr->magFilter = ha_wasm_struct_ptr->magFilter;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] minFilter: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->minFilter, (void *)&ha_host_struct_ptr->minFilter);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] minFilter: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->minFilter, (void *)&ha_host_struct_ptr->minFilter);
     ha_host_struct_ptr->minFilter = ha_wasm_struct_ptr->minFilter;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] mipmapFilter: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->mipmapFilter, (void *)&ha_host_struct_ptr->mipmapFilter);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] mipmapFilter: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->mipmapFilter, (void *)&ha_host_struct_ptr->mipmapFilter);
     ha_host_struct_ptr->mipmapFilter = ha_wasm_struct_ptr->mipmapFilter;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<float32>] lodMinClamp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->lodMinClamp, (void *)&ha_host_struct_ptr->lodMinClamp);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<float32>] lodMinClamp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->lodMinClamp, (void *)&ha_host_struct_ptr->lodMinClamp);
     ha_host_struct_ptr->lodMinClamp = ha_wasm_struct_ptr->lodMinClamp;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<float32>] lodMaxClamp: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->lodMaxClamp, (void *)&ha_host_struct_ptr->lodMaxClamp);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<float32>] lodMaxClamp: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->lodMaxClamp, (void *)&ha_host_struct_ptr->lodMaxClamp);
     ha_host_struct_ptr->lodMaxClamp = ha_wasm_struct_ptr->lodMaxClamp;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] compare: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->compare, (void *)&ha_host_struct_ptr->compare);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] compare: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->compare, (void *)&ha_host_struct_ptr->compare);
     ha_host_struct_ptr->compare = ha_wasm_struct_ptr->compare;
 
-    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<uint16>] maxAnisotropy: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxAnisotropy, (void *)&ha_host_struct_ptr->maxAnisotropy);
+    LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<uint16>] maxAnisotropy: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxAnisotropy, (void *)&ha_host_struct_ptr->maxAnisotropy);
     ha_host_struct_ptr->maxAnisotropy = ha_wasm_struct_ptr->maxAnisotropy;
 
     return 0;
@@ -6077,34 +6077,34 @@ int extract_shader_module_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_shader_module_descriptor: allocating [*HMAS.HS] (%p) as WGPUShaderModuleDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_shader_module_descriptor: allocating [*HMAS.HWST] (%p) as WGPUShaderModuleDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_shader_module_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_shader_module_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_shader_module_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_shader_module_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_shader_module_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_shader_module_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_shader_module_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_shader_module_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_shader_module_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_shader_module_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_shader_module_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_shader_module_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_shader_module_descriptor: extracting [Embedded<count>] hintCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->hintCount, (void *)&ha_host_struct_ptr->hintCount);
+    LOG_TRACE("extract_shader_module_descriptor: extracting [Embedded<count>] hintCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hintCount, (void *)&ha_host_struct_ptr->hintCount);
     ha_host_struct_ptr->hintCount = ha_wasm_struct_ptr->hintCount;
 
-    LOG_TRACE("extract_shader_module_descriptor: extracting [Array<struct>] hints: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->hints, (void *)&ha_host_struct_ptr->hints);
+    LOG_TRACE("extract_shader_module_descriptor: extracting [Array<struct>] hints: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hints, (void *)&ha_host_struct_ptr->hints);
     /* TODO: Implement SAFE pointer extraction */
     WGPUShaderModuleCompilationHint *shader_module_compilation_hint_array_proto = calloc(ha_host_struct_ptr->hintCount, sizeof(WGPUShaderModuleCompilationHint));
     if (shader_module_compilation_hint_array_proto == NULL) {
@@ -6166,31 +6166,31 @@ int extract_shader_module_compilation_hint(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_shader_module_compilation_hint: allocating [*HMAS.HS] (%p) as WGPUShaderModuleCompilationHint", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_shader_module_compilation_hint: allocating [*HMAS.HWST] (%p) as WGPUShaderModuleCompilationHint", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleCompilationHint));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_shader_module_compilation_hint: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_shader_module_compilation_hint: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_shader_module_compilation_hint: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_shader_module_compilation_hint: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_shader_module_compilation_hint: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_shader_module_compilation_hint: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_shader_module_compilation_hint: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_shader_module_compilation_hint: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_shader_module_compilation_hint: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_shader_module_compilation_hint: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
+    LOG_TRACE("extract_shader_module_compilation_hint: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
         LOG_WARN("extract_shader_module_compilation_hint: wasm_safe_copy_string_null_terminated failed for entry_point");
     }
 
-    LOG_TRACE("extract_shader_module_compilation_hint: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
+    LOG_TRACE("extract_shader_module_compilation_hint: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
     ha_host_struct_ptr->layout = (WGPUPipelineLayout)registry_item_get_mapping(&registry->pipelineLayouts, ha_wasm_struct_ptr->layout);
 
     return 0;
@@ -6237,26 +6237,26 @@ int extract_surface_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_descriptor: allocating [*HMAS.HS] (%p) as WGPUSurfaceDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_descriptor: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_surface_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_surface_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_surface_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_surface_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
@@ -6321,55 +6321,55 @@ int extract_texture_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_texture_descriptor: allocating [*HMAS.HS] (%p) as WGPUTextureDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_texture_descriptor: allocating [*HMAS.HWST] (%p) as WGPUTextureDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUTextureDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_texture_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_texture_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_texture_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_texture_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_texture_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_texture_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_texture_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_texture_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_texture_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<bitflag>] usage: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->usage, (void *)&ha_host_struct_ptr->usage);
+    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<bitflag>] usage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->usage, (void *)&ha_host_struct_ptr->usage);
     ha_host_struct_ptr->usage = ha_wasm_struct_ptr->usage;
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<enum>] dimension: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->dimension, (void *)&ha_host_struct_ptr->dimension);
+    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<enum>] dimension: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->dimension, (void *)&ha_host_struct_ptr->dimension);
     ha_host_struct_ptr->dimension = ha_wasm_struct_ptr->dimension;
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<struct>] size: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->size, (void *)&ha_host_struct_ptr->size);
+    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<struct>] size: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->size, (void *)&ha_host_struct_ptr->size);
     WGPUExtent3D *size_ptr = &ha_host_struct_ptr->size;
     if (extract_extent_3D(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUTextureDescriptor, size), &size_ptr)) {
         LOG_WARN("extract_texture_descriptor: extract_extent_3D failed");
     }
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
+    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
     ha_host_struct_ptr->format = ha_wasm_struct_ptr->format;
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<uint32>] mipLevelCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->mipLevelCount, (void *)&ha_host_struct_ptr->mipLevelCount);
+    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<uint32>] mipLevelCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->mipLevelCount, (void *)&ha_host_struct_ptr->mipLevelCount);
     ha_host_struct_ptr->mipLevelCount = ha_wasm_struct_ptr->mipLevelCount;
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<uint32>] sampleCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->sampleCount, (void *)&ha_host_struct_ptr->sampleCount);
+    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<uint32>] sampleCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->sampleCount, (void *)&ha_host_struct_ptr->sampleCount);
     ha_host_struct_ptr->sampleCount = ha_wasm_struct_ptr->sampleCount;
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<count>] viewFormatCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->viewFormatCount, (void *)&ha_host_struct_ptr->viewFormatCount);
+    LOG_TRACE("extract_texture_descriptor: extracting [Embedded<count>] viewFormatCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewFormatCount, (void *)&ha_host_struct_ptr->viewFormatCount);
     ha_host_struct_ptr->viewFormatCount = ha_wasm_struct_ptr->viewFormatCount;
 
-    LOG_TRACE("extract_texture_descriptor: extracting [Array<enum>] viewFormats: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->viewFormats, (void *)&ha_host_struct_ptr->viewFormats);
+    LOG_TRACE("extract_texture_descriptor: extracting [Array<enum>] viewFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewFormats, (void *)&ha_host_struct_ptr->viewFormats);
     /* TODO: Implement SAFE pointer extraction */
     WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->viewFormatCount, sizeof(int *));
     if (texture_format_array_proto == NULL) {
@@ -6440,49 +6440,49 @@ int extract_texture_view_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_texture_view_descriptor: allocating [*HMAS.HS] (%p) as WGPUTextureViewDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_texture_view_descriptor: allocating [*HMAS.HWST] (%p) as WGPUTextureViewDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUTextureViewDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_texture_view_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_texture_view_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_texture_view_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_texture_view_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_texture_view_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_texture_view_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
         LOG_WARN("extract_texture_view_descriptor: wasm_safe_copy_string_null_terminated failed for label");
     }
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
     ha_host_struct_ptr->format = ha_wasm_struct_ptr->format;
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<enum>] dimension: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->dimension, (void *)&ha_host_struct_ptr->dimension);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<enum>] dimension: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->dimension, (void *)&ha_host_struct_ptr->dimension);
     ha_host_struct_ptr->dimension = ha_wasm_struct_ptr->dimension;
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<uint32>] baseMipLevel: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->baseMipLevel, (void *)&ha_host_struct_ptr->baseMipLevel);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<uint32>] baseMipLevel: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->baseMipLevel, (void *)&ha_host_struct_ptr->baseMipLevel);
     ha_host_struct_ptr->baseMipLevel = ha_wasm_struct_ptr->baseMipLevel;
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<uint32>] mipLevelCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->mipLevelCount, (void *)&ha_host_struct_ptr->mipLevelCount);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<uint32>] mipLevelCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->mipLevelCount, (void *)&ha_host_struct_ptr->mipLevelCount);
     ha_host_struct_ptr->mipLevelCount = ha_wasm_struct_ptr->mipLevelCount;
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<uint32>] baseArrayLayer: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->baseArrayLayer, (void *)&ha_host_struct_ptr->baseArrayLayer);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<uint32>] baseArrayLayer: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->baseArrayLayer, (void *)&ha_host_struct_ptr->baseArrayLayer);
     ha_host_struct_ptr->baseArrayLayer = ha_wasm_struct_ptr->baseArrayLayer;
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<uint32>] arrayLayerCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->arrayLayerCount, (void *)&ha_host_struct_ptr->arrayLayerCount);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<uint32>] arrayLayerCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->arrayLayerCount, (void *)&ha_host_struct_ptr->arrayLayerCount);
     ha_host_struct_ptr->arrayLayerCount = ha_wasm_struct_ptr->arrayLayerCount;
 
-    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<enum>] aspect: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->aspect, (void *)&ha_host_struct_ptr->aspect);
+    LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<enum>] aspect: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->aspect, (void *)&ha_host_struct_ptr->aspect);
     ha_host_struct_ptr->aspect = ha_wasm_struct_ptr->aspect;
 
     return 0;
@@ -6543,55 +6543,55 @@ int extract_adapter_info(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_adapter_info: allocating [*HMAS.HS] (%p) as WGPUAdapterInfo", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_adapter_info: allocating [*HMAS.HWST] (%p) as WGPUAdapterInfo", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUAdapterInfo));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_adapter_info: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_adapter_info: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_adapter_info: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_adapter_info: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_adapter_info: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_adapter_info: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_adapter_info: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_adapter_info: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_adapter_info: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] vendor: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->vendor, (void *)&ha_host_struct_ptr->vendor);
+    LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] vendor: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->vendor, (void *)&ha_host_struct_ptr->vendor);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->vendor, &ha_host_struct_ptr->vendor, 65534)) {
         LOG_WARN("extract_adapter_info: wasm_safe_copy_string_null_terminated failed for vendor");
     }
 
-    LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] architecture: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->architecture, (void *)&ha_host_struct_ptr->architecture);
+    LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] architecture: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->architecture, (void *)&ha_host_struct_ptr->architecture);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->architecture, &ha_host_struct_ptr->architecture, 65534)) {
         LOG_WARN("extract_adapter_info: wasm_safe_copy_string_null_terminated failed for architecture");
     }
 
-    LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] device: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->device, (void *)&ha_host_struct_ptr->device);
+    LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] device: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->device, (void *)&ha_host_struct_ptr->device);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->device, &ha_host_struct_ptr->device, 65534)) {
         LOG_WARN("extract_adapter_info: wasm_safe_copy_string_null_terminated failed for device");
     }
 
-    LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] description: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->description, (void *)&ha_host_struct_ptr->description);
+    LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] description: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->description, (void *)&ha_host_struct_ptr->description);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->description, &ha_host_struct_ptr->description, 65534)) {
         LOG_WARN("extract_adapter_info: wasm_safe_copy_string_null_terminated failed for description");
     }
 
-    LOG_TRACE("extract_adapter_info: extracting [Embedded<enum>] backendType: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->backendType, (void *)&ha_host_struct_ptr->backendType);
+    LOG_TRACE("extract_adapter_info: extracting [Embedded<enum>] backendType: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->backendType, (void *)&ha_host_struct_ptr->backendType);
     ha_host_struct_ptr->backendType = ha_wasm_struct_ptr->backendType;
 
-    LOG_TRACE("extract_adapter_info: extracting [Embedded<enum>] adapterType: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->adapterType, (void *)&ha_host_struct_ptr->adapterType);
+    LOG_TRACE("extract_adapter_info: extracting [Embedded<enum>] adapterType: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->adapterType, (void *)&ha_host_struct_ptr->adapterType);
     ha_host_struct_ptr->adapterType = ha_wasm_struct_ptr->adapterType;
 
-    LOG_TRACE("extract_adapter_info: extracting [Embedded<uint32>] vendorID: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->vendorID, (void *)&ha_host_struct_ptr->vendorID);
+    LOG_TRACE("extract_adapter_info: extracting [Embedded<uint32>] vendorID: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->vendorID, (void *)&ha_host_struct_ptr->vendorID);
     ha_host_struct_ptr->vendorID = ha_wasm_struct_ptr->vendorID;
 
-    LOG_TRACE("extract_adapter_info: extracting [Embedded<uint32>] deviceID: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->deviceID, (void *)&ha_host_struct_ptr->deviceID);
+    LOG_TRACE("extract_adapter_info: extracting [Embedded<uint32>] deviceID: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->deviceID, (void *)&ha_host_struct_ptr->deviceID);
     ha_host_struct_ptr->deviceID = ha_wasm_struct_ptr->deviceID;
 
     return 0;
@@ -6650,32 +6650,32 @@ int extract_surface_capabilities(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_capabilities: allocating [*HMAS.HS] (%p) as WGPUSurfaceCapabilities", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_capabilities: allocating [*HMAS.HWST] (%p) as WGPUSurfaceCapabilities", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceCapabilities));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_capabilities: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_capabilities: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_capabilities: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_capabilities: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_capabilities: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_capabilities: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_capabilities: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_surface_capabilities: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_surface_capabilities: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_capabilities: extracting [Embedded<bitflag>] usages: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->usages, (void *)&ha_host_struct_ptr->usages);
+    LOG_TRACE("extract_surface_capabilities: extracting [Embedded<bitflag>] usages: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->usages, (void *)&ha_host_struct_ptr->usages);
     ha_host_struct_ptr->usages = ha_wasm_struct_ptr->usages;
 
-    LOG_TRACE("extract_surface_capabilities: extracting [Embedded<count>] formatCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->formatCount, (void *)&ha_host_struct_ptr->formatCount);
+    LOG_TRACE("extract_surface_capabilities: extracting [Embedded<count>] formatCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->formatCount, (void *)&ha_host_struct_ptr->formatCount);
     ha_host_struct_ptr->formatCount = ha_wasm_struct_ptr->formatCount;
 
-    LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] formats: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->formats, (void *)&ha_host_struct_ptr->formats);
+    LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] formats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->formats, (void *)&ha_host_struct_ptr->formats);
     /* TODO: Implement SAFE pointer extraction */
     WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->formatCount, sizeof(int *));
     if (texture_format_array_proto == NULL) {
@@ -6688,10 +6688,10 @@ int extract_surface_capabilities(
     }
     ha_host_struct_ptr->formats = texture_format_array_proto;
 
-    LOG_TRACE("extract_surface_capabilities: extracting [Embedded<count>] presentModeCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->presentModeCount, (void *)&ha_host_struct_ptr->presentModeCount);
+    LOG_TRACE("extract_surface_capabilities: extracting [Embedded<count>] presentModeCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->presentModeCount, (void *)&ha_host_struct_ptr->presentModeCount);
     ha_host_struct_ptr->presentModeCount = ha_wasm_struct_ptr->presentModeCount;
 
-    LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] presentModes: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->presentModes, (void *)&ha_host_struct_ptr->presentModes);
+    LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] presentModes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->presentModes, (void *)&ha_host_struct_ptr->presentModes);
     /* TODO: Implement SAFE pointer extraction */
     WGPUPresentMode *present_mode_array_proto = calloc(ha_host_struct_ptr->presentModeCount, sizeof(int *));
     if (present_mode_array_proto == NULL) {
@@ -6704,10 +6704,10 @@ int extract_surface_capabilities(
     }
     ha_host_struct_ptr->presentModes = present_mode_array_proto;
 
-    LOG_TRACE("extract_surface_capabilities: extracting [Embedded<count>] alphaModeCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->alphaModeCount, (void *)&ha_host_struct_ptr->alphaModeCount);
+    LOG_TRACE("extract_surface_capabilities: extracting [Embedded<count>] alphaModeCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->alphaModeCount, (void *)&ha_host_struct_ptr->alphaModeCount);
     ha_host_struct_ptr->alphaModeCount = ha_wasm_struct_ptr->alphaModeCount;
 
-    LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] alphaModes: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->alphaModes, (void *)&ha_host_struct_ptr->alphaModes);
+    LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] alphaModes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->alphaModes, (void *)&ha_host_struct_ptr->alphaModes);
     /* TODO: Implement SAFE pointer extraction */
     WGPUCompositeAlphaMode *composite_alpha_mode_array_proto = calloc(ha_host_struct_ptr->alphaModeCount, sizeof(int *));
     if (composite_alpha_mode_array_proto == NULL) {
@@ -6764,26 +6764,26 @@ int extract_supported_limits(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_supported_limits: allocating [*HMAS.HS] (%p) as WGPUSupportedLimits", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_supported_limits: allocating [*HMAS.HWST] (%p) as WGPUSupportedLimits", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSupportedLimits));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_supported_limits: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_supported_limits: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_supported_limits: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_supported_limits: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_supported_limits: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_supported_limits: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_supported_limits: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
+    LOG_TRACE("extract_supported_limits: extracting [Pointer<struct>] nextInChain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->nextInChain, (void *)&ha_host_struct_ptr->nextInChain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->nextInChain, &ha_host_struct_ptr->nextInChain)) {
         LOG_WARN("extract_supported_limits: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_supported_limits: extracting [Embedded<struct>] limits: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->limits, (void *)&ha_host_struct_ptr->limits);
+    LOG_TRACE("extract_supported_limits: extracting [Embedded<struct>] limits: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->limits, (void *)&ha_host_struct_ptr->limits);
     WGPULimits *limits_ptr = &ha_host_struct_ptr->limits;
     if (extract_limits(registry, memory, wa_wasm_struct_offset + offsetof(WasmWGPUSupportedLimits, limits), &limits_ptr)) {
         LOG_WARN("extract_supported_limits: extract_limits failed");
@@ -6833,26 +6833,26 @@ int extract_render_pass_descriptor_max_draw_count(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_render_pass_descriptor_max_draw_count: allocating [*HMAS.HS] (%p) as WGPURenderPassDescriptorMaxDrawCount", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_render_pass_descriptor_max_draw_count: allocating [*HMAS.HWST] (%p) as WGPURenderPassDescriptorMaxDrawCount", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassDescriptorMaxDrawCount));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_render_pass_descriptor_max_draw_count: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_render_pass_descriptor_max_draw_count: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_render_pass_descriptor_max_draw_count: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_render_pass_descriptor_max_draw_count: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_render_pass_descriptor_max_draw_count: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_render_pass_descriptor_max_draw_count: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_render_pass_descriptor_max_draw_count: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_render_pass_descriptor_max_draw_count: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_render_pass_descriptor_max_draw_count: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_render_pass_descriptor_max_draw_count: extracting [Embedded<uint64>] maxDrawCount: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->maxDrawCount, (void *)&ha_host_struct_ptr->maxDrawCount);
+    LOG_TRACE("extract_render_pass_descriptor_max_draw_count: extracting [Embedded<uint64>] maxDrawCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->maxDrawCount, (void *)&ha_host_struct_ptr->maxDrawCount);
     ha_host_struct_ptr->maxDrawCount = ha_wasm_struct_ptr->maxDrawCount;
 
     return 0;
@@ -6899,26 +6899,26 @@ int extract_primitive_depth_clip_control(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_primitive_depth_clip_control: allocating [*HMAS.HS] (%p) as WGPUPrimitiveDepthClipControl", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_primitive_depth_clip_control: allocating [*HMAS.HWST] (%p) as WGPUPrimitiveDepthClipControl", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUPrimitiveDepthClipControl));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_primitive_depth_clip_control: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_primitive_depth_clip_control: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_primitive_depth_clip_control: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_primitive_depth_clip_control: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_primitive_depth_clip_control: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_primitive_depth_clip_control: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_primitive_depth_clip_control: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_primitive_depth_clip_control: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_primitive_depth_clip_control: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_primitive_depth_clip_control: extracting [Embedded<bool>] unclippedDepth: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->unclippedDepth, (void *)&ha_host_struct_ptr->unclippedDepth);
+    LOG_TRACE("extract_primitive_depth_clip_control: extracting [Embedded<bool>] unclippedDepth: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->unclippedDepth, (void *)&ha_host_struct_ptr->unclippedDepth);
     ha_host_struct_ptr->unclippedDepth = ha_wasm_struct_ptr->unclippedDepth;
 
     return 0;
@@ -6967,29 +6967,29 @@ int extract_shader_module_SPIRV_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_shader_module_SPIRV_descriptor: allocating [*HMAS.HS] (%p) as WGPUShaderModuleSPIRVDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_shader_module_SPIRV_descriptor: allocating [*HMAS.HWST] (%p) as WGPUShaderModuleSPIRVDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleSPIRVDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_shader_module_SPIRV_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_shader_module_SPIRV_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_shader_module_SPIRV_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_shader_module_SPIRV_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_shader_module_SPIRV_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [Embedded<uint32>] codeSize: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->codeSize, (void *)&ha_host_struct_ptr->codeSize);
+    LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [Embedded<uint32>] codeSize: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->codeSize, (void *)&ha_host_struct_ptr->codeSize);
     ha_host_struct_ptr->codeSize = ha_wasm_struct_ptr->codeSize;
 
-    LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [Pointer<uint32>] code: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->code, (void *)&ha_host_struct_ptr->code);
+    LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [Pointer<uint32>] code: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->code, (void *)&ha_host_struct_ptr->code);
     /* TODO: Implement Uint32 pointer extraction */
 
     return 0;
@@ -7036,26 +7036,26 @@ int extract_shader_module_WGSL_descriptor(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_shader_module_WGSL_descriptor: allocating [*HMAS.HS] (%p) as WGPUShaderModuleWGSLDescriptor", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_shader_module_WGSL_descriptor: allocating [*HMAS.HWST] (%p) as WGPUShaderModuleWGSLDescriptor", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleWGSLDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_shader_module_WGSL_descriptor: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_shader_module_WGSL_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_shader_module_WGSL_descriptor: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_shader_module_WGSL_descriptor: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_shader_module_WGSL_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_shader_module_WGSL_descriptor: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_shader_module_WGSL_descriptor: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_shader_module_WGSL_descriptor: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_shader_module_WGSL_descriptor: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_shader_module_WGSL_descriptor: extracting [Embedded<string>] code: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->code, (void *)&ha_host_struct_ptr->code);
+    LOG_TRACE("extract_shader_module_WGSL_descriptor: extracting [Embedded<string>] code: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->code, (void *)&ha_host_struct_ptr->code);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->code, &ha_host_struct_ptr->code, 65534)) {
         LOG_WARN("extract_shader_module_WGSL_descriptor: wasm_safe_copy_string_null_terminated failed for code");
     }
@@ -7104,26 +7104,26 @@ int extract_surface_descriptor_from_android_native_window(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_descriptor_from_android_native_window: allocating [*HMAS.HS] (%p) as WGPUSurfaceDescriptorFromAndroidNativeWindow", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_descriptor_from_android_native_window: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromAndroidNativeWindow", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromAndroidNativeWindow));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_descriptor_from_android_native_window: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_descriptor_from_android_native_window: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_descriptor_from_android_native_window: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_android_native_window: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_descriptor_from_android_native_window: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_descriptor_from_android_native_window: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_descriptor_from_android_native_window: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_surface_descriptor_from_android_native_window: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_surface_descriptor_from_android_native_window: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_descriptor_from_android_native_window: extracting [Pointer<c_void>] window: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
+    LOG_TRACE("extract_surface_descriptor_from_android_native_window: extracting [Pointer<c_void>] window: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->window = (void *)ha_wasm_struct_ptr->window;
 
@@ -7171,26 +7171,26 @@ int extract_surface_descriptor_from_canvas_HTML_selector(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_descriptor_from_canvas_HTML_selector: allocating [*HMAS.HS] (%p) as WGPUSurfaceDescriptorFromCanvasHTMLSelector", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_descriptor_from_canvas_HTML_selector: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromCanvasHTMLSelector", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromCanvasHTMLSelector));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_descriptor_from_canvas_HTML_selector: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_descriptor_from_canvas_HTML_selector: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_descriptor_from_canvas_HTML_selector: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_canvas_HTML_selector: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_descriptor_from_canvas_HTML_selector: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_descriptor_from_canvas_HTML_selector: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_descriptor_from_canvas_HTML_selector: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_surface_descriptor_from_canvas_HTML_selector: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_surface_descriptor_from_canvas_HTML_selector: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_descriptor_from_canvas_HTML_selector: extracting [Embedded<string>] selector: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->selector, (void *)&ha_host_struct_ptr->selector);
+    LOG_TRACE("extract_surface_descriptor_from_canvas_HTML_selector: extracting [Embedded<string>] selector: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->selector, (void *)&ha_host_struct_ptr->selector);
     if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->selector, &ha_host_struct_ptr->selector, 65534)) {
         LOG_WARN("extract_surface_descriptor_from_canvas_HTML_selector: wasm_safe_copy_string_null_terminated failed for selector");
     }
@@ -7239,26 +7239,26 @@ int extract_surface_descriptor_from_metal_layer(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_descriptor_from_metal_layer: allocating [*HMAS.HS] (%p) as WGPUSurfaceDescriptorFromMetalLayer", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_descriptor_from_metal_layer: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromMetalLayer", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromMetalLayer));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_descriptor_from_metal_layer: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_descriptor_from_metal_layer: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_descriptor_from_metal_layer: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_metal_layer: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_descriptor_from_metal_layer: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_descriptor_from_metal_layer: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_descriptor_from_metal_layer: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_surface_descriptor_from_metal_layer: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_surface_descriptor_from_metal_layer: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_descriptor_from_metal_layer: extracting [Pointer<c_void>] layer: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->layer, (void *)&ha_host_struct_ptr->layer);
+    LOG_TRACE("extract_surface_descriptor_from_metal_layer: extracting [Pointer<c_void>] layer: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layer, (void *)&ha_host_struct_ptr->layer);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->layer = (void *)ha_wasm_struct_ptr->layer;
 
@@ -7308,30 +7308,30 @@ int extract_surface_descriptor_from_windows_HWND(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_descriptor_from_windows_HWND: allocating [*HMAS.HS] (%p) as WGPUSurfaceDescriptorFromWindowsHWND", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_descriptor_from_windows_HWND: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromWindowsHWND", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromWindowsHWND));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_descriptor_from_windows_HWND: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_descriptor_from_windows_HWND: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_descriptor_from_windows_HWND: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_windows_HWND: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_surface_descriptor_from_windows_HWND: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [Pointer<c_void>] hinstance: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->hinstance, (void *)&ha_host_struct_ptr->hinstance);
+    LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [Pointer<c_void>] hinstance: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hinstance, (void *)&ha_host_struct_ptr->hinstance);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->hinstance = (void *)ha_wasm_struct_ptr->hinstance;
 
-    LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [Pointer<c_void>] hwnd: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->hwnd, (void *)&ha_host_struct_ptr->hwnd);
+    LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [Pointer<c_void>] hwnd: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hwnd, (void *)&ha_host_struct_ptr->hwnd);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->hwnd = (void *)ha_wasm_struct_ptr->hwnd;
 
@@ -7381,30 +7381,30 @@ int extract_surface_descriptor_from_xcb_window(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_descriptor_from_xcb_window: allocating [*HMAS.HS] (%p) as WGPUSurfaceDescriptorFromXcbWindow", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_descriptor_from_xcb_window: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromXcbWindow", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromXcbWindow));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_descriptor_from_xcb_window: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_descriptor_from_xcb_window: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_descriptor_from_xcb_window: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_xcb_window: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_surface_descriptor_from_xcb_window: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [Pointer<c_void>] connection: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->connection, (void *)&ha_host_struct_ptr->connection);
+    LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [Pointer<c_void>] connection: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->connection, (void *)&ha_host_struct_ptr->connection);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->connection = (void *)ha_wasm_struct_ptr->connection;
 
-    LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [Embedded<uint32>] window: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
+    LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [Embedded<uint32>] window: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
     ha_host_struct_ptr->window = ha_wasm_struct_ptr->window;
 
     return 0;
@@ -7453,30 +7453,30 @@ int extract_surface_descriptor_from_xlib_window(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_descriptor_from_xlib_window: allocating [*HMAS.HS] (%p) as WGPUSurfaceDescriptorFromXlibWindow", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_descriptor_from_xlib_window: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromXlibWindow", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromXlibWindow));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_descriptor_from_xlib_window: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_descriptor_from_xlib_window: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_descriptor_from_xlib_window: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_xlib_window: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_surface_descriptor_from_xlib_window: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [Pointer<c_void>] display: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->display, (void *)&ha_host_struct_ptr->display);
+    LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [Pointer<c_void>] display: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->display, (void *)&ha_host_struct_ptr->display);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->display = (void *)ha_wasm_struct_ptr->display;
 
-    LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [Embedded<uint64>] window: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
+    LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [Embedded<uint64>] window: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
     ha_host_struct_ptr->window = ha_wasm_struct_ptr->window;
 
     return 0;
@@ -7525,30 +7525,30 @@ int extract_surface_descriptor_from_wayland_surface(
 
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
-        LOG_DEBUG("extract_surface_descriptor_from_wayland_surface: allocating [*HMAS.HS] (%p) as WGPUSurfaceDescriptorFromWaylandSurface", (void *)out_ha_host_struct_ptr);
+        LOG_DEBUG("extract_surface_descriptor_from_wayland_surface: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromWaylandSurface", (void *)out_ha_host_struct_ptr);
         *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromWaylandSurface));
         if (*out_ha_host_struct_ptr == NULL) {
-            FATAL("extract_surface_descriptor_from_wayland_surface: failed to allocate [*HMAS.HS] (%p)", (void *)out_ha_host_struct_ptr);
+            FATAL("extract_surface_descriptor_from_wayland_surface: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
         }
         ha_host_struct_ptr = *out_ha_host_struct_ptr;
     } else {
-        LOG_DEBUG("extract_surface_descriptor_from_wayland_surface: [*HMAS.HS] is not NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_wayland_surface: [*HMAS.HWST] is not NULL");
     }
 
     /* Extract host-address wasm-struct members to host-address host-struct members */
-    LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
+    LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);
 
-    LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
+    LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [Embedded<struct>] chain: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->chain, (void *)&ha_host_struct_ptr->chain);
     if (extract_chained_struct(registry, memory, (byte_t *)ha_wasm_struct_ptr->chain.next, &ha_host_struct_ptr->chain.next)) {
         LOG_WARN("extract_surface_descriptor_from_wayland_surface: extract_chained_struct failed");
     }
 
-    LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [Pointer<c_void>] display: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->display, (void *)&ha_host_struct_ptr->display);
+    LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [Pointer<c_void>] display: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->display, (void *)&ha_host_struct_ptr->display);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->display = (void *)ha_wasm_struct_ptr->display;
 
-    LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [Pointer<c_void>] surface: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)", (void *)&ha_wasm_struct_ptr->surface, (void *)&ha_host_struct_ptr->surface);
+    LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [Pointer<c_void>] surface: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->surface, (void *)&ha_host_struct_ptr->surface);
     /* TODO: Is this safe? */
     ha_host_struct_ptr->surface = (void *)ha_wasm_struct_ptr->surface;
 

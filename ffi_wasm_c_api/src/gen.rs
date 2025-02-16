@@ -347,7 +347,7 @@ fn gen_extract_struct_inner(gen: &mut CodeGenerator, model: &SpecModel, struct_:
 
     c!(gen, "Allocate ha_host_struct_ptr if it is NULL");
     i!(gen, "if (ha_host_struct_ptr == NULL) {{");
-    a!(gen, "LOG_DEBUG(\"{fn_name}: allocating [*HMAS.HS] (%p) as {wgpu_type}\", (void *)out_ha_host_struct_ptr);");
+    a!(gen, "LOG_DEBUG(\"{fn_name}: allocating [*HMAS.HWST] (%p) as {wgpu_type}\", (void *)out_ha_host_struct_ptr);");
     a!(
         gen,
         "*out_ha_host_struct_ptr = calloc(1, sizeof({wgpu_type}));"
@@ -355,14 +355,14 @@ fn gen_extract_struct_inner(gen: &mut CodeGenerator, model: &SpecModel, struct_:
     i!(gen, "if (*out_ha_host_struct_ptr == NULL) {{");
     a!(
         gen,
-        "FATAL(\"{fn_name}: failed to allocate [*HMAS.HS] (%p)\", (void *)out_ha_host_struct_ptr);"
+        "FATAL(\"{fn_name}: failed to allocate [*HMAS.HWST] (%p)\", (void *)out_ha_host_struct_ptr);"
     );
     a!(gen, "return 0;");
     o!(gen, "}}");
     a!(gen, "ha_host_struct_ptr = *out_ha_host_struct_ptr;");
     oi!(gen, "}} else {{");
-    a!(gen, "LOG_DEBUG(\"{fn_name}: [*HMAS.HS] is not NULL\");");
-    // a!(gen, "FATAL(\"{fn_name}: [*HMAS.HS] is not NULL\");");
+    a!(gen, "LOG_DEBUG(\"{fn_name}: [*HMAS.HWST] is not NULL\");");
+    // a!(gen, "FATAL(\"{fn_name}: [*HMAS.HWST] is not NULL\");");
     // a!(gen, "return 0;");
     o!(gen, "}}");
     n!(gen);
@@ -371,14 +371,14 @@ fn gen_extract_struct_inner(gen: &mut CodeGenerator, model: &SpecModel, struct_:
         gen,
         "Extract host-address wasm-struct members to host-address host-struct members"
     );
-    a!(gen, "LOG_TRACE(\"{fn_name}: extracting [HMAS.WWST] (%p) -> [HMAS.HS] (%p)\", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);");
+    a!(gen, "LOG_TRACE(\"{fn_name}: extracting [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)\", (void *)ha_wasm_struct_ptr, (void *)ha_host_struct_ptr);");
     n!(gen);
 
     for member in struct_.members() {
         let member_name = &member.name_member;
         let ref_mode = &member.ref_mode;
         let cat_str = &member.category;
-        a!(gen, "LOG_TRACE(\"{fn_name}: extracting [{ref_mode}<{cat_str}>] {member_name}: [HMAS.WWST] (%p) -> [HMAS.HS] (%p)\", (void *)&ha_wasm_struct_ptr->{member_name}, (void *)&ha_host_struct_ptr->{member_name});");
+        a!(gen, "LOG_TRACE(\"{fn_name}: extracting [{ref_mode}<{cat_str}>] {member_name}: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)\", (void *)&ha_wasm_struct_ptr->{member_name}, (void *)&ha_host_struct_ptr->{member_name});");
         match ref_mode {
             MemberTypeMode::Embedded => {
                 if member.name_orig == "chain" {

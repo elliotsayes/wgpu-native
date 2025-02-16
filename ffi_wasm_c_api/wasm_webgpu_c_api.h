@@ -1966,7 +1966,7 @@ int extract_vertex_buffer_layout(
     /* TODO: Implement SAFE pointer extraction */
     WGPUVertexAttribute *vertex_attribute_array_proto = calloc(ha_host_struct_ptr->attributeCount, sizeof(WGPUVertexAttribute));
     if (vertex_attribute_array_proto == NULL) {
-        LOG_ERROR("extract_vertex_buffer_layout: calloc failed");
+        FATAL("extract_vertex_buffer_layout: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->attributeCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->attributes + i * sizeof(WasmWGPUVertexAttribute);
@@ -2729,7 +2729,7 @@ int extract_programmable_stage_descriptor(
     /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
-        LOG_ERROR("extract_programmable_stage_descriptor: calloc failed");
+        FATAL("extract_programmable_stage_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->constantCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->constants + i * sizeof(WasmWGPUConstantEntry);
@@ -2909,12 +2909,12 @@ int extract_device_descriptor(
 
     LOG_TRACE("extract_device_descriptor: extracting [Array<enum>] requiredFeatures: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->requiredFeatures, (void *)&ha_host_struct_ptr->requiredFeatures);
     /* TODO: Implement SAFE pointer extraction */
-    WGPUFeatureName *feature_name_array_proto = calloc(ha_host_struct_ptr->requiredFeatureCount, sizeof(int *));
+    WGPUFeatureName *feature_name_array_proto = calloc(ha_host_struct_ptr->requiredFeatureCount, sizeof(int));
     if (feature_name_array_proto == NULL) {
-        LOG_ERROR("extract_device_descriptor: calloc failed");
+        FATAL("extract_device_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->requiredFeatureCount; i++) {
-        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->requiredFeatures + i * sizeof(WASM_POINTER_ENUM_C_TYPE);
+        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->requiredFeatures + i * sizeof(WASM_ENUM_C_TYPE);
         LOG_TRACE("extract_device_descriptor: copying data at %p into feature_name_array_proto[%d]", ha_wasm_ptr_i, i);
         feature_name_array_proto[i] = (int)*ha_wasm_ptr_i;
     }
@@ -3120,7 +3120,7 @@ int extract_bind_group_descriptor(
     /* TODO: Implement SAFE pointer extraction */
     WGPUBindGroupEntry *bind_group_entry_array_proto = calloc(ha_host_struct_ptr->entryCount, sizeof(WGPUBindGroupEntry));
     if (bind_group_entry_array_proto == NULL) {
-        LOG_ERROR("extract_bind_group_descriptor: calloc failed");
+        FATAL("extract_bind_group_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->entryCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->entries + i * sizeof(WasmWGPUBindGroupEntry);
@@ -3443,12 +3443,12 @@ int extract_surface_configuration(
 
     LOG_TRACE("extract_surface_configuration: extracting [Array<enum>] viewFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewFormats, (void *)&ha_host_struct_ptr->viewFormats);
     /* TODO: Implement SAFE pointer extraction */
-    WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->viewFormatCount, sizeof(int *));
+    WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->viewFormatCount, sizeof(int));
     if (texture_format_array_proto == NULL) {
-        LOG_ERROR("extract_surface_configuration: calloc failed");
+        FATAL("extract_surface_configuration: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->viewFormatCount; i++) {
-        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->viewFormats + i * sizeof(WASM_POINTER_ENUM_C_TYPE);
+        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->viewFormats + i * sizeof(WASM_ENUM_C_TYPE);
         LOG_TRACE("extract_surface_configuration: copying data at %p into texture_format_array_proto[%d]", ha_wasm_ptr_i, i);
         texture_format_array_proto[i] = (int)*ha_wasm_ptr_i;
     }
@@ -3724,7 +3724,7 @@ int extract_bind_group_layout_descriptor(
     /* TODO: Implement SAFE pointer extraction */
     WGPUBindGroupLayoutEntry *bind_group_layout_entry_array_proto = calloc(ha_host_struct_ptr->entryCount, sizeof(WGPUBindGroupLayoutEntry));
     if (bind_group_layout_entry_array_proto == NULL) {
-        LOG_ERROR("extract_bind_group_layout_descriptor: calloc failed");
+        FATAL("extract_bind_group_layout_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->entryCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->entries + i * sizeof(WasmWGPUBindGroupLayoutEntry);
@@ -4100,7 +4100,7 @@ int extract_compilation_info(
     /* TODO: Implement SAFE pointer extraction */
     WGPUCompilationMessage *compilation_message_array_proto = calloc(ha_host_struct_ptr->messageCount, sizeof(WGPUCompilationMessage));
     if (compilation_message_array_proto == NULL) {
-        LOG_ERROR("extract_compilation_info: calloc failed");
+        FATAL("extract_compilation_info: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->messageCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->messages + i * sizeof(WasmWGPUCompilationMessage);
@@ -4741,9 +4741,9 @@ int extract_pipeline_layout_descriptor(
 
     LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Array<object>] bindGroupLayouts: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->bindGroupLayouts, (void *)&ha_host_struct_ptr->bindGroupLayouts);
     /* TODO: Implement SAFE pointer extraction */
-    WGPUBindGroupLayout *bind_group_layout_array_proto = calloc(ha_host_struct_ptr->bindGroupLayoutCount, sizeof(WGPUBindGroupLayout *));
+    WGPUBindGroupLayout *bind_group_layout_array_proto = calloc(ha_host_struct_ptr->bindGroupLayoutCount, sizeof(WGPUBindGroupLayout));
     if (bind_group_layout_array_proto == NULL) {
-        LOG_ERROR("extract_pipeline_layout_descriptor: calloc failed");
+        FATAL("extract_pipeline_layout_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->bindGroupLayoutCount; i++) {
         WASM_POINTER_OBJECT_C_TYPE *ha_wasm_ptr_i = (WASM_POINTER_OBJECT_C_TYPE *)ha_wasm_struct_ptr->bindGroupLayouts + i * sizeof(WASM_POINTER_OBJECT_C_TYPE);
@@ -4983,12 +4983,12 @@ int extract_render_bundle_encoder_descriptor(
 
     LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Array<enum>] colorFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorFormats, (void *)&ha_host_struct_ptr->colorFormats);
     /* TODO: Implement SAFE pointer extraction */
-    WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->colorFormatCount, sizeof(int *));
+    WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->colorFormatCount, sizeof(int));
     if (texture_format_array_proto == NULL) {
-        LOG_ERROR("extract_render_bundle_encoder_descriptor: calloc failed");
+        FATAL("extract_render_bundle_encoder_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->colorFormatCount; i++) {
-        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->colorFormats + i * sizeof(WASM_POINTER_ENUM_C_TYPE);
+        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->colorFormats + i * sizeof(WASM_ENUM_C_TYPE);
         LOG_TRACE("extract_render_bundle_encoder_descriptor: copying data at %p into texture_format_array_proto[%d]", ha_wasm_ptr_i, i);
         texture_format_array_proto[i] = (int)*ha_wasm_ptr_i;
     }
@@ -5185,7 +5185,7 @@ int extract_render_pass_descriptor(
     /* TODO: Implement SAFE pointer extraction */
     WGPURenderPassColorAttachment *render_pass_color_attachment_array_proto = calloc(ha_host_struct_ptr->colorAttachmentCount, sizeof(WGPURenderPassColorAttachment));
     if (render_pass_color_attachment_array_proto == NULL) {
-        LOG_ERROR("extract_render_pass_descriptor: calloc failed");
+        FATAL("extract_render_pass_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->colorAttachmentCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->colorAttachments + i * sizeof(WasmWGPURenderPassColorAttachment);
@@ -5298,7 +5298,7 @@ int extract_vertex_state(
     /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
-        LOG_ERROR("extract_vertex_state: calloc failed");
+        FATAL("extract_vertex_state: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->constantCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->constants + i * sizeof(WasmWGPUConstantEntry);
@@ -5317,7 +5317,7 @@ int extract_vertex_state(
     /* TODO: Implement SAFE pointer extraction */
     WGPUVertexBufferLayout *vertex_buffer_layout_array_proto = calloc(ha_host_struct_ptr->bufferCount, sizeof(WGPUVertexBufferLayout));
     if (vertex_buffer_layout_array_proto == NULL) {
-        LOG_ERROR("extract_vertex_state: calloc failed");
+        FATAL("extract_vertex_state: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->bufferCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->buffers + i * sizeof(WasmWGPUVertexBufferLayout);
@@ -5691,7 +5691,7 @@ int extract_fragment_state(
     /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
-        LOG_ERROR("extract_fragment_state: calloc failed");
+        FATAL("extract_fragment_state: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->constantCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->constants + i * sizeof(WasmWGPUConstantEntry);
@@ -5710,7 +5710,7 @@ int extract_fragment_state(
     /* TODO: Implement SAFE pointer extraction */
     WGPUColorTargetState *color_target_state_array_proto = calloc(ha_host_struct_ptr->targetCount, sizeof(WGPUColorTargetState));
     if (color_target_state_array_proto == NULL) {
-        LOG_ERROR("extract_fragment_state: calloc failed");
+        FATAL("extract_fragment_state: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->targetCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->targets + i * sizeof(WasmWGPUColorTargetState);
@@ -6108,7 +6108,7 @@ int extract_shader_module_descriptor(
     /* TODO: Implement SAFE pointer extraction */
     WGPUShaderModuleCompilationHint *shader_module_compilation_hint_array_proto = calloc(ha_host_struct_ptr->hintCount, sizeof(WGPUShaderModuleCompilationHint));
     if (shader_module_compilation_hint_array_proto == NULL) {
-        LOG_ERROR("extract_shader_module_descriptor: calloc failed");
+        FATAL("extract_shader_module_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->hintCount; i++) {
         byte_t *wa_wasm_offset_i = (byte_t *)ha_wasm_struct_ptr->hints + i * sizeof(WasmWGPUShaderModuleCompilationHint);
@@ -6371,12 +6371,12 @@ int extract_texture_descriptor(
 
     LOG_TRACE("extract_texture_descriptor: extracting [Array<enum>] viewFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewFormats, (void *)&ha_host_struct_ptr->viewFormats);
     /* TODO: Implement SAFE pointer extraction */
-    WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->viewFormatCount, sizeof(int *));
+    WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->viewFormatCount, sizeof(int));
     if (texture_format_array_proto == NULL) {
-        LOG_ERROR("extract_texture_descriptor: calloc failed");
+        FATAL("extract_texture_descriptor: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->viewFormatCount; i++) {
-        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->viewFormats + i * sizeof(WASM_POINTER_ENUM_C_TYPE);
+        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->viewFormats + i * sizeof(WASM_ENUM_C_TYPE);
         LOG_TRACE("extract_texture_descriptor: copying data at %p into texture_format_array_proto[%d]", ha_wasm_ptr_i, i);
         texture_format_array_proto[i] = (int)*ha_wasm_ptr_i;
     }
@@ -6677,12 +6677,12 @@ int extract_surface_capabilities(
 
     LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] formats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->formats, (void *)&ha_host_struct_ptr->formats);
     /* TODO: Implement SAFE pointer extraction */
-    WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->formatCount, sizeof(int *));
+    WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->formatCount, sizeof(int));
     if (texture_format_array_proto == NULL) {
-        LOG_ERROR("extract_surface_capabilities: calloc failed");
+        FATAL("extract_surface_capabilities: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->formatCount; i++) {
-        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->formats + i * sizeof(WASM_POINTER_ENUM_C_TYPE);
+        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->formats + i * sizeof(WASM_ENUM_C_TYPE);
         LOG_TRACE("extract_surface_capabilities: copying data at %p into texture_format_array_proto[%d]", ha_wasm_ptr_i, i);
         texture_format_array_proto[i] = (int)*ha_wasm_ptr_i;
     }
@@ -6693,12 +6693,12 @@ int extract_surface_capabilities(
 
     LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] presentModes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->presentModes, (void *)&ha_host_struct_ptr->presentModes);
     /* TODO: Implement SAFE pointer extraction */
-    WGPUPresentMode *present_mode_array_proto = calloc(ha_host_struct_ptr->presentModeCount, sizeof(int *));
+    WGPUPresentMode *present_mode_array_proto = calloc(ha_host_struct_ptr->presentModeCount, sizeof(int));
     if (present_mode_array_proto == NULL) {
-        LOG_ERROR("extract_surface_capabilities: calloc failed");
+        FATAL("extract_surface_capabilities: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->presentModeCount; i++) {
-        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->presentModes + i * sizeof(WASM_POINTER_ENUM_C_TYPE);
+        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->presentModes + i * sizeof(WASM_ENUM_C_TYPE);
         LOG_TRACE("extract_surface_capabilities: copying data at %p into present_mode_array_proto[%d]", ha_wasm_ptr_i, i);
         present_mode_array_proto[i] = (int)*ha_wasm_ptr_i;
     }
@@ -6709,12 +6709,12 @@ int extract_surface_capabilities(
 
     LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] alphaModes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->alphaModes, (void *)&ha_host_struct_ptr->alphaModes);
     /* TODO: Implement SAFE pointer extraction */
-    WGPUCompositeAlphaMode *composite_alpha_mode_array_proto = calloc(ha_host_struct_ptr->alphaModeCount, sizeof(int *));
+    WGPUCompositeAlphaMode *composite_alpha_mode_array_proto = calloc(ha_host_struct_ptr->alphaModeCount, sizeof(int));
     if (composite_alpha_mode_array_proto == NULL) {
-        LOG_ERROR("extract_surface_capabilities: calloc failed");
+        FATAL("extract_surface_capabilities: calloc failed");
     }
     for (int i = 0; i < ha_host_struct_ptr->alphaModeCount; i++) {
-        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->alphaModes + i * sizeof(WASM_POINTER_ENUM_C_TYPE);
+        byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->alphaModes + i * sizeof(WASM_ENUM_C_TYPE);
         LOG_TRACE("extract_surface_capabilities: copying data at %p into composite_alpha_mode_array_proto[%d]", ha_wasm_ptr_i, i);
         composite_alpha_mode_array_proto[i] = (int)*ha_wasm_ptr_i;
     }

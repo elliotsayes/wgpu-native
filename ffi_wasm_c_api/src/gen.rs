@@ -539,15 +539,15 @@ fn gen_extract_array(
             let proto_name = format!("{}_array_proto", e_name);
             let enum_ = model.enum_by_name(&e_name).unwrap();
             let e_wgpu_type = &enum_.name_wgpu_type;
-            a!(gen, "{e_wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof(int *));");
+            a!(gen, "{e_wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof(int));");
             i!(gen, "if ({proto_name} == NULL) {{");
-            a!(gen, "LOG_ERROR(\"{fn_name}: calloc failed\");");
+            a!(gen, "FATAL(\"{fn_name}: calloc failed\");");
             o!(gen, "}}");
             i!(
                 gen,
                 "for (int i = 0; i < ha_host_struct_ptr->{a_count_member}; i++) {{"
             );
-            a!(gen, "byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->{m_member_name} + i * sizeof(WASM_POINTER_ENUM_C_TYPE);");
+            a!(gen, "byte_t *ha_wasm_ptr_i = (byte_t *)ha_wasm_struct_ptr->{m_member_name} + i * sizeof(WASM_ENUM_C_TYPE);");
             a!(gen, "LOG_TRACE(\"{fn_name}: copying data at %p into {proto_name}[%d]\", ha_wasm_ptr_i, i);");
             a!(gen, "{proto_name}[i] = (int)*ha_wasm_ptr_i;");
             o!(gen, "}}");
@@ -558,9 +558,9 @@ fn gen_extract_array(
             let ref_o = model.object_by_name(&o_name).unwrap();
             let obj_wgpu_type = &ref_o.name_wgpu_type;
             let obj_registry = &ref_o.name_member_plural;
-            a!(gen, "{obj_wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof({obj_wgpu_type} *));");
+            a!(gen, "{obj_wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof({obj_wgpu_type}));");
             i!(gen, "if ({proto_name} == NULL) {{");
-            a!(gen, "LOG_ERROR(\"{fn_name}: calloc failed\");");
+            a!(gen, "FATAL(\"{fn_name}: calloc failed\");");
             o!(gen, "}}");
             i!(
                 gen,
@@ -580,7 +580,7 @@ fn gen_extract_array(
 
             a!(gen, "{wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof({wgpu_type}));");
             i!(gen, "if ({proto_name} == NULL) {{");
-            a!(gen, "LOG_ERROR(\"{fn_name}: calloc failed\");");
+            a!(gen, "FATAL(\"{fn_name}: calloc failed\");");
             o!(gen, "}}");
             i!(
                 gen,

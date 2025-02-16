@@ -8,6 +8,7 @@ use crate::{
 };
 
 pub struct SpecModel {
+    pub enums: Vec<EnumModel>,
     pub objects: Vec<ObjectModel>,
     pub structs_chained: Vec<StructModel>,
     pub structs_spec: Vec<StructModel>,
@@ -16,6 +17,11 @@ pub struct SpecModel {
 impl SpecModel {
     pub fn from_spec(spec: &spec::Spec) -> Self {
         Self {
+            enums: spec
+                .enums
+                .iter()
+                .map(|e| EnumModel::from_spec(spec, e))
+                .collect(),
             objects: spec
                 .objects
                 .iter()
@@ -46,22 +52,50 @@ impl SpecModel {
             .chain(self.structs_spec.iter())
             .find(|s| s.name_orig == name)
     }
+
+    pub fn enum_by_name(&self, name: &str) -> Option<&EnumModel> {
+        self.enums.iter().find(|e| e.name_orig == name)
+    }
 }
 
-pub fn to_wgpu_type(name: &str) -> String {
-    format!("WGPU{}", snake_to_pascal_preserve_caps(name))
+pub struct EnumModel {
+    pub o: spec::Enum,
+    pub name_orig: String,
+    pub name_wgpu_type: String,
+    pub entries: Vec<EnumEntryModel>,
 }
 
-fn to_wasm_type(name: &str) -> String {
-    format!("WasmWGPU{}", snake_to_pascal_preserve_caps(name))
+impl EnumModel {
+    pub fn from_spec(_spec: &spec::Spec, enum_: &spec::Enum) -> Self {
+        println!("E {}", enum_.name);
+
+        Self {
+            o: enum_.clone(),
+            name_orig: enum_.name.clone(),
+            name_wgpu_type: to_wgpu_type(&enum_.name),
+            entries: enum_
+                .entries
+                .iter()
+                .map(|e| EnumEntryModel::from_spec(_spec, enum_, e))
+                .collect(),
+        }
+    }
 }
 
-fn to_member(name: &str) -> String {
-    snake_to_camel_preserve_caps(name)
+pub struct EnumEntryModel {
+    pub o: spec::EnumEntry,
+    pub name_orig: String,
+    pub name_wgpu_value: String,
 }
 
-fn to_member_plural(name: &str) -> String {
-    format!("{}s", to_member(name))
+impl EnumEntryModel {
+    pub fn from_spec(_spec: &spec::Spec, enum_: &spec::Enum, entry: &spec::EnumEntry) -> Self {
+        Self {
+            o: entry.clone(),
+            name_orig: entry.name.clone(),
+            name_wgpu_value: to_wgpu_enum_value(&enum_.name, &entry.name),
+        }
+    }
 }
 
 pub struct ObjectModel {
@@ -412,4 +446,28 @@ impl MemberModel {
             _ => Some(inner),
         }
     }
+}
+
+fn to_wgpu_type(name: &str) -> String {
+    format!("WGPU{}", snake_to_pascal_preserve_caps(name))
+}
+
+fn to_wasm_type(name: &str) -> String {
+    format!("WasmWGPU{}", snake_to_pascal_preserve_caps(name))
+}
+
+fn to_wgpu_enum_value(enum_name: &str, entry_name: &str) -> String {
+    format!(
+        "{}_{}",
+        to_wgpu_type(enum_name),
+        snake_to_pascal_preserve_caps(entry_name)
+    )
+}
+
+fn to_member(name: &str) -> String {
+    snake_to_camel_preserve_caps(name)
+}
+
+fn to_member_plural(name: &str) -> String {
+    format!("{}s", to_member(name))
 }

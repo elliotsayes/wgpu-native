@@ -282,41 +282,54 @@ fn gen_extract_fn_definition_template(
 
 fn gen_extract_chained_struct_inner(
     gen: &mut CodeGenerator,
-    _model: &SpecModel,
+    model: &SpecModel,
     struct_: &StructModel,
 ) {
     let fn_name = format!("extract_{}", struct_.name_orig);
     // let cs_wasm_type = &struct_.name_wasm_type;
     // let cs_wgpu_type = &struct_.name_wgpu_type;
 
-    c!(gen, "Resolve SType");
-    a!(gen, "WGPUSType sType = ha_wasm_struct_ptr->sType;");
-    a!(gen, "LOG_DEBUG(\"{fn_name}: sType value: %d\", sType);");
-    i!(gen, "switch (sType) {{");
+    let s_types = model.enum_by_name("s_type").unwrap();
+    let s_types_wgpu_type = &s_types.name_wgpu_type;
 
-    i!(gen, "case WGPUSType_Invalid:");
-    a!(gen, "FATAL(\"{fn_name}: sType: WGPUSType_Invalid\");");
-    a!(gen, "break;");
+    c!(gen, "Resolve SType");
+    a!(
+        gen,
+        "{s_types_wgpu_type} sType = ha_wasm_struct_ptr->sType;"
+    );
+    a!(gen, "LOG_DEBUG(\"{fn_name}: sType value: %d\", sType);");
     n!(gen);
 
-    oi!(gen, "case WGPUSType_ShaderModuleWGSLDescriptor:");
-    a!(
-        gen,
-        "LOG_DEBUG(\"{fn_name}: sType: WGPUSType_ShaderModuleWGSLDescriptor\");"
-    );
-    // a!(gen, "LOG_DEBUG(\"{fn_name}: allocating [*HMAS.HS] (%p) as WGPUShaderModuleWGSLDescriptor\", (void *)out_ha_host_struct_ptr);");
-    // a!(gen, "*out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleWGSLDescriptor));");
-    a!(
-        gen,
-        "LOG_DEBUG(\"{fn_name}: running: extract_shader_module_WGSL_descriptor\");"
-    );
-    a!(gen, "extract_shader_module_WGSL_descriptor(registry, memory, wa_wasm_struct_offset, out_ha_host_struct_ptr);");
-    a!(gen, "break;");
+    i!(gen, "switch (sType) {{");
+    for s_type in s_types.entries.iter() {
+        let s_type_entry_name = &s_type.name_wgpu_value;
+        match s_type.name_orig.as_str() {
+            "invalid" => {
+                i!(gen, "case {s_type_entry_name}:");
+                a!(gen, "FATAL(\"{fn_name}: Bad sType: WGPUSType_Invalid\");");
+            }
+            _ => {
+                let struct_ = model.struct_by_name(&s_type.name_orig).unwrap();
+                let struct_wgpu_type = &struct_.name_wgpu_type;
+                let struct_extract_fn = format!("extract_{}", struct_.name_orig);
+                oi!(gen, "case {s_type_entry_name}:");
+                a!(gen, "LOG_TRACE(\"{fn_name}: sType: {s_type_entry_name}\");");
+                a!(gen, "{struct_extract_fn}(registry, memory, wa_wasm_struct_offset, ({struct_wgpu_type} **)out_ha_host_struct_ptr);");
+            }
+        }
+        a!(gen, "break;");
+    }
+
     oi!(gen, "default:");
-    a!(gen, "FATAL(\"Unsupported sType: %d\", sType);");
+    a!(gen, "FATAL(\"{fn_name}: Unknown sType value: %d\", sType);");
     a!(gen, "break;");
     o2!(gen, "}}");
     n!(gen);
+
+    a!(
+        gen,
+        "LOG_DEBUG(\"{fn_name}: Setting output sType value: %d\", sType);"
+    );
     a!(gen, "(*out_ha_host_struct_ptr)->sType = sType;");
     n!(gen);
 }
@@ -524,10 +537,11 @@ fn gen_extract_array(
     match &member.category {
         MemberCategory::Enum(e_name) => {
             let proto_name = format!("{}_array_proto", e_name);
-            let wgpu_type = crate::model::to_wgpu_type(&e_name);
-            a!(gen, "{wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof(int *));");
+            let enum_ = model.enum_by_name(&e_name).unwrap();
+            let e_wgpu_type = &enum_.name_wgpu_type;
+            a!(gen, "{e_wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof(int *));");
             i!(gen, "if ({proto_name} == NULL) {{");
-            a!(gen, "LOG_ERROR(\"{fn_name}: malloc failed\");");
+            a!(gen, "LOG_ERROR(\"{fn_name}: calloc failed\");");
             o!(gen, "}}");
             i!(
                 gen,
@@ -546,7 +560,7 @@ fn gen_extract_array(
             let obj_registry = &ref_o.name_member_plural;
             a!(gen, "{obj_wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof({obj_wgpu_type} *));");
             i!(gen, "if ({proto_name} == NULL) {{");
-            a!(gen, "LOG_ERROR(\"{fn_name}: malloc failed\");");
+            a!(gen, "LOG_ERROR(\"{fn_name}: calloc failed\");");
             o!(gen, "}}");
             i!(
                 gen,
@@ -566,7 +580,7 @@ fn gen_extract_array(
 
             a!(gen, "{wgpu_type} *{proto_name} = calloc(ha_host_struct_ptr->{a_count_member}, sizeof({wgpu_type}));");
             i!(gen, "if ({proto_name} == NULL) {{");
-            a!(gen, "LOG_ERROR(\"{fn_name}: malloc failed\");");
+            a!(gen, "LOG_ERROR(\"{fn_name}: calloc failed\");");
             o!(gen, "}}");
             i!(
                 gen,

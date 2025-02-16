@@ -120,7 +120,7 @@ const C_TYPES: &[&str] = &[
 ];
 #[allow(unused)]
 fn gen_defines(gen: &mut CodeGenerator) {
-    a!(gen, "/* Define native WASM types */");
+    c!(gen, "Define native WASM types");
     a!(gen, "#define WASM_C_TYPE uint32_t");
     for name in C_TYPES {
         a!(gen, "#define {name} uint32_t");
@@ -128,7 +128,7 @@ fn gen_defines(gen: &mut CodeGenerator) {
 }
 
 fn gen_registry(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Object Registries Definition */");
+    c!(gen, "Object Registries Definition");
 
     i!(gen, "typedef struct BindWGPUObjectMappingRegistry {{");
     for object in &model.objects {
@@ -142,7 +142,7 @@ fn gen_registry(gen: &mut CodeGenerator, model: &SpecModel) {
 }
 
 fn gen_all_struct_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Struct Declarations */");
+    c!(gen, "Struct Declarations");
 
     for struct_ in &model.structs_all() {
         a!(gen, "struct {0};", struct_.name_wasm_type);
@@ -150,7 +150,7 @@ fn gen_all_struct_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
 }
 
 fn gen_all_struct_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Struct Definitions */");
+    c!(gen, "Struct Definitions");
     n!(gen);
 
     for struct_ in &model.structs_all() {
@@ -177,7 +177,7 @@ fn gen_all_struct_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
 }
 
 fn gen_all_extract_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Extract Struct Function Declarations */");
+    c!(gen, "Extract Struct Function Declarations");
 
     for struct_ in &model.structs_all() {
         let fn_name: String = format!("extract_{}", struct_.name_orig);
@@ -194,7 +194,7 @@ fn gen_all_extract_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
 }
 
 fn gen_all_extract_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Extract Struct Function Definitions */");
+    c!(gen, "Extract Struct Function Definitions");
     n!(gen);
 
     gen_extract_fn_definition_template(
@@ -611,7 +611,7 @@ fn gen_extract_array(
 }
 
 fn gen_all_free_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Free Struct Function Declarations */");
+    c!(gen, "Free Struct Function Declarations");
 
     for struct_ in &model.structs_all() {
         let fn_name: String = format!("free_{}", struct_.name_orig);
@@ -622,7 +622,7 @@ fn gen_all_free_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
 }
 
 fn gen_all_free_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
-    a!(gen, "/* Free Struct Function Definitions */");
+    c!(gen, "Free Struct Function Definitions");
     n!(gen);
 
     for struct_ in &model.structs_all() {

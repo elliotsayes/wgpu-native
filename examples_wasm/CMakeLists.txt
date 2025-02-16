@@ -10,7 +10,7 @@ endif()
 
 # Set Emscripten specific flags
 set(CMAKE_EXECUTABLE_SUFFIX ".html")
-set(EMSCRIPTEN_LINK_FLAGS "-s USE_WEBGPU=1 -s WASM=1 -s ASYNCIFY")
+set(EMSCRIPTEN_LINK_FLAGS "-s -s WASM=1 -s ASYNCIFY")
 
 # Get Emscripten root path
 execute_process(
@@ -20,3 +20,4 @@ execute_process(
 )
 
 add_subdirectory(compute)
+add_subdirectory(triangle_png)

@@ -43,7 +43,8 @@ endif
 	run-example-push_constants run-example-push_constants-release \
 	example-capture-release example-compute-release example-triangle-release \
 	run-example-capture run-example-compute run-example-triangle \
-	run-example-capture-release run-example-compute-release run-example-triangle-release
+	run-example-capture-release run-example-compute-release run-example-triangle-release \
+	example-wasm-compute example-wasm-triangle
 
 package: lib-native lib-native-release
 	mkdir -p dist
@@ -202,4 +203,8 @@ examples-wasm-debug:
 
 example-wasm-compute: examples-wasm-debug
 	cd examples_wasm/build/Debug && cmake --build . --target compute
-	# "Output file in examples_wasm/build/Debug/compute/compute.wasm"
+	# Output file in examples_wasm/build/Debug/compute/compute.wasm
+
+example-wasm-triangle: examples-wasm-debug
+	cd examples_wasm/build/Debug && cmake --build . --target triangle_png
+	# Output file in examples_wasm/build/Debug/triangle_png/triangle_png.wasm

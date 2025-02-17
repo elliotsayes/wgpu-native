@@ -1,19 +1,27 @@
 use std::io::Write;
 
-use crate::model::{MemberCategory, MemberModel, MemberTypeMode, SpecModel, StructModel};
+use crate::model::{TypeInfo, TypeModel, RefMode, MethodModel, SpecModel, StructModel};
 use crate::src::{CodeGenerator, GeneratedLine};
 use crate::{a, i, n, o, o2, oi};
 use crate::{c, spec};
 
 pub fn write_wasm_c_api(
     spec: &spec::Spec,
-    mut writer: impl Write,
+    mut inc_writer: impl Write,
+    mut impl_writer: impl Write,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let mut spec_model = SpecModel::from_spec(spec);
 
     order_all(&mut spec_model);
 
-    for line in gen_all(&spec_model) {
+    write_all_lines(inc_writer, gen_all_inc(&spec_model))?;
+    write_all_lines(impl_writer, gen_all_impl(&spec_model))?;
+
+    Ok(())
+}
+
+fn write_all_lines(mut writer: impl Write, lines: Vec<Option<GeneratedLine>>) -> Result<(), Box<dyn std::error::Error>> {
+    Ok(for line in lines {
         match line {
             Some(line) => {
                 let indent_text = "    ".repeat(line.indent);
@@ -23,9 +31,7 @@ pub fn write_wasm_c_api(
             }
             None => writer.write_all(b"\n")?,
         }
-    }
-
-    Ok(())
+    })
 }
 
 const PRIORITY_NAMES: &[&str] = &[
@@ -54,16 +60,29 @@ fn order_all(model: &mut SpecModel) -> () {
     });
 }
 
-fn gen_all(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
+fn gen_all_inc(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
     let mut gen = CodeGenerator::new();
+    let header_guard: &str = "WASM_C_API_WEBGPU_H_";
 
-    gen_headers(&mut gen);
+    gen_inc_headers(&mut gen, header_guard);
     n!(gen);
 
-    // gen_defines(&mut gen);
-    // n!(gen);
+    gen_defines(&mut gen);
+    n!(gen);
 
     gen_registry(&mut gen, model);
+    n!(gen);
+
+    gen_footer(&mut gen, header_guard);
+
+    gen.into_lines()
+}
+
+fn gen_all_impl(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
+    let mut gen = CodeGenerator::new();
+    let header_guard: &str = "WASM_C_API_WEBGPU_IMPL_H_";
+
+    gen_impl_headers(&mut gen, header_guard);
     n!(gen);
 
     // Declarations
@@ -73,6 +92,8 @@ fn gen_all(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
     n!(gen);
     gen_all_free_fn_declarations(&mut gen, model);
     n!(gen);
+    gen_all_wasm_import_fn_declarations(&mut gen, model);
+    n!(gen);
 
     // Definitions
     gen_all_struct_definitions(&mut gen, model);
@@ -81,26 +102,35 @@ fn gen_all(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
     n!(gen);
     gen_all_free_fn_definitions(&mut gen, model);
     n!(gen);
+    gen_all_wasm_import_fn_definitions(&mut gen, model);
+    n!(gen);
 
-    gen_footer(&mut gen);
+    gen_footer(&mut gen, header_guard);
 
     gen.into_lines()
 }
 
-const HEADER_GUARD: &str = "WASM_C_API_WEBGPU_H_";
-fn gen_headers(gen: &mut CodeGenerator) {
-    a!(gen, "#ifndef {HEADER_GUARD}");
-    a!(gen, "#define {HEADER_GUARD}");
+fn gen_inc_headers(gen: &mut CodeGenerator, header_guard: &str) {
+    a!(gen, "#ifndef {header_guard}");
+    a!(gen, "#define {header_guard}");
     n!(gen);
     a!(gen, "#include <stdlib.h>");
     n!(gen);
     a!(gen, "#include <webgpu.h>");
     a!(gen, "#include <wasm_c_api.h>");
+    a!(gen, "#include \"wasm_helpers_inc.h\"");
+}
+
+fn gen_impl_headers(gen: &mut CodeGenerator, header_guard: &str) {
+    a!(gen, "#ifndef {header_guard}");
+    a!(gen, "#define {header_guard}");
+    n!(gen);
+    a!(gen, "#include \"wasm_webgpu_c_api_inc.h\"");
     a!(gen, "#include \"wasm_helpers.h\"");
 }
 
-fn gen_footer(gen: &mut CodeGenerator) {
-    a!(gen, "#endif // {HEADER_GUARD}",);
+fn gen_footer(gen: &mut CodeGenerator, header_guard: &str) {
+    a!(gen, "#endif // {header_guard}",);
 }
 
 // These are copied to `wasm_helpers.h`
@@ -377,18 +407,18 @@ fn gen_extract_struct_inner(gen: &mut CodeGenerator, model: &SpecModel, struct_:
     for member in struct_.members() {
         let member_name = &member.name_member;
         let ref_mode = &member.ref_mode;
-        let cat_str = &member.category;
+        let cat_str = &member.type_info;
         a!(gen, "LOG_TRACE(\"{fn_name}: extracting [{ref_mode}<{cat_str}>] {member_name}: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)\", (void *)&ha_wasm_struct_ptr->{member_name}, (void *)&ha_host_struct_ptr->{member_name});");
         match ref_mode {
-            MemberTypeMode::Embedded => {
+            RefMode::Embedded => {
                 if member.name_orig == "chain" {
                     gen_extract_chain(gen, model, struct_, &member)
                 } else {
                     gen_extract_embedded(gen, model, struct_, &member);
                 }
             }
-            MemberTypeMode::Pointer(_) => gen_extract_pointer(gen, model, struct_, &member),
-            MemberTypeMode::Array => gen_extract_array(gen, model, struct_, &member),
+            RefMode::Pointer(_) => gen_extract_pointer(gen, model, struct_, &member),
+            RefMode::Array => gen_extract_array(gen, model, struct_, &member),
         }
         n!(gen);
     }
@@ -398,7 +428,7 @@ fn gen_extract_chain(
     gen: &mut CodeGenerator,
     _model: &SpecModel,
     struct_: &StructModel,
-    member: &MemberModel,
+    member: &TypeModel,
 ) {
     let fn_name = format!("extract_{}", struct_.name_orig);
     let m_name = &member.name_orig;
@@ -418,7 +448,7 @@ fn gen_extract_embedded(
     gen: &mut CodeGenerator,
     model: &SpecModel,
     struct_: &StructModel,
-    member: &MemberModel,
+    member: &TypeModel,
 ) {
     let fn_name = format!("extract_{}", struct_.name_orig);
     let m_name = &member.name_orig;
@@ -427,34 +457,34 @@ fn gen_extract_embedded(
     let wasm_type = &struct_.name_wasm_type;
     let wgpu_type = &struct_.name_wgpu_type;
 
-    match &member.category {
-        MemberCategory::Uint16
-        | MemberCategory::Uint32
-        | MemberCategory::Uint64
-        | MemberCategory::Int32
-        | MemberCategory::Float32
-        | MemberCategory::Float64
-        | MemberCategory::Bool
-        | MemberCategory::Enum(_)
-        | MemberCategory::Bitflag(_)
-        | MemberCategory::Count => {
+    match &member.type_info {
+        TypeInfo::Uint16
+        | TypeInfo::Uint32
+        | TypeInfo::Uint64
+        | TypeInfo::Int32
+        | TypeInfo::Float32
+        | TypeInfo::Float64
+        | TypeInfo::Bool
+        | TypeInfo::Enum(_)
+        | TypeInfo::Bitflag(_)
+        | TypeInfo::Count => {
             a!(
                 gen,
                 "ha_host_struct_ptr->{m_member_name} = ha_wasm_struct_ptr->{m_member_name};"
             )
         }
-        crate::model::MemberCategory::String => {
+        crate::model::TypeInfo::String => {
             i!(gen, "if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name}, 65534)) {{");
             a!(gen, "LOG_WARN(\"{fn_name}: wasm_safe_copy_string_null_terminated failed for {m_name}\");");
             o!(gen, "}}");
         }
-        crate::model::MemberCategory::Object(o_name) => {
+        crate::model::TypeInfo::Object(o_name) => {
             let obj = model.object_by_name(&o_name).unwrap();
             let obj_registry = &obj.name_member_plural;
             let obj_type = &obj.name_wgpu_type;
             a!(gen, "ha_host_struct_ptr->{m_member_name} = ({obj_type})registry_item_get_mapping(&registry->{obj_registry}, ha_wasm_struct_ptr->{m_member_name});");
         }
-        crate::model::MemberCategory::Struct(s_name) => {
+        crate::model::TypeInfo::Struct(s_name) => {
             let s = model.struct_by_name(&s_name).unwrap();
             let s_wasm_type = &s.name_wasm_type;
             let s_wgpu_type = &s.name_wgpu_type;
@@ -466,13 +496,13 @@ fn gen_extract_embedded(
             a!(gen, "LOG_WARN(\"{fn_name}: extract_{s_name} failed\");");
             o!(gen, "}}");
         }
-        crate::model::MemberCategory::FunctionType(_) => {
+        crate::model::TypeInfo::FunctionType(_) => {
             c!(gen, "TODO: Create native callback function");
             a!(gen, "ha_host_struct_ptr->{m_member_name} = NULL;");
         }
         _ => unimplemented!(
             "Unhandled member of type {:?}: {:?} in {:?}",
-            member.category,
+            member.type_info,
             member.name_orig,
             struct_.name_orig
         ),
@@ -483,18 +513,18 @@ fn gen_extract_pointer(
     gen: &mut CodeGenerator,
     model: &SpecModel,
     struct_: &StructModel,
-    member: &MemberModel,
+    member: &TypeModel,
 ) {
     let fn_name = format!("extract_{}", struct_.name_orig);
     let m_name = &member.name_orig;
     let m_member_name = &member.name_member;
 
-    match &member.category {
-        MemberCategory::Uint32 => {
+    match &member.type_info {
+        TypeInfo::Uint32 => {
             println!("TODO: Implement Uint32 pointer extraction");
             c!(gen, "TODO: Implement Uint32 pointer extraction")
         }
-        MemberCategory::Struct(s_name) => {
+        TypeInfo::Struct(s_name) => {
             let ref_s = model.struct_by_name(&s_name).unwrap();
             let wgpu_type = &ref_s.name_wgpu_type;
             let wasm_type = &ref_s.name_wasm_type;
@@ -503,14 +533,14 @@ fn gen_extract_pointer(
             a!(gen, "LOG_WARN(\"{fn_name}: extract_{s_name} failed\");");
             o!(gen, "}}");
         }
-        MemberCategory::CVoid => {
+        TypeInfo::CVoid => {
             println!("TODO: Confirm c_void pointer copy is safe");
             c!(gen, "TODO: Is this safe?");
             a!(gen, "ha_host_struct_ptr->{m_member_name} = (void *)ha_wasm_struct_ptr->{m_member_name};");
         }
         _ => unimplemented!(
             "Unhandled member of type {:?}: {:?} in {:?}",
-            member.category,
+            member.type_info,
             member.name_orig,
             struct_.name_orig
         ),
@@ -521,7 +551,7 @@ fn gen_extract_array(
     gen: &mut CodeGenerator,
     model: &SpecModel,
     struct_: &StructModel,
-    member: &MemberModel,
+    member: &TypeModel,
 ) {
     let fn_name = format!("extract_{}", struct_.name_orig);
     let s_type_wasm = &struct_.name_wasm_type;
@@ -534,8 +564,8 @@ fn gen_extract_array(
     let a_count_member = &a_count.name_member;
 
     c!(gen, "TODO: Implement SAFE pointer extraction");
-    match &member.category {
-        MemberCategory::Enum(e_name) => {
+    match &member.type_info {
+        TypeInfo::Enum(e_name) => {
             let proto_name = format!("{}_array_proto", e_name);
             let enum_ = model.enum_by_name(&e_name).unwrap();
             let e_wgpu_type = &enum_.name_wgpu_type;
@@ -553,7 +583,7 @@ fn gen_extract_array(
             o!(gen, "}}");
             a!(gen, "ha_host_struct_ptr->{m_member_name} = {proto_name};");
         }
-        MemberCategory::Object(o_name) => {
+        TypeInfo::Object(o_name) => {
             let proto_name = format!("{}_array_proto", o_name);
             let ref_o = model.object_by_name(&o_name).unwrap();
             let obj_wgpu_type = &ref_o.name_wgpu_type;
@@ -572,7 +602,7 @@ fn gen_extract_array(
             o!(gen, "}}");
             a!(gen, "ha_host_struct_ptr->{m_member_name} = {proto_name};");
         }
-        MemberCategory::Struct(s_name) => {
+        TypeInfo::Struct(s_name) => {
             let proto_name = format!("{}_array_proto", s_name);
             let ref_s = model.struct_by_name(&s_name).unwrap();
             let wasm_type = &ref_s.name_wasm_type;
@@ -603,7 +633,7 @@ fn gen_extract_array(
         }
         _ => unimplemented!(
             "Unhandled member of type {:?}: {:?} in {:?}",
-            member.category,
+            member.type_info,
             member.name_orig,
             struct_.name_orig
         ),
@@ -634,5 +664,170 @@ fn gen_all_free_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
         a!(gen, "return 0;");
         o!(gen, "}}");
         n!(gen);
+    }
+}
+
+fn gen_all_wasm_import_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
+    c!(gen, "Wasm Import Function Declarations");
+
+    for object in &model.objects {
+        for method in &object.methods {
+            let wgpu_fn_name = &method.name_wgpu_fn;
+            let import_fn_name = format!("wasm_import_{}", wgpu_fn_name);
+            a!(gen, "wasm_trap_t *{import_fn_name}(void *env, const wasm_val_vec_t *args, wasm_val_vec_t *results);");
+        }
+    }
+}
+
+fn gen_all_wasm_import_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
+    c!(gen, "Wasm Import Function Definitions");
+
+    for object in &model.objects {
+        for method in &object.methods {
+            let wgpu_fn_name = &method.name_wgpu_fn;
+            let import_fn_name = format!("wasm_import_{}", wgpu_fn_name);
+            i!(gen, "wasm_trap_t *{import_fn_name}(");
+            a!(gen, "void *env,");
+            a!(gen, "const wasm_val_vec_t *args,");
+            a!(gen, "wasm_val_vec_t *results");
+            oi!(gen, ") {{");
+            a!(gen, "LOG_TRACE(\"{import_fn_name}: params: env (%p), args (%p), results (%p)\", env, args, results);");
+            n!(gen);
+
+            a!(gen, "ImportHook *import_hook = (ImportHook *)env;");
+            a!(gen, "Proc *proc = import_hook->proc;");
+            a!(gen, "wasm_store_t *store = proc->store;");
+            a!(gen, "wasm_memory_t *memory = get_memory(proc);");
+            a!(gen, "byte_t *base_ptr = wasm_memory_data(memory);");
+            a!(gen, "BindWGPUObjectMappingRegistry registry = proc->registry;");
+            n!(gen);
+
+            c!(gen, "Extract args");
+            let mut index = 0;
+            for arg_group in &method.arg_groups {
+                for arg in &arg_group.args {
+                    index += gen_arg(gen, model, method, arg, index);
+                }
+            }
+            n!(gen);
+
+            a!(gen, "return NULL;");
+            o!(gen, "}}");
+            n!(gen);
+        }
+    }
+}
+
+// Returns the number of args consumed
+fn gen_arg(gen: &mut CodeGenerator, model: &SpecModel, method: &MethodModel, arg: &TypeModel, index: usize) -> usize {
+    let fn_name = format!("wasm_import_{}", method.name_wgpu_fn);
+    let var_name = &arg.name_orig;
+    let ref_mode = &arg.ref_mode;
+    let host_type = arg.host_c_type(model);
+
+    match ref_mode {
+        RefMode::Embedded => gen_arg_embedded(gen, model, method, arg, index),
+        RefMode::Pointer(_) => gen_arg_pointer(gen, model, method, arg, index),
+        RefMode::Array => gen_arg_array(gen, model, method, arg, index),
+    }
+}
+
+fn gen_arg_embedded(gen: &mut CodeGenerator, model: &SpecModel, method: &MethodModel, arg: &TypeModel, index: usize) -> usize {
+    let var_name = &arg.name_orig;
+    let host_type = arg.host_c_type(model);
+    let category = &arg.type_info;
+
+    match category {
+        // MemberCategory::Uint64 => todo!(),
+        // MemberCategory::Float32 => todo!(),
+        // MemberCategory::Float64 => todo!(),
+        // MemberCategory::Bool => todo!(),
+        TypeInfo::String => {
+            println!("FOUND");
+            let ptr_var_name = format!("{var_name}_wa_string_ptr");
+            a!(gen, "WASM_POINTER_STRING_C_TYPE {ptr_var_name} = wasm_val_to_native_int(args->data[{index}]);");
+            a!(gen, "{host_type} {var_name} = NULL;");
+            a!(gen, "wasm_safe_copy_string_null_terminated(memory, {ptr_var_name}, &{var_name}, 1024);");
+            1
+        },
+        TypeInfo::Uint16 |
+        TypeInfo::Uint32 |
+        TypeInfo::Int32 |
+        TypeInfo::Usize |
+        TypeInfo::Enum(_) |
+        TypeInfo::Bitflag(_) |
+        TypeInfo::Count=> {
+            println!("FOUND");
+            a!(gen, "{host_type} {var_name} = wasm_val_to_native_int(args->data[{index}]);");
+            1
+        },
+        TypeInfo::Object(object_name) => {
+            println!("FOUND");
+            let object = model.object_by_name(&object_name).unwrap();
+            let registry_member = &object.name_member_plural;
+            let mapping_index_var_name = format!("mapping_index_{var_name}");
+            a!(gen, "uint32_t {mapping_index_var_name} = wasm_val_to_native_int(args->data[{index}]);");
+            a!(gen, "{host_type} {var_name} = ({host_type})registry_item_get_mapping(&registry.{registry_member}, {mapping_index_var_name});");
+            1
+        },
+        // MemberCategory::Struct(_) => todo!(),
+        // MemberCategory::FunctionType(_) => todo!(),
+        // MemberCategory::CVoid => todo!(),
+        _ => {
+            println!("TODO: gen_arg: embedded {category} {host_type} {var_name}");
+            1
+        },
+    }
+}
+
+fn gen_arg_pointer(gen: &mut CodeGenerator, model: &SpecModel, method: &MethodModel, arg: &TypeModel, index: usize) -> usize {
+    let fn_name = format!("wasm_import_{}", method.name_wgpu_fn);
+    let var_name = &arg.name_orig;
+    let host_type = arg.host_c_type(model);
+
+    match arg.type_info {
+        // MemberCategory::Uint16 => todo!(),
+        // MemberCategory::Uint32 => todo!(),
+        // MemberCategory::Uint64 => todo!(),
+        // MemberCategory::Int32 => todo!(),
+        // MemberCategory::Float32 => todo!(),
+        // MemberCategory::Float64 => todo!(),
+        // MemberCategory::Bool => todo!(),
+        // MemberCategory::String => todo!(),
+        // MemberCategory::Enum(_) => todo!(),
+        // MemberCategory::Bitflag(_) => todo!(),
+        // MemberCategory::Object(_) => todo!(),
+        // MemberCategory::Struct(_) => todo!(),
+        // MemberCategory::FunctionType(_) => todo!(),
+        // MemberCategory::CVoid => todo!(),
+        // MemberCategory::Count => todo!(),
+        // MemberCategory::Usize => todo!(),
+        _ => 0,//println!("TODO: gen_arg: pointer {host_type} {var_name}"),
+    }
+}
+
+fn gen_arg_array(gen: &mut CodeGenerator, model: &SpecModel, method: &MethodModel, arg: &TypeModel, index: usize) -> usize {
+    let fn_name = format!("wasm_import_{}", method.name_wgpu_fn);
+    let var_name = &arg.name_orig;
+    let host_type = arg.host_c_type(model);
+
+    match arg.type_info {
+        // MemberCategory::Uint16 => todo!(),
+        // MemberCategory::Uint32 => todo!(),
+        // MemberCategory::Uint64 => todo!(),
+        // MemberCategory::Int32 => todo!(),
+        // MemberCategory::Float32 => todo!(),
+        // MemberCategory::Float64 => todo!(),
+        // MemberCategory::Bool => todo!(),
+        // MemberCategory::String => todo!(),
+        // MemberCategory::Enum(_) => todo!(),
+        // MemberCategory::Bitflag(_) => todo!(),
+        // MemberCategory::Object(_) => todo!(),
+        // MemberCategory::Struct(_) => todo!(),
+        // MemberCategory::FunctionType(_) => todo!(),
+        // MemberCategory::CVoid => todo!(),
+        // MemberCategory::Count => todo!(),
+        // MemberCategory::Usize => todo!(),
+        _ => 0,//println!("TODO: gen_arg: array {host_type} {var_name}"),
     }
 }

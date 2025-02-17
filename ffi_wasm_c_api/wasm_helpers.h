@@ -8,6 +8,8 @@
 #include <wasm_c_api.h>
 #include <string.h>
 
+#include "wasm_webgpu_c_api_inc.h";
+
 /* Define native WASM types */
 #define WASM_C_TYPE uint32_t
 #define WASM_INT_C_TYPE int32_t
@@ -23,6 +25,9 @@
 #define WASM_POINTER_FUNCTION_C_TYPE WASM_C_TYPE
 #define WASM_SIZE_C_TYPE WASM_C_TYPE
 #define WASM_DEFAULT_ALIGN 1
+#define WASM_INT_KIND WASM_I32
+#define WASM_POINTER_KIND WASM_I32
+#define WASM_VAL_INT_PROP i32
 
 #ifndef LOG_MACROS
 #define LOG_TRACE(...) do {fprintf(stderr, "[TRACE] "); fprintf(stderr, __VA_ARGS__); fprintf(stderr, "\n");} while (0)
@@ -39,14 +44,48 @@
     } while (0)
 #endif
 
-/* Object Registry */
+// Structure to represent a WASM process instance
+typedef struct {
+    wasm_engine_t* engine;          // WASM engine instance
+    wasm_instance_t* instance;      // WASM instance
+    wasm_module_t* module;          // WASM module
+    wasm_store_t* store;            // WASM store
+    // ErlDrvPort port;                // Erlang port associated with this process
+    // ErlDrvTermData port_term;       // Erlang term representation of the port
+    // ErlDrvMutex* is_running;        // Mutex to track if the process is running
+    char* current_function;        // Current function being executed
+    long current_function_ix;   // Index of the current function
+    int indirect_func_table_ix;    // Index of the indirect function table
+    wasm_table_t* indirect_func_table; // Indirect function table
+    // wasm_exec_env_t exec_env;      // Execution environment for the WASM instance
+    // ei_term* current_args;         // Arguments for the current function
+    int current_args_length;       // Length of the current arguments
+    // ImportResponse* current_import; // Import response structure
+    // ErlDrvTermData pid;            // PID of the Erlang process
+    int is_initialized;            // Flag to check if the process is initialized
+    // time_t start_time;             // Start time of the process
+    BindWGPUObjectMappingRegistry registry;
+} Proc;
 
-#define WGPU_OBJECT_TYPE_COUNT 128
+// Structure to represent an import hook
+typedef struct {
+    char* module_name;             // Name of the module
+    char* field_name;              // Name of the field (function)
+    char* signature;               // Function signature
+    Proc* proc;                    // The associated process
+    wasm_func_t* stub_func;        // WASM function pointer for the import
+} ImportHook;
 
-typedef struct BindWGPUObjectMappingRegistryItem {
-    size_t count;
-    void* list[WGPU_OBJECT_TYPE_COUNT];
-} BindWGPUObjectMappingRegistryItem;
+wasm_memory_t* get_memory(Proc* proc) {
+    wasm_extern_vec_t exports;
+    wasm_instance_exports(proc->instance, &exports);
+    for (size_t i = 0; i < exports.size; i++) {
+        if (wasm_extern_kind(exports.data[i]) == WASM_EXTERN_MEMORY) {
+            return wasm_extern_as_memory(exports.data[i]);
+        }
+    }
+    return NULL;
+}
 
 /* Methods */
 
@@ -234,6 +273,18 @@ int wasm_safe_copy_int(wasm_memory_t* memory, WASM_POINTER_UINT32_C_TYPE wasm_in
     LOG_TRACE("wasm_safe_copy_int wasm_int_val: %d, host_int_out: %d", wasm_int_val, *host_int_out);
 
     return 0;
+}
+
+#define GET_WASM_SYS_INT(data) (data).of.WASM_VAL_INT_PROP
+
+static inline WASM_INT_C_TYPE wasm_val_to_native_int(wasm_val_t wasm_val) {
+    if (wasm_val.kind != WASM_INT_KIND) {
+        LOG_DEBUG("wasm_val_to_native_int: expected %s, got kind: %d",
+                  WASM_INT_KIND, wasm_val.kind);
+    } else {
+        // LOG_DEBUG("wasm_val_to_native_int: got kind: %d", WASM_INT_KIND);
+    }
+    return GET_WASM_SYS_INT(wasm_val);
 }
 
 int max(size_t a, size_t b) {

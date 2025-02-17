@@ -103,6 +103,7 @@ pub struct ObjectModel {
     pub name_orig: String,
     pub name_wgpu_type: String,
     pub name_member_plural: String,
+    pub methods: Vec<MethodModel>,
 }
 
 impl ObjectModel {
@@ -114,6 +115,55 @@ impl ObjectModel {
             name_orig: object.name.clone(),
             name_wgpu_type: to_wgpu_type(&object.name),
             name_member_plural: to_member_plural(&object.name),
+            methods: object
+                .methods
+                .iter()
+                .map(|m| MethodModel::from_spec(_spec, object, m))
+                .collect(),
+        }
+    }
+}
+
+pub struct MethodModel {
+    pub o: Option<spec::Method>,
+    pub name_orig: String,
+    pub name_wgpu_fn: String,
+    pub arg_groups: Vec<MethodArgGroupModel>,
+}
+
+impl MethodModel {
+    pub fn from_spec(_spec: &spec::Spec, object: &spec::Object, method: &spec::Method) -> Self {
+        Self {
+            o: Some(method.clone()),
+            name_orig: method.name.clone(),
+            name_wgpu_fn: to_wgpu_fn(&object.name, &method.name),
+            arg_groups: method
+                .args
+                .iter()
+                .map(|a| MethodArgGroupModel::from_spec(_spec, method, a))
+                .collect(),
+        }
+    }
+}
+
+pub struct MethodArgGroupModel {
+    pub o: Option<spec::MethodArg>,
+    pub name_orig: String,
+    pub name_variable: String,
+    pub group_mode: DataGroupMode,
+    pub args: Vec<TypeModel>,
+}
+
+impl MethodArgGroupModel {
+    pub fn from_spec(_spec: &spec::Spec, method: &spec::Method, arg: &spec::MethodArg) -> Self {
+        let (group_type, args) = get_type_info(&arg.name, &arg.type_field, arg.pointer.as_deref());
+
+        Self {
+            o: Some(arg.clone()),
+            name_orig: arg.name.clone(),
+            name_variable: arg.name.clone(),
+            group_mode: group_type,
+            args,
         }
     }
 }
@@ -158,23 +208,23 @@ impl StructModel {
                     StructType::BaseIn | StructType::BaseOut => MemberGroupModel {
                         o: None,
                         name_orig: "chain".to_string(),
-                        cat: MemberGroupCategory::Individual,
-                        members: vec![MemberModel {
+                        group_mode: DataGroupMode::Individual,
+                        members: vec![TypeModel {
                             name_orig: "next_in_chain".to_string(),
                             name_member: "nextInChain".to_string(),
-                            category: MemberCategory::Struct("chained_struct".to_string()),
-                            ref_mode: MemberTypeMode::Pointer(is_mutable),
+                            type_info: TypeInfo::Struct("chained_struct".to_string()),
+                            ref_mode: RefMode::Pointer(is_mutable),
                         }],
                     },
                     StructType::ExtensionIn | StructType::ExtensionOut => MemberGroupModel {
                         o: None,
                         name_orig: "chain".to_string(),
-                        cat: MemberGroupCategory::Individual,
-                        members: vec![MemberModel {
+                        group_mode: DataGroupMode::Individual,
+                        members: vec![TypeModel {
                             name_orig: "chain".to_string(),
                             name_member: "chain".to_string(),
-                            category: MemberCategory::Struct("chained_struct".to_string()),
-                            ref_mode: MemberTypeMode::Embedded,
+                            type_info: TypeInfo::Struct("chained_struct".to_string()),
+                            ref_mode: RefMode::Embedded,
                         }],
                     },
                     _ => unreachable!(),
@@ -212,8 +262,8 @@ impl StructModel {
         }
     }
 
-    pub fn members(&self) -> Vec<MemberModel> {
-        let mut all_members = Vec::<MemberModel>::new();
+    pub fn members(&self) -> Vec<TypeModel> {
+        let mut all_members = Vec::<TypeModel>::new();
         for member_group in &self.member_groups {
             all_members.extend(member_group.members.clone());
         }
@@ -231,17 +281,17 @@ fn get_chained_struct(mutable: bool) -> StructModel {
     let name_wasm_type = format!("WasmWGPUChainedStruct{}", if mutable { "Out" } else { "" });
 
     let members = vec![
-        MemberModel {
+        TypeModel {
             name_orig: "next".to_string(),
             name_member: "next".to_string(),
-            category: MemberCategory::Struct(name.clone()),
-            ref_mode: MemberTypeMode::Pointer(mutable),
+            ref_mode: RefMode::Pointer(mutable),
+            type_info: TypeInfo::Struct(name.clone()),
         },
-        MemberModel {
+        TypeModel {
             name_orig: "stype".to_string(),
             name_member: "sType".to_string(),
-            category: MemberCategory::Enum("stype".to_string()),
-            ref_mode: MemberTypeMode::Embedded,
+            ref_mode: RefMode::Embedded,
+            type_info: TypeInfo::Enum("stype".to_string()),
         },
     ];
     StructModel {
@@ -254,7 +304,7 @@ fn get_chained_struct(mutable: bool) -> StructModel {
         member_groups: vec![MemberGroupModel {
             o: None,
             name_orig: name.clone(),
-            cat: MemberGroupCategory::Individual,
+            group_mode: DataGroupMode::Individual,
             members,
         }],
         free_members: false,
@@ -262,7 +312,7 @@ fn get_chained_struct(mutable: bool) -> StructModel {
 }
 
 #[derive(Debug, Clone)]
-pub enum MemberGroupCategory {
+pub enum DataGroupMode {
     Individual,
     CountAndArray,
 }
@@ -271,64 +321,68 @@ pub enum MemberGroupCategory {
 pub struct MemberGroupModel {
     pub o: Option<spec::Member>,
     pub name_orig: String,
-    pub cat: MemberGroupCategory,
-    pub members: Vec<MemberModel>,
+    pub group_mode: DataGroupMode,
+    pub members: Vec<TypeModel>,
 }
 
 pub fn to_count_member(name: &str) -> String {
     format!("{}Count", snake_to_camel_preserve_caps(&to_singular(name)))
 }
 
+fn get_type_info(name: &str, type_field: &str, pointer: Option<&str>) -> (DataGroupMode, Vec<TypeModel>) {
+    let find_arr = Regex::new(r"array<([\w\.]+)>")
+        .unwrap()
+        .captures(type_field);
+    match find_arr {
+        Some(caps) => {
+            let tf_inner = caps.get(1).unwrap().as_str();
+            let count = TypeModel {
+                name_orig: name.to_string(),
+                type_info: TypeInfo::Count,
+                name_member: to_count_member(name),
+                ref_mode: RefMode::Embedded,
+            };
+            let array = TypeModel {
+                name_orig: name.to_string(),
+                name_member: to_member(name),
+                type_info: TypeInfo::from_type(tf_inner),
+                ref_mode: RefMode::Array,
+            };
+            (DataGroupMode::CountAndArray, vec![count, array])
+        }
+        None => {
+            let ref_mode = match pointer {
+                Some(mutability) => RefMode::Pointer(mutability == "mutable"),
+                None => RefMode::Embedded,
+            };
+            (
+                DataGroupMode::Individual,
+                vec![TypeModel {
+                    name_orig: name.to_string(),
+                    name_member: to_member(name),
+                    ref_mode,
+                    type_info: TypeInfo::from_type(type_field),
+                }],
+            )
+        }
+    }
+}
+
 impl MemberGroupModel {
     pub fn from_spec(_spec: &spec::Spec, member: &spec::Member) -> Self {
-        let find_arr = Regex::new(r"array<([\w\.]+)>")
-            .unwrap()
-            .captures(&member.type_field);
-        let (cat, children) = match find_arr {
-            Some(caps) => {
-                let tf_inner = caps.get(1).unwrap().as_str();
-                let count = MemberModel {
-                    name_orig: member.name.clone(),
-                    category: MemberCategory::Count,
-                    name_member: to_count_member(&member.name),
-                    ref_mode: MemberTypeMode::Embedded,
-                };
-                let array = MemberModel {
-                    name_orig: member.name.clone(),
-                    name_member: to_member(&member.name),
-                    category: MemberCategory::from_type(tf_inner),
-                    ref_mode: MemberTypeMode::Array,
-                };
-                (MemberGroupCategory::CountAndArray, vec![count, array])
-            }
-            None => {
-                let ref_mode = match &member.pointer {
-                    Some(mutability) => MemberTypeMode::Pointer(mutability == "mutable"),
-                    None => MemberTypeMode::Embedded,
-                };
-                (
-                    MemberGroupCategory::Individual,
-                    vec![MemberModel {
-                        name_orig: member.name.clone(),
-                        name_member: to_member(&member.name),
-                        category: MemberCategory::from_type(&member.type_field),
-                        ref_mode,
-                    }],
-                )
-            }
-        };
+        let (group_type, members) = get_type_info(&member.name, &member.type_field, member.pointer.as_deref());
         Self {
             o: Some(member.clone()),
             name_orig: member.name.clone(),
-            cat,
-            members: children,
+            group_mode: group_type,
+            members,
         }
     }
 }
 
 #[derive(EnumString, Debug, Clone, Display)]
 #[strum(serialize_all = "snake_case")]
-pub enum MemberCategory {
+pub enum TypeInfo {
     Uint16,
     Uint32,
     Uint64,
@@ -344,9 +398,10 @@ pub enum MemberCategory {
     FunctionType(String),
     CVoid,
     Count,
+    Usize,
 }
 
-impl MemberCategory {
+impl TypeInfo {
     pub fn from_type(type_field: &str) -> Self {
         let mut parts = type_field.split(".");
         let mut category = parts.next().unwrap();
@@ -357,92 +412,117 @@ impl MemberCategory {
             category = "struct";
         }
 
-        let info = MemberCategory::from_str(category).unwrap();
+        let info = TypeInfo::from_str(category).unwrap();
         // Set the specific type
         match info {
-            MemberCategory::Enum(_) => MemberCategory::Enum(specific.to_string()),
-            MemberCategory::Bitflag(_) => MemberCategory::Bitflag(specific.to_string()),
-            MemberCategory::Object(_) => MemberCategory::Object(specific.to_string()),
-            MemberCategory::Struct(_) => MemberCategory::Struct(specific.to_string()),
-            MemberCategory::FunctionType(_) => MemberCategory::FunctionType(specific.to_string()),
+            TypeInfo::Enum(_) => TypeInfo::Enum(specific.to_string()),
+            TypeInfo::Bitflag(_) => TypeInfo::Bitflag(specific.to_string()),
+            TypeInfo::Object(_) => TypeInfo::Object(specific.to_string()),
+            TypeInfo::Struct(_) => TypeInfo::Struct(specific.to_string()),
+            TypeInfo::FunctionType(_) => TypeInfo::FunctionType(specific.to_string()),
             _ => info,
         }
     }
 }
 
 #[derive(Debug, Clone, Display)]
-pub enum MemberTypeMode {
+pub enum RefMode {
     Embedded,
     Pointer(bool), // bool is true if the pointer is mutable
     Array,
 }
 
 #[derive(Debug, Clone)]
-pub struct MemberModel {
+pub struct TypeModel {
     pub name_orig: String,
     pub name_member: String,
-    pub category: MemberCategory,
-    pub ref_mode: MemberTypeMode,
+    pub ref_mode: RefMode,
+    pub type_info: TypeInfo,
 }
 
-impl MemberModel {
-    pub fn is_primitive(&self) -> bool {
-        matches!(
-            self.category,
-            MemberCategory::Uint16
-                | MemberCategory::Uint32
-                | MemberCategory::Uint64
-                | MemberCategory::Int32
-                | MemberCategory::Float32
-                | MemberCategory::Float64
-                | MemberCategory::Bool
-                | MemberCategory::Enum(_)
-                | MemberCategory::Bitflag(_)
-        )
+impl TypeModel {
+    pub fn host_c_type(&self, model: &SpecModel) -> String {
+        match self.ref_mode {
+            RefMode::Embedded => match &self.type_info {
+                TypeInfo::Uint16 => "uint16_t".to_string(),
+                TypeInfo::Uint32 => "uint32_t".to_string(),
+                TypeInfo::Uint64 => "uint64_t".to_string(),
+                TypeInfo::Int32 => "int32_t".to_string(),
+                TypeInfo::Float32 => "float".to_string(),
+                TypeInfo::Float64 => "double".to_string(),
+                TypeInfo::Bool => "uint32_t".to_string(),
+                TypeInfo::Count => "int".to_string(),
+                TypeInfo::Enum(enum_name) => to_wgpu_type(enum_name),
+                TypeInfo::Bitflag(bitflag_name) => to_wgpu_type(&bitflag_name),
+                TypeInfo::String => "char *".to_string(),
+                TypeInfo::Object(object_name) => {
+                    let object = model.object_by_name(object_name).unwrap();
+                    object.name_wgpu_type.clone()
+                },
+                TypeInfo::Struct(name) => to_wasm_type(&name),
+                TypeInfo::FunctionType(_) => "void *".to_string(),
+                TypeInfo::Usize => "size_t".to_string(),
+                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.type_info),
+            },
+            RefMode::Pointer(_) => match &self.type_info {
+                TypeInfo::Uint32 => "uint32_t *".to_string(),
+                TypeInfo::Struct(struct_name) => {
+                    let struct_ = model.struct_by_name(&struct_name).unwrap();
+                    format!("{} *", struct_.name_wasm_type)
+                },
+                TypeInfo::CVoid => "void *".to_string(),
+                TypeInfo::Enum(enum_name) => {
+                    let enum_ = model.enum_by_name(&enum_name).unwrap();
+                    format!("{} *", enum_.name_wgpu_type)
+                },
+                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.type_info),
+            },
+            RefMode::Array => "WASM_POINTER_ARRAY_C_TYPE".to_string(),
+        }
     }
 
     pub fn wasm_c_type(&self) -> String {
         match self.ref_mode {
-            MemberTypeMode::Embedded => match &self.category {
-                MemberCategory::Uint16 => "uint16_t".to_string(),
-                MemberCategory::Uint32 => "uint32_t".to_string(),
-                MemberCategory::Uint64 => "uint64_t".to_string(),
-                MemberCategory::Int32 => "int32_t".to_string(),
-                MemberCategory::Float32 => "float".to_string(),
-                MemberCategory::Float64 => "double".to_string(),
-                MemberCategory::Bool => "uint32_t".to_string(),
-                MemberCategory::Count => "WASM_SIZE_C_TYPE".to_string(),
-                MemberCategory::Enum(_) => "WASM_ENUM_C_TYPE".to_string(),
-                MemberCategory::Bitflag(_) => "WASM_INT_C_TYPE".to_string(),
-                MemberCategory::String => "WASM_POINTER_STRING_C_TYPE".to_string(),
-                MemberCategory::Object(_) => "WASM_POINTER_OBJECT_C_TYPE".to_string(),
-                MemberCategory::Struct(name) => to_wasm_type(&name),
-                MemberCategory::FunctionType(_) => "WASM_POINTER_FUNCTION_C_TYPE".to_string(),
-                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.category),
+            RefMode::Embedded => match &self.type_info {
+                TypeInfo::Uint16 => "uint16_t".to_string(),
+                TypeInfo::Uint32 => "uint32_t".to_string(),
+                TypeInfo::Uint64 => "uint64_t".to_string(),
+                TypeInfo::Int32 => "int32_t".to_string(),
+                TypeInfo::Float32 => "float".to_string(),
+                TypeInfo::Float64 => "double".to_string(),
+                TypeInfo::Bool => "uint32_t".to_string(),
+                TypeInfo::Count => "WASM_SIZE_C_TYPE".to_string(),
+                TypeInfo::Enum(_) => "WASM_ENUM_C_TYPE".to_string(),
+                TypeInfo::Bitflag(_) => "WASM_INT_C_TYPE".to_string(),
+                TypeInfo::String => "WASM_POINTER_STRING_C_TYPE".to_string(),
+                TypeInfo::Object(_) => "WASM_POINTER_OBJECT_C_TYPE".to_string(),
+                TypeInfo::Struct(name) => to_wasm_type(&name),
+                TypeInfo::FunctionType(_) => "WASM_POINTER_FUNCTION_C_TYPE".to_string(),
+                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.type_info),
             },
-            MemberTypeMode::Pointer(_) => match self.category {
-                MemberCategory::Uint32 => "WASM_POINTER_UINT32_C_TYPE".to_string(),
-                MemberCategory::Struct(_) => "WASM_POINTER_STRUCT_C_TYPE".to_string(),
-                MemberCategory::CVoid => "WASM_POINTER_VOID_C_TYPE".to_string(),
-                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.category),
+            RefMode::Pointer(_) => match self.type_info {
+                TypeInfo::Uint32 => "WASM_POINTER_UINT32_C_TYPE".to_string(),
+                TypeInfo::Struct(_) => "WASM_POINTER_STRUCT_C_TYPE".to_string(),
+                TypeInfo::CVoid => "WASM_POINTER_VOID_C_TYPE".to_string(),
+                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.type_info),
             },
-            MemberTypeMode::Array => "WASM_POINTER_ARRAY_C_TYPE".to_string(),
+            RefMode::Array => "WASM_POINTER_ARRAY_C_TYPE".to_string(),
         }
     }
 
     pub fn original_info_str(&self) -> Option<String> {
-        let inner = match &self.category {
-            MemberCategory::Enum(name) => Some(to_wgpu_type(&name)),
-            MemberCategory::Bitflag(name) => Some(to_wgpu_type(&name)),
-            MemberCategory::Object(name) => Some(to_wgpu_type(&name)),
-            MemberCategory::Struct(name) => Some(to_wasm_type(&name)),
-            MemberCategory::FunctionType(name) => Some(to_wgpu_type(&name)),
+        let inner = match &self.type_info {
+            TypeInfo::Enum(name) => Some(to_wgpu_type(&name)),
+            TypeInfo::Bitflag(name) => Some(to_wgpu_type(&name)),
+            TypeInfo::Object(name) => Some(to_wgpu_type(&name)),
+            TypeInfo::Struct(name) => Some(to_wasm_type(&name)),
+            TypeInfo::FunctionType(name) => Some(to_wgpu_type(&name)),
             _ => return None,
         }
         .unwrap();
 
         match self.ref_mode {
-            MemberTypeMode::Array => Some(format!("{}[]", inner)),
+            RefMode::Array => Some(format!("{}[]", inner)),
             _ => Some(inner),
         }
     }
@@ -470,4 +550,8 @@ fn to_member(name: &str) -> String {
 
 fn to_member_plural(name: &str) -> String {
     format!("{}s", to_member(name))
+}
+
+fn to_wgpu_fn(object: &str, method: &str) -> String {
+    format!("wgpu{}{}", snake_to_pascal_preserve_caps(object), snake_to_pascal_preserve_caps(method))
 }

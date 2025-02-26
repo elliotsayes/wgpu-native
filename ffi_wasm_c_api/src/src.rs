@@ -117,6 +117,11 @@ impl CodeGenerator {
             .push(Some(GeneratedLine::new(self.indent_level, text)));
     }
 
+    pub fn add_at(&mut self, text: impl Into<String>, indent_level: usize) {
+        self.lines
+            .push(Some(GeneratedLine::new(indent_level, text)));
+    }
+
     pub fn newline(&mut self) {
         self.lines.push(None);
     }

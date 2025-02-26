@@ -24,10 +24,13 @@
 #define WASM_POINTER_STRUCT_C_TYPE WASM_C_TYPE
 #define WASM_POINTER_FUNCTION_C_TYPE WASM_C_TYPE
 #define WASM_SIZE_C_TYPE WASM_C_TYPE
+#define WASM_FLOAT_C_TYPE float32_t
 #define WASM_DEFAULT_ALIGN 1
 #define WASM_INT_KIND WASM_I32
+#define WASM_FLOAT_KIND WASM_F32
 #define WASM_POINTER_KIND WASM_I32
 #define WASM_VAL_INT_PROP i32
+#define WASM_VAL_FLOAT_PROP f32
 
 #ifndef LOG_MACROS
 #define LOG_TRACE(...) do {fprintf(stderr, "[TRACE] "); fprintf(stderr, __VA_ARGS__); fprintf(stderr, "\n");} while (0)
@@ -86,6 +89,11 @@ wasm_memory_t* get_memory(Proc* proc) {
     }
     return NULL;
 }
+
+typedef struct {
+    WASM_POINTER_FUNCTION_C_TYPE callback;
+    WASM_POINTER_VOID_C_TYPE userdata;
+} WasmCallbackUserdataWrapper;
 
 /* Methods */
 
@@ -275,7 +283,8 @@ int wasm_safe_copy_int(wasm_memory_t* memory, WASM_POINTER_UINT32_C_TYPE wasm_in
     return 0;
 }
 
-#define GET_WASM_SYS_INT(data) (data).of.WASM_VAL_INT_PROP
+#define GET_WASM_SYS_INT(data) ((data).of.WASM_VAL_INT_PROP)
+#define GET_WASM_SYS_FLOAT(data) ((data).of.WASM_VAL_FLOAT_PROP)
 
 static inline WASM_INT_C_TYPE wasm_val_to_native_int(wasm_val_t wasm_val) {
     if (wasm_val.kind != WASM_INT_KIND) {
@@ -285,6 +294,16 @@ static inline WASM_INT_C_TYPE wasm_val_to_native_int(wasm_val_t wasm_val) {
         // LOG_DEBUG("wasm_val_to_native_int: got kind: %d", WASM_INT_KIND);
     }
     return GET_WASM_SYS_INT(wasm_val);
+}
+
+static inline WASM_FLOAT_C_TYPE wasm_val_to_native_float(wasm_val_t wasm_val) {
+    if (wasm_val.kind != WASM_FLOAT_KIND) {
+        LOG_DEBUG("wasm_val_to_native_float: expected %s, got kind: %d",
+                  WASM_FLOAT_KIND, wasm_val.kind);
+    } else {
+        // LOG_DEBUG("wasm_val_to_native_float: got kind: %d", WASM_FLOAT_KIND);
+    }
+    return GET_WASM_SYS_FLOAT(wasm_val);
 }
 
 int max(size_t a, size_t b) {

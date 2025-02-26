@@ -129,19 +129,59 @@ pub struct MethodModel {
     pub name_orig: String,
     pub name_wgpu_fn: String,
     pub arg_groups: Vec<MethodArgGroupModel>,
+    pub returns_async: Option<CallbackModel>,
 }
 
 impl MethodModel {
-    pub fn from_spec(_spec: &spec::Spec, object: &spec::Object, method: &spec::Method) -> Self {
+    pub fn from_spec(spec: &spec::Spec, object: &spec::Object, method: &spec::Method) -> Self {
+        let returns_async = match method.returns_async.len() {
+            0 => None,
+            _ => Some(CallbackModel::from_spec(spec, method.returns_async.clone())),
+        };
+        let base_arg_groups: Vec<MethodArgGroupModel> = method
+            .args
+            .iter()
+            .map(|a| MethodArgGroupModel::from_spec(spec, object, method, a))
+            .collect();
+        let callback_arg_group = match returns_async {
+            Some(_) => Some({
+                MethodArgGroupModel {
+                    o: None,
+                    name_orig: "returns_async".to_owned(),
+                    name_variable: "returns_async".to_owned(),
+                    group_mode: DataGroupMode::CallbackAndUserdata,
+                    args: vec![
+                        TypeModel {
+                            name_orig: "callback".to_owned(),
+                            name_member: "callback".to_owned(),
+                            ref_mode: RefMode::Pointer(false),
+                            type_info: TypeInfo::MethodCallback(
+                                object.name.clone(),
+                                method.name.clone(),
+                            ),
+                        },
+                        TypeModel {
+                            name_orig: "userdata".to_owned(),
+                            name_member: "userdata".to_owned(),
+                            ref_mode: RefMode::Pointer(false),
+                            type_info: TypeInfo::Userdata(object.name.clone(), method.name.clone()),
+                        },
+                    ],
+                }
+            }),
+            None => None,
+        };
+        let arg_groups = base_arg_groups
+            .into_iter()
+            .chain(callback_arg_group.into_iter())
+            .collect();
+
         Self {
             o: Some(method.clone()),
             name_orig: method.name.clone(),
             name_wgpu_fn: to_wgpu_fn(&object.name, &method.name),
-            arg_groups: method
-                .args
-                .iter()
-                .map(|a| MethodArgGroupModel::from_spec(_spec, method, a))
-                .collect(),
+            arg_groups,
+            returns_async,
         }
     }
 }
@@ -155,7 +195,12 @@ pub struct MethodArgGroupModel {
 }
 
 impl MethodArgGroupModel {
-    pub fn from_spec(_spec: &spec::Spec, method: &spec::Method, arg: &spec::MethodArg) -> Self {
+    pub fn from_spec(
+        _spec: &spec::Spec,
+        _object: &spec::Object,
+        _method: &spec::Method,
+        arg: &spec::MethodArg,
+    ) -> Self {
         let (group_type, args) = get_type_info(&arg.name, &arg.type_field, arg.pointer.as_deref());
 
         Self {
@@ -164,6 +209,29 @@ impl MethodArgGroupModel {
             name_variable: arg.name.clone(),
             group_mode: group_type,
             args,
+        }
+    }
+}
+
+pub struct CallbackModel {
+    args: Vec<TypeModel>,
+}
+
+impl CallbackModel {
+    pub fn from_spec(_spec: &spec::Spec, args: Vec<spec::ReturnsAsync>) -> Self {
+        Self {
+            args: args
+                .iter()
+                .map(|a| {
+                    let name = a.name.clone();
+                    TypeModel {
+                        name_orig: name.clone(),
+                        name_member: to_member(&name),
+                        ref_mode: RefMode::from_pointer(a.pointer.clone()),
+                        type_info: TypeInfo::from_type(&a.type_field),
+                    }
+                })
+                .collect(),
         }
     }
 }
@@ -315,6 +383,7 @@ fn get_chained_struct(mutable: bool) -> StructModel {
 pub enum DataGroupMode {
     Individual,
     CountAndArray,
+    CallbackAndUserdata,
 }
 
 #[derive(Debug, Clone)]
@@ -329,7 +398,11 @@ pub fn to_count_member(name: &str) -> String {
     format!("{}Count", snake_to_camel_preserve_caps(&to_singular(name)))
 }
 
-fn get_type_info(name: &str, type_field: &str, pointer: Option<&str>) -> (DataGroupMode, Vec<TypeModel>) {
+fn get_type_info(
+    name: &str,
+    type_field: &str,
+    pointer: Option<&str>,
+) -> (DataGroupMode, Vec<TypeModel>) {
     let find_arr = Regex::new(r"array<([\w\.]+)>")
         .unwrap()
         .captures(type_field);
@@ -370,7 +443,8 @@ fn get_type_info(name: &str, type_field: &str, pointer: Option<&str>) -> (DataGr
 
 impl MemberGroupModel {
     pub fn from_spec(_spec: &spec::Spec, member: &spec::Member) -> Self {
-        let (group_type, members) = get_type_info(&member.name, &member.type_field, member.pointer.as_deref());
+        let (group_type, members) =
+            get_type_info(&member.name, &member.type_field, member.pointer.as_deref());
         Self {
             o: Some(member.clone()),
             name_orig: member.name.clone(),
@@ -399,6 +473,8 @@ pub enum TypeInfo {
     CVoid,
     Count,
     Usize,
+    MethodCallback(String, String),
+    Userdata(String, String),
 }
 
 impl TypeInfo {
@@ -432,6 +508,17 @@ pub enum RefMode {
     Array,
 }
 
+impl RefMode {
+    pub fn from_pointer(pointer: Option<String>) -> Self {
+        match pointer.as_deref() {
+            None => Self::Embedded,
+            Some("immutable") => Self::Pointer(false),
+            Some("mutable") => Self::Pointer(true),
+            _ => unreachable!(),
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct TypeModel {
     pub name_orig: String,
@@ -458,24 +545,38 @@ impl TypeModel {
                 TypeInfo::Object(object_name) => {
                     let object = model.object_by_name(object_name).unwrap();
                     object.name_wgpu_type.clone()
-                },
+                }
                 TypeInfo::Struct(name) => to_wasm_type(&name),
                 TypeInfo::FunctionType(_) => "void *".to_string(),
                 TypeInfo::Usize => "size_t".to_string(),
-                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.type_info),
+                _ => panic!(
+                    "{:?}: unknown category: {:?}",
+                    self.ref_mode, self.type_info
+                ),
             },
             RefMode::Pointer(_) => match &self.type_info {
                 TypeInfo::Uint32 => "uint32_t *".to_string(),
                 TypeInfo::Struct(struct_name) => {
                     let struct_ = model.struct_by_name(&struct_name).unwrap();
                     format!("{} *", struct_.name_wasm_type)
-                },
-                TypeInfo::CVoid => "void *".to_string(),
+                }
+                TypeInfo::CVoid | TypeInfo::Userdata(_, _) => "void *".to_string(),
                 TypeInfo::Enum(enum_name) => {
                     let enum_ = model.enum_by_name(&enum_name).unwrap();
                     format!("{} *", enum_.name_wgpu_type)
-                },
-                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.type_info),
+                }
+                // TypeInfo::MethodCallback(_, _) => "WASM_POINTER_FUNCTION_C_TYPE".to_string(),
+                TypeInfo::MethodCallback(object_name, method_name) => {
+                    format!(
+                        "{}{}Callback",
+                        to_wgpu_type(object_name),
+                        snake_to_pascal_preserve_caps(method_name)
+                    )
+                }
+                _ => panic!(
+                    "{:?}: unknown category: {:?}",
+                    self.ref_mode, self.type_info
+                ),
             },
             RefMode::Array => "WASM_POINTER_ARRAY_C_TYPE".to_string(),
         }
@@ -498,13 +599,22 @@ impl TypeModel {
                 TypeInfo::Object(_) => "WASM_POINTER_OBJECT_C_TYPE".to_string(),
                 TypeInfo::Struct(name) => to_wasm_type(&name),
                 TypeInfo::FunctionType(_) => "WASM_POINTER_FUNCTION_C_TYPE".to_string(),
-                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.type_info),
+                _ => panic!(
+                    "{:?}: unknown category: {:?}",
+                    self.ref_mode, self.type_info
+                ),
             },
             RefMode::Pointer(_) => match self.type_info {
                 TypeInfo::Uint32 => "WASM_POINTER_UINT32_C_TYPE".to_string(),
                 TypeInfo::Struct(_) => "WASM_POINTER_STRUCT_C_TYPE".to_string(),
-                TypeInfo::CVoid => "WASM_POINTER_VOID_C_TYPE".to_string(),
-                _ => panic!("{:?}: unknown category: {:?}", self.ref_mode, self.type_info),
+                TypeInfo::CVoid | TypeInfo::Userdata(_, _) => {
+                    "WASM_POINTER_VOID_C_TYPE".to_string()
+                }
+                TypeInfo::MethodCallback(_, _) => "WASM_POINTER_FUNCTION_C_TYPE".to_string(),
+                _ => panic!(
+                    "{:?}: unknown category: {:?}",
+                    self.ref_mode, self.type_info
+                ),
             },
             RefMode::Array => "WASM_POINTER_ARRAY_C_TYPE".to_string(),
         }
@@ -524,6 +634,22 @@ impl TypeModel {
         match self.ref_mode {
             RefMode::Array => Some(format!("{}[]", inner)),
             _ => Some(inner),
+        }
+    }
+
+    pub fn func_var_name(&self) -> String {
+        match self.ref_mode {
+            RefMode::Embedded => match &self.type_info {
+                TypeInfo::Count => format!("{}_count", self.name_orig),
+                _ => self.name_orig.clone(),
+            },
+            RefMode::Pointer(_) => match &self.type_info {
+                TypeInfo::MethodCallback(object_name, method_name) => {
+                    to_host_callback_fn(object_name, method_name)
+                }
+                _ => self.name_orig.clone(),
+            },
+            RefMode::Array => format!("{}_array", self.name_orig),
         }
     }
 }
@@ -553,5 +679,17 @@ fn to_member_plural(name: &str) -> String {
 }
 
 fn to_wgpu_fn(object: &str, method: &str) -> String {
-    format!("wgpu{}{}", snake_to_pascal_preserve_caps(object), snake_to_pascal_preserve_caps(method))
+    format!(
+        "wgpu{}{}",
+        snake_to_pascal_preserve_caps(object),
+        snake_to_pascal_preserve_caps(method)
+    )
+}
+
+fn to_host_callback_fn(object: &str, method: &str) -> String {
+    format!(
+        "host_callback_{}{}",
+        snake_to_pascal_preserve_caps(object),
+        snake_to_pascal_preserve_caps(method)
+    )
 }

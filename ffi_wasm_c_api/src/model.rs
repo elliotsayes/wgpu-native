@@ -136,7 +136,12 @@ impl MethodModel {
     pub fn from_spec(spec: &spec::Spec, object: &spec::Object, method: &spec::Method) -> Self {
         let returns_async = match method.returns_async.len() {
             0 => None,
-            _ => Some(CallbackModel::from_spec(spec, method.returns_async.clone())),
+            _ => Some(CallbackModel::from_spec(
+                spec,
+                object,
+                method,
+                method.returns_async.clone(),
+            )),
         };
         let base_arg_groups: Vec<MethodArgGroupModel> = method
             .args
@@ -214,11 +219,16 @@ impl MethodArgGroupModel {
 }
 
 pub struct CallbackModel {
-    args: Vec<TypeModel>,
+    pub args: Vec<TypeModel>,
 }
 
 impl CallbackModel {
-    pub fn from_spec(_spec: &spec::Spec, args: Vec<spec::ReturnsAsync>) -> Self {
+    pub fn from_spec(
+        _spec: &spec::Spec,
+        object: &spec::Object,
+        method: &spec::Method,
+        args: Vec<spec::ReturnsAsync>,
+    ) -> Self {
         Self {
             args: args
                 .iter()
@@ -231,6 +241,12 @@ impl CallbackModel {
                         type_info: TypeInfo::from_type(&a.type_field),
                     }
                 })
+                .chain(vec![TypeModel {
+                    name_orig: String::from("userdata"),
+                    name_member: String::from("userdata"),
+                    ref_mode: RefMode::Pointer(false),
+                    type_info: TypeInfo::Userdata(object.name.to_string(), method.name.to_string()),
+                }])
                 .collect(),
         }
     }
@@ -546,7 +562,7 @@ impl TypeModel {
                     let object = model.object_by_name(object_name).unwrap();
                     object.name_wgpu_type.clone()
                 }
-                TypeInfo::Struct(name) => to_wasm_type(&name),
+                TypeInfo::Struct(name) => to_wgpu_type(&name),
                 TypeInfo::FunctionType(_) => "void *".to_string(),
                 TypeInfo::Usize => "size_t".to_string(),
                 _ => panic!(
@@ -558,7 +574,7 @@ impl TypeModel {
                 TypeInfo::Uint32 => "uint32_t *".to_string(),
                 TypeInfo::Struct(struct_name) => {
                     let struct_ = model.struct_by_name(&struct_name).unwrap();
-                    format!("{} *", struct_.name_wasm_type)
+                    format!("{} *", struct_.name_wgpu_type)
                 }
                 TypeInfo::CVoid | TypeInfo::Userdata(_, _) => "void *".to_string(),
                 TypeInfo::Enum(enum_name) => {
@@ -647,6 +663,7 @@ impl TypeModel {
                 TypeInfo::MethodCallback(object_name, method_name) => {
                     to_host_callback_fn(object_name, method_name)
                 }
+                TypeInfo::Userdata(_, _) => format!("(void *)(&{})", self.name_orig),
                 _ => self.name_orig.clone(),
             },
             RefMode::Array => format!("{}_array", self.name_orig),
@@ -687,9 +704,5 @@ fn to_wgpu_fn(object: &str, method: &str) -> String {
 }
 
 fn to_host_callback_fn(object: &str, method: &str) -> String {
-    format!(
-        "host_callback_{}{}",
-        snake_to_pascal_preserve_caps(object),
-        snake_to_pascal_preserve_caps(method)
-    )
+    format!("host_callback_{}", to_wgpu_fn(object, method))
 }

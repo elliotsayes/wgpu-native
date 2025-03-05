@@ -610,6 +610,45 @@ int free_surface_descriptor_from_xcb_window(WGPUSurfaceDescriptorFromXcbWindow *
 int free_surface_descriptor_from_xlib_window(WGPUSurfaceDescriptorFromXlibWindow *struct_ptr);
 int free_surface_descriptor_from_wayland_surface(WGPUSurfaceDescriptorFromWaylandSurface *struct_ptr);
 
+/* Wasm Callback Function Declarations */
+void host_callback_wgpuAdapterRequestDevice(
+    WGPURequestDeviceStatus status,
+    WGPUDevice device,
+    const char * message,
+    void * userdata
+);
+void host_callback_wgpuBufferMapAsync(
+    WGPUBufferMapAsyncStatus status,
+    void * userdata
+);
+void host_callback_wgpuDeviceCreateComputePipelineAsync(
+    WGPUCreatePipelineAsyncStatus status,
+    WGPUComputePipeline pipeline,
+    const char * message,
+    void * userdata
+);
+void host_callback_wgpuDeviceCreateRenderPipelineAsync(
+    WGPUCreatePipelineAsyncStatus status,
+    WGPURenderPipeline pipeline,
+    const char * message,
+    void * userdata
+);
+void host_callback_wgpuInstanceRequestAdapter(
+    WGPURequestAdapterStatus status,
+    WGPUAdapter adapter,
+    const char * message,
+    void * userdata
+);
+void host_callback_wgpuQueueOnSubmittedWorkDone(
+    WGPUQueueWorkDoneStatus status,
+    void * userdata
+);
+void host_callback_wgpuShaderModuleGetCompilationInfo(
+    WGPUCompilationInfoRequestStatus status,
+    const struct WGPUCompilationInfo * compilation_info,
+    void * userdata
+);
+
 /* Wasm Import Function Declarations */
 wasm_trap_t *wasm_import_wgpuAdapterGetLimits(void *env, const wasm_val_vec_t *args, wasm_val_vec_t *results);
 wasm_trap_t *wasm_import_wgpuAdapterHasFeature(void *env, const wasm_val_vec_t *args, wasm_val_vec_t *results);
@@ -8042,6 +8081,66 @@ int free_surface_descriptor_from_wayland_surface(WGPUSurfaceDescriptorFromWaylan
 }
 
 
+/* Wasm Callback Function Definitions */
+void host_callback_wgpuAdapterRequestDevice(
+    WGPURequestDeviceStatus status,
+    WGPUDevice device,
+    const char * message,
+    void * userdata
+) {
+    /* TODO: Callback */
+}
+
+void host_callback_wgpuBufferMapAsync(
+    WGPUBufferMapAsyncStatus status,
+    void * userdata
+) {
+    /* TODO: Callback */
+}
+
+void host_callback_wgpuDeviceCreateComputePipelineAsync(
+    WGPUCreatePipelineAsyncStatus status,
+    WGPUComputePipeline pipeline,
+    const char * message,
+    void * userdata
+) {
+    /* TODO: Callback */
+}
+
+void host_callback_wgpuDeviceCreateRenderPipelineAsync(
+    WGPUCreatePipelineAsyncStatus status,
+    WGPURenderPipeline pipeline,
+    const char * message,
+    void * userdata
+) {
+    /* TODO: Callback */
+}
+
+void host_callback_wgpuInstanceRequestAdapter(
+    WGPURequestAdapterStatus status,
+    WGPUAdapter adapter,
+    const char * message,
+    void * userdata
+) {
+    /* TODO: Callback */
+}
+
+void host_callback_wgpuQueueOnSubmittedWorkDone(
+    WGPUQueueWorkDoneStatus status,
+    void * userdata
+) {
+    /* TODO: Callback */
+}
+
+void host_callback_wgpuShaderModuleGetCompilationInfo(
+    WGPUCompilationInfoRequestStatus status,
+    const struct WGPUCompilationInfo * compilation_info,
+    void * userdata
+) {
+    /* TODO: Callback */
+}
+
+
 /* Wasm Import Function Definitions */
 wasm_trap_t *wasm_import_wgpuAdapterGetLimits(
     void *env,
@@ -8181,7 +8280,7 @@ wasm_trap_t *wasm_import_wgpuAdapterRequestDevice(
     };
 
 
-    wgpuAdapterRequestDevice(adapter, descriptor, host_callback_AdapterRequestDevice, userdata);
+    wgpuAdapterRequestDevice(adapter, descriptor, host_callback_wgpuAdapterRequestDevice, (void *)(&userdata));
 
     /* TODO: Freeing */
     return NULL;
@@ -8275,7 +8374,7 @@ wasm_trap_t *wasm_import_wgpuBufferMapAsync(
     };
 
 
-    wgpuBufferMapAsync(buffer, mode, offset, size, host_callback_BufferMapAsync, userdata);
+    wgpuBufferMapAsync(buffer, mode, offset, size, host_callback_wgpuBufferMapAsync, (void *)(&userdata));
 
     /* TODO: Freeing */
     return NULL;
@@ -9438,7 +9537,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipelineAsync(
     };
 
 
-    wgpuDeviceCreateComputePipelineAsync(device, descriptor, host_callback_DeviceCreateComputePipelineAsync, userdata);
+    wgpuDeviceCreateComputePipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateComputePipelineAsync, (void *)(&userdata));
 
     /* TODO: Freeing */
     return NULL;
@@ -9530,7 +9629,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipelineAsync(
     };
 
 
-    wgpuDeviceCreateRenderPipelineAsync(device, descriptor, host_callback_DeviceCreateRenderPipelineAsync, userdata);
+    wgpuDeviceCreateRenderPipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateRenderPipelineAsync, (void *)(&userdata));
 
     /* TODO: Freeing */
     return NULL;
@@ -9994,7 +10093,7 @@ wasm_trap_t *wasm_import_wgpuInstanceRequestAdapter(
     };
 
 
-    wgpuInstanceRequestAdapter(instance, options, host_callback_InstanceRequestAdapter, userdata);
+    wgpuInstanceRequestAdapter(instance, options, host_callback_wgpuInstanceRequestAdapter, (void *)(&userdata));
 
     /* TODO: Freeing */
     return NULL;
@@ -10188,7 +10287,7 @@ wasm_trap_t *wasm_import_wgpuQueueOnSubmittedWorkDone(
     };
 
 
-    wgpuQueueOnSubmittedWorkDone(queue, host_callback_QueueOnSubmittedWorkDone, userdata);
+    wgpuQueueOnSubmittedWorkDone(queue, host_callback_wgpuQueueOnSubmittedWorkDone, (void *)(&userdata));
 
     /* TODO: Freeing */
     return NULL;
@@ -11439,7 +11538,7 @@ wasm_trap_t *wasm_import_wgpuShaderModuleGetCompilationInfo(
     };
 
 
-    wgpuShaderModuleGetCompilationInfo(shader_module, host_callback_ShaderModuleGetCompilationInfo, userdata);
+    wgpuShaderModuleGetCompilationInfo(shader_module, host_callback_wgpuShaderModuleGetCompilationInfo, (void *)(&userdata));
 
     /* TODO: Freeing */
     return NULL;

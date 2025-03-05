@@ -97,6 +97,8 @@ fn gen_all_impl(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
     n!(gen);
     gen_all_free_fn_declarations(&mut gen, model);
     n!(gen);
+    gen_all_wasm_callback_fn_declarations(&mut gen, model);
+    n!(gen);
     gen_all_wasm_import_fn_declarations(&mut gen, model);
     n!(gen);
 
@@ -106,6 +108,8 @@ fn gen_all_impl(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
     gen_all_extract_fn_definitions(&mut gen, model);
     n!(gen);
     gen_all_free_fn_definitions(&mut gen, model);
+    n!(gen);
+    gen_all_wasm_callback_fn_definitions(&mut gen, model);
     n!(gen);
     gen_all_wasm_import_fn_definitions(&mut gen, model);
     n!(gen);
@@ -658,6 +662,69 @@ fn gen_all_free_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
         a!(gen, "return 0;");
         o!(gen, "}}");
         n!(gen);
+    }
+}
+
+fn gen_all_wasm_callback_fn_declarations(gen: &mut CodeGenerator, model: &SpecModel) {
+    c!(gen, "Wasm Callback Function Declarations");
+
+    for object in &model.objects {
+        for method in &object.methods {
+            match &method.returns_async {
+                Some(ra) => {
+                    let wgpu_fn_name = &method.name_wgpu_fn;
+                    let callback_fn_name = format!("host_callback_{}", wgpu_fn_name);
+                    let args = &ra.args;
+                    i!(gen, "void {callback_fn_name}(");
+                    gen_wasm_callback_fn_args(gen, model, args);
+                    o!(gen, ");");
+                }
+                None => continue,
+            }
+        }
+    }
+}
+
+fn gen_all_wasm_callback_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
+    c!(gen, "Wasm Callback Function Definitions");
+
+    for object in &model.objects {
+        for method in &object.methods {
+            match &method.returns_async {
+                Some(ra) => {
+                    let wgpu_fn_name = &method.name_wgpu_fn;
+                    let args = &ra.args;
+                    let callback_fn_name = format!("host_callback_{}", wgpu_fn_name);
+                    i!(gen, "void {callback_fn_name}(");
+                    gen_wasm_callback_fn_args(gen, model, args);
+                    oi!(gen, ") {{");
+                    c![gen, "TODO: Callback"];
+                    o!(gen, "}}");
+                    n!(gen);
+                }
+                None => continue,
+            }
+        }
+    }
+}
+
+fn gen_wasm_callback_fn_args(gen: &mut CodeGenerator, model: &SpecModel, args: &[TypeModel]) {
+    for (i, arg) in args.iter().enumerate() {
+        let arg_name = &arg.name_orig;
+        let arg_type = arg.host_c_type(model);
+        let prepended_keywords = match arg.type_info {
+            TypeInfo::Struct(_) => match arg.ref_mode {
+                RefMode::Pointer(is_mut) => match is_mut {
+                    true => "struct ".to_string(),
+                    false => "const struct ".to_string(),
+                },
+                _ => unreachable!(),
+            },
+            TypeInfo::String => "const ".to_string(),
+            _ => "".to_string(),
+        };
+        let sep = if i != args.len() - 1 { "," } else { "" };
+        a!(gen, "{prepended_keywords}{arg_type} {arg_name}{sep}");
     }
 }
 

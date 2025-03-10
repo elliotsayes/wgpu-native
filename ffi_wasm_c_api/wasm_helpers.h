@@ -16,18 +16,7 @@
 
 /* Define native WASM types */
 #define WASM_C_TYPE uint32_t
-#define WASM_INT_C_TYPE int32_t
-#define WASM_ENUM_C_TYPE WASM_C_TYPE
-#define WASM_BITFLAG_C_TYPE WASM_C_TYPE
-#define WASM_POINTER_VOID_C_TYPE WASM_C_TYPE
-#define WASM_POINTER_UINT32_C_TYPE WASM_C_TYPE
 #define WASM_POINTER_ENUM_C_TYPE WASM_C_TYPE
-#define WASM_POINTER_OBJECT_C_TYPE WASM_C_TYPE
-#define WASM_POINTER_STRING_C_TYPE WASM_C_TYPE
-#define WASM_POINTER_ARRAY_C_TYPE WASM_C_TYPE
-#define WASM_POINTER_STRUCT_C_TYPE WASM_C_TYPE
-#define WASM_POINTER_FUNCTION_C_TYPE WASM_C_TYPE
-#define WASM_SIZE_C_TYPE WASM_C_TYPE
 #define WASM_FLOAT_C_TYPE float32_t
 #define WASM_DEFAULT_ALIGN 1
 #define WASM_INT_KIND WASM_I32
@@ -53,8 +42,8 @@
 
 typedef struct {
     Proc *proc;
-    WASM_POINTER_FUNCTION_C_TYPE callback;
-    WASM_POINTER_VOID_C_TYPE userdata;
+    WASM_INT_C_TYPE wasm_callback_index;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_userdata;
 } WasmCallbackUserdataWrapper;
 
 /* Methods */
@@ -102,154 +91,6 @@ void* registry_item_get_mapping(BindWGPUObjectMappingRegistryItem* item, size_t 
     return item->list[index - 1];
 }
 
-/*
- * wasm_cast_pointer_to_struct_safe
- *
- * Casts a pointer to a struct to a struct type.
- *
- * Returns 0 on success, or -1 on failure.
- */
-int wasm_safe_copy_pointer_to_struct(wasm_memory_t* memory, WASM_POINTER_STRUCT_C_TYPE wasm_ptr, void *wasm_struct, size_t struct_size) {
-	LOG_TRACE("wasm_safe_cast_pointer_to_struct args: %p %p %p %zu", memory, (void*)(uintptr_t)wasm_ptr, wasm_struct, struct_size);
-    assert(memory != NULL);
-
-    if (wasm_ptr == 0) {
-        LOG_DEBUG("wasm_safe_cast_pointer_to_struct: wasm_ptr is NULL");
-        return 0;
-    }
-
-    if (WASM_DEFAULT_ALIGN > 1 && (wasm_ptr % WASM_DEFAULT_ALIGN) != 0) {
-        WASM_MEMORY_ERROR("Unaligned struct pointer in WASM memory");
-        return 1;
-    }
-
-    // Get the start of the memory and its size.
-    byte_t *mem_base = wasm_memory_data(memory);
-    size_t mem_size = wasm_memory_data_size(memory);
-
-    // Bounds checking: ensure wasm_ptr is within memory.
-    if (wasm_ptr < 0 || wasm_ptr > mem_size - struct_size) {
-        WASM_MEMORY_ERROR("Attempt to read struct out of WASM memory bounds");
-        return 1;
-    }
-
-    // Copy the memory from WASM to the output struct
-    memcpy(wasm_struct, mem_base + wasm_ptr, struct_size);
-
-    return 0;
-}
-
-int wasm_safe_cast_pointer_void(wasm_memory_t* memory, WASM_POINTER_VOID_C_TYPE wasm_ptr, void **wasm_struct) {
-	LOG_TRACE("wasm_safe_cast_pointer_void args: %p %p %p", memory, (void*)(uintptr_t)wasm_ptr, wasm_struct);
-    assert(memory != NULL);
-
-    if (wasm_ptr == 0) {
-        LOG_DEBUG("wasm_safe_cast_pointer_void: wasm_ptr is NULL");
-        return 0;
-    }
-
-    if (WASM_DEFAULT_ALIGN > 1 && (wasm_ptr % WASM_DEFAULT_ALIGN) != 0) {
-        WASM_MEMORY_ERROR("Unaligned struct pointer in WASM memory");
-        return 1;
-    }
-
-    // Get the start of the memory and its size.
-    byte_t *mem_base = wasm_memory_data(memory);
-    size_t mem_size = wasm_memory_data_size(memory);
-
-    // Bounds checking: ensure wasm_ptr is within memory.
-    // TODO: Also protect against overflow in pointer arithmetic?
-    if (wasm_ptr < 0 || wasm_ptr > mem_size) {
-        WASM_MEMORY_ERROR("Attempt to read struct out of WASM memory bounds");
-        return 1;
-    }
-
-    // Cast the pointer to the struct
-    *wasm_struct = (void *)(mem_base + wasm_ptr);
-	LOG_TRACE("wasm_safe_cast_pointer_void result: mem_base %p + wasm_ptr %p = *wasm_struct %p", mem_base, (void*)(uintptr_t)wasm_ptr, *wasm_struct);
-
-    return 0;
-}
-
-int wasm_safe_copy_string_null_terminated(wasm_memory_t* memory, WASM_POINTER_STRING_C_TYPE wasm_str_ptr, char **host_string, size_t max_str_len) {
-    LOG_TRACE("wasm_safe_copy_string_null_terminated args: %p %p %p %zu", memory, (void*)(uintptr_t)wasm_str_ptr, host_string, max_str_len);
-    assert(memory != NULL);
-    assert(host_string != NULL);
-
-    if (wasm_str_ptr == 0) {
-        LOG_DEBUG("wasm_safe_copy_string_null_terminated: wasm_str_ptr is NULL");
-        *host_string = NULL;
-        return 0;
-    }
-
-    // Get the start of the memory and its size.
-    byte_t *mem_base = wasm_memory_data(memory);
-    size_t mem_size = wasm_memory_data_size(memory);
-
-    // Bounds checking: ensure wasm_ptr is within memory.
-    if (wasm_str_ptr < 0 || wasm_str_ptr >= mem_size) {
-        WASM_MEMORY_ERROR("String pointer out of WASM memory bounds");
-        return 1;
-    }
-
-    // Get pointer to the string in WASM memory
-    const char *wasm_str = (const char *)(mem_base + wasm_str_ptr);
-    LOG_TRACE("wasm_safe_copy_string_null_terminated: mem_base %p + wasm_str_ptr %p = wasm_str %p", 
-              mem_base, (void*)(uintptr_t)wasm_str_ptr, wasm_str);
-
-    // Find string length, ensuring we don't read past memory bounds
-    size_t remaining_mem = mem_size - wasm_str_ptr;
-    size_t max_len = (max_str_len > 0 && max_str_len < remaining_mem) ? max_str_len : remaining_mem;
-    
-    size_t str_len = strnlen(wasm_str, max_len);
-    if (str_len >= max_len) {
-        WASM_MEMORY_ERROR("No null terminator found within bounds");
-        return 1;
-    }
-
-    // Allocate and copy the string
-    *host_string = malloc(str_len + 1);
-    if (*host_string == NULL) {
-        WASM_MEMORY_ERROR("Failed to allocate memory for string");
-        return 1;
-    }
-
-    memcpy(*host_string, wasm_str, str_len);
-    (*host_string)[str_len] = '\0';
-    
-    LOG_TRACE("wasm_safe_copy_string_null_terminated result: %s", *host_string);
-    return 0;
-}
-
-int wasm_safe_copy_int(wasm_memory_t* memory, WASM_POINTER_UINT32_C_TYPE wasm_int_ptr, int *host_int_out) {
-    LOG_TRACE("wasm_safe_copy_int args: %p %p %p", memory, (void*)(uintptr_t)wasm_int_ptr, host_int_out);
-    assert(memory != NULL);
-
-    if (wasm_int_ptr == 0) {
-        LOG_TRACE("wasm_safe_copy_int: wasm_int_ptr is NULL, skipping");
-        return 0;
-    }
-
-    // Get the start of the memory and its size.
-    byte_t *mem_base = wasm_memory_data(memory);
-    size_t mem_size = wasm_memory_data_size(memory);
-
-    // Bounds checking: ensure wasm_ptr is within memory.
-    // TODO: Also protect against overflow in pointer arithmetic?
-    if (wasm_int_ptr < 0 || wasm_int_ptr > mem_size) {
-        WASM_MEMORY_ERROR("Attempt to read struct out of WASM memory bounds");
-        return 1;
-    }
-
-    // Copy the memory from `wasm_int_ptr` to `host_int_out`
-    int wasm_int_val;
-	memcpy(&wasm_int_val, ((WASM_C_TYPE *)(mem_base) + (WASM_C_TYPE)wasm_int_ptr), sizeof(WASM_C_TYPE));
-    *host_int_out = wasm_int_val;
-    LOG_TRACE("wasm_safe_copy_int wasm_int_val: %d, host_int_out: %d", wasm_int_val, *host_int_out);
-
-    return 0;
-}
-
 #define GET_WASM_SYS_INT(data) ((data).of.WASM_VAL_INT_PROP)
 #define GET_WASM_SYS_FLOAT(data) ((data).of.WASM_VAL_FLOAT_PROP)
 
@@ -273,8 +114,163 @@ static inline WASM_FLOAT_C_TYPE wasm_val_to_native_float(wasm_val_t wasm_val) {
     return GET_WASM_SYS_FLOAT(wasm_val);
 }
 
-int max(size_t a, size_t b) {
-    return a > b ? a : b;
+int wasm_safe_extract_pointer(wasm_memory_t* memory, WASM_POINTER_VOID_C_TYPE wa_ptr, void **out_ha_ptr, size_t size) {
+	LOG_TRACE("wasm_safe_extract_pointer args: %p %p %p %zu", memory, (void*)(uintptr_t)wa_ptr, out_ha_ptr, size);
+    assert(memory != NULL);
+
+    if (wa_ptr == 0) {
+        LOG_DEBUG("wasm_safe_extract_pointer: wa_ptr is NULL");
+        return 0;
+    }
+
+    if (WASM_DEFAULT_ALIGN > 1 && (wa_ptr % WASM_DEFAULT_ALIGN) != 0) {
+        WASM_MEMORY_ERROR("Unaligned struct pointer in WASM memory");
+        return 1;
+    }
+
+    // Get the start of the memory and its size.
+    byte_t *mem_base = wasm_memory_data(memory);
+    size_t mem_size = wasm_memory_data_size(memory);
+
+    // Bounds checking: ensure wasm_ptr is within memory.
+    // TODO: Also protect against overflow in pointer arithmetic?
+    if (wa_ptr < 0 || (wa_ptr + size) > mem_size) {
+        WASM_MEMORY_ERROR("Attempt to read struct out of WASM memory bounds");
+        return 1;
+    }
+
+    // Cast the pointer to the struct
+    *out_ha_ptr = (void *)(mem_base + wa_ptr);
+	LOG_TRACE("wasm_safe_extract_pointer result: mem_base %p + wa_ptr %p = *out_ha_ptr %p", mem_base, (void*)(uintptr_t)wa_ptr, *out_ha_ptr);
+
+    return 0;
+}
+
+int wasm_safe_extract_string_null_terminated(wasm_memory_t* memory, WASM_POINTER_STRING_C_TYPE wasm_str_ptr, char **host_string, size_t max_str_len) {
+    LOG_TRACE("wasm_safe_extract_string_null_terminated args: %p %p %p %zu", memory, (void*)(uintptr_t)wasm_str_ptr, host_string, max_str_len);
+    assert(memory != NULL);
+    assert(host_string != NULL);
+
+    if (wasm_str_ptr == 0) {
+        LOG_DEBUG("wasm_safe_extract_string_null_terminated: wasm_str_ptr is NULL");
+        *host_string = NULL;
+        return 0;
+    }
+
+    // Get the start of the memory and its size.
+    byte_t *mem_base = wasm_memory_data(memory);
+    size_t mem_size = wasm_memory_data_size(memory);
+
+    // Bounds checking: ensure wasm_ptr is within memory.
+    if (wasm_str_ptr < 0 || wasm_str_ptr >= mem_size) {
+        WASM_MEMORY_ERROR("String pointer out of WASM memory bounds");
+        return 1;
+    }
+
+    // Get pointer to the string in WASM memory
+    const char *wasm_str = (const char *)(mem_base + wasm_str_ptr);
+    LOG_TRACE("wasm_safe_extract_string_null_terminated: mem_base %p + wasm_str_ptr %p = wasm_str %p", 
+              mem_base, (void*)(uintptr_t)wasm_str_ptr, wasm_str);
+
+    // Find string length, ensuring we don't read past memory bounds
+    size_t remaining_mem = mem_size - wasm_str_ptr;
+    size_t max_len = (max_str_len > 0 && max_str_len < remaining_mem) ? max_str_len : remaining_mem;
+    
+    size_t str_len = strnlen(wasm_str, max_len);
+    if (str_len >= max_len) {
+        WASM_MEMORY_ERROR("No null terminator found within bounds");
+        return 1;
+    }
+
+    // Allocate and copy the string
+    *host_string = malloc(str_len + 1);
+    if (*host_string == NULL) {
+        WASM_MEMORY_ERROR("Failed to allocate memory for string");
+        return 1;
+    }
+
+    memcpy(*host_string, wasm_str, str_len);
+    (*host_string)[str_len] = '\0';
+    
+    LOG_TRACE("wasm_safe_extract_string_null_terminated result: %s", *host_string);
+    return 0;
+}
+
+int wasm_safe_extract_int(wasm_memory_t* memory, WASM_POINTER_UINT32_C_TYPE wasm_int_ptr, int *host_int_out) {
+    LOG_TRACE("wasm_safe_extract_int args: %p %p %p", memory, (void*)(uintptr_t)wasm_int_ptr, host_int_out);
+    assert(memory != NULL);
+
+    if (wasm_int_ptr == 0) {
+        LOG_TRACE("wasm_safe_extract_int: wasm_int_ptr is NULL, skipping");
+        return 0;
+    }
+
+    // Get the start of the memory and its size.
+    byte_t *mem_base = wasm_memory_data(memory);
+    size_t mem_size = wasm_memory_data_size(memory);
+
+    // Bounds checking: ensure wasm_ptr is within memory.
+    // TODO: Also protect against overflow in pointer arithmetic?
+    if (wasm_int_ptr < 0 || wasm_int_ptr > mem_size) {
+        WASM_MEMORY_ERROR("Attempt to read struct out of WASM memory bounds");
+        return 1;
+    }
+
+    // Copy the memory from `wasm_int_ptr` to `host_int_out`
+    int wasm_int_val = 0;
+	memcpy(&wasm_int_val, mem_base + wasm_int_ptr, sizeof(WASM_C_TYPE));
+    *host_int_out = wasm_int_val;
+    LOG_TRACE("wasm_safe_extract_int wasm_int_val: %d, host_int_out: %d", wasm_int_val, *host_int_out);
+
+    return 0;
+}
+
+int wasm_safe_malloc(Proc *proc, size_t size, WASM_POINTER_VOID_C_TYPE *wasm_malloc_res_out, void **ha_wasm_malloc_res_out) {
+    wasm_func_t *wasm_malloc = get_exported_function(proc, "malloc");
+
+    if (wasm_malloc == NULL) {
+        FATAL("wasm_safe_malloc: failed to get exported function 'malloc'");
+        return 1;
+    }
+
+    // set up arguments
+    wasm_val_vec_t wm_args = {};
+    wasm_val_vec_new_uninitialized(&wm_args, 1);
+    wm_args.size = 1;
+    wm_args.num_elems = 1;
+    wm_args.data[0].kind = WASM_INT_KIND;
+    wm_args.data[0].of.i32 = size;
+
+    // create results (void *)
+    wasm_val_vec_t wm_results = {};
+    wasm_val_vec_new_uninitialized(&wm_results, 1);
+
+    wasm_trap_t *trap = wasm_func_call(wasm_malloc, &wm_args, &wm_results);
+    if (trap != NULL) {
+        wasm_message_t msg;
+        wasm_trap_message(trap, &msg);
+        FATAL("Error calling wasm_malloc: %.*s",
+                  msg.size, msg.data);
+        // return 1;
+    }
+
+    WASM_POINTER_VOID_C_TYPE wasm_malloc_res = wasm_val_to_native_int(wm_results.data[0]);
+    LOG_TRACE("Called wasm_malloc with result %p", wasm_malloc_res);
+
+    if (wasm_malloc_res == 0) {
+        LOG_ERROR("Call to wasm malloc returned 0");
+        return 1;
+    }
+
+    *wasm_malloc_res_out = wasm_malloc_res;
+    LOG_TRACE("wasm_safe_malloc [WA] result: %p", *wasm_malloc_res_out);
+
+    wasm_memory_t *memory = get_memory(proc);
+    byte_t *mem_base = wasm_memory_data(memory);
+    *ha_wasm_malloc_res_out =  mem_base + wasm_malloc_res;
+    LOG_TRACE("wasm_safe_malloc [WA] result: %p", *ha_wasm_malloc_res_out);
+
+    return 0;
 }
 
 #endif /* WASM_HELPERS_H */

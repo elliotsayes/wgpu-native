@@ -1399,7 +1399,7 @@ int extract_chained_struct(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_chained_struct: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_chained_struct: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -1498,7 +1498,7 @@ int extract_limits(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_limits: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_limits: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -1712,7 +1712,7 @@ int extract_blend_component(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_blend_component: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_blend_component: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -1781,7 +1781,7 @@ int extract_color(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_color: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_color: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -1855,7 +1855,7 @@ int extract_compute_pass_timestamp_writes(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_compute_pass_timestamp_writes: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_compute_pass_timestamp_writes: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -1924,7 +1924,7 @@ int extract_extent_3D(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_extent_3D: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_extent_3D: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -1993,7 +1993,7 @@ int extract_vertex_attribute(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_vertex_attribute: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_vertex_attribute: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2062,7 +2062,7 @@ int extract_vertex_buffer_layout(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_vertex_buffer_layout: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_vertex_buffer_layout: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2149,7 +2149,7 @@ int extract_origin_3D(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_origin_3D: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_origin_3D: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2218,7 +2218,7 @@ int extract_render_pass_depth_stencil_attachment(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_render_pass_depth_stencil_attachment: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_render_pass_depth_stencil_attachment: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2317,7 +2317,7 @@ int extract_render_pass_timestamp_writes(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_render_pass_timestamp_writes: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_render_pass_timestamp_writes: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2386,7 +2386,7 @@ int extract_blend_state(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_blend_state: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_blend_state: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2456,7 +2456,7 @@ int extract_stencil_face_state(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_stencil_face_state: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_stencil_face_state: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2530,7 +2530,7 @@ int extract_surface_texture(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_texture: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_texture: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2599,7 +2599,7 @@ int extract_uncaptured_error_callback_info(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_uncaptured_error_callback_info: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_uncaptured_error_callback_info: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2672,7 +2672,7 @@ int extract_texture_data_layout(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_texture_data_layout: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_texture_data_layout: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2748,7 +2748,7 @@ int extract_queue_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_queue_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_queue_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2792,8 +2792,8 @@ int extract_queue_descriptor(
     }
 
     LOG_TRACE("extract_queue_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_queue_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_queue_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     return 0;
@@ -2816,7 +2816,7 @@ int extract_programmable_stage_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_programmable_stage_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_programmable_stage_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2869,8 +2869,8 @@ int extract_programmable_stage_descriptor(
     ha_host_struct_ptr->module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, ha_wasm_struct_ptr->module);
 
     LOG_TRACE("extract_programmable_stage_descriptor: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
-        LOG_WARN("extract_programmable_stage_descriptor: wasm_safe_copy_string_null_terminated failed for entry_point");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
+        LOG_WARN("extract_programmable_stage_descriptor: wasm_safe_extract_string_null_terminated failed for entry_point");
     }
 
     LOG_TRACE("extract_programmable_stage_descriptor: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
@@ -2912,7 +2912,7 @@ int extract_request_adapter_options(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_request_adapter_options: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_request_adapter_options: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -2993,7 +2993,7 @@ int extract_device_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_device_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_device_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3051,8 +3051,8 @@ int extract_device_descriptor(
     }
 
     LOG_TRACE("extract_device_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_device_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_device_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_device_descriptor: extracting [Embedded<count>] requiredFeatureCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->requiredFeatureCount, (void *)&ha_host_struct_ptr->requiredFeatureCount);
@@ -3116,7 +3116,7 @@ int extract_bind_group_entry(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_bind_group_entry: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_bind_group_entry: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3207,7 +3207,7 @@ int extract_bind_group_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_bind_group_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_bind_group_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3257,8 +3257,8 @@ int extract_bind_group_descriptor(
     }
 
     LOG_TRACE("extract_bind_group_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_bind_group_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_bind_group_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_bind_group_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
@@ -3303,7 +3303,7 @@ int extract_buffer_binding_layout(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_buffer_binding_layout: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_buffer_binding_layout: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3379,7 +3379,7 @@ int extract_sampler_binding_layout(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_sampler_binding_layout: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_sampler_binding_layout: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3445,7 +3445,7 @@ int extract_texture_binding_layout(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_texture_binding_layout: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_texture_binding_layout: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3521,7 +3521,7 @@ int extract_surface_configuration(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_configuration: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_configuration: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3637,7 +3637,7 @@ int extract_storage_texture_binding_layout(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_storage_texture_binding_layout: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_storage_texture_binding_layout: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3713,7 +3713,7 @@ int extract_bind_group_layout_entry(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_bind_group_layout_entry: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_bind_group_layout_entry: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3816,7 +3816,7 @@ int extract_bind_group_layout_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_bind_group_layout_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_bind_group_layout_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3864,8 +3864,8 @@ int extract_bind_group_layout_descriptor(
     }
 
     LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_bind_group_layout_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_bind_group_layout_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Embedded<count>] entryCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryCount, (void *)&ha_host_struct_ptr->entryCount);
@@ -3907,7 +3907,7 @@ int extract_buffer_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_buffer_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_buffer_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -3957,8 +3957,8 @@ int extract_buffer_descriptor(
     }
 
     LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_buffer_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_buffer_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_buffer_descriptor: extracting [Embedded<bitflag>] usage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->usage, (void *)&ha_host_struct_ptr->usage);
@@ -3990,7 +3990,7 @@ int extract_constant_entry(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_constant_entry: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_constant_entry: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4036,8 +4036,8 @@ int extract_constant_entry(
     }
 
     LOG_TRACE("extract_constant_entry: extracting [Embedded<string>] key: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->key, (void *)&ha_host_struct_ptr->key);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->key, &ha_host_struct_ptr->key, 65534)) {
-        LOG_WARN("extract_constant_entry: wasm_safe_copy_string_null_terminated failed for key");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->key, &ha_host_struct_ptr->key, 65534)) {
+        LOG_WARN("extract_constant_entry: wasm_safe_extract_string_null_terminated failed for key");
     }
 
     LOG_TRACE("extract_constant_entry: extracting [Embedded<float64>] value: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->value, (void *)&ha_host_struct_ptr->value);
@@ -4063,7 +4063,7 @@ int extract_command_buffer_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_command_buffer_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_command_buffer_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4107,8 +4107,8 @@ int extract_command_buffer_descriptor(
     }
 
     LOG_TRACE("extract_command_buffer_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_command_buffer_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_command_buffer_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     return 0;
@@ -4131,7 +4131,7 @@ int extract_command_encoder_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_command_encoder_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_command_encoder_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4175,8 +4175,8 @@ int extract_command_encoder_descriptor(
     }
 
     LOG_TRACE("extract_command_encoder_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_command_encoder_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_command_encoder_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     return 0;
@@ -4199,7 +4199,7 @@ int extract_compilation_info(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_compilation_info: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_compilation_info: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4283,7 +4283,7 @@ int extract_compilation_message(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_compilation_message: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_compilation_message: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4343,8 +4343,8 @@ int extract_compilation_message(
     }
 
     LOG_TRACE("extract_compilation_message: extracting [Embedded<string>] message: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->message, (void *)&ha_host_struct_ptr->message);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->message, &ha_host_struct_ptr->message, 65534)) {
-        LOG_WARN("extract_compilation_message: wasm_safe_copy_string_null_terminated failed for message");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->message, &ha_host_struct_ptr->message, 65534)) {
+        LOG_WARN("extract_compilation_message: wasm_safe_extract_string_null_terminated failed for message");
     }
 
     LOG_TRACE("extract_compilation_message: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
@@ -4391,7 +4391,7 @@ int extract_compute_pass_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_compute_pass_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_compute_pass_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4437,8 +4437,8 @@ int extract_compute_pass_descriptor(
     }
 
     LOG_TRACE("extract_compute_pass_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_compute_pass_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_compute_pass_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_compute_pass_descriptor: extracting [Pointer<struct>] timestampWrites: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->timestampWrites, (void *)&ha_host_struct_ptr->timestampWrites);
@@ -4466,7 +4466,7 @@ int extract_compute_pipeline_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_compute_pipeline_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_compute_pipeline_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4514,8 +4514,8 @@ int extract_compute_pipeline_descriptor(
     }
 
     LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_compute_pipeline_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_compute_pipeline_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_compute_pipeline_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
@@ -4547,7 +4547,7 @@ int extract_required_limits(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_required_limits: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_required_limits: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4616,7 +4616,7 @@ int extract_image_copy_buffer(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_image_copy_buffer: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_image_copy_buffer: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4690,7 +4690,7 @@ int extract_image_copy_texture(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_image_copy_texture: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_image_copy_texture: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4774,7 +4774,7 @@ int extract_instance_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_instance_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_instance_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4835,7 +4835,7 @@ int extract_pipeline_layout_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_pipeline_layout_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_pipeline_layout_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4883,8 +4883,8 @@ int extract_pipeline_layout_descriptor(
     }
 
     LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_pipeline_layout_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_pipeline_layout_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Embedded<count>] bindGroupLayoutCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->bindGroupLayoutCount, (void *)&ha_host_struct_ptr->bindGroupLayoutCount);
@@ -4923,7 +4923,7 @@ int extract_query_set_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_query_set_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_query_set_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -4971,8 +4971,8 @@ int extract_query_set_descriptor(
     }
 
     LOG_TRACE("extract_query_set_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_query_set_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_query_set_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_query_set_descriptor: extracting [Embedded<enum>] type: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->type, (void *)&ha_host_struct_ptr->type);
@@ -5001,7 +5001,7 @@ int extract_render_bundle_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_render_bundle_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_render_bundle_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5045,8 +5045,8 @@ int extract_render_bundle_descriptor(
     }
 
     LOG_TRACE("extract_render_bundle_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_render_bundle_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_render_bundle_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     return 0;
@@ -5069,7 +5069,7 @@ int extract_render_bundle_encoder_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_render_bundle_encoder_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_render_bundle_encoder_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5125,8 +5125,8 @@ int extract_render_bundle_encoder_descriptor(
     }
 
     LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_render_bundle_encoder_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_render_bundle_encoder_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Embedded<count>] colorFormatCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorFormatCount, (void *)&ha_host_struct_ptr->colorFormatCount);
@@ -5177,7 +5177,7 @@ int extract_render_pass_color_attachment(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_render_pass_color_attachment: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_render_pass_color_attachment: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5271,7 +5271,7 @@ int extract_render_pass_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_render_pass_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_render_pass_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5325,8 +5325,8 @@ int extract_render_pass_descriptor(
     }
 
     LOG_TRACE("extract_render_pass_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_render_pass_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_render_pass_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_render_pass_descriptor: extracting [Embedded<count>] colorAttachmentCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorAttachmentCount, (void *)&ha_host_struct_ptr->colorAttachmentCount);
@@ -5381,7 +5381,7 @@ int extract_vertex_state(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_vertex_state: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_vertex_state: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5438,8 +5438,8 @@ int extract_vertex_state(
     ha_host_struct_ptr->module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, ha_wasm_struct_ptr->module);
 
     LOG_TRACE("extract_vertex_state: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
-        LOG_WARN("extract_vertex_state: wasm_safe_copy_string_null_terminated failed for entry_point");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
+        LOG_WARN("extract_vertex_state: wasm_safe_extract_string_null_terminated failed for entry_point");
     }
 
     LOG_TRACE("extract_vertex_state: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
@@ -5500,7 +5500,7 @@ int extract_primitive_state(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_primitive_state: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_primitive_state: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5581,7 +5581,7 @@ int extract_depth_stencil_state(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_depth_stencil_state: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_depth_stencil_state: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5698,7 +5698,7 @@ int extract_multisample_state(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_multisample_state: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_multisample_state: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5774,7 +5774,7 @@ int extract_fragment_state(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_fragment_state: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_fragment_state: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5831,8 +5831,8 @@ int extract_fragment_state(
     ha_host_struct_ptr->module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, ha_wasm_struct_ptr->module);
 
     LOG_TRACE("extract_fragment_state: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
-        LOG_WARN("extract_fragment_state: wasm_safe_copy_string_null_terminated failed for entry_point");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
+        LOG_WARN("extract_fragment_state: wasm_safe_extract_string_null_terminated failed for entry_point");
     }
 
     LOG_TRACE("extract_fragment_state: extracting [Embedded<count>] constantCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constantCount, (void *)&ha_host_struct_ptr->constantCount);
@@ -5893,7 +5893,7 @@ int extract_color_target_state(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_color_target_state: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_color_target_state: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -5971,7 +5971,7 @@ int extract_render_pipeline_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_render_pipeline_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_render_pipeline_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6027,8 +6027,8 @@ int extract_render_pipeline_descriptor(
     }
 
     LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_render_pipeline_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_render_pipeline_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_render_pipeline_descriptor: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
@@ -6082,7 +6082,7 @@ int extract_sampler_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_sampler_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_sampler_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6146,8 +6146,8 @@ int extract_sampler_descriptor(
     }
 
     LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_sampler_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_sampler_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_sampler_descriptor: extracting [Embedded<enum>] addressModeU: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->addressModeU, (void *)&ha_host_struct_ptr->addressModeU);
@@ -6200,7 +6200,7 @@ int extract_shader_module_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_shader_module_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_shader_module_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6248,8 +6248,8 @@ int extract_shader_module_descriptor(
     }
 
     LOG_TRACE("extract_shader_module_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_shader_module_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_shader_module_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_shader_module_descriptor: extracting [Embedded<count>] hintCount: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hintCount, (void *)&ha_host_struct_ptr->hintCount);
@@ -6291,7 +6291,7 @@ int extract_shader_module_compilation_hint(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_shader_module_compilation_hint: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_shader_module_compilation_hint: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6337,8 +6337,8 @@ int extract_shader_module_compilation_hint(
     }
 
     LOG_TRACE("extract_shader_module_compilation_hint: extracting [Embedded<string>] entryPoint: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entryPoint, (void *)&ha_host_struct_ptr->entryPoint);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
-        LOG_WARN("extract_shader_module_compilation_hint: wasm_safe_copy_string_null_terminated failed for entry_point");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->entryPoint, &ha_host_struct_ptr->entryPoint, 65534)) {
+        LOG_WARN("extract_shader_module_compilation_hint: wasm_safe_extract_string_null_terminated failed for entry_point");
     }
 
     LOG_TRACE("extract_shader_module_compilation_hint: extracting [Embedded<object>] layout: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layout, (void *)&ha_host_struct_ptr->layout);
@@ -6364,7 +6364,7 @@ int extract_surface_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6408,8 +6408,8 @@ int extract_surface_descriptor(
     }
 
     LOG_TRACE("extract_surface_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_surface_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_surface_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     return 0;
@@ -6432,7 +6432,7 @@ int extract_texture_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_texture_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_texture_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6492,8 +6492,8 @@ int extract_texture_descriptor(
     }
 
     LOG_TRACE("extract_texture_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_texture_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_texture_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_texture_descriptor: extracting [Embedded<bitflag>] usage: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->usage, (void *)&ha_host_struct_ptr->usage);
@@ -6553,7 +6553,7 @@ int extract_texture_view_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_texture_view_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_texture_view_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6611,8 +6611,8 @@ int extract_texture_view_descriptor(
     }
 
     LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<string>] label: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->label, (void *)&ha_host_struct_ptr->label);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
-        LOG_WARN("extract_texture_view_descriptor: wasm_safe_copy_string_null_terminated failed for label");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->label, &ha_host_struct_ptr->label, 65534)) {
+        LOG_WARN("extract_texture_view_descriptor: wasm_safe_extract_string_null_terminated failed for label");
     }
 
     LOG_TRACE("extract_texture_view_descriptor: extracting [Embedded<enum>] format: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->format, (void *)&ha_host_struct_ptr->format);
@@ -6656,7 +6656,7 @@ int extract_adapter_info(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_adapter_info: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_adapter_info: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6714,23 +6714,23 @@ int extract_adapter_info(
     }
 
     LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] vendor: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->vendor, (void *)&ha_host_struct_ptr->vendor);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->vendor, &ha_host_struct_ptr->vendor, 65534)) {
-        LOG_WARN("extract_adapter_info: wasm_safe_copy_string_null_terminated failed for vendor");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->vendor, &ha_host_struct_ptr->vendor, 65534)) {
+        LOG_WARN("extract_adapter_info: wasm_safe_extract_string_null_terminated failed for vendor");
     }
 
     LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] architecture: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->architecture, (void *)&ha_host_struct_ptr->architecture);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->architecture, &ha_host_struct_ptr->architecture, 65534)) {
-        LOG_WARN("extract_adapter_info: wasm_safe_copy_string_null_terminated failed for architecture");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->architecture, &ha_host_struct_ptr->architecture, 65534)) {
+        LOG_WARN("extract_adapter_info: wasm_safe_extract_string_null_terminated failed for architecture");
     }
 
     LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] device: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->device, (void *)&ha_host_struct_ptr->device);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->device, &ha_host_struct_ptr->device, 65534)) {
-        LOG_WARN("extract_adapter_info: wasm_safe_copy_string_null_terminated failed for device");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->device, &ha_host_struct_ptr->device, 65534)) {
+        LOG_WARN("extract_adapter_info: wasm_safe_extract_string_null_terminated failed for device");
     }
 
     LOG_TRACE("extract_adapter_info: extracting [Embedded<string>] description: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->description, (void *)&ha_host_struct_ptr->description);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->description, &ha_host_struct_ptr->description, 65534)) {
-        LOG_WARN("extract_adapter_info: wasm_safe_copy_string_null_terminated failed for description");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->description, &ha_host_struct_ptr->description, 65534)) {
+        LOG_WARN("extract_adapter_info: wasm_safe_extract_string_null_terminated failed for description");
     }
 
     LOG_TRACE("extract_adapter_info: extracting [Embedded<enum>] backendType: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->backendType, (void *)&ha_host_struct_ptr->backendType);
@@ -6765,7 +6765,7 @@ int extract_surface_capabilities(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_capabilities: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_capabilities: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6891,7 +6891,7 @@ int extract_supported_limits(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_supported_limits: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_supported_limits: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -6960,7 +6960,7 @@ int extract_render_pass_descriptor_max_draw_count(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_render_pass_descriptor_max_draw_count: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_render_pass_descriptor_max_draw_count: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7026,7 +7026,7 @@ int extract_primitive_depth_clip_control(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_primitive_depth_clip_control: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_primitive_depth_clip_control: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7092,7 +7092,7 @@ int extract_shader_module_SPIRV_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_shader_module_SPIRV_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_shader_module_SPIRV_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7163,7 +7163,7 @@ int extract_shader_module_WGSL_descriptor(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_shader_module_WGSL_descriptor: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_shader_module_WGSL_descriptor: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7207,8 +7207,8 @@ int extract_shader_module_WGSL_descriptor(
     }
 
     LOG_TRACE("extract_shader_module_WGSL_descriptor: extracting [Embedded<string>] code: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->code, (void *)&ha_host_struct_ptr->code);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->code, &ha_host_struct_ptr->code, 65534)) {
-        LOG_WARN("extract_shader_module_WGSL_descriptor: wasm_safe_copy_string_null_terminated failed for code");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->code, &ha_host_struct_ptr->code, 65534)) {
+        LOG_WARN("extract_shader_module_WGSL_descriptor: wasm_safe_extract_string_null_terminated failed for code");
     }
 
     return 0;
@@ -7231,7 +7231,7 @@ int extract_surface_descriptor_from_android_native_window(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_descriptor_from_android_native_window: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_android_native_window: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7298,7 +7298,7 @@ int extract_surface_descriptor_from_canvas_HTML_selector(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_descriptor_from_canvas_HTML_selector: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_canvas_HTML_selector: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7342,8 +7342,8 @@ int extract_surface_descriptor_from_canvas_HTML_selector(
     }
 
     LOG_TRACE("extract_surface_descriptor_from_canvas_HTML_selector: extracting [Embedded<string>] selector: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->selector, (void *)&ha_host_struct_ptr->selector);
-    if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->selector, &ha_host_struct_ptr->selector, 65534)) {
-        LOG_WARN("extract_surface_descriptor_from_canvas_HTML_selector: wasm_safe_copy_string_null_terminated failed for selector");
+    if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->selector, &ha_host_struct_ptr->selector, 65534)) {
+        LOG_WARN("extract_surface_descriptor_from_canvas_HTML_selector: wasm_safe_extract_string_null_terminated failed for selector");
     }
 
     return 0;
@@ -7366,7 +7366,7 @@ int extract_surface_descriptor_from_metal_layer(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_descriptor_from_metal_layer: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_metal_layer: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7433,7 +7433,7 @@ int extract_surface_descriptor_from_windows_HWND(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_descriptor_from_windows_HWND: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_windows_HWND: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7506,7 +7506,7 @@ int extract_surface_descriptor_from_xcb_window(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_descriptor_from_xcb_window: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_xcb_window: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7578,7 +7578,7 @@ int extract_surface_descriptor_from_xlib_window(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_descriptor_from_xlib_window: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_xlib_window: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -7650,7 +7650,7 @@ int extract_surface_descriptor_from_wayland_surface(
 
     /* Verify wasm-address is not NULL */
     if (wa_wasm_struct_offset == NULL) {
-        LOG_WARN("extract_surface_descriptor_from_wayland_surface: [WMAS.WWST] is NULL");
+        LOG_DEBUG("extract_surface_descriptor_from_wayland_surface: [WMAS.WWST] is NULL");
         *out_ha_host_struct_ptr = NULL;
         return 0;
     }
@@ -8092,7 +8092,54 @@ void host_callback_wgpuAdapterRequestDevice(
     const char * message,
     void * userdata
 ) {
-    /* TODO: Callback */
+    LOG_TRACE("host_callback_wgpuAdapterRequestDevice");
+    WasmCallbackUserdataWrapper *userdata_wrapper = (WasmCallbackUserdataWrapper *)userdata;
+    Proc *proc = userdata_wrapper->proc;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
+
+    WASM_INT_C_TYPE wasm_callback_index = userdata_wrapper->wasm_callback_index;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_userdata = userdata_wrapper->wa_wasm_userdata;
+
+    LOG_TRACE("Creating args");
+    wasm_val_vec_t args;
+    wasm_val_vec_new_uninitialized(&args, 4);
+    args.num_elems = 4;
+    args.size = (4 * args.num_elems);
+    args.data[0].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuAdapterRequestDevice: inserting [Embedded<enum>] status");
+    args.data[0].of.WASM_VAL_INT_PROP = (WASM_ENUM_C_TYPE)status;
+
+    args.data[1].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuAdapterRequestDevice: inserting [Embedded<object>] device");
+    size_t device_mapping_index = registry_item_add_mapping(&registry->devices, device);
+    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)device_mapping_index;
+
+    args.data[2].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuAdapterRequestDevice: inserting [Embedded<string>] message");
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message;
+
+    args.data[3].kind = WASM_INT_KIND;
+    args.data[3].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
+
+    LOG_TRACE("Getting __indirect_function_table");
+    wasm_table_t *indirect_functions_table = proc->indirect_func_table;
+    LOG_TRACE("Looking up function index: %d", wasm_callback_index);
+    wasm_ref_t *wasm_callback_ref = wasm_table_get(indirect_functions_table, wasm_callback_index);
+    LOG_TRACE("Callback ref: %p", wasm_callback_ref);
+    wasm_func_t *wasm_callback = wasm_ref_as_func(wasm_callback_ref);
+    LOG_TRACE("Callback: %p", wasm_callback);
+
+    wasm_val_vec_t results;
+    wasm_val_vec_new_uninitialized(&results, 1);
+    LOG_DEBUG("Calling WASM callback for wgpuAdapterRequestDevice");
+    wasm_trap_t *trap = wasm_func_call(wasm_callback, &args, &results);
+    if (trap != NULL) {
+        wasm_message_t msg;
+        wasm_trap_message(trap, &msg);
+        FATAL("Error calling WASM callback for wgpuAdapterRequestDevice: %.*s", msg.size, msg.data);
+    }
+    LOG_DEBUG("Successfully called WASM callback for wgpuAdapterRequestDevice");
+
     free(userdata);
 }
 
@@ -8100,7 +8147,45 @@ void host_callback_wgpuBufferMapAsync(
     WGPUBufferMapAsyncStatus status,
     void * userdata
 ) {
-    /* TODO: Callback */
+    LOG_TRACE("host_callback_wgpuBufferMapAsync");
+    WasmCallbackUserdataWrapper *userdata_wrapper = (WasmCallbackUserdataWrapper *)userdata;
+    Proc *proc = userdata_wrapper->proc;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
+
+    WASM_INT_C_TYPE wasm_callback_index = userdata_wrapper->wasm_callback_index;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_userdata = userdata_wrapper->wa_wasm_userdata;
+
+    LOG_TRACE("Creating args");
+    wasm_val_vec_t args;
+    wasm_val_vec_new_uninitialized(&args, 2);
+    args.num_elems = 2;
+    args.size = (4 * args.num_elems);
+    args.data[0].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuBufferMapAsync: inserting [Embedded<enum>] status");
+    args.data[0].of.WASM_VAL_INT_PROP = (WASM_ENUM_C_TYPE)status;
+
+    args.data[1].kind = WASM_INT_KIND;
+    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
+
+    LOG_TRACE("Getting __indirect_function_table");
+    wasm_table_t *indirect_functions_table = proc->indirect_func_table;
+    LOG_TRACE("Looking up function index: %d", wasm_callback_index);
+    wasm_ref_t *wasm_callback_ref = wasm_table_get(indirect_functions_table, wasm_callback_index);
+    LOG_TRACE("Callback ref: %p", wasm_callback_ref);
+    wasm_func_t *wasm_callback = wasm_ref_as_func(wasm_callback_ref);
+    LOG_TRACE("Callback: %p", wasm_callback);
+
+    wasm_val_vec_t results;
+    wasm_val_vec_new_uninitialized(&results, 1);
+    LOG_DEBUG("Calling WASM callback for wgpuBufferMapAsync");
+    wasm_trap_t *trap = wasm_func_call(wasm_callback, &args, &results);
+    if (trap != NULL) {
+        wasm_message_t msg;
+        wasm_trap_message(trap, &msg);
+        FATAL("Error calling WASM callback for wgpuBufferMapAsync: %.*s", msg.size, msg.data);
+    }
+    LOG_DEBUG("Successfully called WASM callback for wgpuBufferMapAsync");
+
     free(userdata);
 }
 
@@ -8110,7 +8195,54 @@ void host_callback_wgpuDeviceCreateComputePipelineAsync(
     const char * message,
     void * userdata
 ) {
-    /* TODO: Callback */
+    LOG_TRACE("host_callback_wgpuDeviceCreateComputePipelineAsync");
+    WasmCallbackUserdataWrapper *userdata_wrapper = (WasmCallbackUserdataWrapper *)userdata;
+    Proc *proc = userdata_wrapper->proc;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
+
+    WASM_INT_C_TYPE wasm_callback_index = userdata_wrapper->wasm_callback_index;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_userdata = userdata_wrapper->wa_wasm_userdata;
+
+    LOG_TRACE("Creating args");
+    wasm_val_vec_t args;
+    wasm_val_vec_new_uninitialized(&args, 4);
+    args.num_elems = 4;
+    args.size = (4 * args.num_elems);
+    args.data[0].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuDeviceCreateComputePipelineAsync: inserting [Embedded<enum>] status");
+    args.data[0].of.WASM_VAL_INT_PROP = (WASM_ENUM_C_TYPE)status;
+
+    args.data[1].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuDeviceCreateComputePipelineAsync: inserting [Embedded<object>] pipeline");
+    size_t pipeline_mapping_index = registry_item_add_mapping(&registry->computePipelines, pipeline);
+    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)pipeline_mapping_index;
+
+    args.data[2].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuDeviceCreateComputePipelineAsync: inserting [Embedded<string>] message");
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message;
+
+    args.data[3].kind = WASM_INT_KIND;
+    args.data[3].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
+
+    LOG_TRACE("Getting __indirect_function_table");
+    wasm_table_t *indirect_functions_table = proc->indirect_func_table;
+    LOG_TRACE("Looking up function index: %d", wasm_callback_index);
+    wasm_ref_t *wasm_callback_ref = wasm_table_get(indirect_functions_table, wasm_callback_index);
+    LOG_TRACE("Callback ref: %p", wasm_callback_ref);
+    wasm_func_t *wasm_callback = wasm_ref_as_func(wasm_callback_ref);
+    LOG_TRACE("Callback: %p", wasm_callback);
+
+    wasm_val_vec_t results;
+    wasm_val_vec_new_uninitialized(&results, 1);
+    LOG_DEBUG("Calling WASM callback for wgpuDeviceCreateComputePipelineAsync");
+    wasm_trap_t *trap = wasm_func_call(wasm_callback, &args, &results);
+    if (trap != NULL) {
+        wasm_message_t msg;
+        wasm_trap_message(trap, &msg);
+        FATAL("Error calling WASM callback for wgpuDeviceCreateComputePipelineAsync: %.*s", msg.size, msg.data);
+    }
+    LOG_DEBUG("Successfully called WASM callback for wgpuDeviceCreateComputePipelineAsync");
+
     free(userdata);
 }
 
@@ -8120,7 +8252,54 @@ void host_callback_wgpuDeviceCreateRenderPipelineAsync(
     const char * message,
     void * userdata
 ) {
-    /* TODO: Callback */
+    LOG_TRACE("host_callback_wgpuDeviceCreateRenderPipelineAsync");
+    WasmCallbackUserdataWrapper *userdata_wrapper = (WasmCallbackUserdataWrapper *)userdata;
+    Proc *proc = userdata_wrapper->proc;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
+
+    WASM_INT_C_TYPE wasm_callback_index = userdata_wrapper->wasm_callback_index;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_userdata = userdata_wrapper->wa_wasm_userdata;
+
+    LOG_TRACE("Creating args");
+    wasm_val_vec_t args;
+    wasm_val_vec_new_uninitialized(&args, 4);
+    args.num_elems = 4;
+    args.size = (4 * args.num_elems);
+    args.data[0].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuDeviceCreateRenderPipelineAsync: inserting [Embedded<enum>] status");
+    args.data[0].of.WASM_VAL_INT_PROP = (WASM_ENUM_C_TYPE)status;
+
+    args.data[1].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuDeviceCreateRenderPipelineAsync: inserting [Embedded<object>] pipeline");
+    size_t pipeline_mapping_index = registry_item_add_mapping(&registry->renderPipelines, pipeline);
+    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)pipeline_mapping_index;
+
+    args.data[2].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuDeviceCreateRenderPipelineAsync: inserting [Embedded<string>] message");
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message;
+
+    args.data[3].kind = WASM_INT_KIND;
+    args.data[3].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
+
+    LOG_TRACE("Getting __indirect_function_table");
+    wasm_table_t *indirect_functions_table = proc->indirect_func_table;
+    LOG_TRACE("Looking up function index: %d", wasm_callback_index);
+    wasm_ref_t *wasm_callback_ref = wasm_table_get(indirect_functions_table, wasm_callback_index);
+    LOG_TRACE("Callback ref: %p", wasm_callback_ref);
+    wasm_func_t *wasm_callback = wasm_ref_as_func(wasm_callback_ref);
+    LOG_TRACE("Callback: %p", wasm_callback);
+
+    wasm_val_vec_t results;
+    wasm_val_vec_new_uninitialized(&results, 1);
+    LOG_DEBUG("Calling WASM callback for wgpuDeviceCreateRenderPipelineAsync");
+    wasm_trap_t *trap = wasm_func_call(wasm_callback, &args, &results);
+    if (trap != NULL) {
+        wasm_message_t msg;
+        wasm_trap_message(trap, &msg);
+        FATAL("Error calling WASM callback for wgpuDeviceCreateRenderPipelineAsync: %.*s", msg.size, msg.data);
+    }
+    LOG_DEBUG("Successfully called WASM callback for wgpuDeviceCreateRenderPipelineAsync");
+
     free(userdata);
 }
 
@@ -8130,7 +8309,54 @@ void host_callback_wgpuInstanceRequestAdapter(
     const char * message,
     void * userdata
 ) {
-    /* TODO: Callback */
+    LOG_TRACE("host_callback_wgpuInstanceRequestAdapter");
+    WasmCallbackUserdataWrapper *userdata_wrapper = (WasmCallbackUserdataWrapper *)userdata;
+    Proc *proc = userdata_wrapper->proc;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
+
+    WASM_INT_C_TYPE wasm_callback_index = userdata_wrapper->wasm_callback_index;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_userdata = userdata_wrapper->wa_wasm_userdata;
+
+    LOG_TRACE("Creating args");
+    wasm_val_vec_t args;
+    wasm_val_vec_new_uninitialized(&args, 4);
+    args.num_elems = 4;
+    args.size = (4 * args.num_elems);
+    args.data[0].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuInstanceRequestAdapter: inserting [Embedded<enum>] status");
+    args.data[0].of.WASM_VAL_INT_PROP = (WASM_ENUM_C_TYPE)status;
+
+    args.data[1].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuInstanceRequestAdapter: inserting [Embedded<object>] adapter");
+    size_t adapter_mapping_index = registry_item_add_mapping(&registry->adapters, adapter);
+    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)adapter_mapping_index;
+
+    args.data[2].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuInstanceRequestAdapter: inserting [Embedded<string>] message");
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message;
+
+    args.data[3].kind = WASM_INT_KIND;
+    args.data[3].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
+
+    LOG_TRACE("Getting __indirect_function_table");
+    wasm_table_t *indirect_functions_table = proc->indirect_func_table;
+    LOG_TRACE("Looking up function index: %d", wasm_callback_index);
+    wasm_ref_t *wasm_callback_ref = wasm_table_get(indirect_functions_table, wasm_callback_index);
+    LOG_TRACE("Callback ref: %p", wasm_callback_ref);
+    wasm_func_t *wasm_callback = wasm_ref_as_func(wasm_callback_ref);
+    LOG_TRACE("Callback: %p", wasm_callback);
+
+    wasm_val_vec_t results;
+    wasm_val_vec_new_uninitialized(&results, 1);
+    LOG_DEBUG("Calling WASM callback for wgpuInstanceRequestAdapter");
+    wasm_trap_t *trap = wasm_func_call(wasm_callback, &args, &results);
+    if (trap != NULL) {
+        wasm_message_t msg;
+        wasm_trap_message(trap, &msg);
+        FATAL("Error calling WASM callback for wgpuInstanceRequestAdapter: %.*s", msg.size, msg.data);
+    }
+    LOG_DEBUG("Successfully called WASM callback for wgpuInstanceRequestAdapter");
+
     free(userdata);
 }
 
@@ -8138,7 +8364,45 @@ void host_callback_wgpuQueueOnSubmittedWorkDone(
     WGPUQueueWorkDoneStatus status,
     void * userdata
 ) {
-    /* TODO: Callback */
+    LOG_TRACE("host_callback_wgpuQueueOnSubmittedWorkDone");
+    WasmCallbackUserdataWrapper *userdata_wrapper = (WasmCallbackUserdataWrapper *)userdata;
+    Proc *proc = userdata_wrapper->proc;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
+
+    WASM_INT_C_TYPE wasm_callback_index = userdata_wrapper->wasm_callback_index;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_userdata = userdata_wrapper->wa_wasm_userdata;
+
+    LOG_TRACE("Creating args");
+    wasm_val_vec_t args;
+    wasm_val_vec_new_uninitialized(&args, 2);
+    args.num_elems = 2;
+    args.size = (4 * args.num_elems);
+    args.data[0].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuQueueOnSubmittedWorkDone: inserting [Embedded<enum>] status");
+    args.data[0].of.WASM_VAL_INT_PROP = (WASM_ENUM_C_TYPE)status;
+
+    args.data[1].kind = WASM_INT_KIND;
+    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
+
+    LOG_TRACE("Getting __indirect_function_table");
+    wasm_table_t *indirect_functions_table = proc->indirect_func_table;
+    LOG_TRACE("Looking up function index: %d", wasm_callback_index);
+    wasm_ref_t *wasm_callback_ref = wasm_table_get(indirect_functions_table, wasm_callback_index);
+    LOG_TRACE("Callback ref: %p", wasm_callback_ref);
+    wasm_func_t *wasm_callback = wasm_ref_as_func(wasm_callback_ref);
+    LOG_TRACE("Callback: %p", wasm_callback);
+
+    wasm_val_vec_t results;
+    wasm_val_vec_new_uninitialized(&results, 1);
+    LOG_DEBUG("Calling WASM callback for wgpuQueueOnSubmittedWorkDone");
+    wasm_trap_t *trap = wasm_func_call(wasm_callback, &args, &results);
+    if (trap != NULL) {
+        wasm_message_t msg;
+        wasm_trap_message(trap, &msg);
+        FATAL("Error calling WASM callback for wgpuQueueOnSubmittedWorkDone: %.*s", msg.size, msg.data);
+    }
+    LOG_DEBUG("Successfully called WASM callback for wgpuQueueOnSubmittedWorkDone");
+
     free(userdata);
 }
 
@@ -8147,7 +8411,49 @@ void host_callback_wgpuShaderModuleGetCompilationInfo(
     const struct WGPUCompilationInfo * compilation_info,
     void * userdata
 ) {
-    /* TODO: Callback */
+    LOG_TRACE("host_callback_wgpuShaderModuleGetCompilationInfo");
+    WasmCallbackUserdataWrapper *userdata_wrapper = (WasmCallbackUserdataWrapper *)userdata;
+    Proc *proc = userdata_wrapper->proc;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
+
+    WASM_INT_C_TYPE wasm_callback_index = userdata_wrapper->wasm_callback_index;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_userdata = userdata_wrapper->wa_wasm_userdata;
+
+    LOG_TRACE("Creating args");
+    wasm_val_vec_t args;
+    wasm_val_vec_new_uninitialized(&args, 3);
+    args.num_elems = 3;
+    args.size = (4 * args.num_elems);
+    args.data[0].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuShaderModuleGetCompilationInfo: inserting [Embedded<enum>] status");
+    args.data[0].of.WASM_VAL_INT_PROP = (WASM_ENUM_C_TYPE)status;
+
+    args.data[1].kind = WASM_INT_KIND;
+    LOG_TRACE("host_callback_wgpuShaderModuleGetCompilationInfo: inserting [Pointer<struct>] compilation_info");
+    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)compilation_info;
+
+    args.data[2].kind = WASM_INT_KIND;
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
+
+    LOG_TRACE("Getting __indirect_function_table");
+    wasm_table_t *indirect_functions_table = proc->indirect_func_table;
+    LOG_TRACE("Looking up function index: %d", wasm_callback_index);
+    wasm_ref_t *wasm_callback_ref = wasm_table_get(indirect_functions_table, wasm_callback_index);
+    LOG_TRACE("Callback ref: %p", wasm_callback_ref);
+    wasm_func_t *wasm_callback = wasm_ref_as_func(wasm_callback_ref);
+    LOG_TRACE("Callback: %p", wasm_callback);
+
+    wasm_val_vec_t results;
+    wasm_val_vec_new_uninitialized(&results, 1);
+    LOG_DEBUG("Calling WASM callback for wgpuShaderModuleGetCompilationInfo");
+    wasm_trap_t *trap = wasm_func_call(wasm_callback, &args, &results);
+    if (trap != NULL) {
+        wasm_message_t msg;
+        wasm_trap_message(trap, &msg);
+        FATAL("Error calling WASM callback for wgpuShaderModuleGetCompilationInfo: %.*s", msg.size, msg.data);
+    }
+    LOG_DEBUG("Successfully called WASM callback for wgpuShaderModuleGetCompilationInfo");
+
     free(userdata);
 }
 
@@ -8301,8 +8607,8 @@ wasm_trap_t *wasm_import_wgpuAdapterRequestDevice(
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
     WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
-    userdata->callback = callback_wasm;
-    userdata->userdata = userdata_wasm;
+    userdata->wasm_callback_index = callback_wasm;
+    userdata->wa_wasm_userdata = userdata_wasm;
 
 
     wgpuAdapterRequestDevice(adapter, descriptor, host_callback_wgpuAdapterRequestDevice, userdata);
@@ -8332,7 +8638,7 @@ wasm_trap_t *wasm_import_wgpuBindGroupSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuBindGroupSetLabel(bind_group, label);
@@ -8362,7 +8668,7 @@ wasm_trap_t *wasm_import_wgpuBindGroupLayoutSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuBindGroupLayoutSetLabel(bind_group_layout, label);
@@ -8401,8 +8707,8 @@ wasm_trap_t *wasm_import_wgpuBufferMapAsync(
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[5]);
     WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
-    userdata->callback = callback_wasm;
-    userdata->userdata = userdata_wasm;
+    userdata->wasm_callback_index = callback_wasm;
+    userdata->wa_wasm_userdata = userdata_wasm;
 
 
     wgpuBufferMapAsync(buffer, mode, offset, size, host_callback_wgpuBufferMapAsync, userdata);
@@ -8439,6 +8745,13 @@ wasm_trap_t *wasm_import_wgpuBufferGetMappedRange(
 
     results->size = 1;
     results->data[0].kind = WASM_INT_KIND;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_malloc_res = 0;
+    void *ha_wasm_malloc_res = NULL;
+    if (wasm_safe_malloc(proc, size, &wa_wasm_malloc_res, &ha_wasm_malloc_res) != 0) {
+        FATAL("wasm_safe_malloc failed");
+    }
+    memcpy(ha_wasm_malloc_res, result, size);
+    results->data[0].of.WASM_VAL_INT_PROP = wa_wasm_malloc_res;
 
     /* TODO: Freeing */
     return NULL;
@@ -8470,6 +8783,13 @@ wasm_trap_t *wasm_import_wgpuBufferGetConstMappedRange(
 
     results->size = 1;
     results->data[0].kind = WASM_INT_KIND;
+    WASM_POINTER_VOID_C_TYPE wa_wasm_malloc_res = 0;
+    void *ha_wasm_malloc_res = NULL;
+    if (wasm_safe_malloc(proc, size, &wa_wasm_malloc_res, &ha_wasm_malloc_res) != 0) {
+        FATAL("wasm_safe_malloc failed");
+    }
+    memcpy(ha_wasm_malloc_res, result, size);
+    results->data[0].of.WASM_VAL_INT_PROP = wa_wasm_malloc_res;
 
     /* TODO: Freeing */
     return NULL;
@@ -8494,7 +8814,7 @@ wasm_trap_t *wasm_import_wgpuBufferSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuBufferSetLabel(buffer, label);
@@ -8659,7 +8979,7 @@ wasm_trap_t *wasm_import_wgpuCommandBufferSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuCommandBufferSetLabel(command_buffer, label);
@@ -8789,19 +9109,19 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyBufferToBuffer(
     uint32_t mapping_index_source = wasm_val_to_native_int(args->data[1]);
     WGPUBuffer source = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_source);
 
-    uint64_t source_offset_high = wasm_val_to_native_int(args->data[2]);
-    uint64_t source_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
+    uint64_t source_offset_low = wasm_val_to_native_int(args->data[2]);
+    uint64_t source_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t source_offset = source_offset_high << 32 | source_offset_low;
 
     uint32_t mapping_index_destination = wasm_val_to_native_int(args->data[4]);
     WGPUBuffer destination = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_destination);
 
-    uint64_t destination_offset_high = wasm_val_to_native_int(args->data[5]);
-    uint64_t destination_offset_low = wasm_val_to_native_int(args->data[5 + 1]);
+    uint64_t destination_offset_low = wasm_val_to_native_int(args->data[5]);
+    uint64_t destination_offset_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t destination_offset = destination_offset_high << 32 | destination_offset_low;
 
-    uint64_t size_high = wasm_val_to_native_int(args->data[7]);
-    uint64_t size_low = wasm_val_to_native_int(args->data[7 + 1]);
+    uint64_t size_low = wasm_val_to_native_int(args->data[7]);
+    uint64_t size_high = wasm_val_to_native_int(args->data[7 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
 
@@ -8947,12 +9267,12 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderClearBuffer(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[1]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-    uint64_t offset_high = wasm_val_to_native_int(args->data[2]);
-    uint64_t offset_low = wasm_val_to_native_int(args->data[2 + 1]);
+    uint64_t offset_low = wasm_val_to_native_int(args->data[2]);
+    uint64_t offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t offset = offset_high << 32 | offset_low;
 
-    uint64_t size_high = wasm_val_to_native_int(args->data[4]);
-    uint64_t size_low = wasm_val_to_native_int(args->data[4 + 1]);
+    uint64_t size_low = wasm_val_to_native_int(args->data[4]);
+    uint64_t size_high = wasm_val_to_native_int(args->data[4 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
 
@@ -8983,7 +9303,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderInsertDebugMarker(
 
     WASM_POINTER_STRING_C_TYPE marker_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * marker_label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
 
 
     wgpuCommandEncoderInsertDebugMarker(command_encoder, marker_label);
@@ -9039,7 +9359,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderPushDebugGroup(
 
     WASM_POINTER_STRING_C_TYPE group_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * group_label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
 
 
     wgpuCommandEncoderPushDebugGroup(command_encoder, group_label);
@@ -9077,8 +9397,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderResolveQuerySet(
     uint32_t mapping_index_destination = wasm_val_to_native_int(args->data[4]);
     WGPUBuffer destination = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_destination);
 
-    uint64_t destination_offset_high = wasm_val_to_native_int(args->data[5]);
-    uint64_t destination_offset_low = wasm_val_to_native_int(args->data[5 + 1]);
+    uint64_t destination_offset_low = wasm_val_to_native_int(args->data[5]);
+    uint64_t destination_offset_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t destination_offset = destination_offset_high << 32 | destination_offset_low;
 
 
@@ -9140,7 +9460,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuCommandEncoderSetLabel(command_encoder, label);
@@ -9170,7 +9490,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderInsertDebugMarker(
 
     WASM_POINTER_STRING_C_TYPE marker_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * marker_label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
 
 
     wgpuComputePassEncoderInsertDebugMarker(compute_pass_encoder, marker_label);
@@ -9226,7 +9546,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderPushDebugGroup(
 
     WASM_POINTER_STRING_C_TYPE group_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * group_label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
 
 
     wgpuComputePassEncoderPushDebugGroup(compute_pass_encoder, group_label);
@@ -9293,7 +9613,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetBindGroup(
     WASM_POINTER_ARRAY_C_TYPE dynamic_offsets_wa_array_ptr = (WASM_POINTER_ARRAY_C_TYPE)wasm_val_to_native_int(args->data[4]);
     uint32_t *dynamic_offsets_array = calloc(dynamic_offsets_count, sizeof(uint32_t));
     for (size_t dynamic_offsets_iter = 0; dynamic_offsets_iter < dynamic_offsets_count; dynamic_offsets_iter++) {
-        wasm_safe_copy_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
+        wasm_safe_extract_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
     }
 
 
@@ -9357,8 +9677,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroupsIndirect(
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
     WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
-    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
-    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
+    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2]);
+    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
 
@@ -9415,7 +9735,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuComputePassEncoderSetLabel(compute_pass_encoder, label);
@@ -9476,7 +9796,7 @@ wasm_trap_t *wasm_import_wgpuComputePipelineSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuComputePipelineSetLabel(compute_pipeline, label);
@@ -9678,8 +9998,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipelineAsync(
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
     WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
-    userdata->callback = callback_wasm;
-    userdata->userdata = userdata_wasm;
+    userdata->wasm_callback_index = callback_wasm;
+    userdata->wa_wasm_userdata = userdata_wasm;
 
 
     wgpuDeviceCreateComputePipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateComputePipelineAsync, userdata);
@@ -9782,8 +10102,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipelineAsync(
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
     WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
-    userdata->callback = callback_wasm;
-    userdata->userdata = userdata_wasm;
+    userdata->wasm_callback_index = callback_wasm;
+    userdata->wa_wasm_userdata = userdata_wasm;
 
 
     wgpuDeviceCreateRenderPipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateRenderPipelineAsync, userdata);
@@ -10153,7 +10473,9 @@ wasm_trap_t *wasm_import_wgpuDevicePopErrorScope(
 
     void * callback = (void *)wasm_val_to_native_int(args->data[1]);
 
-    void * userdata = (void *)wasm_val_to_native_int(args->data[2]);
+    WASM_POINTER_VOID_C_TYPE wa_userdata = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[2]);
+    void * userdata = NULL;
+    wasm_safe_extract_pointer(memory, wa_userdata, &userdata, 0);
 
 
     wgpuDevicePopErrorScope(device, callback, userdata);
@@ -10183,7 +10505,7 @@ wasm_trap_t *wasm_import_wgpuDeviceSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuDeviceSetLabel(device, label);
@@ -10309,8 +10631,8 @@ wasm_trap_t *wasm_import_wgpuInstanceRequestAdapter(
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
     WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
-    userdata->callback = callback_wasm;
-    userdata->userdata = userdata_wasm;
+    userdata->wasm_callback_index = callback_wasm;
+    userdata->wa_wasm_userdata = userdata_wasm;
 
 
     wgpuInstanceRequestAdapter(instance, options, host_callback_wgpuInstanceRequestAdapter, userdata);
@@ -10340,7 +10662,7 @@ wasm_trap_t *wasm_import_wgpuPipelineLayoutSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuPipelineLayoutSetLabel(pipeline_layout, label);
@@ -10370,7 +10692,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuQuerySetSetLabel(query_set, label);
@@ -10483,11 +10805,11 @@ wasm_trap_t *wasm_import_wgpuQueueSubmit(
     int commands_count = wasm_val_to_native_int(args->data[1]);
 
     WASM_POINTER_ARRAY_C_TYPE commands_wa_array_ptr = (WASM_POINTER_ARRAY_C_TYPE)wasm_val_to_native_int(args->data[2]);
-    WGPUCommandBuffer *commands_array = calloc(commands_count, sizeof(void *));
+    WGPUCommandBuffer *commands_array = calloc(commands_count, sizeof(WGPUCommandBuffer));
+    int mapping_index_commands = 0;
     for (size_t commands_iter = 0; commands_iter < commands_count; commands_iter++) {
-        int mapping_index_commands = wasm_val_to_native_int(args->data[2]);
-        wasm_safe_copy_int(memory, commands_wa_array_ptr + commands_iter, &mapping_index_commands);
-        commands_array[commands_iter] = (WGPUCommandBuffer *)registry_item_get_mapping(&registry->commandBuffers, mapping_index_commands);
+        wasm_safe_extract_int(memory, commands_wa_array_ptr + commands_iter, &mapping_index_commands);
+        commands_array[commands_iter] = (WGPUCommandBuffer)registry_item_get_mapping(&registry->commandBuffers, mapping_index_commands);
     }
 
 
@@ -10521,8 +10843,8 @@ wasm_trap_t *wasm_import_wgpuQueueOnSubmittedWorkDone(
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[2]);
     WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
-    userdata->callback = callback_wasm;
-    userdata->userdata = userdata_wasm;
+    userdata->wasm_callback_index = callback_wasm;
+    userdata->wa_wasm_userdata = userdata_wasm;
 
 
     wgpuQueueOnSubmittedWorkDone(queue, host_callback_wgpuQueueOnSubmittedWorkDone, userdata);
@@ -10553,11 +10875,13 @@ wasm_trap_t *wasm_import_wgpuQueueWriteBuffer(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[1]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-    uint64_t buffer_offset_high = wasm_val_to_native_int(args->data[2]);
-    uint64_t buffer_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
+    uint64_t buffer_offset_low = wasm_val_to_native_int(args->data[2]);
+    uint64_t buffer_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t buffer_offset = buffer_offset_high << 32 | buffer_offset_low;
 
-    void * data = (void *)wasm_val_to_native_int(args->data[4]);
+    WASM_POINTER_VOID_C_TYPE wa_data = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[4]);
+    void * data = NULL;
+    wasm_safe_extract_pointer(memory, wa_data, &data, 0);
 
     size_t size = wasm_val_to_native_int(args->data[5]);
 
@@ -10591,7 +10915,9 @@ wasm_trap_t *wasm_import_wgpuQueueWriteTexture(
     WGPUImageCopyTexture *destination = NULL;
     extract_image_copy_texture(registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
 
-    void * data = (void *)wasm_val_to_native_int(args->data[2]);
+    WASM_POINTER_VOID_C_TYPE wa_data = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[2]);
+    void * data = NULL;
+    wasm_safe_extract_pointer(memory, wa_data, &data, 0);
 
     size_t data_size = wasm_val_to_native_int(args->data[3]);
 
@@ -10631,7 +10957,7 @@ wasm_trap_t *wasm_import_wgpuQueueSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuQueueSetLabel(queue, label);
@@ -10661,7 +10987,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuRenderBundleSetLabel(render_bundle, label);
@@ -10728,7 +11054,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetBindGroup(
     WASM_POINTER_ARRAY_C_TYPE dynamic_offsets_wa_array_ptr = (WASM_POINTER_ARRAY_C_TYPE)wasm_val_to_native_int(args->data[4]);
     uint32_t *dynamic_offsets_array = calloc(dynamic_offsets_count, sizeof(uint32_t));
     for (size_t dynamic_offsets_iter = 0; dynamic_offsets_iter < dynamic_offsets_count; dynamic_offsets_iter++) {
-        wasm_safe_copy_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
+        wasm_safe_extract_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
     }
 
 
@@ -10830,8 +11156,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndirect(
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
     WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
-    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
-    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
+    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2]);
+    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
 
@@ -10863,8 +11189,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexedIndirect(
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
     WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
-    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
-    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
+    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2]);
+    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
 
@@ -10895,7 +11221,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderInsertDebugMarker(
 
     WASM_POINTER_STRING_C_TYPE marker_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * marker_label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
 
 
     wgpuRenderBundleEncoderInsertDebugMarker(render_bundle_encoder, marker_label);
@@ -10951,7 +11277,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderPushDebugGroup(
 
     WASM_POINTER_STRING_C_TYPE group_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * group_label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
 
 
     wgpuRenderBundleEncoderPushDebugGroup(render_bundle_encoder, group_label);
@@ -10984,12 +11310,12 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetVertexBuffer(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[2]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-    uint64_t offset_high = wasm_val_to_native_int(args->data[3]);
-    uint64_t offset_low = wasm_val_to_native_int(args->data[3 + 1]);
+    uint64_t offset_low = wasm_val_to_native_int(args->data[3]);
+    uint64_t offset_high = wasm_val_to_native_int(args->data[3 + 1]);
     uint64_t offset = offset_high << 32 | offset_low;
 
-    uint64_t size_high = wasm_val_to_native_int(args->data[5]);
-    uint64_t size_low = wasm_val_to_native_int(args->data[5 + 1]);
+    uint64_t size_low = wasm_val_to_native_int(args->data[5]);
+    uint64_t size_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
 
@@ -11023,12 +11349,12 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetIndexBuffer(
 
     WGPUIndexFormat format = wasm_val_to_native_int(args->data[2]);
 
-    uint64_t offset_high = wasm_val_to_native_int(args->data[3]);
-    uint64_t offset_low = wasm_val_to_native_int(args->data[3 + 1]);
+    uint64_t offset_low = wasm_val_to_native_int(args->data[3]);
+    uint64_t offset_high = wasm_val_to_native_int(args->data[3 + 1]);
     uint64_t offset = offset_high << 32 | offset_low;
 
-    uint64_t size_high = wasm_val_to_native_int(args->data[5]);
-    uint64_t size_low = wasm_val_to_native_int(args->data[5 + 1]);
+    uint64_t size_low = wasm_val_to_native_int(args->data[5]);
+    uint64_t size_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
 
@@ -11092,7 +11418,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuRenderBundleEncoderSetLabel(render_bundle_encoder, label);
@@ -11159,7 +11485,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetBindGroup(
     WASM_POINTER_ARRAY_C_TYPE dynamic_offsets_wa_array_ptr = (WASM_POINTER_ARRAY_C_TYPE)wasm_val_to_native_int(args->data[4]);
     uint32_t *dynamic_offsets_array = calloc(dynamic_offsets_count, sizeof(uint32_t));
     for (size_t dynamic_offsets_iter = 0; dynamic_offsets_iter < dynamic_offsets_count; dynamic_offsets_iter++) {
-        wasm_safe_copy_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
+        wasm_safe_extract_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
     }
 
 
@@ -11261,8 +11587,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndirect(
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
     WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
-    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
-    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
+    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2]);
+    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
 
@@ -11294,8 +11620,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexedIndirect(
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
     WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
-    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
-    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
+    uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2]);
+    uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
 
@@ -11327,11 +11653,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderExecuteBundles(
     int bundles_count = wasm_val_to_native_int(args->data[1]);
 
     WASM_POINTER_ARRAY_C_TYPE bundles_wa_array_ptr = (WASM_POINTER_ARRAY_C_TYPE)wasm_val_to_native_int(args->data[2]);
-    WGPURenderBundle *bundles_array = calloc(bundles_count, sizeof(void *));
+    WGPURenderBundle *bundles_array = calloc(bundles_count, sizeof(WGPURenderBundle));
+    int mapping_index_bundles = 0;
     for (size_t bundles_iter = 0; bundles_iter < bundles_count; bundles_iter++) {
-        int mapping_index_bundles = wasm_val_to_native_int(args->data[2]);
-        wasm_safe_copy_int(memory, bundles_wa_array_ptr + bundles_iter, &mapping_index_bundles);
-        bundles_array[bundles_iter] = (WGPURenderBundle *)registry_item_get_mapping(&registry->renderBundles, mapping_index_bundles);
+        wasm_safe_extract_int(memory, bundles_wa_array_ptr + bundles_iter, &mapping_index_bundles);
+        bundles_array[bundles_iter] = (WGPURenderBundle)registry_item_get_mapping(&registry->renderBundles, mapping_index_bundles);
     }
 
 
@@ -11362,7 +11688,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderInsertDebugMarker(
 
     WASM_POINTER_STRING_C_TYPE marker_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * marker_label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
 
 
     wgpuRenderPassEncoderInsertDebugMarker(render_pass_encoder, marker_label);
@@ -11418,7 +11744,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderPushDebugGroup(
 
     WASM_POINTER_STRING_C_TYPE group_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * group_label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
 
 
     wgpuRenderPassEncoderPushDebugGroup(render_pass_encoder, group_label);
@@ -11581,12 +11907,12 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetVertexBuffer(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[2]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-    uint64_t offset_high = wasm_val_to_native_int(args->data[3]);
-    uint64_t offset_low = wasm_val_to_native_int(args->data[3 + 1]);
+    uint64_t offset_low = wasm_val_to_native_int(args->data[3]);
+    uint64_t offset_high = wasm_val_to_native_int(args->data[3 + 1]);
     uint64_t offset = offset_high << 32 | offset_low;
 
-    uint64_t size_high = wasm_val_to_native_int(args->data[5]);
-    uint64_t size_low = wasm_val_to_native_int(args->data[5 + 1]);
+    uint64_t size_low = wasm_val_to_native_int(args->data[5]);
+    uint64_t size_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
 
@@ -11620,12 +11946,12 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetIndexBuffer(
 
     WGPUIndexFormat format = wasm_val_to_native_int(args->data[2]);
 
-    uint64_t offset_high = wasm_val_to_native_int(args->data[3]);
-    uint64_t offset_low = wasm_val_to_native_int(args->data[3 + 1]);
+    uint64_t offset_low = wasm_val_to_native_int(args->data[3]);
+    uint64_t offset_high = wasm_val_to_native_int(args->data[3 + 1]);
     uint64_t offset = offset_high << 32 | offset_low;
 
-    uint64_t size_high = wasm_val_to_native_int(args->data[5]);
-    uint64_t size_low = wasm_val_to_native_int(args->data[5 + 1]);
+    uint64_t size_low = wasm_val_to_native_int(args->data[5]);
+    uint64_t size_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
 
@@ -11736,7 +12062,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuRenderPassEncoderSetLabel(render_pass_encoder, label);
@@ -11797,7 +12123,7 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuRenderPipelineSetLabel(render_pipeline, label);
@@ -11827,7 +12153,7 @@ wasm_trap_t *wasm_import_wgpuSamplerSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuSamplerSetLabel(sampler, label);
@@ -11860,8 +12186,8 @@ wasm_trap_t *wasm_import_wgpuShaderModuleGetCompilationInfo(
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[2]);
     WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
-    userdata->callback = callback_wasm;
-    userdata->userdata = userdata_wasm;
+    userdata->wasm_callback_index = callback_wasm;
+    userdata->wa_wasm_userdata = userdata_wasm;
 
 
     wgpuShaderModuleGetCompilationInfo(shader_module, host_callback_wgpuShaderModuleGetCompilationInfo, userdata);
@@ -11891,7 +12217,7 @@ wasm_trap_t *wasm_import_wgpuShaderModuleSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuShaderModuleSetLabel(shader_module, label);
@@ -12066,7 +12392,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuSurfaceSetLabel(surface, label);
@@ -12129,7 +12455,7 @@ wasm_trap_t *wasm_import_wgpuTextureSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuTextureSetLabel(texture, label);
@@ -12409,7 +12735,7 @@ wasm_trap_t *wasm_import_wgpuTextureViewSetLabel(
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
-    wasm_safe_copy_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
+    wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
 
     wgpuTextureViewSetLabel(texture_view, label);
@@ -12420,5 +12746,551 @@ wasm_trap_t *wasm_import_wgpuTextureViewSetLabel(
     return NULL;
 }
 
+
+static const struct {
+    const char* name;
+    wasm_func_callback_with_env_t func;
+} webgpu_import_funcs[] = {
+    {
+        .name =            "wgpuAdapterGetLimits",
+        .func = wasm_import_wgpuAdapterGetLimits
+    },
+    {
+        .name =            "wgpuAdapterHasFeature",
+        .func = wasm_import_wgpuAdapterHasFeature
+    },
+    {
+        .name =            "wgpuAdapterEnumerateFeatures",
+        .func = wasm_import_wgpuAdapterEnumerateFeatures
+    },
+    {
+        .name =            "wgpuAdapterGetInfo",
+        .func = wasm_import_wgpuAdapterGetInfo
+    },
+    {
+        .name =            "wgpuAdapterRequestDevice",
+        .func = wasm_import_wgpuAdapterRequestDevice
+    },
+    {
+        .name =            "wgpuBindGroupSetLabel",
+        .func = wasm_import_wgpuBindGroupSetLabel
+    },
+    {
+        .name =            "wgpuBindGroupLayoutSetLabel",
+        .func = wasm_import_wgpuBindGroupLayoutSetLabel
+    },
+    {
+        .name =            "wgpuBufferMapAsync",
+        .func = wasm_import_wgpuBufferMapAsync
+    },
+    {
+        .name =            "wgpuBufferGetMappedRange",
+        .func = wasm_import_wgpuBufferGetMappedRange
+    },
+    {
+        .name =            "wgpuBufferGetConstMappedRange",
+        .func = wasm_import_wgpuBufferGetConstMappedRange
+    },
+    {
+        .name =            "wgpuBufferSetLabel",
+        .func = wasm_import_wgpuBufferSetLabel
+    },
+    {
+        .name =            "wgpuBufferGetUsage",
+        .func = wasm_import_wgpuBufferGetUsage
+    },
+    {
+        .name =            "wgpuBufferGetSize",
+        .func = wasm_import_wgpuBufferGetSize
+    },
+    {
+        .name =            "wgpuBufferGetMapState",
+        .func = wasm_import_wgpuBufferGetMapState
+    },
+    {
+        .name =            "wgpuBufferUnmap",
+        .func = wasm_import_wgpuBufferUnmap
+    },
+    {
+        .name =            "wgpuBufferDestroy",
+        .func = wasm_import_wgpuBufferDestroy
+    },
+    {
+        .name =            "wgpuCommandBufferSetLabel",
+        .func = wasm_import_wgpuCommandBufferSetLabel
+    },
+    {
+        .name =            "wgpuCommandEncoderFinish",
+        .func = wasm_import_wgpuCommandEncoderFinish
+    },
+    {
+        .name =            "wgpuCommandEncoderBeginComputePass",
+        .func = wasm_import_wgpuCommandEncoderBeginComputePass
+    },
+    {
+        .name =            "wgpuCommandEncoderBeginRenderPass",
+        .func = wasm_import_wgpuCommandEncoderBeginRenderPass
+    },
+    {
+        .name =            "wgpuCommandEncoderCopyBufferToBuffer",
+        .func = wasm_import_wgpuCommandEncoderCopyBufferToBuffer
+    },
+    {
+        .name =            "wgpuCommandEncoderCopyBufferToTexture",
+        .func = wasm_import_wgpuCommandEncoderCopyBufferToTexture
+    },
+    {
+        .name =            "wgpuCommandEncoderCopyTextureToBuffer",
+        .func = wasm_import_wgpuCommandEncoderCopyTextureToBuffer
+    },
+    {
+        .name =            "wgpuCommandEncoderCopyTextureToTexture",
+        .func = wasm_import_wgpuCommandEncoderCopyTextureToTexture
+    },
+    {
+        .name =            "wgpuCommandEncoderClearBuffer",
+        .func = wasm_import_wgpuCommandEncoderClearBuffer
+    },
+    {
+        .name =            "wgpuCommandEncoderInsertDebugMarker",
+        .func = wasm_import_wgpuCommandEncoderInsertDebugMarker
+    },
+    {
+        .name =            "wgpuCommandEncoderPopDebugGroup",
+        .func = wasm_import_wgpuCommandEncoderPopDebugGroup
+    },
+    {
+        .name =            "wgpuCommandEncoderPushDebugGroup",
+        .func = wasm_import_wgpuCommandEncoderPushDebugGroup
+    },
+    {
+        .name =            "wgpuCommandEncoderResolveQuerySet",
+        .func = wasm_import_wgpuCommandEncoderResolveQuerySet
+    },
+    {
+        .name =            "wgpuCommandEncoderWriteTimestamp",
+        .func = wasm_import_wgpuCommandEncoderWriteTimestamp
+    },
+    {
+        .name =            "wgpuCommandEncoderSetLabel",
+        .func = wasm_import_wgpuCommandEncoderSetLabel
+    },
+    {
+        .name =            "wgpuComputePassEncoderInsertDebugMarker",
+        .func = wasm_import_wgpuComputePassEncoderInsertDebugMarker
+    },
+    {
+        .name =            "wgpuComputePassEncoderPopDebugGroup",
+        .func = wasm_import_wgpuComputePassEncoderPopDebugGroup
+    },
+    {
+        .name =            "wgpuComputePassEncoderPushDebugGroup",
+        .func = wasm_import_wgpuComputePassEncoderPushDebugGroup
+    },
+    {
+        .name =            "wgpuComputePassEncoderSetPipeline",
+        .func = wasm_import_wgpuComputePassEncoderSetPipeline
+    },
+    {
+        .name =            "wgpuComputePassEncoderSetBindGroup",
+        .func = wasm_import_wgpuComputePassEncoderSetBindGroup
+    },
+    {
+        .name =            "wgpuComputePassEncoderDispatchWorkgroups",
+        .func = wasm_import_wgpuComputePassEncoderDispatchWorkgroups
+    },
+    {
+        .name =            "wgpuComputePassEncoderDispatchWorkgroupsIndirect",
+        .func = wasm_import_wgpuComputePassEncoderDispatchWorkgroupsIndirect
+    },
+    {
+        .name =            "wgpuComputePassEncoderEnd",
+        .func = wasm_import_wgpuComputePassEncoderEnd
+    },
+    {
+        .name =            "wgpuComputePassEncoderSetLabel",
+        .func = wasm_import_wgpuComputePassEncoderSetLabel
+    },
+    {
+        .name =            "wgpuComputePipelineGetBindGroupLayout",
+        .func = wasm_import_wgpuComputePipelineGetBindGroupLayout
+    },
+    {
+        .name =            "wgpuComputePipelineSetLabel",
+        .func = wasm_import_wgpuComputePipelineSetLabel
+    },
+    {
+        .name =            "wgpuDeviceCreateBindGroup",
+        .func = wasm_import_wgpuDeviceCreateBindGroup
+    },
+    {
+        .name =            "wgpuDeviceCreateBindGroupLayout",
+        .func = wasm_import_wgpuDeviceCreateBindGroupLayout
+    },
+    {
+        .name =            "wgpuDeviceCreateBuffer",
+        .func = wasm_import_wgpuDeviceCreateBuffer
+    },
+    {
+        .name =            "wgpuDeviceCreateCommandEncoder",
+        .func = wasm_import_wgpuDeviceCreateCommandEncoder
+    },
+    {
+        .name =            "wgpuDeviceCreateComputePipeline",
+        .func = wasm_import_wgpuDeviceCreateComputePipeline
+    },
+    {
+        .name =            "wgpuDeviceCreateComputePipelineAsync",
+        .func = wasm_import_wgpuDeviceCreateComputePipelineAsync
+    },
+    {
+        .name =            "wgpuDeviceCreatePipelineLayout",
+        .func = wasm_import_wgpuDeviceCreatePipelineLayout
+    },
+    {
+        .name =            "wgpuDeviceCreateQuerySet",
+        .func = wasm_import_wgpuDeviceCreateQuerySet
+    },
+    {
+        .name =            "wgpuDeviceCreateRenderPipelineAsync",
+        .func = wasm_import_wgpuDeviceCreateRenderPipelineAsync
+    },
+    {
+        .name =            "wgpuDeviceCreateRenderBundleEncoder",
+        .func = wasm_import_wgpuDeviceCreateRenderBundleEncoder
+    },
+    {
+        .name =            "wgpuDeviceCreateRenderPipeline",
+        .func = wasm_import_wgpuDeviceCreateRenderPipeline
+    },
+    {
+        .name =            "wgpuDeviceCreateSampler",
+        .func = wasm_import_wgpuDeviceCreateSampler
+    },
+    {
+        .name =            "wgpuDeviceCreateShaderModule",
+        .func = wasm_import_wgpuDeviceCreateShaderModule
+    },
+    {
+        .name =            "wgpuDeviceCreateTexture",
+        .func = wasm_import_wgpuDeviceCreateTexture
+    },
+    {
+        .name =            "wgpuDeviceDestroy",
+        .func = wasm_import_wgpuDeviceDestroy
+    },
+    {
+        .name =            "wgpuDeviceGetLimits",
+        .func = wasm_import_wgpuDeviceGetLimits
+    },
+    {
+        .name =            "wgpuDeviceHasFeature",
+        .func = wasm_import_wgpuDeviceHasFeature
+    },
+    {
+        .name =            "wgpuDeviceEnumerateFeatures",
+        .func = wasm_import_wgpuDeviceEnumerateFeatures
+    },
+    {
+        .name =            "wgpuDeviceGetQueue",
+        .func = wasm_import_wgpuDeviceGetQueue
+    },
+    {
+        .name =            "wgpuDevicePushErrorScope",
+        .func = wasm_import_wgpuDevicePushErrorScope
+    },
+    {
+        .name =            "wgpuDevicePopErrorScope",
+        .func = wasm_import_wgpuDevicePopErrorScope
+    },
+    {
+        .name =            "wgpuDeviceSetLabel",
+        .func = wasm_import_wgpuDeviceSetLabel
+    },
+    {
+        .name =            "wgpuInstanceCreateSurface",
+        .func = wasm_import_wgpuInstanceCreateSurface
+    },
+    {
+        .name =            "wgpuInstanceHasWGSLLanguageFeature",
+        .func = wasm_import_wgpuInstanceHasWGSLLanguageFeature
+    },
+    {
+        .name =            "wgpuInstanceProcessEvents",
+        .func = wasm_import_wgpuInstanceProcessEvents
+    },
+    {
+        .name =            "wgpuInstanceRequestAdapter",
+        .func = wasm_import_wgpuInstanceRequestAdapter
+    },
+    {
+        .name =            "wgpuPipelineLayoutSetLabel",
+        .func = wasm_import_wgpuPipelineLayoutSetLabel
+    },
+    {
+        .name =            "wgpuQuerySetSetLabel",
+        .func = wasm_import_wgpuQuerySetSetLabel
+    },
+    {
+        .name =            "wgpuQuerySetGetType",
+        .func = wasm_import_wgpuQuerySetGetType
+    },
+    {
+        .name =            "wgpuQuerySetGetCount",
+        .func = wasm_import_wgpuQuerySetGetCount
+    },
+    {
+        .name =            "wgpuQuerySetDestroy",
+        .func = wasm_import_wgpuQuerySetDestroy
+    },
+    {
+        .name =            "wgpuQueueSubmit",
+        .func = wasm_import_wgpuQueueSubmit
+    },
+    {
+        .name =            "wgpuQueueOnSubmittedWorkDone",
+        .func = wasm_import_wgpuQueueOnSubmittedWorkDone
+    },
+    {
+        .name =            "wgpuQueueWriteBuffer",
+        .func = wasm_import_wgpuQueueWriteBuffer
+    },
+    {
+        .name =            "wgpuQueueWriteTexture",
+        .func = wasm_import_wgpuQueueWriteTexture
+    },
+    {
+        .name =            "wgpuQueueSetLabel",
+        .func = wasm_import_wgpuQueueSetLabel
+    },
+    {
+        .name =            "wgpuRenderBundleSetLabel",
+        .func = wasm_import_wgpuRenderBundleSetLabel
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderSetPipeline",
+        .func = wasm_import_wgpuRenderBundleEncoderSetPipeline
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderSetBindGroup",
+        .func = wasm_import_wgpuRenderBundleEncoderSetBindGroup
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderDraw",
+        .func = wasm_import_wgpuRenderBundleEncoderDraw
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderDrawIndexed",
+        .func = wasm_import_wgpuRenderBundleEncoderDrawIndexed
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderDrawIndirect",
+        .func = wasm_import_wgpuRenderBundleEncoderDrawIndirect
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderDrawIndexedIndirect",
+        .func = wasm_import_wgpuRenderBundleEncoderDrawIndexedIndirect
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderInsertDebugMarker",
+        .func = wasm_import_wgpuRenderBundleEncoderInsertDebugMarker
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderPopDebugGroup",
+        .func = wasm_import_wgpuRenderBundleEncoderPopDebugGroup
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderPushDebugGroup",
+        .func = wasm_import_wgpuRenderBundleEncoderPushDebugGroup
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderSetVertexBuffer",
+        .func = wasm_import_wgpuRenderBundleEncoderSetVertexBuffer
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderSetIndexBuffer",
+        .func = wasm_import_wgpuRenderBundleEncoderSetIndexBuffer
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderFinish",
+        .func = wasm_import_wgpuRenderBundleEncoderFinish
+    },
+    {
+        .name =            "wgpuRenderBundleEncoderSetLabel",
+        .func = wasm_import_wgpuRenderBundleEncoderSetLabel
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetPipeline",
+        .func = wasm_import_wgpuRenderPassEncoderSetPipeline
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetBindGroup",
+        .func = wasm_import_wgpuRenderPassEncoderSetBindGroup
+    },
+    {
+        .name =            "wgpuRenderPassEncoderDraw",
+        .func = wasm_import_wgpuRenderPassEncoderDraw
+    },
+    {
+        .name =            "wgpuRenderPassEncoderDrawIndexed",
+        .func = wasm_import_wgpuRenderPassEncoderDrawIndexed
+    },
+    {
+        .name =            "wgpuRenderPassEncoderDrawIndirect",
+        .func = wasm_import_wgpuRenderPassEncoderDrawIndirect
+    },
+    {
+        .name =            "wgpuRenderPassEncoderDrawIndexedIndirect",
+        .func = wasm_import_wgpuRenderPassEncoderDrawIndexedIndirect
+    },
+    {
+        .name =            "wgpuRenderPassEncoderExecuteBundles",
+        .func = wasm_import_wgpuRenderPassEncoderExecuteBundles
+    },
+    {
+        .name =            "wgpuRenderPassEncoderInsertDebugMarker",
+        .func = wasm_import_wgpuRenderPassEncoderInsertDebugMarker
+    },
+    {
+        .name =            "wgpuRenderPassEncoderPopDebugGroup",
+        .func = wasm_import_wgpuRenderPassEncoderPopDebugGroup
+    },
+    {
+        .name =            "wgpuRenderPassEncoderPushDebugGroup",
+        .func = wasm_import_wgpuRenderPassEncoderPushDebugGroup
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetStencilReference",
+        .func = wasm_import_wgpuRenderPassEncoderSetStencilReference
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetBlendConstant",
+        .func = wasm_import_wgpuRenderPassEncoderSetBlendConstant
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetViewport",
+        .func = wasm_import_wgpuRenderPassEncoderSetViewport
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetScissorRect",
+        .func = wasm_import_wgpuRenderPassEncoderSetScissorRect
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetVertexBuffer",
+        .func = wasm_import_wgpuRenderPassEncoderSetVertexBuffer
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetIndexBuffer",
+        .func = wasm_import_wgpuRenderPassEncoderSetIndexBuffer
+    },
+    {
+        .name =            "wgpuRenderPassEncoderBeginOcclusionQuery",
+        .func = wasm_import_wgpuRenderPassEncoderBeginOcclusionQuery
+    },
+    {
+        .name =            "wgpuRenderPassEncoderEndOcclusionQuery",
+        .func = wasm_import_wgpuRenderPassEncoderEndOcclusionQuery
+    },
+    {
+        .name =            "wgpuRenderPassEncoderEnd",
+        .func = wasm_import_wgpuRenderPassEncoderEnd
+    },
+    {
+        .name =            "wgpuRenderPassEncoderSetLabel",
+        .func = wasm_import_wgpuRenderPassEncoderSetLabel
+    },
+    {
+        .name =            "wgpuRenderPipelineGetBindGroupLayout",
+        .func = wasm_import_wgpuRenderPipelineGetBindGroupLayout
+    },
+    {
+        .name =            "wgpuRenderPipelineSetLabel",
+        .func = wasm_import_wgpuRenderPipelineSetLabel
+    },
+    {
+        .name =            "wgpuSamplerSetLabel",
+        .func = wasm_import_wgpuSamplerSetLabel
+    },
+    {
+        .name =            "wgpuShaderModuleGetCompilationInfo",
+        .func = wasm_import_wgpuShaderModuleGetCompilationInfo
+    },
+    {
+        .name =            "wgpuShaderModuleSetLabel",
+        .func = wasm_import_wgpuShaderModuleSetLabel
+    },
+    {
+        .name =            "wgpuSurfaceConfigure",
+        .func = wasm_import_wgpuSurfaceConfigure
+    },
+    {
+        .name =            "wgpuSurfaceGetCapabilities",
+        .func = wasm_import_wgpuSurfaceGetCapabilities
+    },
+    {
+        .name =            "wgpuSurfaceGetCurrentTexture",
+        .func = wasm_import_wgpuSurfaceGetCurrentTexture
+    },
+    {
+        .name =            "wgpuSurfacePresent",
+        .func = wasm_import_wgpuSurfacePresent
+    },
+    {
+        .name =            "wgpuSurfaceUnconfigure",
+        .func = wasm_import_wgpuSurfaceUnconfigure
+    },
+    {
+        .name =            "wgpuSurfaceSetLabel",
+        .func = wasm_import_wgpuSurfaceSetLabel
+    },
+    {
+        .name =            "wgpuTextureCreateView",
+        .func = wasm_import_wgpuTextureCreateView
+    },
+    {
+        .name =            "wgpuTextureSetLabel",
+        .func = wasm_import_wgpuTextureSetLabel
+    },
+    {
+        .name =            "wgpuTextureGetWidth",
+        .func = wasm_import_wgpuTextureGetWidth
+    },
+    {
+        .name =            "wgpuTextureGetHeight",
+        .func = wasm_import_wgpuTextureGetHeight
+    },
+    {
+        .name =            "wgpuTextureGetDepthOrArrayLayers",
+        .func = wasm_import_wgpuTextureGetDepthOrArrayLayers
+    },
+    {
+        .name =            "wgpuTextureGetMipLevelCount",
+        .func = wasm_import_wgpuTextureGetMipLevelCount
+    },
+    {
+        .name =            "wgpuTextureGetSampleCount",
+        .func = wasm_import_wgpuTextureGetSampleCount
+    },
+    {
+        .name =            "wgpuTextureGetDimension",
+        .func = wasm_import_wgpuTextureGetDimension
+    },
+    {
+        .name =            "wgpuTextureGetFormat",
+        .func = wasm_import_wgpuTextureGetFormat
+    },
+    {
+        .name =            "wgpuTextureGetUsage",
+        .func = wasm_import_wgpuTextureGetUsage
+    },
+    {
+        .name =            "wgpuTextureDestroy",
+        .func = wasm_import_wgpuTextureDestroy
+    },
+    {
+        .name =            "wgpuTextureViewSetLabel",
+        .func = wasm_import_wgpuTextureViewSetLabel
+    },
+};
 
 #endif // WASM_C_API_WEBGPU_IMPL_H_

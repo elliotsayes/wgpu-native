@@ -49,4 +49,26 @@ wasm_memory_t* get_memory(Proc* proc) {
     return NULL;
 }
 
+wasm_func_t* get_exported_function(Proc* proc, const char* target_name) {
+    wasm_extern_vec_t exports;
+    wasm_instance_exports(proc->instance, &exports);
+    wasm_exporttype_vec_t export_types;
+    wasm_module_exports(proc->module, &export_types);
+    wasm_func_t* func = NULL;
+
+    for (size_t i = 0; i < exports.size; ++i) {
+        wasm_extern_t* ext = exports.data[i];
+        if (wasm_extern_kind(ext) == WASM_EXTERN_FUNC) {
+            const wasm_name_t* exp_name = wasm_exporttype_name(export_types.data[i]);
+            if (exp_name && exp_name->size == strlen(target_name) + 1 && 
+                strncmp(exp_name->data, target_name, exp_name->size - 1) == 0) {
+                func = wasm_extern_as_func(ext);
+                break;
+            }
+        }
+    }
+
+    return func;
+}
+
 #endif /* HB_CORE_H */

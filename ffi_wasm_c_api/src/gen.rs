@@ -1,11 +1,11 @@
 use std::io::Write;
 
 use crate::model::{
-    MethodModel, ObjectModel, RefMode, SpecModel, StructModel, TypeInfo, TypeModel,
+    CallbackModel, MethodModel, ObjectModel, RefMode, SpecModel, StructModel, TypeInfo, TypeModel,
 };
+use crate::spec;
 use crate::src::{CodeGenerator, GeneratedLine};
-use crate::{a, i, n, o, o2, oi};
-use crate::{c, spec};
+use crate::{a, c, i, n, o, o2, oi};
 
 pub fn write_wasm_c_api(
     spec: &spec::Spec,
@@ -112,6 +112,10 @@ fn gen_all_impl(model: &SpecModel) -> Vec<Option<GeneratedLine>> {
     gen_all_wasm_callback_fn_definitions(&mut gen, model);
     n!(gen);
     gen_all_wasm_import_fn_definitions(&mut gen, model);
+    n!(gen);
+
+    // Fn Lookup Map
+    gen_import_fn_lookup(&mut gen, model);
     n!(gen);
 
     gen_footer(&mut gen, header_guard);
@@ -283,8 +287,7 @@ fn gen_extract_fn_definition_template(
 
     c!(gen, "Verify wasm-address is not NULL");
     i!(gen, "if (wa_wasm_struct_offset == NULL) {{");
-    // a!(gen, "FATAL(\"{fn_name}: [WMAS.WWST] is NULL\");");
-    a!(gen, "LOG_WARN(\"{fn_name}: [WMAS.WWST] is NULL\");");
+    a!(gen, "LOG_DEBUG(\"{fn_name}: [WMAS.WWST] is NULL\");");
     a!(gen, "*out_ha_host_struct_ptr = NULL;");
     a!(gen, "return 0;");
     o!(gen, "}}");
@@ -420,14 +423,14 @@ fn gen_extract_struct_inner(gen: &mut CodeGenerator, model: &SpecModel, struct_:
     for member in struct_.members() {
         let member_name = &member.name_member;
         let ref_mode = &member.ref_mode;
-        let cat_str = &member.type_info;
-        a!(gen, "LOG_TRACE(\"{fn_name}: extracting [{ref_mode}<{cat_str}>] {member_name}: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)\", (void *)&ha_wasm_struct_ptr->{member_name}, (void *)&ha_host_struct_ptr->{member_name});");
+        let type_info = &member.type_info;
+        a!(gen, "LOG_TRACE(\"{fn_name}: extracting [{ref_mode}<{type_info}>] {member_name}: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)\", (void *)&ha_wasm_struct_ptr->{member_name}, (void *)&ha_host_struct_ptr->{member_name});");
         match ref_mode {
             RefMode::Embedded => {
                 if member.name_orig == "chain" {
                     gen_extract_chain(gen, model, struct_, &member)
                 } else {
-                    gen_extract_embedded(gen, model, struct_, &member);
+                    gen_extract_embedded(gen, model, struct_, &member)
                 }
             }
             RefMode::Pointer(_) => gen_extract_pointer(gen, model, struct_, &member),
@@ -483,8 +486,8 @@ fn gen_extract_embedded(
             )
         }
         crate::model::TypeInfo::String => {
-            i!(gen, "if (wasm_safe_copy_string_null_terminated(memory, ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name}, 65534)) {{");
-            a!(gen, "LOG_WARN(\"{fn_name}: wasm_safe_copy_string_null_terminated failed for {m_name}\");");
+            i!(gen, "if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name}, 65534)) {{");
+            a!(gen, "LOG_WARN(\"{fn_name}: wasm_safe_extract_string_null_terminated failed for {m_name}\");");
             o!(gen, "}}");
         }
         crate::model::TypeInfo::Object(o_name) => {
@@ -697,13 +700,84 @@ fn gen_all_wasm_callback_fn_definitions(gen: &mut CodeGenerator, model: &SpecMod
             match &method.returns_async {
                 Some(ra) => {
                     let wgpu_fn_name = &method.name_wgpu_fn;
-                    let args = &ra.args;
                     let callback_fn_name = format!("host_callback_{}", wgpu_fn_name);
+                    let args = &ra.args;
                     i!(gen, "void {callback_fn_name}(");
                     gen_wasm_callback_fn_args(gen, model, args);
                     oi!(gen, ") {{");
-                    c![gen, "TODO: Callback"];
+                    a!(gen, "LOG_TRACE(\"{callback_fn_name}\");");
+                    a!(gen, "WasmCallbackUserdataWrapper *userdata_wrapper = (WasmCallbackUserdataWrapper *)userdata;");
+                    a!(gen, "Proc *proc = userdata_wrapper->proc;");
+                    a!(
+                        gen,
+                        "BindWGPUObjectMappingRegistry *registry = &proc->registry;"
+                    );
+
                     n!(gen);
+                    a!(gen, "WASM_INT_C_TYPE wasm_callback_index = userdata_wrapper->wasm_callback_index;");
+                    a!(gen, "WASM_POINTER_VOID_C_TYPE wa_wasm_userdata = userdata_wrapper->wa_wasm_userdata;");
+                    n!(gen);
+
+                    a!(gen, "LOG_TRACE(\"Creating args\");");
+                    a!(gen, "wasm_val_vec_t args;");
+                    a!(
+                        gen,
+                        "wasm_val_vec_new_uninitialized(&args, {});",
+                        args.len()
+                    );
+                    a!(gen, "args.num_elems = {};", args.len());
+                    a!(gen, "args.size = (4 * args.num_elems);");
+                    for (i, arg) in args.iter().enumerate() {
+                        let arg_name = &arg.name_orig;
+                        a!(gen, "args.data[{}].kind = WASM_INT_KIND;", i);
+                        if i == args.len() - 1 {
+                            a!(gen, "args.data[{}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;", i);
+                        } else {
+                            gen_insert_result(gen, model, object, method, ra, i, arg);
+                        }
+                    }
+                    n!(gen);
+
+                    a!(gen, "LOG_TRACE(\"Getting __indirect_function_table\");");
+                    a!(
+                        gen,
+                        "wasm_table_t *indirect_functions_table = proc->indirect_func_table;"
+                    );
+                    a!(
+                        gen,
+                        "LOG_TRACE(\"Looking up function index: %d\", wasm_callback_index);"
+                    );
+                    a!(gen, "wasm_ref_t *wasm_callback_ref = wasm_table_get(indirect_functions_table, wasm_callback_index);");
+                    a!(gen, "LOG_TRACE(\"Callback ref: %p\", wasm_callback_ref);");
+                    a!(
+                        gen,
+                        "wasm_func_t *wasm_callback = wasm_ref_as_func(wasm_callback_ref);"
+                    );
+                    a!(gen, "LOG_TRACE(\"Callback: %p\", wasm_callback);");
+                    n!(gen);
+
+                    a!(gen, "wasm_val_vec_t results;");
+                    a!(gen, "wasm_val_vec_new_uninitialized(&results, 1);");
+
+                    a!(
+                        gen,
+                        "LOG_DEBUG(\"Calling WASM callback for {wgpu_fn_name}\");"
+                    );
+                    a!(
+                        gen,
+                        "wasm_trap_t *trap = wasm_func_call(wasm_callback, &args, &results);"
+                    );
+                    a!(gen, "if (trap != NULL) {{");
+                    a!(gen, "    wasm_message_t msg;");
+                    a!(gen, "    wasm_trap_message(trap, &msg);");
+                    a!(gen, "    FATAL(\"Error calling WASM callback for {wgpu_fn_name}: %.*s\", msg.size, msg.data);");
+                    a!(gen, "}}");
+                    a!(
+                        gen,
+                        "LOG_DEBUG(\"Successfully called WASM callback for {wgpu_fn_name}\");"
+                    );
+                    n!(gen);
+
                     a!(gen, "free(userdata);");
                     o!(gen, "}}");
                     n!(gen);
@@ -712,6 +786,63 @@ fn gen_all_wasm_callback_fn_definitions(gen: &mut CodeGenerator, model: &SpecMod
             }
         }
     }
+}
+
+fn gen_insert_result(
+    gen: &mut CodeGenerator,
+    model: &SpecModel,
+    object: &ObjectModel,
+    method: &MethodModel,
+    callback: &CallbackModel,
+    index: usize,
+    arg: &TypeModel,
+) {
+    let wgpu_fn_name = &method.name_wgpu_fn;
+    let callback_fn_name = format!("host_callback_{}", wgpu_fn_name);
+    let ref_mode = &arg.ref_mode;
+    let type_info = &arg.type_info;
+    let var_name = &arg.name_orig;
+
+    a!(
+        gen,
+        "LOG_TRACE(\"{callback_fn_name}: inserting [{ref_mode}<{type_info}>] {var_name}\");"
+    );
+    match ref_mode {
+        RefMode::Embedded => match type_info {
+            TypeInfo::Enum(_) => {
+                a!(
+                    gen,
+                    "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_ENUM_C_TYPE){var_name};"
+                );
+            }
+            TypeInfo::Object(o_name) => {
+                let object = model.object_by_name(o_name).unwrap();
+                // let object_wgpu_type = object.name_wgpu_type.clone();
+                let object_member = object.name_member_plural.clone();
+                let mapping_index_var_name = format!("{}_mapping_index", var_name);
+                a!(gen, "size_t {mapping_index_var_name} = registry_item_add_mapping(&registry->{object_member}, {var_name});");
+                a!(gen, "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t){mapping_index_var_name};");
+            }
+            _ => {
+                println!(
+                    "RefMode::{:?}, TypeInfo::{:?} not implemented yet",
+                    ref_mode, type_info
+                );
+                a!(gen, "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t){var_name};");
+            }
+        },
+        RefMode::Pointer(_) => match type_info {
+            _ => {
+                println!(
+                    "RefMode::{:?}, TypeInfo::{:?} not implemented yet",
+                    ref_mode, type_info
+                );
+                a!(gen, "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t){var_name};");
+            }
+        },
+        _ => unimplemented!("RefMode::{:?} not implemented yet", ref_mode),
+    }
+    n!(gen);
 }
 
 fn gen_wasm_callback_fn_args(gen: &mut CodeGenerator, model: &SpecModel, args: &[TypeModel]) {
@@ -799,7 +930,7 @@ fn gen_all_wasm_import_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel
                 Some(r) => gen_assign_method_result(gen, model, object, method, &r),
                 None => {
                     c!(gen, "Nothing returned");
-                },
+                }
             }
             n!(gen);
 
@@ -872,7 +1003,7 @@ fn gen_arg_embedded(
             a!(gen, "{host_type} {var_name} = NULL;");
             a!(
                 gen,
-                "wasm_safe_copy_string_null_terminated(memory, {ptr_var_name}, &{var_name}, 1024);"
+                "wasm_safe_extract_string_null_terminated(memory, {ptr_var_name}, &{var_name}, 1024);"
             );
             1
         }
@@ -943,7 +1074,12 @@ fn gen_arg_pointer(
             );
         }
         TypeInfo::CVoid => {
-            a!(gen, "{host_type} {var_name} = ({host_type})wasm_val_to_native_int(args->data[{index}]);");
+            a!(gen, "WASM_POINTER_VOID_C_TYPE wa_{var_name} = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[{index}]);");
+            a!(gen, "{host_type} {var_name} = NULL;");
+            a!(
+                gen,
+                "wasm_safe_extract_pointer(memory, wa_{var_name}, &{var_name}, 0);"
+            );
         }
         TypeInfo::MethodCallback(_, _) => {
             a!(gen, "WASM_POINTER_FUNCTION_C_TYPE {var_name}_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[{index}]);");
@@ -952,8 +1088,8 @@ fn gen_arg_pointer(
             a!(gen, "WASM_POINTER_VOID_C_TYPE {var_name}_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[{index}]);");
             a!(gen, "WasmCallbackUserdataWrapper *{var_name} = malloc(sizeof(WasmCallbackUserdataWrapper));");
             a!(gen, "{var_name}->proc = proc;");
-            a!(gen, "{var_name}->callback = callback_wasm;");
-            a!(gen, "{var_name}->userdata = {var_name}_wasm;");
+            a!(gen, "{var_name}->wasm_callback_index = callback_wasm;");
+            a!(gen, "{var_name}->wa_wasm_userdata = {var_name}_wasm;");
         }
         _ => unimplemented!("gen_arg: {type_info} {host_type} {var_name}"),
     };
@@ -986,7 +1122,7 @@ fn gen_arg_array(
             );
             i!(gen, "for (size_t {iter_var_name} = 0; {iter_var_name} < {count_var_name}; {iter_var_name}++) {{");
             // TODO: call wasm_safe_copy_uint32?
-            a!(gen, "wasm_safe_copy_int(memory, {wasm_array_ptr_name} + {iter_var_name}, &({array_var_name}[{iter_var_name}]));");
+            a!(gen, "wasm_safe_extract_int(memory, {wasm_array_ptr_name} + {iter_var_name}, &({array_var_name}[{iter_var_name}]));");
             o!(gen, "}}");
         }
         TypeInfo::Object(object_name) => {
@@ -998,16 +1134,13 @@ fn gen_arg_array(
             a!(gen, "WASM_POINTER_ARRAY_C_TYPE {wasm_array_ptr_name} = (WASM_POINTER_ARRAY_C_TYPE)wasm_val_to_native_int(args->data[{index}]);");
             a!(
                 gen,
-                "{object_type} *{array_var_name} = calloc({count_var_name}, sizeof(void *));"
+                "{object_type} *{array_var_name} = calloc({count_var_name}, sizeof({object_type}));"
             );
+            a!(gen, "int {mapping_index_var_name} = 0;");
             i!(gen, "for (size_t {iter_var_name} = 0; {iter_var_name} < {count_var_name}; {iter_var_name}++) {{");
-            a!(
-                gen,
-                "int {mapping_index_var_name} = wasm_val_to_native_int(args->data[{index}]);"
-            );
             // TODO: call wasm_safe_copy_uint32?
-            a!(gen, "wasm_safe_copy_int(memory, {wasm_array_ptr_name} + {iter_var_name}, &{mapping_index_var_name});");
-            a!(gen, "{array_var_name}[{iter_var_name}] = ({object_type} *)registry_item_get_mapping(&registry->{registry_member}, {mapping_index_var_name});");
+            a!(gen, "wasm_safe_extract_int(memory, {wasm_array_ptr_name} + {iter_var_name}, &{mapping_index_var_name});");
+            a!(gen, "{array_var_name}[{iter_var_name}] = ({object_type})registry_item_get_mapping(&registry->{registry_member}, {mapping_index_var_name});");
             o!(gen, "}}");
         }
         _ => unimplemented!("gen_arg: {type_info} {host_type} {var_name}"),
@@ -1040,10 +1173,10 @@ fn gen_call_method_fn(
         Some(t) => {
             let result_type = t.host_c_type(model);
             a!(gen, "{result_type} result = {func_call}");
-        },
+        }
         None => {
             a!(gen, "{func_call}");
-        },
+        }
     };
 
     method.returns.clone()
@@ -1060,11 +1193,11 @@ fn gen_assign_method_result(
     a!(gen, "results->data[0].kind = WASM_INT_KIND;");
 
     match &returns.type_info {
-        TypeInfo::Bool |
-        TypeInfo::Usize |
-        TypeInfo::Enum(_) |
-        TypeInfo::Bitflag(_) |
-        TypeInfo::Uint32 => a!(gen, "results->data[0].of.WASM_VAL_INT_PROP = result;"),
+        TypeInfo::Bool
+        | TypeInfo::Usize
+        | TypeInfo::Enum(_)
+        | TypeInfo::Bitflag(_)
+        | TypeInfo::Uint32 => a!(gen, "results->data[0].of.WASM_VAL_INT_PROP = result;"),
         TypeInfo::Object(o_name) => {
             let object = model.object_by_name(&o_name).unwrap();
             // let object_wgpu_type = object.name_wgpu_type.clone();
@@ -1073,10 +1206,45 @@ fn gen_assign_method_result(
             a!(gen, "results->data[0].of.WASM_VAL_INT_PROP = result_index;");
         }
         // TypeInfo::Uint64 => todo!(),
-        // TypeInfo::CVoid => todo!(),
+        TypeInfo::CVoid => {
+            // There should always be a `size` variable
+            a!(gen, "WASM_POINTER_VOID_C_TYPE wa_wasm_malloc_res = 0;");
+            a!(gen, "void *ha_wasm_malloc_res = NULL;");
+            i!(gen, "if (wasm_safe_malloc(proc, size, &wa_wasm_malloc_res, &ha_wasm_malloc_res) != 0) {{");
+            a!(gen, "FATAL(\"wasm_safe_malloc failed\");");
+            o!(gen, "}}");
+            a!(gen, "memcpy(ha_wasm_malloc_res, result, size);");
+            a!(gen, "results->data[0].of.WASM_VAL_INT_PROP = wa_wasm_malloc_res;");
+        }
         _ => {
             println!("unimplemented return type: {:?}", returns.type_info);
             // unimplemented!("Unhandled returns type: {:?}", returns.type_info)
         }
     }
+}
+
+fn gen_import_fn_lookup(gen: &mut CodeGenerator, model: &SpecModel) {
+    i!(gen, "static const struct {{");
+    a!(gen, "const char* name;");
+    a!(gen, "wasm_func_callback_with_env_t func;");
+    oi!(gen, "}} webgpu_import_funcs[] = {{");
+
+    for object in &model.objects {
+        for method in &object.methods {
+            let fn_name = &method.name_wgpu_fn;
+            let import_fn_prefix = "wasm_import_";
+            let import_fn_name = format!("{}{}", import_fn_prefix, fn_name);
+
+            i!(gen, "{{");
+            a!(
+                gen,
+                ".name = {}\"{fn_name}\",",
+                " ".repeat(import_fn_prefix.len() - 1)
+            );
+            a!(gen, ".func = {import_fn_name}");
+            o!(gen, "}},");
+        }
+    }
+
+    o!(gen, "}};");
 }

@@ -842,15 +842,15 @@ fn gen_arg_embedded(
 
     match type_info {
         TypeInfo::Uint64 => {
-            let high_var_name = format!("{var_name}_high");
             let low_var_name = format!("{var_name}_low");
+            let high_var_name = format!("{var_name}_high");
             a!(
                 gen,
-                "uint64_t {high_var_name} = wasm_val_to_native_int(args->data[{index}]);"
+                "uint64_t {low_var_name} = wasm_val_to_native_int(args->data[{index}]);"
             );
             a!(
                 gen,
-                "uint64_t {low_var_name} = wasm_val_to_native_int(args->data[{index} + 1]);"
+                "uint64_t {high_var_name} = wasm_val_to_native_int(args->data[{index} + 1]);"
             );
             a!(
                 gen,

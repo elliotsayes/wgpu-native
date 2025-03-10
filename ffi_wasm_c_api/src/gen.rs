@@ -136,6 +136,10 @@ fn gen_impl_headers(gen: &mut CodeGenerator, header_guard: &str) {
     n!(gen);
     a!(gen, "#include \"wasm_webgpu_c_api_inc.h\"");
     a!(gen, "#include \"wasm_helpers.h\"");
+    n!(gen);
+    a!(gen, "#ifndef HB_CORE_H");
+    a!(gen, "#include \"hb_stub.h\"");
+    a!(gen, "#endif");
 }
 
 fn gen_footer(gen: &mut CodeGenerator, header_guard: &str) {
@@ -334,7 +338,7 @@ fn gen_extract_chained_struct_inner(
     c!(gen, "Resolve SType");
     a!(
         gen,
-        "{s_types_wgpu_type} sType = ha_wasm_struct_ptr->sType;"
+        "{s_types_wgpu_type} sType = ({s_types_wgpu_type})ha_wasm_struct_ptr->sType;"
     );
     a!(gen, "LOG_DEBUG(\"{fn_name}: sType value: %d\", sType);");
     n!(gen);
@@ -389,7 +393,7 @@ fn gen_extract_struct_inner(gen: &mut CodeGenerator, model: &SpecModel, struct_:
     a!(gen, "LOG_DEBUG(\"{fn_name}: allocating [*HMAS.HWST] (%p) as {wgpu_type}\", (void *)out_ha_host_struct_ptr);");
     a!(
         gen,
-        "*out_ha_host_struct_ptr = calloc(1, sizeof({wgpu_type}));"
+        "*out_ha_host_struct_ptr = ({wgpu_type} *)calloc(1, sizeof({wgpu_type}));"
     );
     i!(gen, "if (*out_ha_host_struct_ptr == NULL) {{");
     a!(
@@ -699,6 +703,8 @@ fn gen_all_wasm_callback_fn_definitions(gen: &mut CodeGenerator, model: &SpecMod
                     gen_wasm_callback_fn_args(gen, model, args);
                     oi!(gen, ") {{");
                     c![gen, "TODO: Callback"];
+                    n!(gen);
+                    a!(gen, "free(userdata);");
                     o!(gen, "}}");
                     n!(gen);
                 }
@@ -761,7 +767,7 @@ fn gen_all_wasm_import_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel
             a!(gen, "byte_t *base_ptr = wasm_memory_data(memory);");
             a!(
                 gen,
-                "BindWGPUObjectMappingRegistry registry = proc->registry;"
+                "BindWGPUObjectMappingRegistry *registry = &proc->registry;"
             );
             n!(gen);
 
@@ -786,7 +792,15 @@ fn gen_all_wasm_import_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel
             }
             n!(gen);
 
-            gen_call_method_fn(gen, model, object, method);
+            let returns = gen_call_method_fn(gen, model, object, method);
+            n!(gen);
+
+            match returns {
+                Some(r) => gen_assign_method_result(gen, model, object, method, &r),
+                None => {
+                    c!(gen, "Nothing returned");
+                },
+            }
             n!(gen);
 
             c!(gen, "TODO: Freeing");
@@ -894,7 +908,7 @@ fn gen_arg_embedded(
                 gen,
                 "uint32_t {mapping_index_var_name} = wasm_val_to_native_int(args->data[{index}]);"
             );
-            a!(gen, "{host_type} {var_name} = ({host_type})registry_item_get_mapping(&registry.{registry_member}, {mapping_index_var_name});");
+            a!(gen, "{host_type} {var_name} = ({host_type})registry_item_get_mapping(&registry->{registry_member}, {mapping_index_var_name});");
             1
         }
         _ => unimplemented!("gen_arg: embedded {type_info} {host_type} {var_name}"),
@@ -925,7 +939,7 @@ fn gen_arg_pointer(
             a!(gen, "{host_native_type} *{var_name} = NULL;");
             a!(
                 gen,
-                "{extract_fn_name}(&registry, memory, (byte_t *){wasm_ptr_var_name}, &{var_name});"
+                "{extract_fn_name}(registry, memory, (byte_t *){wasm_ptr_var_name}, &{var_name});"
             );
         }
         TypeInfo::CVoid => {
@@ -936,10 +950,10 @@ fn gen_arg_pointer(
         }
         TypeInfo::Userdata(_, _) => {
             a!(gen, "WASM_POINTER_VOID_C_TYPE {var_name}_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[{index}]);");
-            i!(gen, "WasmCallbackUserdataWrapper {var_name} = {{");
-            a!(gen, ".callback = callback_wasm,");
-            a!(gen, ".userdata = {var_name}_wasm");
-            o!(gen, "}};");
+            a!(gen, "WasmCallbackUserdataWrapper *{var_name} = malloc(sizeof(WasmCallbackUserdataWrapper));");
+            a!(gen, "{var_name}->proc = proc;");
+            a!(gen, "{var_name}->callback = callback_wasm;");
+            a!(gen, "{var_name}->userdata = {var_name}_wasm;");
         }
         _ => unimplemented!("gen_arg: {type_info} {host_type} {var_name}"),
     };
@@ -993,7 +1007,7 @@ fn gen_arg_array(
             );
             // TODO: call wasm_safe_copy_uint32?
             a!(gen, "wasm_safe_copy_int(memory, {wasm_array_ptr_name} + {iter_var_name}, &{mapping_index_var_name});");
-            a!(gen, "{array_var_name}[{iter_var_name}] = ({object_type} *)registry_item_get_mapping(&registry.{registry_member}, {mapping_index_var_name});");
+            a!(gen, "{array_var_name}[{iter_var_name}] = ({object_type} *)registry_item_get_mapping(&registry->{registry_member}, {mapping_index_var_name});");
             o!(gen, "}}");
         }
         _ => unimplemented!("gen_arg: {type_info} {host_type} {var_name}"),
@@ -1004,10 +1018,10 @@ fn gen_arg_array(
 
 fn gen_call_method_fn(
     gen: &mut CodeGenerator,
-    _model: &SpecModel,
+    model: &SpecModel,
     object: &ObjectModel,
     method: &MethodModel,
-) {
+) -> Option<TypeModel> {
     let wgpu_fn_name = &method.name_wgpu_fn;
     let mut var_names: Vec<String> = vec![];
 
@@ -1020,5 +1034,49 @@ fn gen_call_method_fn(
     }
 
     let var_args = var_names.join(", ");
-    a!(gen, "{wgpu_fn_name}({var_args});")
+    let func_call = format!("{wgpu_fn_name}({var_args});");
+
+    match &method.returns {
+        Some(t) => {
+            let result_type = t.host_c_type(model);
+            a!(gen, "{result_type} result = {func_call}");
+        },
+        None => {
+            a!(gen, "{func_call}");
+        },
+    };
+
+    method.returns.clone()
+}
+
+fn gen_assign_method_result(
+    gen: &mut CodeGenerator,
+    model: &SpecModel,
+    object: &ObjectModel,
+    method: &MethodModel,
+    returns: &TypeModel,
+) {
+    a!(gen, "results->size = 1;");
+    a!(gen, "results->data[0].kind = WASM_INT_KIND;");
+
+    match &returns.type_info {
+        TypeInfo::Bool |
+        TypeInfo::Usize |
+        TypeInfo::Enum(_) |
+        TypeInfo::Bitflag(_) |
+        TypeInfo::Uint32 => a!(gen, "results->data[0].of.WASM_VAL_INT_PROP = result;"),
+        TypeInfo::Object(o_name) => {
+            let object = model.object_by_name(&o_name).unwrap();
+            // let object_wgpu_type = object.name_wgpu_type.clone();
+            let object_member_plural = object.name_member_plural.clone();
+            a!(gen, "size_t result_index = registry_item_add_mapping(&registry->{object_member_plural}, result);");
+            a!(gen, "results->data[0].of.WASM_VAL_INT_PROP = result_index;");
+        }
+        // TypeInfo::Uint64 => todo!(),
+        // TypeInfo::CVoid => todo!(),
+        _ => {
+            println!("unimplemented return type: {:?}", returns.type_info);
+            // unimplemented!("Unhandled returns type: {:?}", returns.type_info)
+        }
+    }
 }

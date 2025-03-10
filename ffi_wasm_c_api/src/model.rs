@@ -129,11 +129,28 @@ pub struct MethodModel {
     pub name_orig: String,
     pub name_wgpu_fn: String,
     pub arg_groups: Vec<MethodArgGroupModel>,
+    pub returns: Option<TypeModel>,
     pub returns_async: Option<CallbackModel>,
 }
 
 impl MethodModel {
     pub fn from_spec(spec: &spec::Spec, object: &spec::Object, method: &spec::Method) -> Self {
+        let base_arg_groups: Vec<MethodArgGroupModel> = method
+            .args
+            .iter()
+            .map(|a| MethodArgGroupModel::from_spec(spec, object, method, a))
+            .collect();
+
+        let returns: Option<TypeModel> = match &method.returns {
+            Some(r) => Some(TypeModel {
+                name_orig: "returns".to_string(),
+                name_member: "returns".to_string(),
+                ref_mode: RefMode::from_pointer(r.pointer.clone()),
+                type_info: TypeInfo::from_type(&r.type_field),
+            }),
+            None => None,
+        };
+
         let returns_async = match method.returns_async.len() {
             0 => None,
             _ => Some(CallbackModel::from_spec(
@@ -143,11 +160,7 @@ impl MethodModel {
                 method.returns_async.clone(),
             )),
         };
-        let base_arg_groups: Vec<MethodArgGroupModel> = method
-            .args
-            .iter()
-            .map(|a| MethodArgGroupModel::from_spec(spec, object, method, a))
-            .collect();
+
         let callback_arg_group = match returns_async {
             Some(_) => Some({
                 MethodArgGroupModel {
@@ -186,6 +199,7 @@ impl MethodModel {
             name_orig: method.name.clone(),
             name_wgpu_fn: to_wgpu_fn(&object.name, &method.name),
             arg_groups,
+            returns,
             returns_async,
         }
     }
@@ -440,10 +454,10 @@ fn get_type_info(
             (DataGroupMode::CountAndArray, vec![count, array])
         }
         None => {
-            let ref_mode = match pointer {
-                Some(mutability) => RefMode::Pointer(mutability == "mutable"),
-                None => RefMode::Embedded,
-            };
+            let ref_mode = RefMode::from_pointer(match pointer {
+                Some(s) => Some(s.to_string()),
+                None => None,
+            });
             (
                 DataGroupMode::Individual,
                 vec![TypeModel {
@@ -662,8 +676,7 @@ impl TypeModel {
             RefMode::Pointer(_) => match &self.type_info {
                 TypeInfo::MethodCallback(object_name, method_name) => {
                     to_host_callback_fn(object_name, method_name)
-                }
-                TypeInfo::Userdata(_, _) => format!("(void *)(&{})", self.name_orig),
+                },
                 _ => self.name_orig.clone(),
             },
             RefMode::Array => format!("{}_array", self.name_orig),

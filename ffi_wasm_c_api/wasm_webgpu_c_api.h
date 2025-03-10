@@ -4,6 +4,10 @@
 #include "wasm_webgpu_c_api_inc.h"
 #include "wasm_helpers.h"
 
+#ifndef HB_CORE_H
+#include "hb_stub.h"
+#endif
+
 /* Struct Declarations */
 struct WasmWGPUChainedStruct;
 struct WasmWGPUChainedStructOut;
@@ -1415,7 +1419,7 @@ int extract_chained_struct(
     LOG_TRACE("extract_chained_struct: [HMAS.WWST]sType: (%p)", (void *)&ha_wasm_struct_ptr->sType);
 
     /* Resolve SType */
-    WGPUSType sType = ha_wasm_struct_ptr->sType;
+    WGPUSType sType = (WGPUSType)ha_wasm_struct_ptr->sType;
     LOG_DEBUG("extract_chained_struct: sType value: %d", sType);
 
     switch (sType) {
@@ -1579,7 +1583,7 @@ int extract_limits(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_limits: allocating [*HMAS.HWST] (%p) as WGPULimits", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPULimits));
+        *out_ha_host_struct_ptr = (WGPULimits *)calloc(1, sizeof(WGPULimits));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_limits: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -1735,7 +1739,7 @@ int extract_blend_component(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_blend_component: allocating [*HMAS.HWST] (%p) as WGPUBlendComponent", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBlendComponent));
+        *out_ha_host_struct_ptr = (WGPUBlendComponent *)calloc(1, sizeof(WGPUBlendComponent));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_blend_component: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -1806,7 +1810,7 @@ int extract_color(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_color: allocating [*HMAS.HWST] (%p) as WGPUColor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUColor));
+        *out_ha_host_struct_ptr = (WGPUColor *)calloc(1, sizeof(WGPUColor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_color: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -1878,7 +1882,7 @@ int extract_compute_pass_timestamp_writes(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_compute_pass_timestamp_writes: allocating [*HMAS.HWST] (%p) as WGPUComputePassTimestampWrites", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUComputePassTimestampWrites));
+        *out_ha_host_struct_ptr = (WGPUComputePassTimestampWrites *)calloc(1, sizeof(WGPUComputePassTimestampWrites));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_compute_pass_timestamp_writes: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -1947,7 +1951,7 @@ int extract_extent_3D(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_extent_3D: allocating [*HMAS.HWST] (%p) as WGPUExtent3D", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUExtent3D));
+        *out_ha_host_struct_ptr = (WGPUExtent3D *)calloc(1, sizeof(WGPUExtent3D));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_extent_3D: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2016,7 +2020,7 @@ int extract_vertex_attribute(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_vertex_attribute: allocating [*HMAS.HWST] (%p) as WGPUVertexAttribute", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUVertexAttribute));
+        *out_ha_host_struct_ptr = (WGPUVertexAttribute *)calloc(1, sizeof(WGPUVertexAttribute));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_vertex_attribute: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2087,7 +2091,7 @@ int extract_vertex_buffer_layout(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_vertex_buffer_layout: allocating [*HMAS.HWST] (%p) as WGPUVertexBufferLayout", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUVertexBufferLayout));
+        *out_ha_host_struct_ptr = (WGPUVertexBufferLayout *)calloc(1, sizeof(WGPUVertexBufferLayout));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_vertex_buffer_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2172,7 +2176,7 @@ int extract_origin_3D(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_origin_3D: allocating [*HMAS.HWST] (%p) as WGPUOrigin3D", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUOrigin3D));
+        *out_ha_host_struct_ptr = (WGPUOrigin3D *)calloc(1, sizeof(WGPUOrigin3D));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_origin_3D: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2253,7 +2257,7 @@ int extract_render_pass_depth_stencil_attachment(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_render_pass_depth_stencil_attachment: allocating [*HMAS.HWST] (%p) as WGPURenderPassDepthStencilAttachment", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassDepthStencilAttachment));
+        *out_ha_host_struct_ptr = (WGPURenderPassDepthStencilAttachment *)calloc(1, sizeof(WGPURenderPassDepthStencilAttachment));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_render_pass_depth_stencil_attachment: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2340,7 +2344,7 @@ int extract_render_pass_timestamp_writes(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_render_pass_timestamp_writes: allocating [*HMAS.HWST] (%p) as WGPURenderPassTimestampWrites", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassTimestampWrites));
+        *out_ha_host_struct_ptr = (WGPURenderPassTimestampWrites *)calloc(1, sizeof(WGPURenderPassTimestampWrites));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_render_pass_timestamp_writes: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2407,7 +2411,7 @@ int extract_blend_state(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_blend_state: allocating [*HMAS.HWST] (%p) as WGPUBlendState", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBlendState));
+        *out_ha_host_struct_ptr = (WGPUBlendState *)calloc(1, sizeof(WGPUBlendState));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_blend_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2481,7 +2485,7 @@ int extract_stencil_face_state(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_stencil_face_state: allocating [*HMAS.HWST] (%p) as WGPUStencilFaceState", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUStencilFaceState));
+        *out_ha_host_struct_ptr = (WGPUStencilFaceState *)calloc(1, sizeof(WGPUStencilFaceState));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_stencil_face_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2553,7 +2557,7 @@ int extract_surface_texture(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_texture: allocating [*HMAS.HWST] (%p) as WGPUSurfaceTexture", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceTexture));
+        *out_ha_host_struct_ptr = (WGPUSurfaceTexture *)calloc(1, sizeof(WGPUSurfaceTexture));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_texture: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2622,7 +2626,7 @@ int extract_uncaptured_error_callback_info(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_uncaptured_error_callback_info: allocating [*HMAS.HWST] (%p) as WGPUUncapturedErrorCallbackInfo", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUUncapturedErrorCallbackInfo));
+        *out_ha_host_struct_ptr = (WGPUUncapturedErrorCallbackInfo *)calloc(1, sizeof(WGPUUncapturedErrorCallbackInfo));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_uncaptured_error_callback_info: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2697,7 +2701,7 @@ int extract_texture_data_layout(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_texture_data_layout: allocating [*HMAS.HWST] (%p) as WGPUTextureDataLayout", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUTextureDataLayout));
+        *out_ha_host_struct_ptr = (WGPUTextureDataLayout *)calloc(1, sizeof(WGPUTextureDataLayout));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_texture_data_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2769,7 +2773,7 @@ int extract_queue_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_queue_descriptor: allocating [*HMAS.HWST] (%p) as WGPUQueueDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUQueueDescriptor));
+        *out_ha_host_struct_ptr = (WGPUQueueDescriptor *)calloc(1, sizeof(WGPUQueueDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_queue_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2843,7 +2847,7 @@ int extract_programmable_stage_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_programmable_stage_descriptor: allocating [*HMAS.HWST] (%p) as WGPUProgrammableStageDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUProgrammableStageDescriptor));
+        *out_ha_host_struct_ptr = (WGPUProgrammableStageDescriptor *)calloc(1, sizeof(WGPUProgrammableStageDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_programmable_stage_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -2939,7 +2943,7 @@ int extract_request_adapter_options(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_request_adapter_options: allocating [*HMAS.HWST] (%p) as WGPURequestAdapterOptions", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURequestAdapterOptions));
+        *out_ha_host_struct_ptr = (WGPURequestAdapterOptions *)calloc(1, sizeof(WGPURequestAdapterOptions));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_request_adapter_options: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3028,7 +3032,7 @@ int extract_device_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_device_descriptor: allocating [*HMAS.HWST] (%p) as WGPUDeviceDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUDeviceDescriptor));
+        *out_ha_host_struct_ptr = (WGPUDeviceDescriptor *)calloc(1, sizeof(WGPUDeviceDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_device_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3147,7 +3151,7 @@ int extract_bind_group_entry(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_bind_group_entry: allocating [*HMAS.HWST] (%p) as WGPUBindGroupEntry", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBindGroupEntry));
+        *out_ha_host_struct_ptr = (WGPUBindGroupEntry *)calloc(1, sizeof(WGPUBindGroupEntry));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_bind_group_entry: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3234,7 +3238,7 @@ int extract_bind_group_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_bind_group_descriptor: allocating [*HMAS.HWST] (%p) as WGPUBindGroupDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBindGroupDescriptor));
+        *out_ha_host_struct_ptr = (WGPUBindGroupDescriptor *)calloc(1, sizeof(WGPUBindGroupDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_bind_group_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3328,7 +3332,7 @@ int extract_buffer_binding_layout(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_buffer_binding_layout: allocating [*HMAS.HWST] (%p) as WGPUBufferBindingLayout", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBufferBindingLayout));
+        *out_ha_host_struct_ptr = (WGPUBufferBindingLayout *)calloc(1, sizeof(WGPUBufferBindingLayout));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_buffer_binding_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3400,7 +3404,7 @@ int extract_sampler_binding_layout(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_sampler_binding_layout: allocating [*HMAS.HWST] (%p) as WGPUSamplerBindingLayout", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSamplerBindingLayout));
+        *out_ha_host_struct_ptr = (WGPUSamplerBindingLayout *)calloc(1, sizeof(WGPUSamplerBindingLayout));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_sampler_binding_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3470,7 +3474,7 @@ int extract_texture_binding_layout(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_texture_binding_layout: allocating [*HMAS.HWST] (%p) as WGPUTextureBindingLayout", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUTextureBindingLayout));
+        *out_ha_host_struct_ptr = (WGPUTextureBindingLayout *)calloc(1, sizeof(WGPUTextureBindingLayout));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_texture_binding_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3558,7 +3562,7 @@ int extract_surface_configuration(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_configuration: allocating [*HMAS.HWST] (%p) as WGPUSurfaceConfiguration", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceConfiguration));
+        *out_ha_host_struct_ptr = (WGPUSurfaceConfiguration *)calloc(1, sizeof(WGPUSurfaceConfiguration));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_configuration: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3662,7 +3666,7 @@ int extract_storage_texture_binding_layout(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_storage_texture_binding_layout: allocating [*HMAS.HWST] (%p) as WGPUStorageTextureBindingLayout", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUStorageTextureBindingLayout));
+        *out_ha_host_struct_ptr = (WGPUStorageTextureBindingLayout *)calloc(1, sizeof(WGPUStorageTextureBindingLayout));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_storage_texture_binding_layout: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3744,7 +3748,7 @@ int extract_bind_group_layout_entry(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_bind_group_layout_entry: allocating [*HMAS.HWST] (%p) as WGPUBindGroupLayoutEntry", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBindGroupLayoutEntry));
+        *out_ha_host_struct_ptr = (WGPUBindGroupLayoutEntry *)calloc(1, sizeof(WGPUBindGroupLayoutEntry));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_bind_group_layout_entry: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3841,7 +3845,7 @@ int extract_bind_group_layout_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_bind_group_layout_descriptor: allocating [*HMAS.HWST] (%p) as WGPUBindGroupLayoutDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBindGroupLayoutDescriptor));
+        *out_ha_host_struct_ptr = (WGPUBindGroupLayoutDescriptor *)calloc(1, sizeof(WGPUBindGroupLayoutDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_bind_group_layout_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -3934,7 +3938,7 @@ int extract_buffer_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_buffer_descriptor: allocating [*HMAS.HWST] (%p) as WGPUBufferDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUBufferDescriptor));
+        *out_ha_host_struct_ptr = (WGPUBufferDescriptor *)calloc(1, sizeof(WGPUBufferDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_buffer_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4013,7 +4017,7 @@ int extract_constant_entry(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_constant_entry: allocating [*HMAS.HWST] (%p) as WGPUConstantEntry", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUConstantEntry));
+        *out_ha_host_struct_ptr = (WGPUConstantEntry *)calloc(1, sizeof(WGPUConstantEntry));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_constant_entry: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4084,7 +4088,7 @@ int extract_command_buffer_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_command_buffer_descriptor: allocating [*HMAS.HWST] (%p) as WGPUCommandBufferDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUCommandBufferDescriptor));
+        *out_ha_host_struct_ptr = (WGPUCommandBufferDescriptor *)calloc(1, sizeof(WGPUCommandBufferDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_command_buffer_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4152,7 +4156,7 @@ int extract_command_encoder_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_command_encoder_descriptor: allocating [*HMAS.HWST] (%p) as WGPUCommandEncoderDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUCommandEncoderDescriptor));
+        *out_ha_host_struct_ptr = (WGPUCommandEncoderDescriptor *)calloc(1, sizeof(WGPUCommandEncoderDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_command_encoder_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4222,7 +4226,7 @@ int extract_compilation_info(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_compilation_info: allocating [*HMAS.HWST] (%p) as WGPUCompilationInfo", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUCompilationInfo));
+        *out_ha_host_struct_ptr = (WGPUCompilationInfo *)calloc(1, sizeof(WGPUCompilationInfo));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_compilation_info: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4320,7 +4324,7 @@ int extract_compilation_message(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_compilation_message: allocating [*HMAS.HWST] (%p) as WGPUCompilationMessage", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUCompilationMessage));
+        *out_ha_host_struct_ptr = (WGPUCompilationMessage *)calloc(1, sizeof(WGPUCompilationMessage));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_compilation_message: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4414,7 +4418,7 @@ int extract_compute_pass_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_compute_pass_descriptor: allocating [*HMAS.HWST] (%p) as WGPUComputePassDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUComputePassDescriptor));
+        *out_ha_host_struct_ptr = (WGPUComputePassDescriptor *)calloc(1, sizeof(WGPUComputePassDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_compute_pass_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4491,7 +4495,7 @@ int extract_compute_pipeline_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_compute_pipeline_descriptor: allocating [*HMAS.HWST] (%p) as WGPUComputePipelineDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUComputePipelineDescriptor));
+        *out_ha_host_struct_ptr = (WGPUComputePipelineDescriptor *)calloc(1, sizeof(WGPUComputePipelineDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_compute_pipeline_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4568,7 +4572,7 @@ int extract_required_limits(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_required_limits: allocating [*HMAS.HWST] (%p) as WGPURequiredLimits", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURequiredLimits));
+        *out_ha_host_struct_ptr = (WGPURequiredLimits *)calloc(1, sizeof(WGPURequiredLimits));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_required_limits: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4639,7 +4643,7 @@ int extract_image_copy_buffer(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_image_copy_buffer: allocating [*HMAS.HWST] (%p) as WGPUImageCopyBuffer", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUImageCopyBuffer));
+        *out_ha_host_struct_ptr = (WGPUImageCopyBuffer *)calloc(1, sizeof(WGPUImageCopyBuffer));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_image_copy_buffer: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4717,7 +4721,7 @@ int extract_image_copy_texture(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_image_copy_texture: allocating [*HMAS.HWST] (%p) as WGPUImageCopyTexture", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUImageCopyTexture));
+        *out_ha_host_struct_ptr = (WGPUImageCopyTexture *)calloc(1, sizeof(WGPUImageCopyTexture));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_image_copy_texture: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4793,7 +4797,7 @@ int extract_instance_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_instance_descriptor: allocating [*HMAS.HWST] (%p) as WGPUInstanceDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUInstanceDescriptor));
+        *out_ha_host_struct_ptr = (WGPUInstanceDescriptor *)calloc(1, sizeof(WGPUInstanceDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_instance_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4860,7 +4864,7 @@ int extract_pipeline_layout_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_pipeline_layout_descriptor: allocating [*HMAS.HWST] (%p) as WGPUPipelineLayoutDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUPipelineLayoutDescriptor));
+        *out_ha_host_struct_ptr = (WGPUPipelineLayoutDescriptor *)calloc(1, sizeof(WGPUPipelineLayoutDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_pipeline_layout_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -4948,7 +4952,7 @@ int extract_query_set_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_query_set_descriptor: allocating [*HMAS.HWST] (%p) as WGPUQuerySetDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUQuerySetDescriptor));
+        *out_ha_host_struct_ptr = (WGPUQuerySetDescriptor *)calloc(1, sizeof(WGPUQuerySetDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_query_set_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5022,7 +5026,7 @@ int extract_render_bundle_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_render_bundle_descriptor: allocating [*HMAS.HWST] (%p) as WGPURenderBundleDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderBundleDescriptor));
+        *out_ha_host_struct_ptr = (WGPURenderBundleDescriptor *)calloc(1, sizeof(WGPURenderBundleDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_render_bundle_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5102,7 +5106,7 @@ int extract_render_bundle_encoder_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_render_bundle_encoder_descriptor: allocating [*HMAS.HWST] (%p) as WGPURenderBundleEncoderDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderBundleEncoderDescriptor));
+        *out_ha_host_struct_ptr = (WGPURenderBundleEncoderDescriptor *)calloc(1, sizeof(WGPURenderBundleEncoderDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_render_bundle_encoder_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5208,7 +5212,7 @@ int extract_render_pass_color_attachment(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_render_pass_color_attachment: allocating [*HMAS.HWST] (%p) as WGPURenderPassColorAttachment", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassColorAttachment));
+        *out_ha_host_struct_ptr = (WGPURenderPassColorAttachment *)calloc(1, sizeof(WGPURenderPassColorAttachment));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_render_pass_color_attachment: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5302,7 +5306,7 @@ int extract_render_pass_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_render_pass_descriptor: allocating [*HMAS.HWST] (%p) as WGPURenderPassDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassDescriptor));
+        *out_ha_host_struct_ptr = (WGPURenderPassDescriptor *)calloc(1, sizeof(WGPURenderPassDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_render_pass_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5412,7 +5416,7 @@ int extract_vertex_state(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_vertex_state: allocating [*HMAS.HWST] (%p) as WGPUVertexState", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUVertexState));
+        *out_ha_host_struct_ptr = (WGPUVertexState *)calloc(1, sizeof(WGPUVertexState));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_vertex_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5527,7 +5531,7 @@ int extract_primitive_state(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_primitive_state: allocating [*HMAS.HWST] (%p) as WGPUPrimitiveState", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUPrimitiveState));
+        *out_ha_host_struct_ptr = (WGPUPrimitiveState *)calloc(1, sizeof(WGPUPrimitiveState));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_primitive_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5620,7 +5624,7 @@ int extract_depth_stencil_state(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_depth_stencil_state: allocating [*HMAS.HWST] (%p) as WGPUDepthStencilState", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUDepthStencilState));
+        *out_ha_host_struct_ptr = (WGPUDepthStencilState *)calloc(1, sizeof(WGPUDepthStencilState));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_depth_stencil_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5723,7 +5727,7 @@ int extract_multisample_state(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_multisample_state: allocating [*HMAS.HWST] (%p) as WGPUMultisampleState", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUMultisampleState));
+        *out_ha_host_struct_ptr = (WGPUMultisampleState *)calloc(1, sizeof(WGPUMultisampleState));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_multisample_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5805,7 +5809,7 @@ int extract_fragment_state(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_fragment_state: allocating [*HMAS.HWST] (%p) as WGPUFragmentState", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUFragmentState));
+        *out_ha_host_struct_ptr = (WGPUFragmentState *)calloc(1, sizeof(WGPUFragmentState));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_fragment_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -5918,7 +5922,7 @@ int extract_color_target_state(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_color_target_state: allocating [*HMAS.HWST] (%p) as WGPUColorTargetState", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUColorTargetState));
+        *out_ha_host_struct_ptr = (WGPUColorTargetState *)calloc(1, sizeof(WGPUColorTargetState));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_color_target_state: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6004,7 +6008,7 @@ int extract_render_pipeline_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_render_pipeline_descriptor: allocating [*HMAS.HWST] (%p) as WGPURenderPipelineDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPipelineDescriptor));
+        *out_ha_host_struct_ptr = (WGPURenderPipelineDescriptor *)calloc(1, sizeof(WGPURenderPipelineDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_render_pipeline_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6123,7 +6127,7 @@ int extract_sampler_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_sampler_descriptor: allocating [*HMAS.HWST] (%p) as WGPUSamplerDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSamplerDescriptor));
+        *out_ha_host_struct_ptr = (WGPUSamplerDescriptor *)calloc(1, sizeof(WGPUSamplerDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_sampler_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6225,7 +6229,7 @@ int extract_shader_module_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_shader_module_descriptor: allocating [*HMAS.HWST] (%p) as WGPUShaderModuleDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleDescriptor));
+        *out_ha_host_struct_ptr = (WGPUShaderModuleDescriptor *)calloc(1, sizeof(WGPUShaderModuleDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_shader_module_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6314,7 +6318,7 @@ int extract_shader_module_compilation_hint(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_shader_module_compilation_hint: allocating [*HMAS.HWST] (%p) as WGPUShaderModuleCompilationHint", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleCompilationHint));
+        *out_ha_host_struct_ptr = (WGPUShaderModuleCompilationHint *)calloc(1, sizeof(WGPUShaderModuleCompilationHint));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_shader_module_compilation_hint: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6385,7 +6389,7 @@ int extract_surface_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_descriptor: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptor));
+        *out_ha_host_struct_ptr = (WGPUSurfaceDescriptor *)calloc(1, sizeof(WGPUSurfaceDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6469,7 +6473,7 @@ int extract_texture_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_texture_descriptor: allocating [*HMAS.HWST] (%p) as WGPUTextureDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUTextureDescriptor));
+        *out_ha_host_struct_ptr = (WGPUTextureDescriptor *)calloc(1, sizeof(WGPUTextureDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_texture_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6588,7 +6592,7 @@ int extract_texture_view_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_texture_view_descriptor: allocating [*HMAS.HWST] (%p) as WGPUTextureViewDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUTextureViewDescriptor));
+        *out_ha_host_struct_ptr = (WGPUTextureViewDescriptor *)calloc(1, sizeof(WGPUTextureViewDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_texture_view_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6691,7 +6695,7 @@ int extract_adapter_info(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_adapter_info: allocating [*HMAS.HWST] (%p) as WGPUAdapterInfo", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUAdapterInfo));
+        *out_ha_host_struct_ptr = (WGPUAdapterInfo *)calloc(1, sizeof(WGPUAdapterInfo));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_adapter_info: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6798,7 +6802,7 @@ int extract_surface_capabilities(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_capabilities: allocating [*HMAS.HWST] (%p) as WGPUSurfaceCapabilities", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceCapabilities));
+        *out_ha_host_struct_ptr = (WGPUSurfaceCapabilities *)calloc(1, sizeof(WGPUSurfaceCapabilities));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_capabilities: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6912,7 +6916,7 @@ int extract_supported_limits(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_supported_limits: allocating [*HMAS.HWST] (%p) as WGPUSupportedLimits", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSupportedLimits));
+        *out_ha_host_struct_ptr = (WGPUSupportedLimits *)calloc(1, sizeof(WGPUSupportedLimits));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_supported_limits: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -6981,7 +6985,7 @@ int extract_render_pass_descriptor_max_draw_count(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_render_pass_descriptor_max_draw_count: allocating [*HMAS.HWST] (%p) as WGPURenderPassDescriptorMaxDrawCount", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPURenderPassDescriptorMaxDrawCount));
+        *out_ha_host_struct_ptr = (WGPURenderPassDescriptorMaxDrawCount *)calloc(1, sizeof(WGPURenderPassDescriptorMaxDrawCount));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_render_pass_descriptor_max_draw_count: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7047,7 +7051,7 @@ int extract_primitive_depth_clip_control(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_primitive_depth_clip_control: allocating [*HMAS.HWST] (%p) as WGPUPrimitiveDepthClipControl", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUPrimitiveDepthClipControl));
+        *out_ha_host_struct_ptr = (WGPUPrimitiveDepthClipControl *)calloc(1, sizeof(WGPUPrimitiveDepthClipControl));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_primitive_depth_clip_control: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7115,7 +7119,7 @@ int extract_shader_module_SPIRV_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_shader_module_SPIRV_descriptor: allocating [*HMAS.HWST] (%p) as WGPUShaderModuleSPIRVDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleSPIRVDescriptor));
+        *out_ha_host_struct_ptr = (WGPUShaderModuleSPIRVDescriptor *)calloc(1, sizeof(WGPUShaderModuleSPIRVDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_shader_module_SPIRV_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7184,7 +7188,7 @@ int extract_shader_module_WGSL_descriptor(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_shader_module_WGSL_descriptor: allocating [*HMAS.HWST] (%p) as WGPUShaderModuleWGSLDescriptor", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUShaderModuleWGSLDescriptor));
+        *out_ha_host_struct_ptr = (WGPUShaderModuleWGSLDescriptor *)calloc(1, sizeof(WGPUShaderModuleWGSLDescriptor));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_shader_module_WGSL_descriptor: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7252,7 +7256,7 @@ int extract_surface_descriptor_from_android_native_window(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_descriptor_from_android_native_window: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromAndroidNativeWindow", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromAndroidNativeWindow));
+        *out_ha_host_struct_ptr = (WGPUSurfaceDescriptorFromAndroidNativeWindow *)calloc(1, sizeof(WGPUSurfaceDescriptorFromAndroidNativeWindow));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_descriptor_from_android_native_window: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7319,7 +7323,7 @@ int extract_surface_descriptor_from_canvas_HTML_selector(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_descriptor_from_canvas_HTML_selector: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromCanvasHTMLSelector", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromCanvasHTMLSelector));
+        *out_ha_host_struct_ptr = (WGPUSurfaceDescriptorFromCanvasHTMLSelector *)calloc(1, sizeof(WGPUSurfaceDescriptorFromCanvasHTMLSelector));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_descriptor_from_canvas_HTML_selector: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7387,7 +7391,7 @@ int extract_surface_descriptor_from_metal_layer(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_descriptor_from_metal_layer: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromMetalLayer", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromMetalLayer));
+        *out_ha_host_struct_ptr = (WGPUSurfaceDescriptorFromMetalLayer *)calloc(1, sizeof(WGPUSurfaceDescriptorFromMetalLayer));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_descriptor_from_metal_layer: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7456,7 +7460,7 @@ int extract_surface_descriptor_from_windows_HWND(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_descriptor_from_windows_HWND: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromWindowsHWND", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromWindowsHWND));
+        *out_ha_host_struct_ptr = (WGPUSurfaceDescriptorFromWindowsHWND *)calloc(1, sizeof(WGPUSurfaceDescriptorFromWindowsHWND));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_descriptor_from_windows_HWND: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7529,7 +7533,7 @@ int extract_surface_descriptor_from_xcb_window(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_descriptor_from_xcb_window: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromXcbWindow", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromXcbWindow));
+        *out_ha_host_struct_ptr = (WGPUSurfaceDescriptorFromXcbWindow *)calloc(1, sizeof(WGPUSurfaceDescriptorFromXcbWindow));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_descriptor_from_xcb_window: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7601,7 +7605,7 @@ int extract_surface_descriptor_from_xlib_window(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_descriptor_from_xlib_window: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromXlibWindow", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromXlibWindow));
+        *out_ha_host_struct_ptr = (WGPUSurfaceDescriptorFromXlibWindow *)calloc(1, sizeof(WGPUSurfaceDescriptorFromXlibWindow));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_descriptor_from_xlib_window: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -7673,7 +7677,7 @@ int extract_surface_descriptor_from_wayland_surface(
     /* Allocate ha_host_struct_ptr if it is NULL */
     if (ha_host_struct_ptr == NULL) {
         LOG_DEBUG("extract_surface_descriptor_from_wayland_surface: allocating [*HMAS.HWST] (%p) as WGPUSurfaceDescriptorFromWaylandSurface", (void *)out_ha_host_struct_ptr);
-        *out_ha_host_struct_ptr = calloc(1, sizeof(WGPUSurfaceDescriptorFromWaylandSurface));
+        *out_ha_host_struct_ptr = (WGPUSurfaceDescriptorFromWaylandSurface *)calloc(1, sizeof(WGPUSurfaceDescriptorFromWaylandSurface));
         if (*out_ha_host_struct_ptr == NULL) {
             FATAL("extract_surface_descriptor_from_wayland_surface: failed to allocate [*HMAS.HWST] (%p)", (void *)out_ha_host_struct_ptr);
             return 0;
@@ -8089,6 +8093,7 @@ void host_callback_wgpuAdapterRequestDevice(
     void * userdata
 ) {
     /* TODO: Callback */
+    free(userdata);
 }
 
 void host_callback_wgpuBufferMapAsync(
@@ -8096,6 +8101,7 @@ void host_callback_wgpuBufferMapAsync(
     void * userdata
 ) {
     /* TODO: Callback */
+    free(userdata);
 }
 
 void host_callback_wgpuDeviceCreateComputePipelineAsync(
@@ -8105,6 +8111,7 @@ void host_callback_wgpuDeviceCreateComputePipelineAsync(
     void * userdata
 ) {
     /* TODO: Callback */
+    free(userdata);
 }
 
 void host_callback_wgpuDeviceCreateRenderPipelineAsync(
@@ -8114,6 +8121,7 @@ void host_callback_wgpuDeviceCreateRenderPipelineAsync(
     void * userdata
 ) {
     /* TODO: Callback */
+    free(userdata);
 }
 
 void host_callback_wgpuInstanceRequestAdapter(
@@ -8123,6 +8131,7 @@ void host_callback_wgpuInstanceRequestAdapter(
     void * userdata
 ) {
     /* TODO: Callback */
+    free(userdata);
 }
 
 void host_callback_wgpuQueueOnSubmittedWorkDone(
@@ -8130,6 +8139,7 @@ void host_callback_wgpuQueueOnSubmittedWorkDone(
     void * userdata
 ) {
     /* TODO: Callback */
+    free(userdata);
 }
 
 void host_callback_wgpuShaderModuleGetCompilationInfo(
@@ -8138,6 +8148,7 @@ void host_callback_wgpuShaderModuleGetCompilationInfo(
     void * userdata
 ) {
     /* TODO: Callback */
+    free(userdata);
 }
 
 
@@ -8153,18 +8164,22 @@ wasm_trap_t *wasm_import_wgpuAdapterGetLimits(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_adapter = wasm_val_to_native_int(args->data[0]);
-    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry.adapters, mapping_index_adapter);
+    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry->adapters, mapping_index_adapter);
 
     WASM_POINTER_STRUCT_C_TYPE limits_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUSupportedLimits *limits = NULL;
-    extract_supported_limits(&registry, memory, (byte_t *)limits_wa_struct_ptr, &limits);
+    extract_supported_limits(registry, memory, (byte_t *)limits_wa_struct_ptr, &limits);
 
 
-    wgpuAdapterGetLimits(adapter, limits);
+    uint32_t result = wgpuAdapterGetLimits(adapter, limits);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -8181,16 +8196,20 @@ wasm_trap_t *wasm_import_wgpuAdapterHasFeature(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_adapter = wasm_val_to_native_int(args->data[0]);
-    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry.adapters, mapping_index_adapter);
+    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry->adapters, mapping_index_adapter);
 
     WGPUFeatureName feature = wasm_val_to_native_int(args->data[1]);
 
 
-    wgpuAdapterHasFeature(adapter, feature);
+    uint32_t result = wgpuAdapterHasFeature(adapter, feature);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -8207,16 +8226,20 @@ wasm_trap_t *wasm_import_wgpuAdapterEnumerateFeatures(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_adapter = wasm_val_to_native_int(args->data[0]);
-    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry.adapters, mapping_index_adapter);
+    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry->adapters, mapping_index_adapter);
 
     WGPUFeatureName * features = (WGPUFeatureName *)wasm_val_to_native_int(args->data[1]);
 
 
-    wgpuAdapterEnumerateFeatures(adapter, features);
+    size_t result = wgpuAdapterEnumerateFeatures(adapter, features);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -8233,18 +8256,20 @@ wasm_trap_t *wasm_import_wgpuAdapterGetInfo(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_adapter = wasm_val_to_native_int(args->data[0]);
-    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry.adapters, mapping_index_adapter);
+    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry->adapters, mapping_index_adapter);
 
     WASM_POINTER_STRUCT_C_TYPE info_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUAdapterInfo *info = NULL;
-    extract_adapter_info(&registry, memory, (byte_t *)info_wa_struct_ptr, &info);
+    extract_adapter_info(registry, memory, (byte_t *)info_wa_struct_ptr, &info);
 
 
     wgpuAdapterGetInfo(adapter, info);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8261,26 +8286,28 @@ wasm_trap_t *wasm_import_wgpuAdapterRequestDevice(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_adapter = wasm_val_to_native_int(args->data[0]);
-    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry.adapters, mapping_index_adapter);
+    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry->adapters, mapping_index_adapter);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUDeviceDescriptor *descriptor = NULL;
-    extract_device_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_device_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[2]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
-    WasmCallbackUserdataWrapper userdata = {
-        .callback = callback_wasm,
-        .userdata = userdata_wasm
-    };
+    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    userdata->proc = proc;
+    userdata->callback = callback_wasm;
+    userdata->userdata = userdata_wasm;
 
 
-    wgpuAdapterRequestDevice(adapter, descriptor, host_callback_wgpuAdapterRequestDevice, (void *)(&userdata));
+    wgpuAdapterRequestDevice(adapter, descriptor, host_callback_wgpuAdapterRequestDevice, userdata);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8297,11 +8324,11 @@ wasm_trap_t *wasm_import_wgpuBindGroupSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_bind_group = wasm_val_to_native_int(args->data[0]);
-    WGPUBindGroup bind_group = (WGPUBindGroup)registry_item_get_mapping(&registry.bindGroups, mapping_index_bind_group);
+    WGPUBindGroup bind_group = (WGPUBindGroup)registry_item_get_mapping(&registry->bindGroups, mapping_index_bind_group);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -8309,6 +8336,8 @@ wasm_trap_t *wasm_import_wgpuBindGroupSetLabel(
 
 
     wgpuBindGroupSetLabel(bind_group, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8325,11 +8354,11 @@ wasm_trap_t *wasm_import_wgpuBindGroupLayoutSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_bind_group_layout = wasm_val_to_native_int(args->data[0]);
-    WGPUBindGroupLayout bind_group_layout = (WGPUBindGroupLayout)registry_item_get_mapping(&registry.bindGroupLayouts, mapping_index_bind_group_layout);
+    WGPUBindGroupLayout bind_group_layout = (WGPUBindGroupLayout)registry_item_get_mapping(&registry->bindGroupLayouts, mapping_index_bind_group_layout);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -8337,6 +8366,8 @@ wasm_trap_t *wasm_import_wgpuBindGroupLayoutSetLabel(
 
 
     wgpuBindGroupLayoutSetLabel(bind_group_layout, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8353,11 +8384,11 @@ wasm_trap_t *wasm_import_wgpuBufferMapAsync(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     WGPUMapMode mode = wasm_val_to_native_int(args->data[1]);
 
@@ -8368,13 +8399,15 @@ wasm_trap_t *wasm_import_wgpuBufferMapAsync(
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[4]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[5]);
-    WasmCallbackUserdataWrapper userdata = {
-        .callback = callback_wasm,
-        .userdata = userdata_wasm
-    };
+    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    userdata->proc = proc;
+    userdata->callback = callback_wasm;
+    userdata->userdata = userdata_wasm;
 
 
-    wgpuBufferMapAsync(buffer, mode, offset, size, host_callback_wgpuBufferMapAsync, (void *)(&userdata));
+    wgpuBufferMapAsync(buffer, mode, offset, size, host_callback_wgpuBufferMapAsync, userdata);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8391,18 +8424,21 @@ wasm_trap_t *wasm_import_wgpuBufferGetMappedRange(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     size_t offset = wasm_val_to_native_int(args->data[1]);
 
     size_t size = wasm_val_to_native_int(args->data[2]);
 
 
-    wgpuBufferGetMappedRange(buffer, offset, size);
+    void * result = wgpuBufferGetMappedRange(buffer, offset, size);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
 
     /* TODO: Freeing */
     return NULL;
@@ -8419,18 +8455,21 @@ wasm_trap_t *wasm_import_wgpuBufferGetConstMappedRange(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     size_t offset = wasm_val_to_native_int(args->data[1]);
 
     size_t size = wasm_val_to_native_int(args->data[2]);
 
 
-    wgpuBufferGetConstMappedRange(buffer, offset, size);
+    void * result = wgpuBufferGetConstMappedRange(buffer, offset, size);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
 
     /* TODO: Freeing */
     return NULL;
@@ -8447,11 +8486,11 @@ wasm_trap_t *wasm_import_wgpuBufferSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -8459,6 +8498,8 @@ wasm_trap_t *wasm_import_wgpuBufferSetLabel(
 
 
     wgpuBufferSetLabel(buffer, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8475,14 +8516,18 @@ wasm_trap_t *wasm_import_wgpuBufferGetUsage(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
 
-    wgpuBufferGetUsage(buffer);
+    WGPUBufferUsage result = wgpuBufferGetUsage(buffer);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -8499,14 +8544,17 @@ wasm_trap_t *wasm_import_wgpuBufferGetSize(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
 
-    wgpuBufferGetSize(buffer);
+    uint64_t result = wgpuBufferGetSize(buffer);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
 
     /* TODO: Freeing */
     return NULL;
@@ -8523,14 +8571,18 @@ wasm_trap_t *wasm_import_wgpuBufferGetMapState(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
 
-    wgpuBufferGetMapState(buffer);
+    WGPUBufferMapState result = wgpuBufferGetMapState(buffer);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -8547,14 +8599,16 @@ wasm_trap_t *wasm_import_wgpuBufferUnmap(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
 
     wgpuBufferUnmap(buffer);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8571,14 +8625,16 @@ wasm_trap_t *wasm_import_wgpuBufferDestroy(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
 
     wgpuBufferDestroy(buffer);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8595,11 +8651,11 @@ wasm_trap_t *wasm_import_wgpuCommandBufferSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_buffer = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandBuffer command_buffer = (WGPUCommandBuffer)registry_item_get_mapping(&registry.commandBuffers, mapping_index_command_buffer);
+    WGPUCommandBuffer command_buffer = (WGPUCommandBuffer)registry_item_get_mapping(&registry->commandBuffers, mapping_index_command_buffer);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -8607,6 +8663,8 @@ wasm_trap_t *wasm_import_wgpuCommandBufferSetLabel(
 
 
     wgpuCommandBufferSetLabel(command_buffer, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8623,18 +8681,23 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderFinish(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUCommandBufferDescriptor *descriptor = NULL;
-    extract_command_buffer_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_command_buffer_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuCommandEncoderFinish(command_encoder, descriptor);
+    WGPUCommandBuffer result = wgpuCommandEncoderFinish(command_encoder, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->commandBuffers, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -8651,18 +8714,23 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderBeginComputePass(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUComputePassDescriptor *descriptor = NULL;
-    extract_compute_pass_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_compute_pass_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuCommandEncoderBeginComputePass(command_encoder, descriptor);
+    WGPUComputePassEncoder result = wgpuCommandEncoderBeginComputePass(command_encoder, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->computePassEncoders, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -8679,18 +8747,23 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderBeginRenderPass(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPURenderPassDescriptor *descriptor = NULL;
-    extract_render_pass_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_render_pass_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuCommandEncoderBeginRenderPass(command_encoder, descriptor);
+    WGPURenderPassEncoder result = wgpuCommandEncoderBeginRenderPass(command_encoder, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->renderPassEncoders, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -8707,21 +8780,21 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyBufferToBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     uint32_t mapping_index_source = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer source = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_source);
+    WGPUBuffer source = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_source);
 
     uint64_t source_offset_high = wasm_val_to_native_int(args->data[2]);
     uint64_t source_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t source_offset = source_offset_high << 32 | source_offset_low;
 
     uint32_t mapping_index_destination = wasm_val_to_native_int(args->data[4]);
-    WGPUBuffer destination = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_destination);
+    WGPUBuffer destination = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_destination);
 
     uint64_t destination_offset_high = wasm_val_to_native_int(args->data[5]);
     uint64_t destination_offset_low = wasm_val_to_native_int(args->data[5 + 1]);
@@ -8733,6 +8806,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyBufferToBuffer(
 
 
     wgpuCommandEncoderCopyBufferToBuffer(command_encoder, source, source_offset, destination, destination_offset, size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8749,26 +8824,28 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyBufferToTexture(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRUCT_C_TYPE source_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUImageCopyBuffer *source = NULL;
-    extract_image_copy_buffer(&registry, memory, (byte_t *)source_wa_struct_ptr, &source);
+    extract_image_copy_buffer(registry, memory, (byte_t *)source_wa_struct_ptr, &source);
 
     WASM_POINTER_STRUCT_C_TYPE destination_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[2]);
     WGPUImageCopyTexture *destination = NULL;
-    extract_image_copy_texture(&registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
+    extract_image_copy_texture(registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
 
     WASM_POINTER_STRUCT_C_TYPE copy_size_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[3]);
     WGPUExtent3D *copy_size = NULL;
-    extract_extent_3D(&registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
+    extract_extent_3D(registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
 
 
     wgpuCommandEncoderCopyBufferToTexture(command_encoder, source, destination, copy_size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8785,26 +8862,28 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyTextureToBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRUCT_C_TYPE source_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUImageCopyTexture *source = NULL;
-    extract_image_copy_texture(&registry, memory, (byte_t *)source_wa_struct_ptr, &source);
+    extract_image_copy_texture(registry, memory, (byte_t *)source_wa_struct_ptr, &source);
 
     WASM_POINTER_STRUCT_C_TYPE destination_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[2]);
     WGPUImageCopyBuffer *destination = NULL;
-    extract_image_copy_buffer(&registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
+    extract_image_copy_buffer(registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
 
     WASM_POINTER_STRUCT_C_TYPE copy_size_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[3]);
     WGPUExtent3D *copy_size = NULL;
-    extract_extent_3D(&registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
+    extract_extent_3D(registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
 
 
     wgpuCommandEncoderCopyTextureToBuffer(command_encoder, source, destination, copy_size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8821,26 +8900,28 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyTextureToTexture(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRUCT_C_TYPE source_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUImageCopyTexture *source = NULL;
-    extract_image_copy_texture(&registry, memory, (byte_t *)source_wa_struct_ptr, &source);
+    extract_image_copy_texture(registry, memory, (byte_t *)source_wa_struct_ptr, &source);
 
     WASM_POINTER_STRUCT_C_TYPE destination_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[2]);
     WGPUImageCopyTexture *destination = NULL;
-    extract_image_copy_texture(&registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
+    extract_image_copy_texture(registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
 
     WASM_POINTER_STRUCT_C_TYPE copy_size_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[3]);
     WGPUExtent3D *copy_size = NULL;
-    extract_extent_3D(&registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
+    extract_extent_3D(registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
 
 
     wgpuCommandEncoderCopyTextureToTexture(command_encoder, source, destination, copy_size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8857,14 +8938,14 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderClearBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     uint64_t offset_high = wasm_val_to_native_int(args->data[2]);
     uint64_t offset_low = wasm_val_to_native_int(args->data[2 + 1]);
@@ -8876,6 +8957,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderClearBuffer(
 
 
     wgpuCommandEncoderClearBuffer(command_encoder, buffer, offset, size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8892,11 +8975,11 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderInsertDebugMarker(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRING_C_TYPE marker_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * marker_label = NULL;
@@ -8904,6 +8987,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderInsertDebugMarker(
 
 
     wgpuCommandEncoderInsertDebugMarker(command_encoder, marker_label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8920,14 +9005,16 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderPopDebugGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
 
     wgpuCommandEncoderPopDebugGroup(command_encoder);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8944,11 +9031,11 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderPushDebugGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRING_C_TYPE group_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * group_label = NULL;
@@ -8956,6 +9043,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderPushDebugGroup(
 
 
     wgpuCommandEncoderPushDebugGroup(command_encoder, group_label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -8972,21 +9061,21 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderResolveQuerySet(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[1]);
-    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry.querySets, mapping_index_query_set);
+    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
     uint32_t first_query = wasm_val_to_native_int(args->data[2]);
 
     uint32_t query_count = wasm_val_to_native_int(args->data[3]);
 
     uint32_t mapping_index_destination = wasm_val_to_native_int(args->data[4]);
-    WGPUBuffer destination = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_destination);
+    WGPUBuffer destination = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_destination);
 
     uint64_t destination_offset_high = wasm_val_to_native_int(args->data[5]);
     uint64_t destination_offset_low = wasm_val_to_native_int(args->data[5 + 1]);
@@ -8994,6 +9083,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderResolveQuerySet(
 
 
     wgpuCommandEncoderResolveQuerySet(command_encoder, query_set, first_query, query_count, destination, destination_offset);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9010,19 +9101,21 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderWriteTimestamp(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[1]);
-    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry.querySets, mapping_index_query_set);
+    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
     uint32_t query_index = wasm_val_to_native_int(args->data[2]);
 
 
     wgpuCommandEncoderWriteTimestamp(command_encoder, query_set, query_index);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9039,11 +9132,11 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry.commandEncoders, mapping_index_command_encoder);
+    WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -9051,6 +9144,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderSetLabel(
 
 
     wgpuCommandEncoderSetLabel(command_encoder, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9067,11 +9162,11 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderInsertDebugMarker(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
     WASM_POINTER_STRING_C_TYPE marker_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * marker_label = NULL;
@@ -9079,6 +9174,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderInsertDebugMarker(
 
 
     wgpuComputePassEncoderInsertDebugMarker(compute_pass_encoder, marker_label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9095,14 +9192,16 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderPopDebugGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
 
     wgpuComputePassEncoderPopDebugGroup(compute_pass_encoder);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9119,11 +9218,11 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderPushDebugGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
     WASM_POINTER_STRING_C_TYPE group_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * group_label = NULL;
@@ -9131,6 +9230,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderPushDebugGroup(
 
 
     wgpuComputePassEncoderPushDebugGroup(compute_pass_encoder, group_label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9147,17 +9248,19 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetPipeline(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
     uint32_t mapping_index_pipeline = wasm_val_to_native_int(args->data[1]);
-    WGPUComputePipeline pipeline = (WGPUComputePipeline)registry_item_get_mapping(&registry.computePipelines, mapping_index_pipeline);
+    WGPUComputePipeline pipeline = (WGPUComputePipeline)registry_item_get_mapping(&registry->computePipelines, mapping_index_pipeline);
 
 
     wgpuComputePassEncoderSetPipeline(compute_pass_encoder, pipeline);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9174,16 +9277,16 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetBindGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
     uint32_t group_index = wasm_val_to_native_int(args->data[1]);
 
     uint32_t mapping_index_group = wasm_val_to_native_int(args->data[2]);
-    WGPUBindGroup group = (WGPUBindGroup)registry_item_get_mapping(&registry.bindGroups, mapping_index_group);
+    WGPUBindGroup group = (WGPUBindGroup)registry_item_get_mapping(&registry->bindGroups, mapping_index_group);
 
     int dynamic_offsets_count = wasm_val_to_native_int(args->data[3]);
 
@@ -9195,6 +9298,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetBindGroup(
 
 
     wgpuComputePassEncoderSetBindGroup(compute_pass_encoder, group_index, group, dynamic_offsets_count, dynamic_offsets_array);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9211,11 +9316,11 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroups(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
     uint32_t workgroupCountX = wasm_val_to_native_int(args->data[1]);
 
@@ -9225,6 +9330,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroups(
 
 
     wgpuComputePassEncoderDispatchWorkgroups(compute_pass_encoder, workgroupCountX, workgroupCountY, workgroupCountZ);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9241,14 +9348,14 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroupsIndirect(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_indirect_buffer);
+    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
     uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
@@ -9256,6 +9363,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroupsIndirect(
 
 
     wgpuComputePassEncoderDispatchWorkgroupsIndirect(compute_pass_encoder, indirect_buffer, indirect_offset);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9272,14 +9381,16 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderEnd(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
 
     wgpuComputePassEncoderEnd(compute_pass_encoder);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9296,11 +9407,11 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry.computePassEncoders, mapping_index_compute_pass_encoder);
+    WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -9308,6 +9419,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetLabel(
 
 
     wgpuComputePassEncoderSetLabel(compute_pass_encoder, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9324,16 +9437,21 @@ wasm_trap_t *wasm_import_wgpuComputePipelineGetBindGroupLayout(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pipeline = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePipeline compute_pipeline = (WGPUComputePipeline)registry_item_get_mapping(&registry.computePipelines, mapping_index_compute_pipeline);
+    WGPUComputePipeline compute_pipeline = (WGPUComputePipeline)registry_item_get_mapping(&registry->computePipelines, mapping_index_compute_pipeline);
 
     uint32_t group_index = wasm_val_to_native_int(args->data[1]);
 
 
-    wgpuComputePipelineGetBindGroupLayout(compute_pipeline, group_index);
+    WGPUBindGroupLayout result = wgpuComputePipelineGetBindGroupLayout(compute_pipeline, group_index);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->bindGroupLayouts, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9350,11 +9468,11 @@ wasm_trap_t *wasm_import_wgpuComputePipelineSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_compute_pipeline = wasm_val_to_native_int(args->data[0]);
-    WGPUComputePipeline compute_pipeline = (WGPUComputePipeline)registry_item_get_mapping(&registry.computePipelines, mapping_index_compute_pipeline);
+    WGPUComputePipeline compute_pipeline = (WGPUComputePipeline)registry_item_get_mapping(&registry->computePipelines, mapping_index_compute_pipeline);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -9362,6 +9480,8 @@ wasm_trap_t *wasm_import_wgpuComputePipelineSetLabel(
 
 
     wgpuComputePipelineSetLabel(compute_pipeline, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9378,18 +9498,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBindGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUBindGroupDescriptor *descriptor = NULL;
-    extract_bind_group_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_bind_group_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateBindGroup(device, descriptor);
+    WGPUBindGroup result = wgpuDeviceCreateBindGroup(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->bindGroups, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9406,18 +9531,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBindGroupLayout(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUBindGroupLayoutDescriptor *descriptor = NULL;
-    extract_bind_group_layout_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_bind_group_layout_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateBindGroupLayout(device, descriptor);
+    WGPUBindGroupLayout result = wgpuDeviceCreateBindGroupLayout(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->bindGroupLayouts, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9434,18 +9564,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUBufferDescriptor *descriptor = NULL;
-    extract_buffer_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_buffer_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateBuffer(device, descriptor);
+    WGPUBuffer result = wgpuDeviceCreateBuffer(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->buffers, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9462,18 +9597,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateCommandEncoder(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUCommandEncoderDescriptor *descriptor = NULL;
-    extract_command_encoder_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_command_encoder_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateCommandEncoder(device, descriptor);
+    WGPUCommandEncoder result = wgpuDeviceCreateCommandEncoder(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->commandEncoders, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9490,18 +9630,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipeline(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUComputePipelineDescriptor *descriptor = NULL;
-    extract_compute_pipeline_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_compute_pipeline_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateComputePipeline(device, descriptor);
+    WGPUComputePipeline result = wgpuDeviceCreateComputePipeline(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->computePipelines, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9518,26 +9663,28 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipelineAsync(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUComputePipelineDescriptor *descriptor = NULL;
-    extract_compute_pipeline_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_compute_pipeline_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[2]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
-    WasmCallbackUserdataWrapper userdata = {
-        .callback = callback_wasm,
-        .userdata = userdata_wasm
-    };
+    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    userdata->proc = proc;
+    userdata->callback = callback_wasm;
+    userdata->userdata = userdata_wasm;
 
 
-    wgpuDeviceCreateComputePipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateComputePipelineAsync, (void *)(&userdata));
+    wgpuDeviceCreateComputePipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateComputePipelineAsync, userdata);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9554,18 +9701,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreatePipelineLayout(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUPipelineLayoutDescriptor *descriptor = NULL;
-    extract_pipeline_layout_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_pipeline_layout_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreatePipelineLayout(device, descriptor);
+    WGPUPipelineLayout result = wgpuDeviceCreatePipelineLayout(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->pipelineLayouts, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9582,18 +9734,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateQuerySet(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUQuerySetDescriptor *descriptor = NULL;
-    extract_query_set_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_query_set_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateQuerySet(device, descriptor);
+    WGPUQuerySet result = wgpuDeviceCreateQuerySet(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->querySets, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9610,26 +9767,28 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipelineAsync(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPURenderPipelineDescriptor *descriptor = NULL;
-    extract_render_pipeline_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_render_pipeline_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[2]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
-    WasmCallbackUserdataWrapper userdata = {
-        .callback = callback_wasm,
-        .userdata = userdata_wasm
-    };
+    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    userdata->proc = proc;
+    userdata->callback = callback_wasm;
+    userdata->userdata = userdata_wasm;
 
 
-    wgpuDeviceCreateRenderPipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateRenderPipelineAsync, (void *)(&userdata));
+    wgpuDeviceCreateRenderPipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateRenderPipelineAsync, userdata);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9646,18 +9805,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderBundleEncoder(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPURenderBundleEncoderDescriptor *descriptor = NULL;
-    extract_render_bundle_encoder_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_render_bundle_encoder_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateRenderBundleEncoder(device, descriptor);
+    WGPURenderBundleEncoder result = wgpuDeviceCreateRenderBundleEncoder(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->renderBundleEncoders, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9674,18 +9838,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipeline(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPURenderPipelineDescriptor *descriptor = NULL;
-    extract_render_pipeline_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_render_pipeline_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateRenderPipeline(device, descriptor);
+    WGPURenderPipeline result = wgpuDeviceCreateRenderPipeline(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->renderPipelines, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9702,18 +9871,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateSampler(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUSamplerDescriptor *descriptor = NULL;
-    extract_sampler_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_sampler_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateSampler(device, descriptor);
+    WGPUSampler result = wgpuDeviceCreateSampler(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->samplers, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9730,18 +9904,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateShaderModule(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUShaderModuleDescriptor *descriptor = NULL;
-    extract_shader_module_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_shader_module_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateShaderModule(device, descriptor);
+    WGPUShaderModule result = wgpuDeviceCreateShaderModule(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->shaderModules, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9758,18 +9937,23 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateTexture(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUTextureDescriptor *descriptor = NULL;
-    extract_texture_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_texture_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuDeviceCreateTexture(device, descriptor);
+    WGPUTexture result = wgpuDeviceCreateTexture(device, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->textures, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9786,14 +9970,16 @@ wasm_trap_t *wasm_import_wgpuDeviceDestroy(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
 
     wgpuDeviceDestroy(device);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9810,18 +9996,22 @@ wasm_trap_t *wasm_import_wgpuDeviceGetLimits(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRUCT_C_TYPE limits_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUSupportedLimits *limits = NULL;
-    extract_supported_limits(&registry, memory, (byte_t *)limits_wa_struct_ptr, &limits);
+    extract_supported_limits(registry, memory, (byte_t *)limits_wa_struct_ptr, &limits);
 
 
-    wgpuDeviceGetLimits(device, limits);
+    uint32_t result = wgpuDeviceGetLimits(device, limits);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -9838,16 +10028,20 @@ wasm_trap_t *wasm_import_wgpuDeviceHasFeature(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WGPUFeatureName feature = wasm_val_to_native_int(args->data[1]);
 
 
-    wgpuDeviceHasFeature(device, feature);
+    uint32_t result = wgpuDeviceHasFeature(device, feature);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -9864,16 +10058,20 @@ wasm_trap_t *wasm_import_wgpuDeviceEnumerateFeatures(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WGPUFeatureName * features = (WGPUFeatureName *)wasm_val_to_native_int(args->data[1]);
 
 
-    wgpuDeviceEnumerateFeatures(device, features);
+    size_t result = wgpuDeviceEnumerateFeatures(device, features);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -9890,14 +10088,19 @@ wasm_trap_t *wasm_import_wgpuDeviceGetQueue(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
 
-    wgpuDeviceGetQueue(device);
+    WGPUQueue result = wgpuDeviceGetQueue(device);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->queues, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -9914,16 +10117,18 @@ wasm_trap_t *wasm_import_wgpuDevicePushErrorScope(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WGPUErrorFilter filter = wasm_val_to_native_int(args->data[1]);
 
 
     wgpuDevicePushErrorScope(device, filter);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9940,11 +10145,11 @@ wasm_trap_t *wasm_import_wgpuDevicePopErrorScope(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     void * callback = (void *)wasm_val_to_native_int(args->data[1]);
 
@@ -9952,6 +10157,8 @@ wasm_trap_t *wasm_import_wgpuDevicePopErrorScope(
 
 
     wgpuDevicePopErrorScope(device, callback, userdata);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9968,11 +10175,11 @@ wasm_trap_t *wasm_import_wgpuDeviceSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
-    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry.devices, mapping_index_device);
+    WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -9980,6 +10187,8 @@ wasm_trap_t *wasm_import_wgpuDeviceSetLabel(
 
 
     wgpuDeviceSetLabel(device, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -9996,18 +10205,23 @@ wasm_trap_t *wasm_import_wgpuInstanceCreateSurface(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_instance = wasm_val_to_native_int(args->data[0]);
-    WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry.instances, mapping_index_instance);
+    WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry->instances, mapping_index_instance);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUSurfaceDescriptor *descriptor = NULL;
-    extract_surface_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_surface_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuInstanceCreateSurface(instance, descriptor);
+    WGPUSurface result = wgpuInstanceCreateSurface(instance, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->surfaces, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -10024,16 +10238,20 @@ wasm_trap_t *wasm_import_wgpuInstanceHasWGSLLanguageFeature(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_instance = wasm_val_to_native_int(args->data[0]);
-    WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry.instances, mapping_index_instance);
+    WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry->instances, mapping_index_instance);
 
     WGPUWGSLFeatureName feature = wasm_val_to_native_int(args->data[1]);
 
 
-    wgpuInstanceHasWGSLLanguageFeature(instance, feature);
+    uint32_t result = wgpuInstanceHasWGSLLanguageFeature(instance, feature);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -10050,14 +10268,16 @@ wasm_trap_t *wasm_import_wgpuInstanceProcessEvents(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_instance = wasm_val_to_native_int(args->data[0]);
-    WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry.instances, mapping_index_instance);
+    WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry->instances, mapping_index_instance);
 
 
     wgpuInstanceProcessEvents(instance);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10074,26 +10294,28 @@ wasm_trap_t *wasm_import_wgpuInstanceRequestAdapter(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_instance = wasm_val_to_native_int(args->data[0]);
-    WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry.instances, mapping_index_instance);
+    WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry->instances, mapping_index_instance);
 
     WASM_POINTER_STRUCT_C_TYPE options_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPURequestAdapterOptions *options = NULL;
-    extract_request_adapter_options(&registry, memory, (byte_t *)options_wa_struct_ptr, &options);
+    extract_request_adapter_options(registry, memory, (byte_t *)options_wa_struct_ptr, &options);
 
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[2]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
-    WasmCallbackUserdataWrapper userdata = {
-        .callback = callback_wasm,
-        .userdata = userdata_wasm
-    };
+    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    userdata->proc = proc;
+    userdata->callback = callback_wasm;
+    userdata->userdata = userdata_wasm;
 
 
-    wgpuInstanceRequestAdapter(instance, options, host_callback_wgpuInstanceRequestAdapter, (void *)(&userdata));
+    wgpuInstanceRequestAdapter(instance, options, host_callback_wgpuInstanceRequestAdapter, userdata);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10110,11 +10332,11 @@ wasm_trap_t *wasm_import_wgpuPipelineLayoutSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_pipeline_layout = wasm_val_to_native_int(args->data[0]);
-    WGPUPipelineLayout pipeline_layout = (WGPUPipelineLayout)registry_item_get_mapping(&registry.pipelineLayouts, mapping_index_pipeline_layout);
+    WGPUPipelineLayout pipeline_layout = (WGPUPipelineLayout)registry_item_get_mapping(&registry->pipelineLayouts, mapping_index_pipeline_layout);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -10122,6 +10344,8 @@ wasm_trap_t *wasm_import_wgpuPipelineLayoutSetLabel(
 
 
     wgpuPipelineLayoutSetLabel(pipeline_layout, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10138,11 +10362,11 @@ wasm_trap_t *wasm_import_wgpuQuerySetSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[0]);
-    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry.querySets, mapping_index_query_set);
+    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -10150,6 +10374,8 @@ wasm_trap_t *wasm_import_wgpuQuerySetSetLabel(
 
 
     wgpuQuerySetSetLabel(query_set, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10166,14 +10392,18 @@ wasm_trap_t *wasm_import_wgpuQuerySetGetType(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[0]);
-    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry.querySets, mapping_index_query_set);
+    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
 
-    wgpuQuerySetGetType(query_set);
+    WGPUQueryType result = wgpuQuerySetGetType(query_set);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -10190,14 +10420,18 @@ wasm_trap_t *wasm_import_wgpuQuerySetGetCount(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[0]);
-    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry.querySets, mapping_index_query_set);
+    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
 
-    wgpuQuerySetGetCount(query_set);
+    uint32_t result = wgpuQuerySetGetCount(query_set);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -10214,14 +10448,16 @@ wasm_trap_t *wasm_import_wgpuQuerySetDestroy(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[0]);
-    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry.querySets, mapping_index_query_set);
+    WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
 
     wgpuQuerySetDestroy(query_set);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10238,11 +10474,11 @@ wasm_trap_t *wasm_import_wgpuQueueSubmit(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_queue = wasm_val_to_native_int(args->data[0]);
-    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry.queues, mapping_index_queue);
+    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry->queues, mapping_index_queue);
 
     int commands_count = wasm_val_to_native_int(args->data[1]);
 
@@ -10251,11 +10487,13 @@ wasm_trap_t *wasm_import_wgpuQueueSubmit(
     for (size_t commands_iter = 0; commands_iter < commands_count; commands_iter++) {
         int mapping_index_commands = wasm_val_to_native_int(args->data[2]);
         wasm_safe_copy_int(memory, commands_wa_array_ptr + commands_iter, &mapping_index_commands);
-        commands_array[commands_iter] = (WGPUCommandBuffer *)registry_item_get_mapping(&registry.commandBuffers, mapping_index_commands);
+        commands_array[commands_iter] = (WGPUCommandBuffer *)registry_item_get_mapping(&registry->commandBuffers, mapping_index_commands);
     }
 
 
     wgpuQueueSubmit(queue, commands_count, commands_array);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10272,22 +10510,24 @@ wasm_trap_t *wasm_import_wgpuQueueOnSubmittedWorkDone(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_queue = wasm_val_to_native_int(args->data[0]);
-    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry.queues, mapping_index_queue);
+    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry->queues, mapping_index_queue);
 
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[1]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[2]);
-    WasmCallbackUserdataWrapper userdata = {
-        .callback = callback_wasm,
-        .userdata = userdata_wasm
-    };
+    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    userdata->proc = proc;
+    userdata->callback = callback_wasm;
+    userdata->userdata = userdata_wasm;
 
 
-    wgpuQueueOnSubmittedWorkDone(queue, host_callback_wgpuQueueOnSubmittedWorkDone, (void *)(&userdata));
+    wgpuQueueOnSubmittedWorkDone(queue, host_callback_wgpuQueueOnSubmittedWorkDone, userdata);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10304,14 +10544,14 @@ wasm_trap_t *wasm_import_wgpuQueueWriteBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_queue = wasm_val_to_native_int(args->data[0]);
-    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry.queues, mapping_index_queue);
+    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry->queues, mapping_index_queue);
 
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     uint64_t buffer_offset_high = wasm_val_to_native_int(args->data[2]);
     uint64_t buffer_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
@@ -10323,6 +10563,8 @@ wasm_trap_t *wasm_import_wgpuQueueWriteBuffer(
 
 
     wgpuQueueWriteBuffer(queue, buffer, buffer_offset, data, size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10339,15 +10581,15 @@ wasm_trap_t *wasm_import_wgpuQueueWriteTexture(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_queue = wasm_val_to_native_int(args->data[0]);
-    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry.queues, mapping_index_queue);
+    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry->queues, mapping_index_queue);
 
     WASM_POINTER_STRUCT_C_TYPE destination_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUImageCopyTexture *destination = NULL;
-    extract_image_copy_texture(&registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
+    extract_image_copy_texture(registry, memory, (byte_t *)destination_wa_struct_ptr, &destination);
 
     void * data = (void *)wasm_val_to_native_int(args->data[2]);
 
@@ -10355,14 +10597,16 @@ wasm_trap_t *wasm_import_wgpuQueueWriteTexture(
 
     WASM_POINTER_STRUCT_C_TYPE data_layout_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[4]);
     WGPUTextureDataLayout *data_layout = NULL;
-    extract_texture_data_layout(&registry, memory, (byte_t *)data_layout_wa_struct_ptr, &data_layout);
+    extract_texture_data_layout(registry, memory, (byte_t *)data_layout_wa_struct_ptr, &data_layout);
 
     WASM_POINTER_STRUCT_C_TYPE write_size_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[5]);
     WGPUExtent3D *write_size = NULL;
-    extract_extent_3D(&registry, memory, (byte_t *)write_size_wa_struct_ptr, &write_size);
+    extract_extent_3D(registry, memory, (byte_t *)write_size_wa_struct_ptr, &write_size);
 
 
     wgpuQueueWriteTexture(queue, destination, data, data_size, data_layout, write_size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10379,11 +10623,11 @@ wasm_trap_t *wasm_import_wgpuQueueSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_queue = wasm_val_to_native_int(args->data[0]);
-    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry.queues, mapping_index_queue);
+    WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry->queues, mapping_index_queue);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -10391,6 +10635,8 @@ wasm_trap_t *wasm_import_wgpuQueueSetLabel(
 
 
     wgpuQueueSetLabel(queue, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10407,11 +10653,11 @@ wasm_trap_t *wasm_import_wgpuRenderBundleSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundle render_bundle = (WGPURenderBundle)registry_item_get_mapping(&registry.renderBundles, mapping_index_render_bundle);
+    WGPURenderBundle render_bundle = (WGPURenderBundle)registry_item_get_mapping(&registry->renderBundles, mapping_index_render_bundle);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -10419,6 +10665,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleSetLabel(
 
 
     wgpuRenderBundleSetLabel(render_bundle, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10435,17 +10683,19 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetPipeline(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     uint32_t mapping_index_pipeline = wasm_val_to_native_int(args->data[1]);
-    WGPURenderPipeline pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry.renderPipelines, mapping_index_pipeline);
+    WGPURenderPipeline pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry->renderPipelines, mapping_index_pipeline);
 
 
     wgpuRenderBundleEncoderSetPipeline(render_bundle_encoder, pipeline);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10462,16 +10712,16 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetBindGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     uint32_t group_index = wasm_val_to_native_int(args->data[1]);
 
     uint32_t mapping_index_group = wasm_val_to_native_int(args->data[2]);
-    WGPUBindGroup group = (WGPUBindGroup)registry_item_get_mapping(&registry.bindGroups, mapping_index_group);
+    WGPUBindGroup group = (WGPUBindGroup)registry_item_get_mapping(&registry->bindGroups, mapping_index_group);
 
     int dynamic_offsets_count = wasm_val_to_native_int(args->data[3]);
 
@@ -10483,6 +10733,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetBindGroup(
 
 
     wgpuRenderBundleEncoderSetBindGroup(render_bundle_encoder, group_index, group, dynamic_offsets_count, dynamic_offsets_array);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10499,11 +10751,11 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDraw(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     uint32_t vertex_count = wasm_val_to_native_int(args->data[1]);
 
@@ -10515,6 +10767,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDraw(
 
 
     wgpuRenderBundleEncoderDraw(render_bundle_encoder, vertex_count, instance_count, first_vertex, first_instance);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10531,11 +10785,11 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexed(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     uint32_t index_count = wasm_val_to_native_int(args->data[1]);
 
@@ -10549,6 +10803,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexed(
 
 
     wgpuRenderBundleEncoderDrawIndexed(render_bundle_encoder, index_count, instance_count, first_index, base_vertex, first_instance);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10565,14 +10821,14 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndirect(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_indirect_buffer);
+    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
     uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
@@ -10580,6 +10836,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndirect(
 
 
     wgpuRenderBundleEncoderDrawIndirect(render_bundle_encoder, indirect_buffer, indirect_offset);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10596,14 +10854,14 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexedIndirect(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_indirect_buffer);
+    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
     uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
@@ -10611,6 +10869,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexedIndirect(
 
 
     wgpuRenderBundleEncoderDrawIndexedIndirect(render_bundle_encoder, indirect_buffer, indirect_offset);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10627,11 +10887,11 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderInsertDebugMarker(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     WASM_POINTER_STRING_C_TYPE marker_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * marker_label = NULL;
@@ -10639,6 +10899,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderInsertDebugMarker(
 
 
     wgpuRenderBundleEncoderInsertDebugMarker(render_bundle_encoder, marker_label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10655,14 +10917,16 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderPopDebugGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
 
     wgpuRenderBundleEncoderPopDebugGroup(render_bundle_encoder);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10679,11 +10943,11 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderPushDebugGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     WASM_POINTER_STRING_C_TYPE group_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * group_label = NULL;
@@ -10691,6 +10955,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderPushDebugGroup(
 
 
     wgpuRenderBundleEncoderPushDebugGroup(render_bundle_encoder, group_label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10707,16 +10973,16 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetVertexBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     uint32_t slot = wasm_val_to_native_int(args->data[1]);
 
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[2]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     uint64_t offset_high = wasm_val_to_native_int(args->data[3]);
     uint64_t offset_low = wasm_val_to_native_int(args->data[3 + 1]);
@@ -10728,6 +10994,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetVertexBuffer(
 
 
     wgpuRenderBundleEncoderSetVertexBuffer(render_bundle_encoder, slot, buffer, offset, size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10744,14 +11012,14 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetIndexBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     WGPUIndexFormat format = wasm_val_to_native_int(args->data[2]);
 
@@ -10765,6 +11033,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetIndexBuffer(
 
 
     wgpuRenderBundleEncoderSetIndexBuffer(render_bundle_encoder, buffer, format, offset, size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10781,18 +11051,23 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderFinish(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPURenderBundleDescriptor *descriptor = NULL;
-    extract_render_bundle_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_render_bundle_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuRenderBundleEncoderFinish(render_bundle_encoder, descriptor);
+    WGPURenderBundle result = wgpuRenderBundleEncoderFinish(render_bundle_encoder, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->renderBundles, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -10809,11 +11084,11 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry.renderBundleEncoders, mapping_index_render_bundle_encoder);
+    WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -10821,6 +11096,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetLabel(
 
 
     wgpuRenderBundleEncoderSetLabel(render_bundle_encoder, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10837,17 +11114,19 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetPipeline(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t mapping_index_pipeline = wasm_val_to_native_int(args->data[1]);
-    WGPURenderPipeline pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry.renderPipelines, mapping_index_pipeline);
+    WGPURenderPipeline pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry->renderPipelines, mapping_index_pipeline);
 
 
     wgpuRenderPassEncoderSetPipeline(render_pass_encoder, pipeline);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10864,16 +11143,16 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetBindGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t group_index = wasm_val_to_native_int(args->data[1]);
 
     uint32_t mapping_index_group = wasm_val_to_native_int(args->data[2]);
-    WGPUBindGroup group = (WGPUBindGroup)registry_item_get_mapping(&registry.bindGroups, mapping_index_group);
+    WGPUBindGroup group = (WGPUBindGroup)registry_item_get_mapping(&registry->bindGroups, mapping_index_group);
 
     int dynamic_offsets_count = wasm_val_to_native_int(args->data[3]);
 
@@ -10885,6 +11164,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetBindGroup(
 
 
     wgpuRenderPassEncoderSetBindGroup(render_pass_encoder, group_index, group, dynamic_offsets_count, dynamic_offsets_array);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10901,11 +11182,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDraw(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t vertex_count = wasm_val_to_native_int(args->data[1]);
 
@@ -10917,6 +11198,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDraw(
 
 
     wgpuRenderPassEncoderDraw(render_pass_encoder, vertex_count, instance_count, first_vertex, first_instance);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10933,11 +11216,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexed(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t index_count = wasm_val_to_native_int(args->data[1]);
 
@@ -10951,6 +11234,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexed(
 
 
     wgpuRenderPassEncoderDrawIndexed(render_pass_encoder, index_count, instance_count, first_index, base_vertex, first_instance);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10967,14 +11252,14 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndirect(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_indirect_buffer);
+    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
     uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
@@ -10982,6 +11267,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndirect(
 
 
     wgpuRenderPassEncoderDrawIndirect(render_pass_encoder, indirect_buffer, indirect_offset);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -10998,14 +11285,14 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexedIndirect(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t mapping_index_indirect_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_indirect_buffer);
+    WGPUBuffer indirect_buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_indirect_buffer);
 
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2]);
     uint64_t indirect_offset_low = wasm_val_to_native_int(args->data[2 + 1]);
@@ -11013,6 +11300,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexedIndirect(
 
 
     wgpuRenderPassEncoderDrawIndexedIndirect(render_pass_encoder, indirect_buffer, indirect_offset);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11029,11 +11318,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderExecuteBundles(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     int bundles_count = wasm_val_to_native_int(args->data[1]);
 
@@ -11042,11 +11331,13 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderExecuteBundles(
     for (size_t bundles_iter = 0; bundles_iter < bundles_count; bundles_iter++) {
         int mapping_index_bundles = wasm_val_to_native_int(args->data[2]);
         wasm_safe_copy_int(memory, bundles_wa_array_ptr + bundles_iter, &mapping_index_bundles);
-        bundles_array[bundles_iter] = (WGPURenderBundle *)registry_item_get_mapping(&registry.renderBundles, mapping_index_bundles);
+        bundles_array[bundles_iter] = (WGPURenderBundle *)registry_item_get_mapping(&registry->renderBundles, mapping_index_bundles);
     }
 
 
     wgpuRenderPassEncoderExecuteBundles(render_pass_encoder, bundles_count, bundles_array);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11063,11 +11354,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderInsertDebugMarker(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     WASM_POINTER_STRING_C_TYPE marker_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * marker_label = NULL;
@@ -11075,6 +11366,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderInsertDebugMarker(
 
 
     wgpuRenderPassEncoderInsertDebugMarker(render_pass_encoder, marker_label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11091,14 +11384,16 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderPopDebugGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
 
     wgpuRenderPassEncoderPopDebugGroup(render_pass_encoder);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11115,11 +11410,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderPushDebugGroup(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     WASM_POINTER_STRING_C_TYPE group_label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * group_label = NULL;
@@ -11127,6 +11422,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderPushDebugGroup(
 
 
     wgpuRenderPassEncoderPushDebugGroup(render_pass_encoder, group_label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11143,16 +11440,18 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetStencilReference(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t reference = wasm_val_to_native_int(args->data[1]);
 
 
     wgpuRenderPassEncoderSetStencilReference(render_pass_encoder, reference);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11169,18 +11468,20 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetBlendConstant(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     WASM_POINTER_STRUCT_C_TYPE color_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUColor *color = NULL;
-    extract_color(&registry, memory, (byte_t *)color_wa_struct_ptr, &color);
+    extract_color(registry, memory, (byte_t *)color_wa_struct_ptr, &color);
 
 
     wgpuRenderPassEncoderSetBlendConstant(render_pass_encoder, color);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11197,11 +11498,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetViewport(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     float x = wasm_val_to_native_float(args->data[1]);
 
@@ -11218,6 +11519,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetViewport(
 
     wgpuRenderPassEncoderSetViewport(render_pass_encoder, x, y, width, height, min_depth, max_depth);
 
+    /* Nothing returned */
+
     /* TODO: Freeing */
     return NULL;
 }
@@ -11233,11 +11536,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetScissorRect(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t x = wasm_val_to_native_int(args->data[1]);
 
@@ -11249,6 +11552,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetScissorRect(
 
 
     wgpuRenderPassEncoderSetScissorRect(render_pass_encoder, x, y, width, height);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11265,16 +11570,16 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetVertexBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t slot = wasm_val_to_native_int(args->data[1]);
 
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[2]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     uint64_t offset_high = wasm_val_to_native_int(args->data[3]);
     uint64_t offset_low = wasm_val_to_native_int(args->data[3 + 1]);
@@ -11286,6 +11591,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetVertexBuffer(
 
 
     wgpuRenderPassEncoderSetVertexBuffer(render_pass_encoder, slot, buffer, offset, size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11302,14 +11609,14 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetIndexBuffer(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[1]);
-    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry.buffers, mapping_index_buffer);
+    WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
     WGPUIndexFormat format = wasm_val_to_native_int(args->data[2]);
 
@@ -11323,6 +11630,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetIndexBuffer(
 
 
     wgpuRenderPassEncoderSetIndexBuffer(render_pass_encoder, buffer, format, offset, size);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11339,16 +11648,18 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderBeginOcclusionQuery(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     uint32_t query_index = wasm_val_to_native_int(args->data[1]);
 
 
     wgpuRenderPassEncoderBeginOcclusionQuery(render_pass_encoder, query_index);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11365,14 +11676,16 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderEndOcclusionQuery(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
 
     wgpuRenderPassEncoderEndOcclusionQuery(render_pass_encoder);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11389,14 +11702,16 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderEnd(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
 
     wgpuRenderPassEncoderEnd(render_pass_encoder);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11413,11 +11728,11 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry.renderPassEncoders, mapping_index_render_pass_encoder);
+    WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -11425,6 +11740,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetLabel(
 
 
     wgpuRenderPassEncoderSetLabel(render_pass_encoder, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11441,16 +11758,21 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineGetBindGroupLayout(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pipeline = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPipeline render_pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry.renderPipelines, mapping_index_render_pipeline);
+    WGPURenderPipeline render_pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry->renderPipelines, mapping_index_render_pipeline);
 
     uint32_t group_index = wasm_val_to_native_int(args->data[1]);
 
 
-    wgpuRenderPipelineGetBindGroupLayout(render_pipeline, group_index);
+    WGPUBindGroupLayout result = wgpuRenderPipelineGetBindGroupLayout(render_pipeline, group_index);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->bindGroupLayouts, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -11467,11 +11789,11 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_render_pipeline = wasm_val_to_native_int(args->data[0]);
-    WGPURenderPipeline render_pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry.renderPipelines, mapping_index_render_pipeline);
+    WGPURenderPipeline render_pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry->renderPipelines, mapping_index_render_pipeline);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -11479,6 +11801,8 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineSetLabel(
 
 
     wgpuRenderPipelineSetLabel(render_pipeline, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11495,11 +11819,11 @@ wasm_trap_t *wasm_import_wgpuSamplerSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_sampler = wasm_val_to_native_int(args->data[0]);
-    WGPUSampler sampler = (WGPUSampler)registry_item_get_mapping(&registry.samplers, mapping_index_sampler);
+    WGPUSampler sampler = (WGPUSampler)registry_item_get_mapping(&registry->samplers, mapping_index_sampler);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -11507,6 +11831,8 @@ wasm_trap_t *wasm_import_wgpuSamplerSetLabel(
 
 
     wgpuSamplerSetLabel(sampler, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11523,22 +11849,24 @@ wasm_trap_t *wasm_import_wgpuShaderModuleGetCompilationInfo(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_shader_module = wasm_val_to_native_int(args->data[0]);
-    WGPUShaderModule shader_module = (WGPUShaderModule)registry_item_get_mapping(&registry.shaderModules, mapping_index_shader_module);
+    WGPUShaderModule shader_module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, mapping_index_shader_module);
 
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[1]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[2]);
-    WasmCallbackUserdataWrapper userdata = {
-        .callback = callback_wasm,
-        .userdata = userdata_wasm
-    };
+    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    userdata->proc = proc;
+    userdata->callback = callback_wasm;
+    userdata->userdata = userdata_wasm;
 
 
-    wgpuShaderModuleGetCompilationInfo(shader_module, host_callback_wgpuShaderModuleGetCompilationInfo, (void *)(&userdata));
+    wgpuShaderModuleGetCompilationInfo(shader_module, host_callback_wgpuShaderModuleGetCompilationInfo, userdata);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11555,11 +11883,11 @@ wasm_trap_t *wasm_import_wgpuShaderModuleSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_shader_module = wasm_val_to_native_int(args->data[0]);
-    WGPUShaderModule shader_module = (WGPUShaderModule)registry_item_get_mapping(&registry.shaderModules, mapping_index_shader_module);
+    WGPUShaderModule shader_module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, mapping_index_shader_module);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -11567,6 +11895,8 @@ wasm_trap_t *wasm_import_wgpuShaderModuleSetLabel(
 
 
     wgpuShaderModuleSetLabel(shader_module, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11583,18 +11913,20 @@ wasm_trap_t *wasm_import_wgpuSurfaceConfigure(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
-    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry.surfaces, mapping_index_surface);
+    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
     WASM_POINTER_STRUCT_C_TYPE config_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUSurfaceConfiguration *config = NULL;
-    extract_surface_configuration(&registry, memory, (byte_t *)config_wa_struct_ptr, &config);
+    extract_surface_configuration(registry, memory, (byte_t *)config_wa_struct_ptr, &config);
 
 
     wgpuSurfaceConfigure(surface, config);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11611,21 +11943,23 @@ wasm_trap_t *wasm_import_wgpuSurfaceGetCapabilities(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
-    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry.surfaces, mapping_index_surface);
+    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
     uint32_t mapping_index_adapter = wasm_val_to_native_int(args->data[1]);
-    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry.adapters, mapping_index_adapter);
+    WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry->adapters, mapping_index_adapter);
 
     WASM_POINTER_STRUCT_C_TYPE capabilities_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[2]);
     WGPUSurfaceCapabilities *capabilities = NULL;
-    extract_surface_capabilities(&registry, memory, (byte_t *)capabilities_wa_struct_ptr, &capabilities);
+    extract_surface_capabilities(registry, memory, (byte_t *)capabilities_wa_struct_ptr, &capabilities);
 
 
     wgpuSurfaceGetCapabilities(surface, adapter, capabilities);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11642,18 +11976,20 @@ wasm_trap_t *wasm_import_wgpuSurfaceGetCurrentTexture(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
-    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry.surfaces, mapping_index_surface);
+    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
     WASM_POINTER_STRUCT_C_TYPE surface_texture_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUSurfaceTexture *surface_texture = NULL;
-    extract_surface_texture(&registry, memory, (byte_t *)surface_texture_wa_struct_ptr, &surface_texture);
+    extract_surface_texture(registry, memory, (byte_t *)surface_texture_wa_struct_ptr, &surface_texture);
 
 
     wgpuSurfaceGetCurrentTexture(surface, surface_texture);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11670,14 +12006,16 @@ wasm_trap_t *wasm_import_wgpuSurfacePresent(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
-    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry.surfaces, mapping_index_surface);
+    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
 
     wgpuSurfacePresent(surface);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11694,14 +12032,16 @@ wasm_trap_t *wasm_import_wgpuSurfaceUnconfigure(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
-    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry.surfaces, mapping_index_surface);
+    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
 
     wgpuSurfaceUnconfigure(surface);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11718,11 +12058,11 @@ wasm_trap_t *wasm_import_wgpuSurfaceSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
-    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry.surfaces, mapping_index_surface);
+    WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -11730,6 +12070,8 @@ wasm_trap_t *wasm_import_wgpuSurfaceSetLabel(
 
 
     wgpuSurfaceSetLabel(surface, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11746,18 +12088,23 @@ wasm_trap_t *wasm_import_wgpuTextureCreateView(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
     WASM_POINTER_STRUCT_C_TYPE descriptor_wa_struct_ptr = (WASM_POINTER_STRUCT_C_TYPE)wasm_val_to_native_int(args->data[1]);
     WGPUTextureViewDescriptor *descriptor = NULL;
-    extract_texture_view_descriptor(&registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
+    extract_texture_view_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
 
-    wgpuTextureCreateView(texture, descriptor);
+    WGPUTextureView result = wgpuTextureCreateView(texture, descriptor);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    size_t result_index = registry_item_add_mapping(&registry->textureViews, result);
+    results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
     /* TODO: Freeing */
     return NULL;
@@ -11774,11 +12121,11 @@ wasm_trap_t *wasm_import_wgpuTextureSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -11786,6 +12133,8 @@ wasm_trap_t *wasm_import_wgpuTextureSetLabel(
 
 
     wgpuTextureSetLabel(texture, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -11802,14 +12151,18 @@ wasm_trap_t *wasm_import_wgpuTextureGetWidth(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
-    wgpuTextureGetWidth(texture);
+    uint32_t result = wgpuTextureGetWidth(texture);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -11826,14 +12179,18 @@ wasm_trap_t *wasm_import_wgpuTextureGetHeight(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
-    wgpuTextureGetHeight(texture);
+    uint32_t result = wgpuTextureGetHeight(texture);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -11850,14 +12207,18 @@ wasm_trap_t *wasm_import_wgpuTextureGetDepthOrArrayLayers(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
-    wgpuTextureGetDepthOrArrayLayers(texture);
+    uint32_t result = wgpuTextureGetDepthOrArrayLayers(texture);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -11874,14 +12235,18 @@ wasm_trap_t *wasm_import_wgpuTextureGetMipLevelCount(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
-    wgpuTextureGetMipLevelCount(texture);
+    uint32_t result = wgpuTextureGetMipLevelCount(texture);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -11898,14 +12263,18 @@ wasm_trap_t *wasm_import_wgpuTextureGetSampleCount(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
-    wgpuTextureGetSampleCount(texture);
+    uint32_t result = wgpuTextureGetSampleCount(texture);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -11922,14 +12291,18 @@ wasm_trap_t *wasm_import_wgpuTextureGetDimension(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
-    wgpuTextureGetDimension(texture);
+    WGPUTextureDimension result = wgpuTextureGetDimension(texture);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -11946,14 +12319,18 @@ wasm_trap_t *wasm_import_wgpuTextureGetFormat(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
-    wgpuTextureGetFormat(texture);
+    WGPUTextureFormat result = wgpuTextureGetFormat(texture);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -11970,14 +12347,18 @@ wasm_trap_t *wasm_import_wgpuTextureGetUsage(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
-    wgpuTextureGetUsage(texture);
+    WGPUTextureUsage result = wgpuTextureGetUsage(texture);
+
+    results->size = 1;
+    results->data[0].kind = WASM_INT_KIND;
+    results->data[0].of.WASM_VAL_INT_PROP = result;
 
     /* TODO: Freeing */
     return NULL;
@@ -11994,14 +12375,16 @@ wasm_trap_t *wasm_import_wgpuTextureDestroy(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
-    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry.textures, mapping_index_texture);
+    WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
 
     wgpuTextureDestroy(texture);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;
@@ -12018,11 +12401,11 @@ wasm_trap_t *wasm_import_wgpuTextureViewSetLabel(
     wasm_store_t *store = proc->store;
     wasm_memory_t *memory = get_memory(proc);
     byte_t *base_ptr = wasm_memory_data(memory);
-    BindWGPUObjectMappingRegistry registry = proc->registry;
+    BindWGPUObjectMappingRegistry *registry = &proc->registry;
 
     /* Extract args */
     uint32_t mapping_index_texture_view = wasm_val_to_native_int(args->data[0]);
-    WGPUTextureView texture_view = (WGPUTextureView)registry_item_get_mapping(&registry.textureViews, mapping_index_texture_view);
+    WGPUTextureView texture_view = (WGPUTextureView)registry_item_get_mapping(&registry->textureViews, mapping_index_texture_view);
 
     WASM_POINTER_STRING_C_TYPE label_wa_string_ptr = wasm_val_to_native_int(args->data[1]);
     char * label = NULL;
@@ -12030,6 +12413,8 @@ wasm_trap_t *wasm_import_wgpuTextureViewSetLabel(
 
 
     wgpuTextureViewSetLabel(texture_view, label);
+
+    /* Nothing returned */
 
     /* TODO: Freeing */
     return NULL;

@@ -8,7 +8,11 @@
 #include <wasm_c_api.h>
 #include <string.h>
 
-#include "wasm_webgpu_c_api_inc.h";
+#include "wasm_webgpu_c_api_inc.h"
+
+#ifndef HB_CORE_H
+#include "hb_stub.h"
+#endif
 
 /* Define native WASM types */
 #define WASM_C_TYPE uint32_t
@@ -47,50 +51,8 @@
     } while (0)
 #endif
 
-// Structure to represent a WASM process instance
 typedef struct {
-    wasm_engine_t* engine;          // WASM engine instance
-    wasm_instance_t* instance;      // WASM instance
-    wasm_module_t* module;          // WASM module
-    wasm_store_t* store;            // WASM store
-    // ErlDrvPort port;                // Erlang port associated with this process
-    // ErlDrvTermData port_term;       // Erlang term representation of the port
-    // ErlDrvMutex* is_running;        // Mutex to track if the process is running
-    char* current_function;        // Current function being executed
-    long current_function_ix;   // Index of the current function
-    int indirect_func_table_ix;    // Index of the indirect function table
-    wasm_table_t* indirect_func_table; // Indirect function table
-    // wasm_exec_env_t exec_env;      // Execution environment for the WASM instance
-    // ei_term* current_args;         // Arguments for the current function
-    int current_args_length;       // Length of the current arguments
-    // ImportResponse* current_import; // Import response structure
-    // ErlDrvTermData pid;            // PID of the Erlang process
-    int is_initialized;            // Flag to check if the process is initialized
-    // time_t start_time;             // Start time of the process
-    BindWGPUObjectMappingRegistry registry;
-} Proc;
-
-// Structure to represent an import hook
-typedef struct {
-    char* module_name;             // Name of the module
-    char* field_name;              // Name of the field (function)
-    char* signature;               // Function signature
-    Proc* proc;                    // The associated process
-    wasm_func_t* stub_func;        // WASM function pointer for the import
-} ImportHook;
-
-wasm_memory_t* get_memory(Proc* proc) {
-    wasm_extern_vec_t exports;
-    wasm_instance_exports(proc->instance, &exports);
-    for (size_t i = 0; i < exports.size; i++) {
-        if (wasm_extern_kind(exports.data[i]) == WASM_EXTERN_MEMORY) {
-            return wasm_extern_as_memory(exports.data[i]);
-        }
-    }
-    return NULL;
-}
-
-typedef struct {
+    Proc *proc;
     WASM_POINTER_FUNCTION_C_TYPE callback;
     WASM_POINTER_VOID_C_TYPE userdata;
 } WasmCallbackUserdataWrapper;
@@ -103,7 +65,10 @@ typedef struct {
  * Returns the index of the mapping in the registry.
  */
 size_t registry_item_add_mapping(BindWGPUObjectMappingRegistryItem* item, void* value) {
+	LOG_TRACE("registry_item_add_mapping: item = %p, value = %p", item, value);
+
     if (item->count >= WGPU_OBJECT_TYPE_COUNT) {
+		LOG_WARN("Too many mappings: %zu", item->count);
         return 0;
     }
     item->list[item->count] = value;
@@ -121,9 +86,11 @@ size_t registry_item_add_mapping(BindWGPUObjectMappingRegistryItem* item, void* 
  * Returns NULL if the index is out of bounds.
  */
 void* registry_item_get_mapping(BindWGPUObjectMappingRegistryItem* item, size_t index) {
+	LOG_TRACE("registry_item_get_mapping: item = %p, index = %zu", item, index);
+
     /* Treat index as 1-index */
     if (index == 0) {
-        LOG_TRACE("Returning NULL for 0-index");
+        LOG_DEBUG("Returning NULL for 0-index");
         return NULL;
     }
 

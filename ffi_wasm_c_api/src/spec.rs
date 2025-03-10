@@ -3,17 +3,14 @@ use serde_derive::Serialize;
 use serde_yml::Value;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Spec {
     pub copyright: String,
     pub name: String,
-    #[serde(rename = "enum_prefix")]
     pub enum_prefix: String,
     pub constants: Vec<Constant>,
     pub typedefs: Vec<Value>,
     pub enums: Vec<Enum>,
     pub bitflags: Vec<Bitflag>,
-    #[serde(rename = "function_types")]
     pub function_types: Vec<FunctionType>,
     pub structs: Vec<Struct>,
     pub functions: Vec<Function>,
@@ -21,7 +18,6 @@ pub struct Spec {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Constant {
     pub name: String,
     pub value: String,
@@ -29,7 +25,6 @@ pub struct Constant {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Enum {
     pub name: String,
     pub doc: String,
@@ -37,7 +32,6 @@ pub struct Enum {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct EnumEntry {
     pub name: String,
     pub doc: String,
@@ -45,7 +39,6 @@ pub struct EnumEntry {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Bitflag {
     pub name: String,
     pub doc: String,
@@ -53,16 +46,13 @@ pub struct Bitflag {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct BitflagEntry {
     pub name: String,
     pub doc: String,
-    #[serde(rename = "value_combination")]
     pub value_combination: Option<Vec<String>>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct FunctionType {
     pub name: String,
     pub doc: String,
@@ -70,7 +60,6 @@ pub struct FunctionType {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct FunctionTypeArg {
     pub name: String,
     pub doc: String,
@@ -80,7 +69,6 @@ pub struct FunctionTypeArg {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Struct {
     pub name: String,
     pub doc: String,
@@ -88,14 +76,12 @@ pub struct Struct {
     pub type_field: String,
     #[serde(default)]
     pub members: Vec<Member>,
-    #[serde(rename = "free_members")]
     pub free_members: Option<bool>,
     #[serde(default)]
     pub extends: Vec<String>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Member {
     pub name: String,
     pub doc: String,
@@ -106,7 +92,6 @@ pub struct Member {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Function {
     pub name: String,
     pub doc: String,
@@ -115,7 +100,6 @@ pub struct Function {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct FunctionReturns {
     pub doc: String,
     #[serde(rename = "type")]
@@ -123,7 +107,6 @@ pub struct FunctionReturns {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct FuntionArg {
     pub name: String,
     pub doc: String,
@@ -134,7 +117,6 @@ pub struct FuntionArg {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Object {
     pub name: String,
     pub doc: String,
@@ -142,20 +124,17 @@ pub struct Object {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct Method {
     pub name: String,
     pub doc: String,
     #[serde(default)]
     pub args: Vec<MethodArg>,
     pub returns: Option<MethodReturns>,
-    #[serde(rename = "returns_async")]
     #[serde(default)]
     pub returns_async: Vec<ReturnsAsync>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct MethodArg {
     pub name: String,
     pub doc: String,
@@ -166,7 +145,6 @@ pub struct MethodArg {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct MethodReturns {
     pub doc: String,
     #[serde(rename = "type")]
@@ -175,7 +153,6 @@ pub struct MethodReturns {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct ReturnsAsync {
     pub name: String,
     pub doc: String,

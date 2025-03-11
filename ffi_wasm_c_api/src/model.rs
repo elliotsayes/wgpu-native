@@ -119,6 +119,14 @@ impl ObjectModel {
                 .methods
                 .iter()
                 .map(|m| MethodModel::from_spec(_spec, object, m))
+                .chain(vec![MethodModel {
+                    o: None,
+                    name_orig: "release".to_string(),
+                    name_wgpu_fn: to_wgpu_fn(&object.name, "release"),
+                    arg_groups: vec![],
+                    returns: None,
+                    returns_async: None,
+                }])
                 .collect(),
         }
     }
@@ -676,7 +684,7 @@ impl TypeModel {
             RefMode::Pointer(_) => match &self.type_info {
                 TypeInfo::MethodCallback(object_name, method_name) => {
                     to_host_callback_fn(object_name, method_name)
-                },
+                }
                 _ => self.name_orig.clone(),
             },
             RefMode::Array => format!("{}_array", self.name_orig),

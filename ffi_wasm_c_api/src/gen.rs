@@ -921,8 +921,8 @@ fn gen_all_wasm_import_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel
                     n!(gen);
                 }
             }
-            n!(gen);
 
+            c!(gen, "Call method");
             let returns = gen_call_method_fn(gen, model, object, method);
             n!(gen);
 

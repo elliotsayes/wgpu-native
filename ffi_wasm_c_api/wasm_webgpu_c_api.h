@@ -8502,7 +8502,7 @@ wasm_trap_t *wasm_import_wgpuAdapterGetLimits(
     WGPUSupportedLimits *limits = NULL;
     extract_supported_limits(registry, memory, (byte_t *)limits_wa_struct_ptr, &limits);
 
-
+    /* Call method */
     uint32_t result = wgpuAdapterGetLimits(adapter, limits);
 
     results->size = 1;
@@ -8532,7 +8532,7 @@ wasm_trap_t *wasm_import_wgpuAdapterHasFeature(
 
     WGPUFeatureName feature = wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     uint32_t result = wgpuAdapterHasFeature(adapter, feature);
 
     results->size = 1;
@@ -8562,7 +8562,7 @@ wasm_trap_t *wasm_import_wgpuAdapterEnumerateFeatures(
 
     WGPUFeatureName * features = (WGPUFeatureName *)wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     size_t result = wgpuAdapterEnumerateFeatures(adapter, features);
 
     results->size = 1;
@@ -8594,7 +8594,7 @@ wasm_trap_t *wasm_import_wgpuAdapterGetInfo(
     WGPUAdapterInfo *info = NULL;
     extract_adapter_info(registry, memory, (byte_t *)info_wa_struct_ptr, &info);
 
-
+    /* Call method */
     wgpuAdapterGetInfo(adapter, info);
 
     /* Nothing returned */
@@ -8632,7 +8632,7 @@ wasm_trap_t *wasm_import_wgpuAdapterRequestDevice(
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
 
-
+    /* Call method */
     wgpuAdapterRequestDevice(adapter, descriptor, host_callback_wgpuAdapterRequestDevice, userdata);
 
     /* Nothing returned */
@@ -8658,7 +8658,7 @@ wasm_trap_t *wasm_import_wgpuAdapterRelease(
     uint32_t mapping_index_adapter = wasm_val_to_native_int(args->data[0]);
     WGPUAdapter adapter = (WGPUAdapter)registry_item_get_mapping(&registry->adapters, mapping_index_adapter);
 
-
+    /* Call method */
     wgpuAdapterRelease(adapter);
 
     /* Nothing returned */
@@ -8688,7 +8688,7 @@ wasm_trap_t *wasm_import_wgpuBindGroupSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuBindGroupSetLabel(bind_group, label);
 
     /* Nothing returned */
@@ -8714,7 +8714,7 @@ wasm_trap_t *wasm_import_wgpuBindGroupRelease(
     uint32_t mapping_index_bind_group = wasm_val_to_native_int(args->data[0]);
     WGPUBindGroup bind_group = (WGPUBindGroup)registry_item_get_mapping(&registry->bindGroups, mapping_index_bind_group);
 
-
+    /* Call method */
     wgpuBindGroupRelease(bind_group);
 
     /* Nothing returned */
@@ -8744,7 +8744,7 @@ wasm_trap_t *wasm_import_wgpuBindGroupLayoutSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuBindGroupLayoutSetLabel(bind_group_layout, label);
 
     /* Nothing returned */
@@ -8770,7 +8770,7 @@ wasm_trap_t *wasm_import_wgpuBindGroupLayoutRelease(
     uint32_t mapping_index_bind_group_layout = wasm_val_to_native_int(args->data[0]);
     WGPUBindGroupLayout bind_group_layout = (WGPUBindGroupLayout)registry_item_get_mapping(&registry->bindGroupLayouts, mapping_index_bind_group_layout);
 
-
+    /* Call method */
     wgpuBindGroupLayoutRelease(bind_group_layout);
 
     /* Nothing returned */
@@ -8810,7 +8810,7 @@ wasm_trap_t *wasm_import_wgpuBufferMapAsync(
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
 
-
+    /* Call method */
     wgpuBufferMapAsync(buffer, mode, offset, size, host_callback_wgpuBufferMapAsync, userdata);
 
     /* Nothing returned */
@@ -8840,7 +8840,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetMappedRange(
 
     size_t size = wasm_val_to_native_int(args->data[2]);
 
-
+    /* Call method */
     void * result = wgpuBufferGetMappedRange(buffer, offset, size);
 
     results->size = 1;
@@ -8878,7 +8878,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetConstMappedRange(
 
     size_t size = wasm_val_to_native_int(args->data[2]);
 
-
+    /* Call method */
     void * result = wgpuBufferGetConstMappedRange(buffer, offset, size);
 
     results->size = 1;
@@ -8916,7 +8916,7 @@ wasm_trap_t *wasm_import_wgpuBufferSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuBufferSetLabel(buffer, label);
 
     /* Nothing returned */
@@ -8942,7 +8942,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetUsage(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-
+    /* Call method */
     WGPUBufferUsage result = wgpuBufferGetUsage(buffer);
 
     results->size = 1;
@@ -8970,7 +8970,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetSize(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-
+    /* Call method */
     uint64_t result = wgpuBufferGetSize(buffer);
 
     results->size = 1;
@@ -8997,7 +8997,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetMapState(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-
+    /* Call method */
     WGPUBufferMapState result = wgpuBufferGetMapState(buffer);
 
     results->size = 1;
@@ -9025,7 +9025,7 @@ wasm_trap_t *wasm_import_wgpuBufferUnmap(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-
+    /* Call method */
     wgpuBufferUnmap(buffer);
 
     /* Nothing returned */
@@ -9051,7 +9051,7 @@ wasm_trap_t *wasm_import_wgpuBufferDestroy(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-
+    /* Call method */
     wgpuBufferDestroy(buffer);
 
     /* Nothing returned */
@@ -9077,7 +9077,7 @@ wasm_trap_t *wasm_import_wgpuBufferRelease(
     uint32_t mapping_index_buffer = wasm_val_to_native_int(args->data[0]);
     WGPUBuffer buffer = (WGPUBuffer)registry_item_get_mapping(&registry->buffers, mapping_index_buffer);
 
-
+    /* Call method */
     wgpuBufferRelease(buffer);
 
     /* Nothing returned */
@@ -9107,7 +9107,7 @@ wasm_trap_t *wasm_import_wgpuCommandBufferSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuCommandBufferSetLabel(command_buffer, label);
 
     /* Nothing returned */
@@ -9133,7 +9133,7 @@ wasm_trap_t *wasm_import_wgpuCommandBufferRelease(
     uint32_t mapping_index_command_buffer = wasm_val_to_native_int(args->data[0]);
     WGPUCommandBuffer command_buffer = (WGPUCommandBuffer)registry_item_get_mapping(&registry->commandBuffers, mapping_index_command_buffer);
 
-
+    /* Call method */
     wgpuCommandBufferRelease(command_buffer);
 
     /* Nothing returned */
@@ -9163,7 +9163,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderFinish(
     WGPUCommandBufferDescriptor *descriptor = NULL;
     extract_command_buffer_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUCommandBuffer result = wgpuCommandEncoderFinish(command_encoder, descriptor);
 
     results->size = 1;
@@ -9196,7 +9196,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderBeginComputePass(
     WGPUComputePassDescriptor *descriptor = NULL;
     extract_compute_pass_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUComputePassEncoder result = wgpuCommandEncoderBeginComputePass(command_encoder, descriptor);
 
     results->size = 1;
@@ -9229,7 +9229,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderBeginRenderPass(
     WGPURenderPassDescriptor *descriptor = NULL;
     extract_render_pass_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPURenderPassEncoder result = wgpuCommandEncoderBeginRenderPass(command_encoder, descriptor);
 
     results->size = 1;
@@ -9276,7 +9276,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyBufferToBuffer(
     uint64_t size_high = wasm_val_to_native_int(args->data[7 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
-
+    /* Call method */
     wgpuCommandEncoderCopyBufferToBuffer(command_encoder, source, source_offset, destination, destination_offset, size);
 
     /* Nothing returned */
@@ -9314,7 +9314,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyBufferToTexture(
     WGPUExtent3D *copy_size = NULL;
     extract_extent_3D(registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
 
-
+    /* Call method */
     wgpuCommandEncoderCopyBufferToTexture(command_encoder, source, destination, copy_size);
 
     /* Nothing returned */
@@ -9352,7 +9352,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyTextureToBuffer(
     WGPUExtent3D *copy_size = NULL;
     extract_extent_3D(registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
 
-
+    /* Call method */
     wgpuCommandEncoderCopyTextureToBuffer(command_encoder, source, destination, copy_size);
 
     /* Nothing returned */
@@ -9390,7 +9390,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyTextureToTexture(
     WGPUExtent3D *copy_size = NULL;
     extract_extent_3D(registry, memory, (byte_t *)copy_size_wa_struct_ptr, &copy_size);
 
-
+    /* Call method */
     wgpuCommandEncoderCopyTextureToTexture(command_encoder, source, destination, copy_size);
 
     /* Nothing returned */
@@ -9427,7 +9427,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderClearBuffer(
     uint64_t size_high = wasm_val_to_native_int(args->data[4 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
-
+    /* Call method */
     wgpuCommandEncoderClearBuffer(command_encoder, buffer, offset, size);
 
     /* Nothing returned */
@@ -9457,7 +9457,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderInsertDebugMarker(
     char * marker_label = NULL;
     wasm_safe_extract_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
 
-
+    /* Call method */
     wgpuCommandEncoderInsertDebugMarker(command_encoder, marker_label);
 
     /* Nothing returned */
@@ -9483,7 +9483,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderPopDebugGroup(
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
     WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
-
+    /* Call method */
     wgpuCommandEncoderPopDebugGroup(command_encoder);
 
     /* Nothing returned */
@@ -9513,7 +9513,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderPushDebugGroup(
     char * group_label = NULL;
     wasm_safe_extract_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
 
-
+    /* Call method */
     wgpuCommandEncoderPushDebugGroup(command_encoder, group_label);
 
     /* Nothing returned */
@@ -9553,7 +9553,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderResolveQuerySet(
     uint64_t destination_offset_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t destination_offset = destination_offset_high << 32 | destination_offset_low;
 
-
+    /* Call method */
     wgpuCommandEncoderResolveQuerySet(command_encoder, query_set, first_query, query_count, destination, destination_offset);
 
     /* Nothing returned */
@@ -9584,7 +9584,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderWriteTimestamp(
 
     uint32_t query_index = wasm_val_to_native_int(args->data[2]);
 
-
+    /* Call method */
     wgpuCommandEncoderWriteTimestamp(command_encoder, query_set, query_index);
 
     /* Nothing returned */
@@ -9614,7 +9614,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuCommandEncoderSetLabel(command_encoder, label);
 
     /* Nothing returned */
@@ -9640,7 +9640,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderRelease(
     uint32_t mapping_index_command_encoder = wasm_val_to_native_int(args->data[0]);
     WGPUCommandEncoder command_encoder = (WGPUCommandEncoder)registry_item_get_mapping(&registry->commandEncoders, mapping_index_command_encoder);
 
-
+    /* Call method */
     wgpuCommandEncoderRelease(command_encoder);
 
     /* Nothing returned */
@@ -9670,7 +9670,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderInsertDebugMarker(
     char * marker_label = NULL;
     wasm_safe_extract_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
 
-
+    /* Call method */
     wgpuComputePassEncoderInsertDebugMarker(compute_pass_encoder, marker_label);
 
     /* Nothing returned */
@@ -9696,7 +9696,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderPopDebugGroup(
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
     WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
-
+    /* Call method */
     wgpuComputePassEncoderPopDebugGroup(compute_pass_encoder);
 
     /* Nothing returned */
@@ -9726,7 +9726,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderPushDebugGroup(
     char * group_label = NULL;
     wasm_safe_extract_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
 
-
+    /* Call method */
     wgpuComputePassEncoderPushDebugGroup(compute_pass_encoder, group_label);
 
     /* Nothing returned */
@@ -9755,7 +9755,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetPipeline(
     uint32_t mapping_index_pipeline = wasm_val_to_native_int(args->data[1]);
     WGPUComputePipeline pipeline = (WGPUComputePipeline)registry_item_get_mapping(&registry->computePipelines, mapping_index_pipeline);
 
-
+    /* Call method */
     wgpuComputePassEncoderSetPipeline(compute_pass_encoder, pipeline);
 
     /* Nothing returned */
@@ -9794,7 +9794,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetBindGroup(
         wasm_safe_extract_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
     }
 
-
+    /* Call method */
     wgpuComputePassEncoderSetBindGroup(compute_pass_encoder, group_index, group, dynamic_offsets_count, dynamic_offsets_array);
 
     /* Nothing returned */
@@ -9826,7 +9826,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroups(
 
     uint32_t workgroupCountZ = wasm_val_to_native_int(args->data[3]);
 
-
+    /* Call method */
     wgpuComputePassEncoderDispatchWorkgroups(compute_pass_encoder, workgroupCountX, workgroupCountY, workgroupCountZ);
 
     /* Nothing returned */
@@ -9859,7 +9859,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroupsIndirect(
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
-
+    /* Call method */
     wgpuComputePassEncoderDispatchWorkgroupsIndirect(compute_pass_encoder, indirect_buffer, indirect_offset);
 
     /* Nothing returned */
@@ -9885,7 +9885,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderEnd(
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
     WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
-
+    /* Call method */
     wgpuComputePassEncoderEnd(compute_pass_encoder);
 
     /* Nothing returned */
@@ -9915,7 +9915,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuComputePassEncoderSetLabel(compute_pass_encoder, label);
 
     /* Nothing returned */
@@ -9941,7 +9941,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderRelease(
     uint32_t mapping_index_compute_pass_encoder = wasm_val_to_native_int(args->data[0]);
     WGPUComputePassEncoder compute_pass_encoder = (WGPUComputePassEncoder)registry_item_get_mapping(&registry->computePassEncoders, mapping_index_compute_pass_encoder);
 
-
+    /* Call method */
     wgpuComputePassEncoderRelease(compute_pass_encoder);
 
     /* Nothing returned */
@@ -9969,7 +9969,7 @@ wasm_trap_t *wasm_import_wgpuComputePipelineGetBindGroupLayout(
 
     uint32_t group_index = wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     WGPUBindGroupLayout result = wgpuComputePipelineGetBindGroupLayout(compute_pipeline, group_index);
 
     results->size = 1;
@@ -10002,7 +10002,7 @@ wasm_trap_t *wasm_import_wgpuComputePipelineSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuComputePipelineSetLabel(compute_pipeline, label);
 
     /* Nothing returned */
@@ -10028,7 +10028,7 @@ wasm_trap_t *wasm_import_wgpuComputePipelineRelease(
     uint32_t mapping_index_compute_pipeline = wasm_val_to_native_int(args->data[0]);
     WGPUComputePipeline compute_pipeline = (WGPUComputePipeline)registry_item_get_mapping(&registry->computePipelines, mapping_index_compute_pipeline);
 
-
+    /* Call method */
     wgpuComputePipelineRelease(compute_pipeline);
 
     /* Nothing returned */
@@ -10058,7 +10058,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBindGroup(
     WGPUBindGroupDescriptor *descriptor = NULL;
     extract_bind_group_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUBindGroup result = wgpuDeviceCreateBindGroup(device, descriptor);
 
     results->size = 1;
@@ -10091,7 +10091,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBindGroupLayout(
     WGPUBindGroupLayoutDescriptor *descriptor = NULL;
     extract_bind_group_layout_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUBindGroupLayout result = wgpuDeviceCreateBindGroupLayout(device, descriptor);
 
     results->size = 1;
@@ -10124,7 +10124,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBuffer(
     WGPUBufferDescriptor *descriptor = NULL;
     extract_buffer_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUBuffer result = wgpuDeviceCreateBuffer(device, descriptor);
 
     results->size = 1;
@@ -10157,7 +10157,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateCommandEncoder(
     WGPUCommandEncoderDescriptor *descriptor = NULL;
     extract_command_encoder_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUCommandEncoder result = wgpuDeviceCreateCommandEncoder(device, descriptor);
 
     results->size = 1;
@@ -10190,7 +10190,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipeline(
     WGPUComputePipelineDescriptor *descriptor = NULL;
     extract_compute_pipeline_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUComputePipeline result = wgpuDeviceCreateComputePipeline(device, descriptor);
 
     results->size = 1;
@@ -10231,7 +10231,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipelineAsync(
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
 
-
+    /* Call method */
     wgpuDeviceCreateComputePipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateComputePipelineAsync, userdata);
 
     /* Nothing returned */
@@ -10261,7 +10261,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreatePipelineLayout(
     WGPUPipelineLayoutDescriptor *descriptor = NULL;
     extract_pipeline_layout_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUPipelineLayout result = wgpuDeviceCreatePipelineLayout(device, descriptor);
 
     results->size = 1;
@@ -10294,7 +10294,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateQuerySet(
     WGPUQuerySetDescriptor *descriptor = NULL;
     extract_query_set_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUQuerySet result = wgpuDeviceCreateQuerySet(device, descriptor);
 
     results->size = 1;
@@ -10335,7 +10335,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipelineAsync(
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
 
-
+    /* Call method */
     wgpuDeviceCreateRenderPipelineAsync(device, descriptor, host_callback_wgpuDeviceCreateRenderPipelineAsync, userdata);
 
     /* Nothing returned */
@@ -10365,7 +10365,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderBundleEncoder(
     WGPURenderBundleEncoderDescriptor *descriptor = NULL;
     extract_render_bundle_encoder_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPURenderBundleEncoder result = wgpuDeviceCreateRenderBundleEncoder(device, descriptor);
 
     results->size = 1;
@@ -10398,7 +10398,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipeline(
     WGPURenderPipelineDescriptor *descriptor = NULL;
     extract_render_pipeline_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPURenderPipeline result = wgpuDeviceCreateRenderPipeline(device, descriptor);
 
     results->size = 1;
@@ -10431,7 +10431,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateSampler(
     WGPUSamplerDescriptor *descriptor = NULL;
     extract_sampler_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUSampler result = wgpuDeviceCreateSampler(device, descriptor);
 
     results->size = 1;
@@ -10464,7 +10464,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateShaderModule(
     WGPUShaderModuleDescriptor *descriptor = NULL;
     extract_shader_module_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUShaderModule result = wgpuDeviceCreateShaderModule(device, descriptor);
 
     results->size = 1;
@@ -10497,7 +10497,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateTexture(
     WGPUTextureDescriptor *descriptor = NULL;
     extract_texture_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUTexture result = wgpuDeviceCreateTexture(device, descriptor);
 
     results->size = 1;
@@ -10526,7 +10526,7 @@ wasm_trap_t *wasm_import_wgpuDeviceDestroy(
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
     WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
-
+    /* Call method */
     wgpuDeviceDestroy(device);
 
     /* Nothing returned */
@@ -10556,7 +10556,7 @@ wasm_trap_t *wasm_import_wgpuDeviceGetLimits(
     WGPUSupportedLimits *limits = NULL;
     extract_supported_limits(registry, memory, (byte_t *)limits_wa_struct_ptr, &limits);
 
-
+    /* Call method */
     uint32_t result = wgpuDeviceGetLimits(device, limits);
 
     results->size = 1;
@@ -10586,7 +10586,7 @@ wasm_trap_t *wasm_import_wgpuDeviceHasFeature(
 
     WGPUFeatureName feature = wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     uint32_t result = wgpuDeviceHasFeature(device, feature);
 
     results->size = 1;
@@ -10616,7 +10616,7 @@ wasm_trap_t *wasm_import_wgpuDeviceEnumerateFeatures(
 
     WGPUFeatureName * features = (WGPUFeatureName *)wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     size_t result = wgpuDeviceEnumerateFeatures(device, features);
 
     results->size = 1;
@@ -10644,7 +10644,7 @@ wasm_trap_t *wasm_import_wgpuDeviceGetQueue(
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
     WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
-
+    /* Call method */
     WGPUQueue result = wgpuDeviceGetQueue(device);
 
     results->size = 1;
@@ -10675,7 +10675,7 @@ wasm_trap_t *wasm_import_wgpuDevicePushErrorScope(
 
     WGPUErrorFilter filter = wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     wgpuDevicePushErrorScope(device, filter);
 
     /* Nothing returned */
@@ -10707,7 +10707,7 @@ wasm_trap_t *wasm_import_wgpuDevicePopErrorScope(
     void * userdata = NULL;
     wasm_safe_extract_pointer(memory, wa_userdata, &userdata, 0);
 
-
+    /* Call method */
     wgpuDevicePopErrorScope(device, callback, userdata);
 
     /* Nothing returned */
@@ -10737,7 +10737,7 @@ wasm_trap_t *wasm_import_wgpuDeviceSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuDeviceSetLabel(device, label);
 
     /* Nothing returned */
@@ -10763,7 +10763,7 @@ wasm_trap_t *wasm_import_wgpuDeviceRelease(
     uint32_t mapping_index_device = wasm_val_to_native_int(args->data[0]);
     WGPUDevice device = (WGPUDevice)registry_item_get_mapping(&registry->devices, mapping_index_device);
 
-
+    /* Call method */
     wgpuDeviceRelease(device);
 
     /* Nothing returned */
@@ -10793,7 +10793,7 @@ wasm_trap_t *wasm_import_wgpuInstanceCreateSurface(
     WGPUSurfaceDescriptor *descriptor = NULL;
     extract_surface_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUSurface result = wgpuInstanceCreateSurface(instance, descriptor);
 
     results->size = 1;
@@ -10824,7 +10824,7 @@ wasm_trap_t *wasm_import_wgpuInstanceHasWGSLLanguageFeature(
 
     WGPUWGSLFeatureName feature = wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     uint32_t result = wgpuInstanceHasWGSLLanguageFeature(instance, feature);
 
     results->size = 1;
@@ -10852,7 +10852,7 @@ wasm_trap_t *wasm_import_wgpuInstanceProcessEvents(
     uint32_t mapping_index_instance = wasm_val_to_native_int(args->data[0]);
     WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry->instances, mapping_index_instance);
 
-
+    /* Call method */
     wgpuInstanceProcessEvents(instance);
 
     /* Nothing returned */
@@ -10890,7 +10890,7 @@ wasm_trap_t *wasm_import_wgpuInstanceRequestAdapter(
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
 
-
+    /* Call method */
     wgpuInstanceRequestAdapter(instance, options, host_callback_wgpuInstanceRequestAdapter, userdata);
 
     /* Nothing returned */
@@ -10916,7 +10916,7 @@ wasm_trap_t *wasm_import_wgpuInstanceRelease(
     uint32_t mapping_index_instance = wasm_val_to_native_int(args->data[0]);
     WGPUInstance instance = (WGPUInstance)registry_item_get_mapping(&registry->instances, mapping_index_instance);
 
-
+    /* Call method */
     wgpuInstanceRelease(instance);
 
     /* Nothing returned */
@@ -10946,7 +10946,7 @@ wasm_trap_t *wasm_import_wgpuPipelineLayoutSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuPipelineLayoutSetLabel(pipeline_layout, label);
 
     /* Nothing returned */
@@ -10972,7 +10972,7 @@ wasm_trap_t *wasm_import_wgpuPipelineLayoutRelease(
     uint32_t mapping_index_pipeline_layout = wasm_val_to_native_int(args->data[0]);
     WGPUPipelineLayout pipeline_layout = (WGPUPipelineLayout)registry_item_get_mapping(&registry->pipelineLayouts, mapping_index_pipeline_layout);
 
-
+    /* Call method */
     wgpuPipelineLayoutRelease(pipeline_layout);
 
     /* Nothing returned */
@@ -11002,7 +11002,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuQuerySetSetLabel(query_set, label);
 
     /* Nothing returned */
@@ -11028,7 +11028,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetGetType(
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[0]);
     WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
-
+    /* Call method */
     WGPUQueryType result = wgpuQuerySetGetType(query_set);
 
     results->size = 1;
@@ -11056,7 +11056,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetGetCount(
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[0]);
     WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
-
+    /* Call method */
     uint32_t result = wgpuQuerySetGetCount(query_set);
 
     results->size = 1;
@@ -11084,7 +11084,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetDestroy(
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[0]);
     WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
-
+    /* Call method */
     wgpuQuerySetDestroy(query_set);
 
     /* Nothing returned */
@@ -11110,7 +11110,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetRelease(
     uint32_t mapping_index_query_set = wasm_val_to_native_int(args->data[0]);
     WGPUQuerySet query_set = (WGPUQuerySet)registry_item_get_mapping(&registry->querySets, mapping_index_query_set);
 
-
+    /* Call method */
     wgpuQuerySetRelease(query_set);
 
     /* Nothing returned */
@@ -11146,7 +11146,7 @@ wasm_trap_t *wasm_import_wgpuQueueSubmit(
         commands_array[commands_iter] = (WGPUCommandBuffer)registry_item_get_mapping(&registry->commandBuffers, mapping_index_commands);
     }
 
-
+    /* Call method */
     wgpuQueueSubmit(queue, commands_count, commands_array);
 
     /* Nothing returned */
@@ -11180,7 +11180,7 @@ wasm_trap_t *wasm_import_wgpuQueueOnSubmittedWorkDone(
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
 
-
+    /* Call method */
     wgpuQueueOnSubmittedWorkDone(queue, host_callback_wgpuQueueOnSubmittedWorkDone, userdata);
 
     /* Nothing returned */
@@ -11219,7 +11219,7 @@ wasm_trap_t *wasm_import_wgpuQueueWriteBuffer(
 
     size_t size = wasm_val_to_native_int(args->data[5]);
 
-
+    /* Call method */
     wgpuQueueWriteBuffer(queue, buffer, buffer_offset, data, size);
 
     /* Nothing returned */
@@ -11263,7 +11263,7 @@ wasm_trap_t *wasm_import_wgpuQueueWriteTexture(
     WGPUExtent3D *write_size = NULL;
     extract_extent_3D(registry, memory, (byte_t *)write_size_wa_struct_ptr, &write_size);
 
-
+    /* Call method */
     wgpuQueueWriteTexture(queue, destination, data, data_size, data_layout, write_size);
 
     /* Nothing returned */
@@ -11293,7 +11293,7 @@ wasm_trap_t *wasm_import_wgpuQueueSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuQueueSetLabel(queue, label);
 
     /* Nothing returned */
@@ -11319,7 +11319,7 @@ wasm_trap_t *wasm_import_wgpuQueueRelease(
     uint32_t mapping_index_queue = wasm_val_to_native_int(args->data[0]);
     WGPUQueue queue = (WGPUQueue)registry_item_get_mapping(&registry->queues, mapping_index_queue);
 
-
+    /* Call method */
     wgpuQueueRelease(queue);
 
     /* Nothing returned */
@@ -11349,7 +11349,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuRenderBundleSetLabel(render_bundle, label);
 
     /* Nothing returned */
@@ -11375,7 +11375,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleRelease(
     uint32_t mapping_index_render_bundle = wasm_val_to_native_int(args->data[0]);
     WGPURenderBundle render_bundle = (WGPURenderBundle)registry_item_get_mapping(&registry->renderBundles, mapping_index_render_bundle);
 
-
+    /* Call method */
     wgpuRenderBundleRelease(render_bundle);
 
     /* Nothing returned */
@@ -11404,7 +11404,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetPipeline(
     uint32_t mapping_index_pipeline = wasm_val_to_native_int(args->data[1]);
     WGPURenderPipeline pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry->renderPipelines, mapping_index_pipeline);
 
-
+    /* Call method */
     wgpuRenderBundleEncoderSetPipeline(render_bundle_encoder, pipeline);
 
     /* Nothing returned */
@@ -11443,7 +11443,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetBindGroup(
         wasm_safe_extract_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
     }
 
-
+    /* Call method */
     wgpuRenderBundleEncoderSetBindGroup(render_bundle_encoder, group_index, group, dynamic_offsets_count, dynamic_offsets_array);
 
     /* Nothing returned */
@@ -11477,7 +11477,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDraw(
 
     uint32_t first_instance = wasm_val_to_native_int(args->data[4]);
 
-
+    /* Call method */
     wgpuRenderBundleEncoderDraw(render_bundle_encoder, vertex_count, instance_count, first_vertex, first_instance);
 
     /* Nothing returned */
@@ -11513,7 +11513,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexed(
 
     uint32_t first_instance = wasm_val_to_native_int(args->data[5]);
 
-
+    /* Call method */
     wgpuRenderBundleEncoderDrawIndexed(render_bundle_encoder, index_count, instance_count, first_index, base_vertex, first_instance);
 
     /* Nothing returned */
@@ -11546,7 +11546,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndirect(
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
-
+    /* Call method */
     wgpuRenderBundleEncoderDrawIndirect(render_bundle_encoder, indirect_buffer, indirect_offset);
 
     /* Nothing returned */
@@ -11579,7 +11579,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexedIndirect(
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
-
+    /* Call method */
     wgpuRenderBundleEncoderDrawIndexedIndirect(render_bundle_encoder, indirect_buffer, indirect_offset);
 
     /* Nothing returned */
@@ -11609,7 +11609,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderInsertDebugMarker(
     char * marker_label = NULL;
     wasm_safe_extract_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
 
-
+    /* Call method */
     wgpuRenderBundleEncoderInsertDebugMarker(render_bundle_encoder, marker_label);
 
     /* Nothing returned */
@@ -11635,7 +11635,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderPopDebugGroup(
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
     WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
-
+    /* Call method */
     wgpuRenderBundleEncoderPopDebugGroup(render_bundle_encoder);
 
     /* Nothing returned */
@@ -11665,7 +11665,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderPushDebugGroup(
     char * group_label = NULL;
     wasm_safe_extract_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
 
-
+    /* Call method */
     wgpuRenderBundleEncoderPushDebugGroup(render_bundle_encoder, group_label);
 
     /* Nothing returned */
@@ -11704,7 +11704,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetVertexBuffer(
     uint64_t size_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
-
+    /* Call method */
     wgpuRenderBundleEncoderSetVertexBuffer(render_bundle_encoder, slot, buffer, offset, size);
 
     /* Nothing returned */
@@ -11743,7 +11743,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetIndexBuffer(
     uint64_t size_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
-
+    /* Call method */
     wgpuRenderBundleEncoderSetIndexBuffer(render_bundle_encoder, buffer, format, offset, size);
 
     /* Nothing returned */
@@ -11773,7 +11773,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderFinish(
     WGPURenderBundleDescriptor *descriptor = NULL;
     extract_render_bundle_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPURenderBundle result = wgpuRenderBundleEncoderFinish(render_bundle_encoder, descriptor);
 
     results->size = 1;
@@ -11806,7 +11806,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuRenderBundleEncoderSetLabel(render_bundle_encoder, label);
 
     /* Nothing returned */
@@ -11832,7 +11832,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderRelease(
     uint32_t mapping_index_render_bundle_encoder = wasm_val_to_native_int(args->data[0]);
     WGPURenderBundleEncoder render_bundle_encoder = (WGPURenderBundleEncoder)registry_item_get_mapping(&registry->renderBundleEncoders, mapping_index_render_bundle_encoder);
 
-
+    /* Call method */
     wgpuRenderBundleEncoderRelease(render_bundle_encoder);
 
     /* Nothing returned */
@@ -11861,7 +11861,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetPipeline(
     uint32_t mapping_index_pipeline = wasm_val_to_native_int(args->data[1]);
     WGPURenderPipeline pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry->renderPipelines, mapping_index_pipeline);
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetPipeline(render_pass_encoder, pipeline);
 
     /* Nothing returned */
@@ -11900,7 +11900,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetBindGroup(
         wasm_safe_extract_int(memory, dynamic_offsets_wa_array_ptr + dynamic_offsets_iter, &(dynamic_offsets_array[dynamic_offsets_iter]));
     }
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetBindGroup(render_pass_encoder, group_index, group, dynamic_offsets_count, dynamic_offsets_array);
 
     /* Nothing returned */
@@ -11934,7 +11934,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDraw(
 
     uint32_t first_instance = wasm_val_to_native_int(args->data[4]);
 
-
+    /* Call method */
     wgpuRenderPassEncoderDraw(render_pass_encoder, vertex_count, instance_count, first_vertex, first_instance);
 
     /* Nothing returned */
@@ -11970,7 +11970,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexed(
 
     uint32_t first_instance = wasm_val_to_native_int(args->data[5]);
 
-
+    /* Call method */
     wgpuRenderPassEncoderDrawIndexed(render_pass_encoder, index_count, instance_count, first_index, base_vertex, first_instance);
 
     /* Nothing returned */
@@ -12003,7 +12003,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndirect(
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
-
+    /* Call method */
     wgpuRenderPassEncoderDrawIndirect(render_pass_encoder, indirect_buffer, indirect_offset);
 
     /* Nothing returned */
@@ -12036,7 +12036,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexedIndirect(
     uint64_t indirect_offset_high = wasm_val_to_native_int(args->data[2 + 1]);
     uint64_t indirect_offset = indirect_offset_high << 32 | indirect_offset_low;
 
-
+    /* Call method */
     wgpuRenderPassEncoderDrawIndexedIndirect(render_pass_encoder, indirect_buffer, indirect_offset);
 
     /* Nothing returned */
@@ -12072,7 +12072,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderExecuteBundles(
         bundles_array[bundles_iter] = (WGPURenderBundle)registry_item_get_mapping(&registry->renderBundles, mapping_index_bundles);
     }
 
-
+    /* Call method */
     wgpuRenderPassEncoderExecuteBundles(render_pass_encoder, bundles_count, bundles_array);
 
     /* Nothing returned */
@@ -12102,7 +12102,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderInsertDebugMarker(
     char * marker_label = NULL;
     wasm_safe_extract_string_null_terminated(memory, marker_label_wa_string_ptr, &marker_label, 1024);
 
-
+    /* Call method */
     wgpuRenderPassEncoderInsertDebugMarker(render_pass_encoder, marker_label);
 
     /* Nothing returned */
@@ -12128,7 +12128,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderPopDebugGroup(
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
     WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
-
+    /* Call method */
     wgpuRenderPassEncoderPopDebugGroup(render_pass_encoder);
 
     /* Nothing returned */
@@ -12158,7 +12158,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderPushDebugGroup(
     char * group_label = NULL;
     wasm_safe_extract_string_null_terminated(memory, group_label_wa_string_ptr, &group_label, 1024);
 
-
+    /* Call method */
     wgpuRenderPassEncoderPushDebugGroup(render_pass_encoder, group_label);
 
     /* Nothing returned */
@@ -12186,7 +12186,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetStencilReference(
 
     uint32_t reference = wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetStencilReference(render_pass_encoder, reference);
 
     /* Nothing returned */
@@ -12216,7 +12216,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetBlendConstant(
     WGPUColor *color = NULL;
     extract_color(registry, memory, (byte_t *)color_wa_struct_ptr, &color);
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetBlendConstant(render_pass_encoder, color);
 
     /* Nothing returned */
@@ -12254,7 +12254,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetViewport(
 
     float max_depth = wasm_val_to_native_float(args->data[6]);
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetViewport(render_pass_encoder, x, y, width, height, min_depth, max_depth);
 
     /* Nothing returned */
@@ -12288,7 +12288,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetScissorRect(
 
     uint32_t height = wasm_val_to_native_int(args->data[4]);
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetScissorRect(render_pass_encoder, x, y, width, height);
 
     /* Nothing returned */
@@ -12327,7 +12327,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetVertexBuffer(
     uint64_t size_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetVertexBuffer(render_pass_encoder, slot, buffer, offset, size);
 
     /* Nothing returned */
@@ -12366,7 +12366,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetIndexBuffer(
     uint64_t size_high = wasm_val_to_native_int(args->data[5 + 1]);
     uint64_t size = size_high << 32 | size_low;
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetIndexBuffer(render_pass_encoder, buffer, format, offset, size);
 
     /* Nothing returned */
@@ -12394,7 +12394,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderBeginOcclusionQuery(
 
     uint32_t query_index = wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     wgpuRenderPassEncoderBeginOcclusionQuery(render_pass_encoder, query_index);
 
     /* Nothing returned */
@@ -12420,7 +12420,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderEndOcclusionQuery(
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
     WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
-
+    /* Call method */
     wgpuRenderPassEncoderEndOcclusionQuery(render_pass_encoder);
 
     /* Nothing returned */
@@ -12446,7 +12446,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderEnd(
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
     WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
-
+    /* Call method */
     wgpuRenderPassEncoderEnd(render_pass_encoder);
 
     /* Nothing returned */
@@ -12476,7 +12476,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuRenderPassEncoderSetLabel(render_pass_encoder, label);
 
     /* Nothing returned */
@@ -12502,7 +12502,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderRelease(
     uint32_t mapping_index_render_pass_encoder = wasm_val_to_native_int(args->data[0]);
     WGPURenderPassEncoder render_pass_encoder = (WGPURenderPassEncoder)registry_item_get_mapping(&registry->renderPassEncoders, mapping_index_render_pass_encoder);
 
-
+    /* Call method */
     wgpuRenderPassEncoderRelease(render_pass_encoder);
 
     /* Nothing returned */
@@ -12530,7 +12530,7 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineGetBindGroupLayout(
 
     uint32_t group_index = wasm_val_to_native_int(args->data[1]);
 
-
+    /* Call method */
     WGPUBindGroupLayout result = wgpuRenderPipelineGetBindGroupLayout(render_pipeline, group_index);
 
     results->size = 1;
@@ -12563,7 +12563,7 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuRenderPipelineSetLabel(render_pipeline, label);
 
     /* Nothing returned */
@@ -12589,7 +12589,7 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineRelease(
     uint32_t mapping_index_render_pipeline = wasm_val_to_native_int(args->data[0]);
     WGPURenderPipeline render_pipeline = (WGPURenderPipeline)registry_item_get_mapping(&registry->renderPipelines, mapping_index_render_pipeline);
 
-
+    /* Call method */
     wgpuRenderPipelineRelease(render_pipeline);
 
     /* Nothing returned */
@@ -12619,7 +12619,7 @@ wasm_trap_t *wasm_import_wgpuSamplerSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuSamplerSetLabel(sampler, label);
 
     /* Nothing returned */
@@ -12645,7 +12645,7 @@ wasm_trap_t *wasm_import_wgpuSamplerRelease(
     uint32_t mapping_index_sampler = wasm_val_to_native_int(args->data[0]);
     WGPUSampler sampler = (WGPUSampler)registry_item_get_mapping(&registry->samplers, mapping_index_sampler);
 
-
+    /* Call method */
     wgpuSamplerRelease(sampler);
 
     /* Nothing returned */
@@ -12679,7 +12679,7 @@ wasm_trap_t *wasm_import_wgpuShaderModuleGetCompilationInfo(
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
 
-
+    /* Call method */
     wgpuShaderModuleGetCompilationInfo(shader_module, host_callback_wgpuShaderModuleGetCompilationInfo, userdata);
 
     /* Nothing returned */
@@ -12709,7 +12709,7 @@ wasm_trap_t *wasm_import_wgpuShaderModuleSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuShaderModuleSetLabel(shader_module, label);
 
     /* Nothing returned */
@@ -12735,7 +12735,7 @@ wasm_trap_t *wasm_import_wgpuShaderModuleRelease(
     uint32_t mapping_index_shader_module = wasm_val_to_native_int(args->data[0]);
     WGPUShaderModule shader_module = (WGPUShaderModule)registry_item_get_mapping(&registry->shaderModules, mapping_index_shader_module);
 
-
+    /* Call method */
     wgpuShaderModuleRelease(shader_module);
 
     /* Nothing returned */
@@ -12765,7 +12765,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceConfigure(
     WGPUSurfaceConfiguration *config = NULL;
     extract_surface_configuration(registry, memory, (byte_t *)config_wa_struct_ptr, &config);
 
-
+    /* Call method */
     wgpuSurfaceConfigure(surface, config);
 
     /* Nothing returned */
@@ -12798,7 +12798,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceGetCapabilities(
     WGPUSurfaceCapabilities *capabilities = NULL;
     extract_surface_capabilities(registry, memory, (byte_t *)capabilities_wa_struct_ptr, &capabilities);
 
-
+    /* Call method */
     wgpuSurfaceGetCapabilities(surface, adapter, capabilities);
 
     /* Nothing returned */
@@ -12828,7 +12828,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceGetCurrentTexture(
     WGPUSurfaceTexture *surface_texture = NULL;
     extract_surface_texture(registry, memory, (byte_t *)surface_texture_wa_struct_ptr, &surface_texture);
 
-
+    /* Call method */
     wgpuSurfaceGetCurrentTexture(surface, surface_texture);
 
     /* Nothing returned */
@@ -12854,7 +12854,7 @@ wasm_trap_t *wasm_import_wgpuSurfacePresent(
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
     WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
-
+    /* Call method */
     wgpuSurfacePresent(surface);
 
     /* Nothing returned */
@@ -12880,7 +12880,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceUnconfigure(
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
     WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
-
+    /* Call method */
     wgpuSurfaceUnconfigure(surface);
 
     /* Nothing returned */
@@ -12910,7 +12910,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuSurfaceSetLabel(surface, label);
 
     /* Nothing returned */
@@ -12936,7 +12936,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceRelease(
     uint32_t mapping_index_surface = wasm_val_to_native_int(args->data[0]);
     WGPUSurface surface = (WGPUSurface)registry_item_get_mapping(&registry->surfaces, mapping_index_surface);
 
-
+    /* Call method */
     wgpuSurfaceRelease(surface);
 
     /* Nothing returned */
@@ -12966,7 +12966,7 @@ wasm_trap_t *wasm_import_wgpuTextureCreateView(
     WGPUTextureViewDescriptor *descriptor = NULL;
     extract_texture_view_descriptor(registry, memory, (byte_t *)descriptor_wa_struct_ptr, &descriptor);
 
-
+    /* Call method */
     WGPUTextureView result = wgpuTextureCreateView(texture, descriptor);
 
     results->size = 1;
@@ -12999,7 +12999,7 @@ wasm_trap_t *wasm_import_wgpuTextureSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuTextureSetLabel(texture, label);
 
     /* Nothing returned */
@@ -13025,7 +13025,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetWidth(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     uint32_t result = wgpuTextureGetWidth(texture);
 
     results->size = 1;
@@ -13053,7 +13053,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetHeight(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     uint32_t result = wgpuTextureGetHeight(texture);
 
     results->size = 1;
@@ -13081,7 +13081,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetDepthOrArrayLayers(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     uint32_t result = wgpuTextureGetDepthOrArrayLayers(texture);
 
     results->size = 1;
@@ -13109,7 +13109,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetMipLevelCount(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     uint32_t result = wgpuTextureGetMipLevelCount(texture);
 
     results->size = 1;
@@ -13137,7 +13137,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetSampleCount(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     uint32_t result = wgpuTextureGetSampleCount(texture);
 
     results->size = 1;
@@ -13165,7 +13165,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetDimension(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     WGPUTextureDimension result = wgpuTextureGetDimension(texture);
 
     results->size = 1;
@@ -13193,7 +13193,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetFormat(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     WGPUTextureFormat result = wgpuTextureGetFormat(texture);
 
     results->size = 1;
@@ -13221,7 +13221,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetUsage(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     WGPUTextureUsage result = wgpuTextureGetUsage(texture);
 
     results->size = 1;
@@ -13249,7 +13249,7 @@ wasm_trap_t *wasm_import_wgpuTextureDestroy(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     wgpuTextureDestroy(texture);
 
     /* Nothing returned */
@@ -13275,7 +13275,7 @@ wasm_trap_t *wasm_import_wgpuTextureRelease(
     uint32_t mapping_index_texture = wasm_val_to_native_int(args->data[0]);
     WGPUTexture texture = (WGPUTexture)registry_item_get_mapping(&registry->textures, mapping_index_texture);
 
-
+    /* Call method */
     wgpuTextureRelease(texture);
 
     /* Nothing returned */
@@ -13305,7 +13305,7 @@ wasm_trap_t *wasm_import_wgpuTextureViewSetLabel(
     char * label = NULL;
     wasm_safe_extract_string_null_terminated(memory, label_wa_string_ptr, &label, 1024);
 
-
+    /* Call method */
     wgpuTextureViewSetLabel(texture_view, label);
 
     /* Nothing returned */
@@ -13331,7 +13331,7 @@ wasm_trap_t *wasm_import_wgpuTextureViewRelease(
     uint32_t mapping_index_texture_view = wasm_val_to_native_int(args->data[0]);
     WGPUTextureView texture_view = (WGPUTextureView)registry_item_get_mapping(&registry->textureViews, mapping_index_texture_view);
 
-
+    /* Call method */
     wgpuTextureViewRelease(texture_view);
 
     /* Nothing returned */

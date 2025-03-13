@@ -530,19 +530,16 @@ fn gen_extract_pointer(
     let m_member_name = &member.name_member;
 
     match &member.type_info {
-        TypeInfo::Uint32 => {
-            println!("TODO: Implement Uint32 pointer extraction");
-            c!(gen, "TODO: Implement Uint32 pointer extraction")
+        TypeInfo::Uint32 | TypeInfo::CVoid => {
+            a!(
+                gen,
+                "wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->{m_member_name}, (void *)&ha_host_struct_ptr->{m_member_name}, 1);"
+            );
         }
         TypeInfo::Struct(s_name) => {
             i!(gen, "if (extract_{s_name}(registry, memory, (byte_t *)ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name})) {{");
             a!(gen, "LOG_WARN(\"{fn_name}: extract_{s_name} failed\");");
             o!(gen, "}}");
-        }
-        TypeInfo::CVoid => {
-            println!("TODO: Confirm c_void pointer copy is safe");
-            c!(gen, "TODO: Is this safe?");
-            a!(gen, "ha_host_struct_ptr->{m_member_name} = (void *)ha_wasm_struct_ptr->{m_member_name};");
         }
         _ => unimplemented!(
             "Unhandled member of type {:?}: {:?} in {:?}",

@@ -2671,8 +2671,7 @@ int extract_uncaptured_error_callback_info(
     ha_host_struct_ptr->callback = NULL;
 
     LOG_TRACE("extract_uncaptured_error_callback_info: extracting [Pointer<c_void>] userdata: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->userdata, (void *)&ha_host_struct_ptr->userdata);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->userdata = (void *)ha_wasm_struct_ptr->userdata;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->userdata, (void *)&ha_host_struct_ptr->userdata, 1);
 
     return 0;
 }
@@ -3109,8 +3108,7 @@ int extract_device_descriptor(
     ha_host_struct_ptr->deviceLostCallback = NULL;
 
     LOG_TRACE("extract_device_descriptor: extracting [Pointer<c_void>] deviceLostUserdata: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->deviceLostUserdata, (void *)&ha_host_struct_ptr->deviceLostUserdata);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->deviceLostUserdata = (void *)ha_wasm_struct_ptr->deviceLostUserdata;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->deviceLostUserdata, (void *)&ha_host_struct_ptr->deviceLostUserdata, 1);
 
     LOG_TRACE("extract_device_descriptor: extracting [Embedded<struct>] uncapturedErrorCallbackInfo: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->uncapturedErrorCallbackInfo, (void *)&ha_host_struct_ptr->uncapturedErrorCallbackInfo);
     WGPUUncapturedErrorCallbackInfo *uncaptured_error_callback_info_ptr = &ha_host_struct_ptr->uncapturedErrorCallbackInfo;
@@ -7163,7 +7161,7 @@ int extract_shader_module_SPIRV_descriptor(
     ha_host_struct_ptr->codeSize = ha_wasm_struct_ptr->codeSize;
 
     LOG_TRACE("extract_shader_module_SPIRV_descriptor: extracting [Pointer<uint32>] code: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->code, (void *)&ha_host_struct_ptr->code);
-    /* TODO: Implement Uint32 pointer extraction */
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->code, (void *)&ha_host_struct_ptr->code, 1);
 
     return 0;
 }
@@ -7297,8 +7295,7 @@ int extract_surface_descriptor_from_android_native_window(
     }
 
     LOG_TRACE("extract_surface_descriptor_from_android_native_window: extracting [Pointer<c_void>] window: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->window = (void *)ha_wasm_struct_ptr->window;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window, 1);
 
     return 0;
 }
@@ -7432,8 +7429,7 @@ int extract_surface_descriptor_from_metal_layer(
     }
 
     LOG_TRACE("extract_surface_descriptor_from_metal_layer: extracting [Pointer<c_void>] layer: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->layer, (void *)&ha_host_struct_ptr->layer);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->layer = (void *)ha_wasm_struct_ptr->layer;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->layer, (void *)&ha_host_struct_ptr->layer, 1);
 
     return 0;
 }
@@ -7501,12 +7497,10 @@ int extract_surface_descriptor_from_windows_HWND(
     }
 
     LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [Pointer<c_void>] hinstance: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hinstance, (void *)&ha_host_struct_ptr->hinstance);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->hinstance = (void *)ha_wasm_struct_ptr->hinstance;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->hinstance, (void *)&ha_host_struct_ptr->hinstance, 1);
 
     LOG_TRACE("extract_surface_descriptor_from_windows_HWND: extracting [Pointer<c_void>] hwnd: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hwnd, (void *)&ha_host_struct_ptr->hwnd);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->hwnd = (void *)ha_wasm_struct_ptr->hwnd;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->hwnd, (void *)&ha_host_struct_ptr->hwnd, 1);
 
     return 0;
 }
@@ -7574,8 +7568,7 @@ int extract_surface_descriptor_from_xcb_window(
     }
 
     LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [Pointer<c_void>] connection: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->connection, (void *)&ha_host_struct_ptr->connection);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->connection = (void *)ha_wasm_struct_ptr->connection;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->connection, (void *)&ha_host_struct_ptr->connection, 1);
 
     LOG_TRACE("extract_surface_descriptor_from_xcb_window: extracting [Embedded<uint32>] window: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
     ha_host_struct_ptr->window = ha_wasm_struct_ptr->window;
@@ -7646,8 +7639,7 @@ int extract_surface_descriptor_from_xlib_window(
     }
 
     LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [Pointer<c_void>] display: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->display, (void *)&ha_host_struct_ptr->display);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->display = (void *)ha_wasm_struct_ptr->display;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->display, (void *)&ha_host_struct_ptr->display, 1);
 
     LOG_TRACE("extract_surface_descriptor_from_xlib_window: extracting [Embedded<uint64>] window: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->window, (void *)&ha_host_struct_ptr->window);
     ha_host_struct_ptr->window = ha_wasm_struct_ptr->window;
@@ -7718,12 +7710,10 @@ int extract_surface_descriptor_from_wayland_surface(
     }
 
     LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [Pointer<c_void>] display: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->display, (void *)&ha_host_struct_ptr->display);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->display = (void *)ha_wasm_struct_ptr->display;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->display, (void *)&ha_host_struct_ptr->display, 1);
 
     LOG_TRACE("extract_surface_descriptor_from_wayland_surface: extracting [Pointer<c_void>] surface: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->surface, (void *)&ha_host_struct_ptr->surface);
-    /* TODO: Is this safe? */
-    ha_host_struct_ptr->surface = (void *)ha_wasm_struct_ptr->surface;
+    wasm_safe_extract_pointer(memory, ha_wasm_struct_ptr->surface, (void *)&ha_host_struct_ptr->surface, 1);
 
     return 0;
 }

@@ -1,7 +1,8 @@
 use std::io::Write;
 
 use crate::model::{
-    CallbackModel, MethodModel, ObjectModel, RefMode, SpecModel, StructModel, TypeInfo, TypeModel,
+    CallbackModel, MethodArgGroupModel, MethodModel, ObjectModel, RefMode, SpecModel, StructModel,
+    TypeInfo, TypeModel,
 };
 use crate::spec;
 use crate::src::{CodeGenerator, GeneratedLine};
@@ -485,18 +486,18 @@ fn gen_extract_embedded(
                 "ha_host_struct_ptr->{m_member_name} = ha_wasm_struct_ptr->{m_member_name};"
             )
         }
-        crate::model::TypeInfo::String => {
+        TypeInfo::String => {
             i!(gen, "if (wasm_safe_extract_string_null_terminated(memory, ha_wasm_struct_ptr->{m_member_name}, &ha_host_struct_ptr->{m_member_name}, 65534)) {{");
             a!(gen, "LOG_WARN(\"{fn_name}: wasm_safe_extract_string_null_terminated failed for {m_name}\");");
             o!(gen, "}}");
         }
-        crate::model::TypeInfo::Object(o_name) => {
+        TypeInfo::Object(o_name) => {
             let obj = model.object_by_name(&o_name).unwrap();
             let obj_registry = &obj.name_member_plural;
             let obj_type = &obj.name_wgpu_type;
             a!(gen, "ha_host_struct_ptr->{m_member_name} = ({obj_type})registry_item_get_mapping(&registry->{obj_registry}, ha_wasm_struct_ptr->{m_member_name});");
         }
-        crate::model::TypeInfo::Struct(s_name) => {
+        TypeInfo::Struct(s_name) => {
             let s = model.struct_by_name(&s_name).unwrap();
             let s_wgpu_type = &s.name_wgpu_type;
             a!(
@@ -507,7 +508,7 @@ fn gen_extract_embedded(
             a!(gen, "LOG_WARN(\"{fn_name}: extract_{s_name} failed\");");
             o!(gen, "}}");
         }
-        crate::model::TypeInfo::FunctionType(_) => {
+        TypeInfo::FunctionType(_) => {
             c!(gen, "TODO: Create native callback function");
             a!(gen, "ha_host_struct_ptr->{m_member_name} = NULL;");
         }
@@ -565,7 +566,6 @@ fn gen_extract_array(
     let a_count = m_group.members.first().unwrap();
     let a_count_member = &a_count.name_member;
 
-    c!(gen, "TODO: Implement SAFE pointer extraction");
     match &member.type_info {
         TypeInfo::Enum(e_name) => {
             let proto_name = format!("{}_array_proto", e_name);
@@ -662,7 +662,81 @@ fn gen_all_free_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel) {
         let wgpu_type = &struct_.name_wgpu_type;
 
         i!(gen, "int {fn_name}({wgpu_type} *struct_ptr) {{");
-        a!(gen, "LOG_WARN(\"{fn_name}: TODO\");");
+        a!(gen, "LOG_DEBUG(\"{fn_name} params: (%p)\", struct_ptr);");
+        n!(gen);
+
+        i!(gen, "if (struct_ptr == NULL) {{");
+        a!(gen, "LOG_DEBUG(\"{fn_name} struct_ptr is NULL, skipping\");");
+        a!(gen, "return 0;");
+        o!(gen, "}}");
+        n!(gen);
+
+        if struct_.name_orig == "chained_struct" || struct_.name_orig == "chained_struct_out" {
+            let s_types = model.enum_by_name("s_type").unwrap();
+            let s_types_wgpu_type = &s_types.name_wgpu_type;
+            c!(gen, "Resolve SType");
+            a!(
+                gen,
+                "{s_types_wgpu_type} sType = ({s_types_wgpu_type})struct_ptr->sType;"
+            );
+            a!(gen, "LOG_DEBUG(\"{fn_name}: sType value: %d\", sType);");
+            n!(gen);
+
+            i!(gen, "switch (sType) {{");
+            for s_type in s_types.entries.iter() {
+                let s_type_entry_name = &s_type.name_wgpu_value;
+                match s_type.name_orig.as_str() {
+                    "invalid" => {
+                        i!(gen, "case {s_type_entry_name}:");
+                        a!(gen, "FATAL(\"{fn_name}: Bad sType: WGPUSType_Invalid\");");
+                    }
+                    _ => {
+                        let struct_ = model.struct_by_name(&s_type.name_orig).unwrap();
+                        let struct_free_fn = format!("free_{}", struct_.name_orig);
+                        let struct_wgpu_type = &struct_.name_wgpu_type;
+                        oi!(gen, "case {s_type_entry_name}:");
+                        a!(gen, "LOG_TRACE(\"{fn_name}: sType: {s_type_entry_name}\");");
+                        a!(gen, "{struct_free_fn}(({struct_wgpu_type} *)struct_ptr);");
+                    }
+                }
+                a!(gen, "break;");
+            }
+
+            oi!(gen, "default:");
+            a!(gen, "FATAL(\"{fn_name}: Unknown sType value: %d\", sType);");
+            a!(gen, "break;");
+            o2!(gen, "}}");
+        } else {
+            c!(gen, "free structs allocated members");
+            for member_group in struct_.member_groups.clone() {
+                for member in member_group.members {
+                    let var = format!("struct_ptr->{}", member.name_member);
+                    match member.ref_mode {
+                        RefMode::Embedded => match &member.type_info {
+                            TypeInfo::String => {
+                                a!(gen, "free({var});")
+                            }
+                            _ => {}
+                        },
+                        RefMode::Pointer(_) => match &member.type_info {
+                            TypeInfo::Struct(s_name) => {
+                                a!(gen, "free_{s_name}({var});")
+                            }
+                            _ => {}
+                        },
+                        RefMode::Array => {
+                            a!(gen, "free({var});")
+                        }
+                    }
+                }
+            }
+            n!(gen);
+
+            c!(gen, "free the struct itself");
+            a!(gen, "free(struct_ptr);");
+        }
+        n!(gen);
+
         a!(gen, "return 0;");
         o!(gen, "}}");
         n!(gen);
@@ -725,7 +799,6 @@ fn gen_all_wasm_callback_fn_definitions(gen: &mut CodeGenerator, model: &SpecMod
                     a!(gen, "args.num_elems = {};", args.len());
                     a!(gen, "args.size = (4 * args.num_elems);");
                     for (i, arg) in args.iter().enumerate() {
-                        let arg_name = &arg.name_orig;
                         a!(gen, "args.data[{}].kind = WASM_INT_KIND;", i);
                         if i == args.len() - 1 {
                             a!(gen, "args.data[{}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;", i);
@@ -822,12 +895,18 @@ fn gen_insert_result(
             }
             TypeInfo::String => {
                 a!(gen, "size_t {var_name}_mem_size = strlen({var_name}) + 1;");
-                a!(gen, "WASM_POINTER_VOID_C_TYPE {var_name}_wa_wasm_malloc_res = 0;");
+                a!(
+                    gen,
+                    "WASM_POINTER_VOID_C_TYPE {var_name}_wa_wasm_malloc_res = 0;"
+                );
                 a!(gen, "void *{var_name}_ha_wasm_malloc_res = NULL;");
                 i!(gen, "if (wasm_safe_malloc(proc, {var_name}_mem_size, &{var_name}_wa_wasm_malloc_res, &{var_name}_ha_wasm_malloc_res) != 0) {{");
                 a!(gen, "FATAL(\"wasm_safe_malloc failed\");");
                 o!(gen, "}}");
-                a!(gen, "memcpy({var_name}_ha_wasm_malloc_res, {var_name}, {var_name}_mem_size);");
+                a!(
+                    gen,
+                    "memcpy({var_name}_ha_wasm_malloc_res, {var_name}, {var_name}_mem_size);"
+                );
                 a!(gen, "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t){var_name}_wa_wasm_malloc_res;");
             }
             _ => {
@@ -842,12 +921,18 @@ fn gen_insert_result(
             TypeInfo::Struct(s_name) => {
                 let struct_ = model.struct_by_name(s_name).unwrap();
                 let s_wasm_type = struct_.name_wasm_type.to_string();
-                a!(gen, "WASM_POINTER_VOID_C_TYPE {var_name}_wa_wasm_malloc_res = 0;");
+                a!(
+                    gen,
+                    "WASM_POINTER_VOID_C_TYPE {var_name}_wa_wasm_malloc_res = 0;"
+                );
                 a!(gen, "void *{var_name}_ha_wasm_malloc_res = NULL;");
                 i!(gen, "if (wasm_safe_malloc(proc, sizeof({s_wasm_type}), &{var_name}_wa_wasm_malloc_res, &{var_name}_ha_wasm_malloc_res) != 0) {{");
                 a!(gen, "FATAL(\"wasm_safe_malloc failed\");");
                 o!(gen, "}}");
-                a!(gen, "insert_{s_name}({var_name}_ha_wasm_malloc_res, {var_name});");
+                a!(
+                    gen,
+                    "insert_{s_name}({var_name}_ha_wasm_malloc_res, {var_name});"
+                );
                 a!(gen, "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t){var_name}_wa_wasm_malloc_res;");
             }
             _ => {
@@ -952,7 +1037,12 @@ fn gen_all_wasm_import_fn_definitions(gen: &mut CodeGenerator, model: &SpecModel
             }
             n!(gen);
 
-            c!(gen, "TODO: Freeing");
+            for arg_group in &method.arg_groups {
+                for arg in &arg_group.args {
+                    gen_arg_free(gen, model, object, method, arg_group, arg);
+                }
+            }
+            n!(gen);
 
             a!(gen, "return NULL;");
             o!(gen, "}}");
@@ -1232,11 +1322,42 @@ fn gen_assign_method_result(
             a!(gen, "FATAL(\"wasm_safe_malloc failed\");");
             o!(gen, "}}");
             a!(gen, "memcpy(ha_wasm_malloc_res, result, size);");
-            a!(gen, "results->data[0].of.WASM_VAL_INT_PROP = wa_wasm_malloc_res;");
+            a!(
+                gen,
+                "results->data[0].of.WASM_VAL_INT_PROP = wa_wasm_malloc_res;"
+            );
         }
         _ => {
             println!("unimplemented return type: {:?}", returns.type_info);
             // unimplemented!("Unhandled returns type: {:?}", returns.type_info)
+        }
+    }
+}
+
+fn gen_arg_free(
+    gen: &mut CodeGenerator,
+    model: &SpecModel,
+    object: &ObjectModel,
+    method: &MethodModel,
+    arg_group: &MethodArgGroupModel,
+    arg: &TypeModel,
+) {
+    let arg_name = &arg.name_orig;
+    match arg.ref_mode {
+        RefMode::Embedded => match &arg.type_info {
+            TypeInfo::String => {
+                a!(gen, "free({arg_name});")
+            }
+            _ => {}
+        },
+        RefMode::Pointer(_) => match &arg.type_info {
+            TypeInfo::Struct(s_name) => {
+                a!(gen, "free_{s_name}({arg_name});")
+            }
+            _ => {}
+        },
+        RefMode::Array => {
+            a!(gen, "free({arg_name}_array);");
         }
     }
 }

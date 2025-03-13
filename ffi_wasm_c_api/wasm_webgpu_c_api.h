@@ -2136,7 +2136,6 @@ int extract_vertex_buffer_layout(
     ha_host_struct_ptr->attributeCount = ha_wasm_struct_ptr->attributeCount;
 
     LOG_TRACE("extract_vertex_buffer_layout: extracting [Array<struct>] attributes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->attributes, (void *)&ha_host_struct_ptr->attributes);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUVertexAttribute *vertex_attribute_array_proto = calloc(ha_host_struct_ptr->attributeCount, sizeof(WGPUVertexAttribute));
     if (vertex_attribute_array_proto == NULL) {
         FATAL("extract_vertex_buffer_layout: calloc failed");
@@ -2898,7 +2897,6 @@ int extract_programmable_stage_descriptor(
     ha_host_struct_ptr->constantCount = ha_wasm_struct_ptr->constantCount;
 
     LOG_TRACE("extract_programmable_stage_descriptor: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
         FATAL("extract_programmable_stage_descriptor: calloc failed");
@@ -3080,7 +3078,6 @@ int extract_device_descriptor(
     ha_host_struct_ptr->requiredFeatureCount = ha_wasm_struct_ptr->requiredFeatureCount;
 
     LOG_TRACE("extract_device_descriptor: extracting [Array<enum>] requiredFeatures: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->requiredFeatures, (void *)&ha_host_struct_ptr->requiredFeatures);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUFeatureName *feature_name_array_proto = calloc(ha_host_struct_ptr->requiredFeatureCount, sizeof(int));
     if (feature_name_array_proto == NULL) {
         FATAL("extract_device_descriptor: calloc failed");
@@ -3288,7 +3285,6 @@ int extract_bind_group_descriptor(
     ha_host_struct_ptr->entryCount = ha_wasm_struct_ptr->entryCount;
 
     LOG_TRACE("extract_bind_group_descriptor: extracting [Array<struct>] entries: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entries, (void *)&ha_host_struct_ptr->entries);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUBindGroupEntry *bind_group_entry_array_proto = calloc(ha_host_struct_ptr->entryCount, sizeof(WGPUBindGroupEntry));
     if (bind_group_entry_array_proto == NULL) {
         FATAL("extract_bind_group_descriptor: calloc failed");
@@ -3613,7 +3609,6 @@ int extract_surface_configuration(
     ha_host_struct_ptr->viewFormatCount = ha_wasm_struct_ptr->viewFormatCount;
 
     LOG_TRACE("extract_surface_configuration: extracting [Array<enum>] viewFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewFormats, (void *)&ha_host_struct_ptr->viewFormats);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->viewFormatCount, sizeof(int));
     if (texture_format_array_proto == NULL) {
         FATAL("extract_surface_configuration: calloc failed");
@@ -3892,7 +3887,6 @@ int extract_bind_group_layout_descriptor(
     ha_host_struct_ptr->entryCount = ha_wasm_struct_ptr->entryCount;
 
     LOG_TRACE("extract_bind_group_layout_descriptor: extracting [Array<struct>] entries: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->entries, (void *)&ha_host_struct_ptr->entries);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUBindGroupLayoutEntry *bind_group_layout_entry_array_proto = calloc(ha_host_struct_ptr->entryCount, sizeof(WGPUBindGroupLayoutEntry));
     if (bind_group_layout_entry_array_proto == NULL) {
         FATAL("extract_bind_group_layout_descriptor: calloc failed");
@@ -4268,7 +4262,6 @@ int extract_compilation_info(
     ha_host_struct_ptr->messageCount = ha_wasm_struct_ptr->messageCount;
 
     LOG_TRACE("extract_compilation_info: extracting [Array<struct>] messages: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->messages, (void *)&ha_host_struct_ptr->messages);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUCompilationMessage *compilation_message_array_proto = calloc(ha_host_struct_ptr->messageCount, sizeof(WGPUCompilationMessage));
     if (compilation_message_array_proto == NULL) {
         FATAL("extract_compilation_info: calloc failed");
@@ -4911,7 +4904,6 @@ int extract_pipeline_layout_descriptor(
     ha_host_struct_ptr->bindGroupLayoutCount = ha_wasm_struct_ptr->bindGroupLayoutCount;
 
     LOG_TRACE("extract_pipeline_layout_descriptor: extracting [Array<object>] bindGroupLayouts: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->bindGroupLayouts, (void *)&ha_host_struct_ptr->bindGroupLayouts);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUBindGroupLayout *bind_group_layout_array_proto = calloc(ha_host_struct_ptr->bindGroupLayoutCount, sizeof(WGPUBindGroupLayout));
     if (bind_group_layout_array_proto == NULL) {
         FATAL("extract_pipeline_layout_descriptor: calloc failed");
@@ -5153,7 +5145,6 @@ int extract_render_bundle_encoder_descriptor(
     ha_host_struct_ptr->colorFormatCount = ha_wasm_struct_ptr->colorFormatCount;
 
     LOG_TRACE("extract_render_bundle_encoder_descriptor: extracting [Array<enum>] colorFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorFormats, (void *)&ha_host_struct_ptr->colorFormats);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->colorFormatCount, sizeof(int));
     if (texture_format_array_proto == NULL) {
         FATAL("extract_render_bundle_encoder_descriptor: calloc failed");
@@ -5353,7 +5344,6 @@ int extract_render_pass_descriptor(
     ha_host_struct_ptr->colorAttachmentCount = ha_wasm_struct_ptr->colorAttachmentCount;
 
     LOG_TRACE("extract_render_pass_descriptor: extracting [Array<struct>] colorAttachments: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->colorAttachments, (void *)&ha_host_struct_ptr->colorAttachments);
-    /* TODO: Implement SAFE pointer extraction */
     WGPURenderPassColorAttachment *render_pass_color_attachment_array_proto = calloc(ha_host_struct_ptr->colorAttachmentCount, sizeof(WGPURenderPassColorAttachment));
     if (render_pass_color_attachment_array_proto == NULL) {
         FATAL("extract_render_pass_descriptor: calloc failed");
@@ -5466,7 +5456,6 @@ int extract_vertex_state(
     ha_host_struct_ptr->constantCount = ha_wasm_struct_ptr->constantCount;
 
     LOG_TRACE("extract_vertex_state: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
         FATAL("extract_vertex_state: calloc failed");
@@ -5485,7 +5474,6 @@ int extract_vertex_state(
     ha_host_struct_ptr->bufferCount = ha_wasm_struct_ptr->bufferCount;
 
     LOG_TRACE("extract_vertex_state: extracting [Array<struct>] buffers: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->buffers, (void *)&ha_host_struct_ptr->buffers);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUVertexBufferLayout *vertex_buffer_layout_array_proto = calloc(ha_host_struct_ptr->bufferCount, sizeof(WGPUVertexBufferLayout));
     if (vertex_buffer_layout_array_proto == NULL) {
         FATAL("extract_vertex_state: calloc failed");
@@ -5859,7 +5847,6 @@ int extract_fragment_state(
     ha_host_struct_ptr->constantCount = ha_wasm_struct_ptr->constantCount;
 
     LOG_TRACE("extract_fragment_state: extracting [Array<struct>] constants: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->constants, (void *)&ha_host_struct_ptr->constants);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUConstantEntry *constant_entry_array_proto = calloc(ha_host_struct_ptr->constantCount, sizeof(WGPUConstantEntry));
     if (constant_entry_array_proto == NULL) {
         FATAL("extract_fragment_state: calloc failed");
@@ -5878,7 +5865,6 @@ int extract_fragment_state(
     ha_host_struct_ptr->targetCount = ha_wasm_struct_ptr->targetCount;
 
     LOG_TRACE("extract_fragment_state: extracting [Array<struct>] targets: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->targets, (void *)&ha_host_struct_ptr->targets);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUColorTargetState *color_target_state_array_proto = calloc(ha_host_struct_ptr->targetCount, sizeof(WGPUColorTargetState));
     if (color_target_state_array_proto == NULL) {
         FATAL("extract_fragment_state: calloc failed");
@@ -6276,7 +6262,6 @@ int extract_shader_module_descriptor(
     ha_host_struct_ptr->hintCount = ha_wasm_struct_ptr->hintCount;
 
     LOG_TRACE("extract_shader_module_descriptor: extracting [Array<struct>] hints: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->hints, (void *)&ha_host_struct_ptr->hints);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUShaderModuleCompilationHint *shader_module_compilation_hint_array_proto = calloc(ha_host_struct_ptr->hintCount, sizeof(WGPUShaderModuleCompilationHint));
     if (shader_module_compilation_hint_array_proto == NULL) {
         FATAL("extract_shader_module_descriptor: calloc failed");
@@ -6541,7 +6526,6 @@ int extract_texture_descriptor(
     ha_host_struct_ptr->viewFormatCount = ha_wasm_struct_ptr->viewFormatCount;
 
     LOG_TRACE("extract_texture_descriptor: extracting [Array<enum>] viewFormats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->viewFormats, (void *)&ha_host_struct_ptr->viewFormats);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->viewFormatCount, sizeof(int));
     if (texture_format_array_proto == NULL) {
         FATAL("extract_texture_descriptor: calloc failed");
@@ -6847,7 +6831,6 @@ int extract_surface_capabilities(
     ha_host_struct_ptr->formatCount = ha_wasm_struct_ptr->formatCount;
 
     LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] formats: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->formats, (void *)&ha_host_struct_ptr->formats);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUTextureFormat *texture_format_array_proto = calloc(ha_host_struct_ptr->formatCount, sizeof(int));
     if (texture_format_array_proto == NULL) {
         FATAL("extract_surface_capabilities: calloc failed");
@@ -6863,7 +6846,6 @@ int extract_surface_capabilities(
     ha_host_struct_ptr->presentModeCount = ha_wasm_struct_ptr->presentModeCount;
 
     LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] presentModes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->presentModes, (void *)&ha_host_struct_ptr->presentModes);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUPresentMode *present_mode_array_proto = calloc(ha_host_struct_ptr->presentModeCount, sizeof(int));
     if (present_mode_array_proto == NULL) {
         FATAL("extract_surface_capabilities: calloc failed");
@@ -6879,7 +6861,6 @@ int extract_surface_capabilities(
     ha_host_struct_ptr->alphaModeCount = ha_wasm_struct_ptr->alphaModeCount;
 
     LOG_TRACE("extract_surface_capabilities: extracting [Array<enum>] alphaModes: [HMAS.WWST] (%p) -> [HMAS.HWST] (%p)", (void *)&ha_wasm_struct_ptr->alphaModes, (void *)&ha_host_struct_ptr->alphaModes);
-    /* TODO: Implement SAFE pointer extraction */
     WGPUCompositeAlphaMode *composite_alpha_mode_array_proto = calloc(ha_host_struct_ptr->alphaModeCount, sizeof(int));
     if (composite_alpha_mode_array_proto == NULL) {
         FATAL("extract_surface_capabilities: calloc failed");
@@ -7722,377 +7703,1413 @@ int extract_surface_descriptor_from_wayland_surface(
 /* Free Struct Function Definitions */
 
 int free_chained_struct(WGPUChainedStruct *struct_ptr) {
-    LOG_WARN("free_chained_struct: TODO");
+    LOG_DEBUG("free_chained_struct params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_chained_struct struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* Resolve SType */
+    WGPUSType sType = (WGPUSType)struct_ptr->sType;
+    LOG_DEBUG("free_chained_struct: sType value: %d", sType);
+
+    switch (sType) {
+        case WGPUSType_Invalid:
+            FATAL("free_chained_struct: Bad sType: WGPUSType_Invalid");
+            break;
+        case WGPUSType_SurfaceDescriptorFromMetalLayer:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_SurfaceDescriptorFromMetalLayer");
+            free_surface_descriptor_from_metal_layer((WGPUSurfaceDescriptorFromMetalLayer *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromWindowsHWND:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_SurfaceDescriptorFromWindowsHWND");
+            free_surface_descriptor_from_windows_HWND((WGPUSurfaceDescriptorFromWindowsHWND *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromXlibWindow:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_SurfaceDescriptorFromXlibWindow");
+            free_surface_descriptor_from_xlib_window((WGPUSurfaceDescriptorFromXlibWindow *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromCanvasHTMLSelector:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_SurfaceDescriptorFromCanvasHTMLSelector");
+            free_surface_descriptor_from_canvas_HTML_selector((WGPUSurfaceDescriptorFromCanvasHTMLSelector *)struct_ptr);
+            break;
+        case WGPUSType_ShaderModuleSPIRVDescriptor:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_ShaderModuleSPIRVDescriptor");
+            free_shader_module_SPIRV_descriptor((WGPUShaderModuleSPIRVDescriptor *)struct_ptr);
+            break;
+        case WGPUSType_ShaderModuleWGSLDescriptor:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_ShaderModuleWGSLDescriptor");
+            free_shader_module_WGSL_descriptor((WGPUShaderModuleWGSLDescriptor *)struct_ptr);
+            break;
+        case WGPUSType_PrimitiveDepthClipControl:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_PrimitiveDepthClipControl");
+            free_primitive_depth_clip_control((WGPUPrimitiveDepthClipControl *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromWaylandSurface:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_SurfaceDescriptorFromWaylandSurface");
+            free_surface_descriptor_from_wayland_surface((WGPUSurfaceDescriptorFromWaylandSurface *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromAndroidNativeWindow:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_SurfaceDescriptorFromAndroidNativeWindow");
+            free_surface_descriptor_from_android_native_window((WGPUSurfaceDescriptorFromAndroidNativeWindow *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromXcbWindow:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_SurfaceDescriptorFromXcbWindow");
+            free_surface_descriptor_from_xcb_window((WGPUSurfaceDescriptorFromXcbWindow *)struct_ptr);
+            break;
+        case WGPUSType_RenderPassDescriptorMaxDrawCount:
+            LOG_TRACE("free_chained_struct: sType: WGPUSType_RenderPassDescriptorMaxDrawCount");
+            free_render_pass_descriptor_max_draw_count((WGPURenderPassDescriptorMaxDrawCount *)struct_ptr);
+            break;
+        default:
+            FATAL("free_chained_struct: Unknown sType value: %d", sType);
+            break;
+    }
+
     return 0;
 }
 
 int free_chained_struct_out(WGPUChainedStructOut *struct_ptr) {
-    LOG_WARN("free_chained_struct_out: TODO");
+    LOG_DEBUG("free_chained_struct_out params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_chained_struct_out struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* Resolve SType */
+    WGPUSType sType = (WGPUSType)struct_ptr->sType;
+    LOG_DEBUG("free_chained_struct_out: sType value: %d", sType);
+
+    switch (sType) {
+        case WGPUSType_Invalid:
+            FATAL("free_chained_struct_out: Bad sType: WGPUSType_Invalid");
+            break;
+        case WGPUSType_SurfaceDescriptorFromMetalLayer:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_SurfaceDescriptorFromMetalLayer");
+            free_surface_descriptor_from_metal_layer((WGPUSurfaceDescriptorFromMetalLayer *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromWindowsHWND:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_SurfaceDescriptorFromWindowsHWND");
+            free_surface_descriptor_from_windows_HWND((WGPUSurfaceDescriptorFromWindowsHWND *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromXlibWindow:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_SurfaceDescriptorFromXlibWindow");
+            free_surface_descriptor_from_xlib_window((WGPUSurfaceDescriptorFromXlibWindow *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromCanvasHTMLSelector:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_SurfaceDescriptorFromCanvasHTMLSelector");
+            free_surface_descriptor_from_canvas_HTML_selector((WGPUSurfaceDescriptorFromCanvasHTMLSelector *)struct_ptr);
+            break;
+        case WGPUSType_ShaderModuleSPIRVDescriptor:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_ShaderModuleSPIRVDescriptor");
+            free_shader_module_SPIRV_descriptor((WGPUShaderModuleSPIRVDescriptor *)struct_ptr);
+            break;
+        case WGPUSType_ShaderModuleWGSLDescriptor:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_ShaderModuleWGSLDescriptor");
+            free_shader_module_WGSL_descriptor((WGPUShaderModuleWGSLDescriptor *)struct_ptr);
+            break;
+        case WGPUSType_PrimitiveDepthClipControl:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_PrimitiveDepthClipControl");
+            free_primitive_depth_clip_control((WGPUPrimitiveDepthClipControl *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromWaylandSurface:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_SurfaceDescriptorFromWaylandSurface");
+            free_surface_descriptor_from_wayland_surface((WGPUSurfaceDescriptorFromWaylandSurface *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromAndroidNativeWindow:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_SurfaceDescriptorFromAndroidNativeWindow");
+            free_surface_descriptor_from_android_native_window((WGPUSurfaceDescriptorFromAndroidNativeWindow *)struct_ptr);
+            break;
+        case WGPUSType_SurfaceDescriptorFromXcbWindow:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_SurfaceDescriptorFromXcbWindow");
+            free_surface_descriptor_from_xcb_window((WGPUSurfaceDescriptorFromXcbWindow *)struct_ptr);
+            break;
+        case WGPUSType_RenderPassDescriptorMaxDrawCount:
+            LOG_TRACE("free_chained_struct_out: sType: WGPUSType_RenderPassDescriptorMaxDrawCount");
+            free_render_pass_descriptor_max_draw_count((WGPURenderPassDescriptorMaxDrawCount *)struct_ptr);
+            break;
+        default:
+            FATAL("free_chained_struct_out: Unknown sType value: %d", sType);
+            break;
+    }
+
     return 0;
 }
 
 int free_limits(WGPULimits *struct_ptr) {
-    LOG_WARN("free_limits: TODO");
+    LOG_DEBUG("free_limits params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_limits struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_blend_component(WGPUBlendComponent *struct_ptr) {
-    LOG_WARN("free_blend_component: TODO");
+    LOG_DEBUG("free_blend_component params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_blend_component struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_color(WGPUColor *struct_ptr) {
-    LOG_WARN("free_color: TODO");
+    LOG_DEBUG("free_color params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_color struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_compute_pass_timestamp_writes(WGPUComputePassTimestampWrites *struct_ptr) {
-    LOG_WARN("free_compute_pass_timestamp_writes: TODO");
+    LOG_DEBUG("free_compute_pass_timestamp_writes params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_compute_pass_timestamp_writes struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_extent_3D(WGPUExtent3D *struct_ptr) {
-    LOG_WARN("free_extent_3D: TODO");
+    LOG_DEBUG("free_extent_3D params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_extent_3D struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_vertex_attribute(WGPUVertexAttribute *struct_ptr) {
-    LOG_WARN("free_vertex_attribute: TODO");
+    LOG_DEBUG("free_vertex_attribute params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_vertex_attribute struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_vertex_buffer_layout(WGPUVertexBufferLayout *struct_ptr) {
-    LOG_WARN("free_vertex_buffer_layout: TODO");
+    LOG_DEBUG("free_vertex_buffer_layout params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_vertex_buffer_layout struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free(struct_ptr->attributes);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_origin_3D(WGPUOrigin3D *struct_ptr) {
-    LOG_WARN("free_origin_3D: TODO");
+    LOG_DEBUG("free_origin_3D params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_origin_3D struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_render_pass_depth_stencil_attachment(WGPURenderPassDepthStencilAttachment *struct_ptr) {
-    LOG_WARN("free_render_pass_depth_stencil_attachment: TODO");
+    LOG_DEBUG("free_render_pass_depth_stencil_attachment params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_render_pass_depth_stencil_attachment struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_render_pass_timestamp_writes(WGPURenderPassTimestampWrites *struct_ptr) {
-    LOG_WARN("free_render_pass_timestamp_writes: TODO");
+    LOG_DEBUG("free_render_pass_timestamp_writes params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_render_pass_timestamp_writes struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_blend_state(WGPUBlendState *struct_ptr) {
-    LOG_WARN("free_blend_state: TODO");
+    LOG_DEBUG("free_blend_state params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_blend_state struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_stencil_face_state(WGPUStencilFaceState *struct_ptr) {
-    LOG_WARN("free_stencil_face_state: TODO");
+    LOG_DEBUG("free_stencil_face_state params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_stencil_face_state struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_texture(WGPUSurfaceTexture *struct_ptr) {
-    LOG_WARN("free_surface_texture: TODO");
+    LOG_DEBUG("free_surface_texture params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_texture struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_uncaptured_error_callback_info(WGPUUncapturedErrorCallbackInfo *struct_ptr) {
-    LOG_WARN("free_uncaptured_error_callback_info: TODO");
+    LOG_DEBUG("free_uncaptured_error_callback_info params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_uncaptured_error_callback_info struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_texture_data_layout(WGPUTextureDataLayout *struct_ptr) {
-    LOG_WARN("free_texture_data_layout: TODO");
+    LOG_DEBUG("free_texture_data_layout params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_texture_data_layout struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_queue_descriptor(WGPUQueueDescriptor *struct_ptr) {
-    LOG_WARN("free_queue_descriptor: TODO");
+    LOG_DEBUG("free_queue_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_queue_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_programmable_stage_descriptor(WGPUProgrammableStageDescriptor *struct_ptr) {
-    LOG_WARN("free_programmable_stage_descriptor: TODO");
+    LOG_DEBUG("free_programmable_stage_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_programmable_stage_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->entryPoint);
+    free(struct_ptr->constants);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_request_adapter_options(WGPURequestAdapterOptions *struct_ptr) {
-    LOG_WARN("free_request_adapter_options: TODO");
+    LOG_DEBUG("free_request_adapter_options params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_request_adapter_options struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_device_descriptor(WGPUDeviceDescriptor *struct_ptr) {
-    LOG_WARN("free_device_descriptor: TODO");
+    LOG_DEBUG("free_device_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_device_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free(struct_ptr->requiredFeatures);
+    free_required_limits(struct_ptr->requiredLimits);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_bind_group_entry(WGPUBindGroupEntry *struct_ptr) {
-    LOG_WARN("free_bind_group_entry: TODO");
+    LOG_DEBUG("free_bind_group_entry params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_bind_group_entry struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_bind_group_descriptor(WGPUBindGroupDescriptor *struct_ptr) {
-    LOG_WARN("free_bind_group_descriptor: TODO");
+    LOG_DEBUG("free_bind_group_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_bind_group_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free(struct_ptr->entries);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_buffer_binding_layout(WGPUBufferBindingLayout *struct_ptr) {
-    LOG_WARN("free_buffer_binding_layout: TODO");
+    LOG_DEBUG("free_buffer_binding_layout params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_buffer_binding_layout struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_sampler_binding_layout(WGPUSamplerBindingLayout *struct_ptr) {
-    LOG_WARN("free_sampler_binding_layout: TODO");
+    LOG_DEBUG("free_sampler_binding_layout params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_sampler_binding_layout struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_texture_binding_layout(WGPUTextureBindingLayout *struct_ptr) {
-    LOG_WARN("free_texture_binding_layout: TODO");
+    LOG_DEBUG("free_texture_binding_layout params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_texture_binding_layout struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_configuration(WGPUSurfaceConfiguration *struct_ptr) {
-    LOG_WARN("free_surface_configuration: TODO");
+    LOG_DEBUG("free_surface_configuration params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_configuration struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->viewFormats);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_storage_texture_binding_layout(WGPUStorageTextureBindingLayout *struct_ptr) {
-    LOG_WARN("free_storage_texture_binding_layout: TODO");
+    LOG_DEBUG("free_storage_texture_binding_layout params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_storage_texture_binding_layout struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_bind_group_layout_entry(WGPUBindGroupLayoutEntry *struct_ptr) {
-    LOG_WARN("free_bind_group_layout_entry: TODO");
+    LOG_DEBUG("free_bind_group_layout_entry params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_bind_group_layout_entry struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_bind_group_layout_descriptor(WGPUBindGroupLayoutDescriptor *struct_ptr) {
-    LOG_WARN("free_bind_group_layout_descriptor: TODO");
+    LOG_DEBUG("free_bind_group_layout_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_bind_group_layout_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free(struct_ptr->entries);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_buffer_descriptor(WGPUBufferDescriptor *struct_ptr) {
-    LOG_WARN("free_buffer_descriptor: TODO");
+    LOG_DEBUG("free_buffer_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_buffer_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_constant_entry(WGPUConstantEntry *struct_ptr) {
-    LOG_WARN("free_constant_entry: TODO");
+    LOG_DEBUG("free_constant_entry params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_constant_entry struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->key);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_command_buffer_descriptor(WGPUCommandBufferDescriptor *struct_ptr) {
-    LOG_WARN("free_command_buffer_descriptor: TODO");
+    LOG_DEBUG("free_command_buffer_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_command_buffer_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_command_encoder_descriptor(WGPUCommandEncoderDescriptor *struct_ptr) {
-    LOG_WARN("free_command_encoder_descriptor: TODO");
+    LOG_DEBUG("free_command_encoder_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_command_encoder_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_compilation_info(WGPUCompilationInfo *struct_ptr) {
-    LOG_WARN("free_compilation_info: TODO");
+    LOG_DEBUG("free_compilation_info params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_compilation_info struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->messages);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_compilation_message(WGPUCompilationMessage *struct_ptr) {
-    LOG_WARN("free_compilation_message: TODO");
+    LOG_DEBUG("free_compilation_message params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_compilation_message struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->message);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_compute_pass_descriptor(WGPUComputePassDescriptor *struct_ptr) {
-    LOG_WARN("free_compute_pass_descriptor: TODO");
+    LOG_DEBUG("free_compute_pass_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_compute_pass_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free_compute_pass_timestamp_writes(struct_ptr->timestampWrites);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_compute_pipeline_descriptor(WGPUComputePipelineDescriptor *struct_ptr) {
-    LOG_WARN("free_compute_pipeline_descriptor: TODO");
+    LOG_DEBUG("free_compute_pipeline_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_compute_pipeline_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_required_limits(WGPURequiredLimits *struct_ptr) {
-    LOG_WARN("free_required_limits: TODO");
+    LOG_DEBUG("free_required_limits params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_required_limits struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_image_copy_buffer(WGPUImageCopyBuffer *struct_ptr) {
-    LOG_WARN("free_image_copy_buffer: TODO");
+    LOG_DEBUG("free_image_copy_buffer params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_image_copy_buffer struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_image_copy_texture(WGPUImageCopyTexture *struct_ptr) {
-    LOG_WARN("free_image_copy_texture: TODO");
+    LOG_DEBUG("free_image_copy_texture params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_image_copy_texture struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_instance_descriptor(WGPUInstanceDescriptor *struct_ptr) {
-    LOG_WARN("free_instance_descriptor: TODO");
+    LOG_DEBUG("free_instance_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_instance_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_pipeline_layout_descriptor(WGPUPipelineLayoutDescriptor *struct_ptr) {
-    LOG_WARN("free_pipeline_layout_descriptor: TODO");
+    LOG_DEBUG("free_pipeline_layout_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_pipeline_layout_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free(struct_ptr->bindGroupLayouts);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_query_set_descriptor(WGPUQuerySetDescriptor *struct_ptr) {
-    LOG_WARN("free_query_set_descriptor: TODO");
+    LOG_DEBUG("free_query_set_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_query_set_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_render_bundle_descriptor(WGPURenderBundleDescriptor *struct_ptr) {
-    LOG_WARN("free_render_bundle_descriptor: TODO");
+    LOG_DEBUG("free_render_bundle_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_render_bundle_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_render_bundle_encoder_descriptor(WGPURenderBundleEncoderDescriptor *struct_ptr) {
-    LOG_WARN("free_render_bundle_encoder_descriptor: TODO");
+    LOG_DEBUG("free_render_bundle_encoder_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_render_bundle_encoder_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free(struct_ptr->colorFormats);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_render_pass_color_attachment(WGPURenderPassColorAttachment *struct_ptr) {
-    LOG_WARN("free_render_pass_color_attachment: TODO");
+    LOG_DEBUG("free_render_pass_color_attachment params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_render_pass_color_attachment struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_render_pass_descriptor(WGPURenderPassDescriptor *struct_ptr) {
-    LOG_WARN("free_render_pass_descriptor: TODO");
+    LOG_DEBUG("free_render_pass_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_render_pass_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free(struct_ptr->colorAttachments);
+    free_render_pass_depth_stencil_attachment(struct_ptr->depthStencilAttachment);
+    free_render_pass_timestamp_writes(struct_ptr->timestampWrites);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_vertex_state(WGPUVertexState *struct_ptr) {
-    LOG_WARN("free_vertex_state: TODO");
+    LOG_DEBUG("free_vertex_state params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_vertex_state struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->entryPoint);
+    free(struct_ptr->constants);
+    free(struct_ptr->buffers);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_primitive_state(WGPUPrimitiveState *struct_ptr) {
-    LOG_WARN("free_primitive_state: TODO");
+    LOG_DEBUG("free_primitive_state params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_primitive_state struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_depth_stencil_state(WGPUDepthStencilState *struct_ptr) {
-    LOG_WARN("free_depth_stencil_state: TODO");
+    LOG_DEBUG("free_depth_stencil_state params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_depth_stencil_state struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_multisample_state(WGPUMultisampleState *struct_ptr) {
-    LOG_WARN("free_multisample_state: TODO");
+    LOG_DEBUG("free_multisample_state params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_multisample_state struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_fragment_state(WGPUFragmentState *struct_ptr) {
-    LOG_WARN("free_fragment_state: TODO");
+    LOG_DEBUG("free_fragment_state params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_fragment_state struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->entryPoint);
+    free(struct_ptr->constants);
+    free(struct_ptr->targets);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_color_target_state(WGPUColorTargetState *struct_ptr) {
-    LOG_WARN("free_color_target_state: TODO");
+    LOG_DEBUG("free_color_target_state params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_color_target_state struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free_blend_state(struct_ptr->blend);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_render_pipeline_descriptor(WGPURenderPipelineDescriptor *struct_ptr) {
-    LOG_WARN("free_render_pipeline_descriptor: TODO");
+    LOG_DEBUG("free_render_pipeline_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_render_pipeline_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free_depth_stencil_state(struct_ptr->depthStencil);
+    free_fragment_state(struct_ptr->fragment);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_sampler_descriptor(WGPUSamplerDescriptor *struct_ptr) {
-    LOG_WARN("free_sampler_descriptor: TODO");
+    LOG_DEBUG("free_sampler_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_sampler_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_shader_module_descriptor(WGPUShaderModuleDescriptor *struct_ptr) {
-    LOG_WARN("free_shader_module_descriptor: TODO");
+    LOG_DEBUG("free_shader_module_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_shader_module_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free(struct_ptr->hints);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_shader_module_compilation_hint(WGPUShaderModuleCompilationHint *struct_ptr) {
-    LOG_WARN("free_shader_module_compilation_hint: TODO");
+    LOG_DEBUG("free_shader_module_compilation_hint params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_shader_module_compilation_hint struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->entryPoint);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_descriptor(WGPUSurfaceDescriptor *struct_ptr) {
-    LOG_WARN("free_surface_descriptor: TODO");
+    LOG_DEBUG("free_surface_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_texture_descriptor(WGPUTextureDescriptor *struct_ptr) {
-    LOG_WARN("free_texture_descriptor: TODO");
+    LOG_DEBUG("free_texture_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_texture_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+    free(struct_ptr->viewFormats);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_texture_view_descriptor(WGPUTextureViewDescriptor *struct_ptr) {
-    LOG_WARN("free_texture_view_descriptor: TODO");
+    LOG_DEBUG("free_texture_view_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_texture_view_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->label);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_adapter_info(WGPUAdapterInfo *struct_ptr) {
-    LOG_WARN("free_adapter_info: TODO");
+    LOG_DEBUG("free_adapter_info params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_adapter_info struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->vendor);
+    free(struct_ptr->architecture);
+    free(struct_ptr->device);
+    free(struct_ptr->description);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_capabilities(WGPUSurfaceCapabilities *struct_ptr) {
-    LOG_WARN("free_surface_capabilities: TODO");
+    LOG_DEBUG("free_surface_capabilities params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_capabilities struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+    free(struct_ptr->formats);
+    free(struct_ptr->presentModes);
+    free(struct_ptr->alphaModes);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_supported_limits(WGPUSupportedLimits *struct_ptr) {
-    LOG_WARN("free_supported_limits: TODO");
+    LOG_DEBUG("free_supported_limits params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_supported_limits struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free_chained_struct(struct_ptr->nextInChain);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_render_pass_descriptor_max_draw_count(WGPURenderPassDescriptorMaxDrawCount *struct_ptr) {
-    LOG_WARN("free_render_pass_descriptor_max_draw_count: TODO");
+    LOG_DEBUG("free_render_pass_descriptor_max_draw_count params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_render_pass_descriptor_max_draw_count struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_primitive_depth_clip_control(WGPUPrimitiveDepthClipControl *struct_ptr) {
-    LOG_WARN("free_primitive_depth_clip_control: TODO");
+    LOG_DEBUG("free_primitive_depth_clip_control params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_primitive_depth_clip_control struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_shader_module_SPIRV_descriptor(WGPUShaderModuleSPIRVDescriptor *struct_ptr) {
-    LOG_WARN("free_shader_module_SPIRV_descriptor: TODO");
+    LOG_DEBUG("free_shader_module_SPIRV_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_shader_module_SPIRV_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_shader_module_WGSL_descriptor(WGPUShaderModuleWGSLDescriptor *struct_ptr) {
-    LOG_WARN("free_shader_module_WGSL_descriptor: TODO");
+    LOG_DEBUG("free_shader_module_WGSL_descriptor params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_shader_module_WGSL_descriptor struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free(struct_ptr->code);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_descriptor_from_android_native_window(WGPUSurfaceDescriptorFromAndroidNativeWindow *struct_ptr) {
-    LOG_WARN("free_surface_descriptor_from_android_native_window: TODO");
+    LOG_DEBUG("free_surface_descriptor_from_android_native_window params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_descriptor_from_android_native_window struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_descriptor_from_canvas_HTML_selector(WGPUSurfaceDescriptorFromCanvasHTMLSelector *struct_ptr) {
-    LOG_WARN("free_surface_descriptor_from_canvas_HTML_selector: TODO");
+    LOG_DEBUG("free_surface_descriptor_from_canvas_HTML_selector params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_descriptor_from_canvas_HTML_selector struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+    free(struct_ptr->selector);
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_descriptor_from_metal_layer(WGPUSurfaceDescriptorFromMetalLayer *struct_ptr) {
-    LOG_WARN("free_surface_descriptor_from_metal_layer: TODO");
+    LOG_DEBUG("free_surface_descriptor_from_metal_layer params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_descriptor_from_metal_layer struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_descriptor_from_windows_HWND(WGPUSurfaceDescriptorFromWindowsHWND *struct_ptr) {
-    LOG_WARN("free_surface_descriptor_from_windows_HWND: TODO");
+    LOG_DEBUG("free_surface_descriptor_from_windows_HWND params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_descriptor_from_windows_HWND struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_descriptor_from_xcb_window(WGPUSurfaceDescriptorFromXcbWindow *struct_ptr) {
-    LOG_WARN("free_surface_descriptor_from_xcb_window: TODO");
+    LOG_DEBUG("free_surface_descriptor_from_xcb_window params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_descriptor_from_xcb_window struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_descriptor_from_xlib_window(WGPUSurfaceDescriptorFromXlibWindow *struct_ptr) {
-    LOG_WARN("free_surface_descriptor_from_xlib_window: TODO");
+    LOG_DEBUG("free_surface_descriptor_from_xlib_window params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_descriptor_from_xlib_window struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
 int free_surface_descriptor_from_wayland_surface(WGPUSurfaceDescriptorFromWaylandSurface *struct_ptr) {
-    LOG_WARN("free_surface_descriptor_from_wayland_surface: TODO");
+    LOG_DEBUG("free_surface_descriptor_from_wayland_surface params: (%p)", struct_ptr);
+
+    if (struct_ptr == NULL) {
+        LOG_DEBUG("free_surface_descriptor_from_wayland_surface struct_ptr is NULL, skipping");
+        return 0;
+    }
+
+    /* free structs allocated members */
+
+    /* free the struct itself */
+    free(struct_ptr);
+
     return 0;
 }
 
@@ -8533,7 +9550,8 @@ wasm_trap_t *wasm_import_wgpuAdapterGetLimits(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+    free_supported_limits(limits);
+
     return NULL;
 }
 
@@ -8563,7 +9581,7 @@ wasm_trap_t *wasm_import_wgpuAdapterHasFeature(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -8593,7 +9611,7 @@ wasm_trap_t *wasm_import_wgpuAdapterEnumerateFeatures(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -8623,7 +9641,8 @@ wasm_trap_t *wasm_import_wgpuAdapterGetInfo(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_adapter_info(info);
+
     return NULL;
 }
 
@@ -8661,7 +9680,8 @@ wasm_trap_t *wasm_import_wgpuAdapterRequestDevice(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_device_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -8687,7 +9707,7 @@ wasm_trap_t *wasm_import_wgpuAdapterRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -8717,7 +9737,8 @@ wasm_trap_t *wasm_import_wgpuBindGroupSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -8743,7 +9764,7 @@ wasm_trap_t *wasm_import_wgpuBindGroupRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -8773,7 +9794,8 @@ wasm_trap_t *wasm_import_wgpuBindGroupLayoutSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -8799,7 +9821,7 @@ wasm_trap_t *wasm_import_wgpuBindGroupLayoutRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -8839,7 +9861,7 @@ wasm_trap_t *wasm_import_wgpuBufferMapAsync(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -8877,7 +9899,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetMappedRange(
     memcpy(ha_wasm_malloc_res, result, size);
     results->data[0].of.WASM_VAL_INT_PROP = wa_wasm_malloc_res;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -8915,7 +9937,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetConstMappedRange(
     memcpy(ha_wasm_malloc_res, result, size);
     results->data[0].of.WASM_VAL_INT_PROP = wa_wasm_malloc_res;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -8945,7 +9967,8 @@ wasm_trap_t *wasm_import_wgpuBufferSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -8973,7 +9996,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetUsage(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9000,7 +10023,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetSize(
     results->size = 1;
     results->data[0].kind = WASM_INT_KIND;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9028,7 +10051,7 @@ wasm_trap_t *wasm_import_wgpuBufferGetMapState(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9054,7 +10077,7 @@ wasm_trap_t *wasm_import_wgpuBufferUnmap(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9080,7 +10103,7 @@ wasm_trap_t *wasm_import_wgpuBufferDestroy(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9106,7 +10129,7 @@ wasm_trap_t *wasm_import_wgpuBufferRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9136,7 +10159,8 @@ wasm_trap_t *wasm_import_wgpuCommandBufferSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -9162,7 +10186,7 @@ wasm_trap_t *wasm_import_wgpuCommandBufferRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9195,7 +10219,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderFinish(
     size_t result_index = registry_item_add_mapping(&registry->commandBuffers, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_command_buffer_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -9228,7 +10253,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderBeginComputePass(
     size_t result_index = registry_item_add_mapping(&registry->computePassEncoders, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_compute_pass_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -9261,7 +10287,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderBeginRenderPass(
     size_t result_index = registry_item_add_mapping(&registry->renderPassEncoders, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_render_pass_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -9305,7 +10332,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyBufferToBuffer(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9343,7 +10370,10 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyBufferToTexture(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_image_copy_buffer(source);
+    free_image_copy_texture(destination);
+    free_extent_3D(copy_size);
+
     return NULL;
 }
 
@@ -9381,7 +10411,10 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyTextureToBuffer(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_image_copy_texture(source);
+    free_image_copy_buffer(destination);
+    free_extent_3D(copy_size);
+
     return NULL;
 }
 
@@ -9419,7 +10452,10 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderCopyTextureToTexture(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_image_copy_texture(source);
+    free_image_copy_texture(destination);
+    free_extent_3D(copy_size);
+
     return NULL;
 }
 
@@ -9456,7 +10492,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderClearBuffer(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9486,7 +10522,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderInsertDebugMarker(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(marker_label);
+
     return NULL;
 }
 
@@ -9512,7 +10549,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderPopDebugGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9542,7 +10579,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderPushDebugGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(group_label);
+
     return NULL;
 }
 
@@ -9582,7 +10620,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderResolveQuerySet(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9613,7 +10651,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderWriteTimestamp(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9643,7 +10681,8 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -9669,7 +10708,7 @@ wasm_trap_t *wasm_import_wgpuCommandEncoderRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9699,7 +10738,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderInsertDebugMarker(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(marker_label);
+
     return NULL;
 }
 
@@ -9725,7 +10765,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderPopDebugGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9755,7 +10795,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderPushDebugGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(group_label);
+
     return NULL;
 }
 
@@ -9784,7 +10825,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetPipeline(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9823,7 +10864,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetBindGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(dynamic_offsets_array);
+
     return NULL;
 }
 
@@ -9855,7 +10897,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroups(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9888,7 +10930,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderDispatchWorkgroupsIndirect(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9914,7 +10956,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderEnd(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -9944,7 +10986,8 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -9970,7 +11013,7 @@ wasm_trap_t *wasm_import_wgpuComputePassEncoderRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10001,7 +11044,7 @@ wasm_trap_t *wasm_import_wgpuComputePipelineGetBindGroupLayout(
     size_t result_index = registry_item_add_mapping(&registry->bindGroupLayouts, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10031,7 +11074,8 @@ wasm_trap_t *wasm_import_wgpuComputePipelineSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -10057,7 +11101,7 @@ wasm_trap_t *wasm_import_wgpuComputePipelineRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10090,7 +11134,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBindGroup(
     size_t result_index = registry_item_add_mapping(&registry->bindGroups, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_bind_group_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10123,7 +11168,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBindGroupLayout(
     size_t result_index = registry_item_add_mapping(&registry->bindGroupLayouts, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_bind_group_layout_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10156,7 +11202,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateBuffer(
     size_t result_index = registry_item_add_mapping(&registry->buffers, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_buffer_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10189,7 +11236,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateCommandEncoder(
     size_t result_index = registry_item_add_mapping(&registry->commandEncoders, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_command_encoder_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10222,7 +11270,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipeline(
     size_t result_index = registry_item_add_mapping(&registry->computePipelines, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_compute_pipeline_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10260,7 +11309,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipelineAsync(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_compute_pipeline_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10293,7 +11343,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreatePipelineLayout(
     size_t result_index = registry_item_add_mapping(&registry->pipelineLayouts, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_pipeline_layout_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10326,7 +11377,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateQuerySet(
     size_t result_index = registry_item_add_mapping(&registry->querySets, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_query_set_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10364,7 +11416,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipelineAsync(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_render_pipeline_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10397,7 +11450,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderBundleEncoder(
     size_t result_index = registry_item_add_mapping(&registry->renderBundleEncoders, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_render_bundle_encoder_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10430,7 +11484,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipeline(
     size_t result_index = registry_item_add_mapping(&registry->renderPipelines, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_render_pipeline_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10463,7 +11518,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateSampler(
     size_t result_index = registry_item_add_mapping(&registry->samplers, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_sampler_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10496,7 +11552,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateShaderModule(
     size_t result_index = registry_item_add_mapping(&registry->shaderModules, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_shader_module_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10529,7 +11586,8 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateTexture(
     size_t result_index = registry_item_add_mapping(&registry->textures, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_texture_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10555,7 +11613,7 @@ wasm_trap_t *wasm_import_wgpuDeviceDestroy(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10587,7 +11645,8 @@ wasm_trap_t *wasm_import_wgpuDeviceGetLimits(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+    free_supported_limits(limits);
+
     return NULL;
 }
 
@@ -10617,7 +11676,7 @@ wasm_trap_t *wasm_import_wgpuDeviceHasFeature(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10647,7 +11706,7 @@ wasm_trap_t *wasm_import_wgpuDeviceEnumerateFeatures(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10676,7 +11735,7 @@ wasm_trap_t *wasm_import_wgpuDeviceGetQueue(
     size_t result_index = registry_item_add_mapping(&registry->queues, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10704,7 +11763,7 @@ wasm_trap_t *wasm_import_wgpuDevicePushErrorScope(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10736,7 +11795,7 @@ wasm_trap_t *wasm_import_wgpuDevicePopErrorScope(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10766,7 +11825,8 @@ wasm_trap_t *wasm_import_wgpuDeviceSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -10792,7 +11852,7 @@ wasm_trap_t *wasm_import_wgpuDeviceRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10825,7 +11885,8 @@ wasm_trap_t *wasm_import_wgpuInstanceCreateSurface(
     size_t result_index = registry_item_add_mapping(&registry->surfaces, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_surface_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -10855,7 +11916,7 @@ wasm_trap_t *wasm_import_wgpuInstanceHasWGSLLanguageFeature(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10881,7 +11942,7 @@ wasm_trap_t *wasm_import_wgpuInstanceProcessEvents(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10919,7 +11980,8 @@ wasm_trap_t *wasm_import_wgpuInstanceRequestAdapter(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_request_adapter_options(options);
+
     return NULL;
 }
 
@@ -10945,7 +12007,7 @@ wasm_trap_t *wasm_import_wgpuInstanceRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -10975,7 +12037,8 @@ wasm_trap_t *wasm_import_wgpuPipelineLayoutSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -11001,7 +12064,7 @@ wasm_trap_t *wasm_import_wgpuPipelineLayoutRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11031,7 +12094,8 @@ wasm_trap_t *wasm_import_wgpuQuerySetSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -11059,7 +12123,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetGetType(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11087,7 +12151,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetGetCount(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11113,7 +12177,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetDestroy(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11139,7 +12203,7 @@ wasm_trap_t *wasm_import_wgpuQuerySetRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11175,7 +12239,8 @@ wasm_trap_t *wasm_import_wgpuQueueSubmit(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(commands_array);
+
     return NULL;
 }
 
@@ -11209,7 +12274,7 @@ wasm_trap_t *wasm_import_wgpuQueueOnSubmittedWorkDone(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11248,7 +12313,7 @@ wasm_trap_t *wasm_import_wgpuQueueWriteBuffer(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11292,7 +12357,10 @@ wasm_trap_t *wasm_import_wgpuQueueWriteTexture(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_image_copy_texture(destination);
+    free_texture_data_layout(data_layout);
+    free_extent_3D(write_size);
+
     return NULL;
 }
 
@@ -11322,7 +12390,8 @@ wasm_trap_t *wasm_import_wgpuQueueSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -11348,7 +12417,7 @@ wasm_trap_t *wasm_import_wgpuQueueRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11378,7 +12447,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -11404,7 +12474,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11433,7 +12503,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetPipeline(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11472,7 +12542,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetBindGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(dynamic_offsets_array);
+
     return NULL;
 }
 
@@ -11506,7 +12577,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDraw(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11542,7 +12613,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexed(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11575,7 +12646,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndirect(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11608,7 +12679,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderDrawIndexedIndirect(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11638,7 +12709,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderInsertDebugMarker(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(marker_label);
+
     return NULL;
 }
 
@@ -11664,7 +12736,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderPopDebugGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11694,7 +12766,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderPushDebugGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(group_label);
+
     return NULL;
 }
 
@@ -11733,7 +12806,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetVertexBuffer(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11772,7 +12845,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetIndexBuffer(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11805,7 +12878,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderFinish(
     size_t result_index = registry_item_add_mapping(&registry->renderBundles, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_render_bundle_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -11835,7 +12909,8 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -11861,7 +12936,7 @@ wasm_trap_t *wasm_import_wgpuRenderBundleEncoderRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11890,7 +12965,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetPipeline(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11929,7 +13004,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetBindGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(dynamic_offsets_array);
+
     return NULL;
 }
 
@@ -11963,7 +13039,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDraw(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -11999,7 +13075,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexed(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12032,7 +13108,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndirect(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12065,7 +13141,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderDrawIndexedIndirect(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12101,7 +13177,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderExecuteBundles(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(bundles_array);
+
     return NULL;
 }
 
@@ -12131,7 +13208,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderInsertDebugMarker(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(marker_label);
+
     return NULL;
 }
 
@@ -12157,7 +13235,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderPopDebugGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12187,7 +13265,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderPushDebugGroup(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(group_label);
+
     return NULL;
 }
 
@@ -12215,7 +13294,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetStencilReference(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12245,7 +13324,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetBlendConstant(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_color(color);
+
     return NULL;
 }
 
@@ -12283,7 +13363,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetViewport(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12317,7 +13397,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetScissorRect(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12356,7 +13436,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetVertexBuffer(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12395,7 +13475,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetIndexBuffer(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12423,7 +13503,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderBeginOcclusionQuery(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12449,7 +13529,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderEndOcclusionQuery(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12475,7 +13555,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderEnd(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12505,7 +13585,8 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -12531,7 +13612,7 @@ wasm_trap_t *wasm_import_wgpuRenderPassEncoderRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12562,7 +13643,7 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineGetBindGroupLayout(
     size_t result_index = registry_item_add_mapping(&registry->bindGroupLayouts, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12592,7 +13673,8 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -12618,7 +13700,7 @@ wasm_trap_t *wasm_import_wgpuRenderPipelineRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12648,7 +13730,8 @@ wasm_trap_t *wasm_import_wgpuSamplerSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -12674,7 +13757,7 @@ wasm_trap_t *wasm_import_wgpuSamplerRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12708,7 +13791,7 @@ wasm_trap_t *wasm_import_wgpuShaderModuleGetCompilationInfo(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12738,7 +13821,8 @@ wasm_trap_t *wasm_import_wgpuShaderModuleSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -12764,7 +13848,7 @@ wasm_trap_t *wasm_import_wgpuShaderModuleRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12794,7 +13878,8 @@ wasm_trap_t *wasm_import_wgpuSurfaceConfigure(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_surface_configuration(config);
+
     return NULL;
 }
 
@@ -12827,7 +13912,8 @@ wasm_trap_t *wasm_import_wgpuSurfaceGetCapabilities(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_surface_capabilities(capabilities);
+
     return NULL;
 }
 
@@ -12857,7 +13943,8 @@ wasm_trap_t *wasm_import_wgpuSurfaceGetCurrentTexture(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free_surface_texture(surface_texture);
+
     return NULL;
 }
 
@@ -12883,7 +13970,7 @@ wasm_trap_t *wasm_import_wgpuSurfacePresent(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12909,7 +13996,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceUnconfigure(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12939,7 +14026,8 @@ wasm_trap_t *wasm_import_wgpuSurfaceSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -12965,7 +14053,7 @@ wasm_trap_t *wasm_import_wgpuSurfaceRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -12998,7 +14086,8 @@ wasm_trap_t *wasm_import_wgpuTextureCreateView(
     size_t result_index = registry_item_add_mapping(&registry->textureViews, result);
     results->data[0].of.WASM_VAL_INT_PROP = result_index;
 
-    /* TODO: Freeing */
+    free_texture_view_descriptor(descriptor);
+
     return NULL;
 }
 
@@ -13028,7 +14117,8 @@ wasm_trap_t *wasm_import_wgpuTextureSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -13056,7 +14146,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetWidth(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13084,7 +14174,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetHeight(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13112,7 +14202,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetDepthOrArrayLayers(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13140,7 +14230,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetMipLevelCount(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13168,7 +14258,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetSampleCount(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13196,7 +14286,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetDimension(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13224,7 +14314,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetFormat(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13252,7 +14342,7 @@ wasm_trap_t *wasm_import_wgpuTextureGetUsage(
     results->data[0].kind = WASM_INT_KIND;
     results->data[0].of.WASM_VAL_INT_PROP = result;
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13278,7 +14368,7 @@ wasm_trap_t *wasm_import_wgpuTextureDestroy(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13304,7 +14394,7 @@ wasm_trap_t *wasm_import_wgpuTextureRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 
@@ -13334,7 +14424,8 @@ wasm_trap_t *wasm_import_wgpuTextureViewSetLabel(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+    free(label);
+
     return NULL;
 }
 
@@ -13360,7 +14451,7 @@ wasm_trap_t *wasm_import_wgpuTextureViewRelease(
 
     /* Nothing returned */
 
-    /* TODO: Freeing */
+
     return NULL;
 }
 

@@ -268,7 +268,7 @@ int wasm_safe_malloc(Proc *proc, size_t size, WASM_POINTER_VOID_C_TYPE *wasm_mal
     wasm_memory_t *memory = get_memory(proc);
     byte_t *mem_base = wasm_memory_data(memory);
     *ha_wasm_malloc_res_out =  mem_base + wasm_malloc_res;
-    LOG_TRACE("wasm_safe_malloc [WA] result: %p", *ha_wasm_malloc_res_out);
+    LOG_TRACE("wasm_safe_malloc [HA] result: %p", *ha_wasm_malloc_res_out);
 
     return 0;
 }

@@ -823,6 +823,16 @@ fn gen_insert_result(
                 a!(gen, "size_t {mapping_index_var_name} = registry_item_add_mapping(&registry->{object_member}, {var_name});");
                 a!(gen, "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t){mapping_index_var_name};");
             }
+            TypeInfo::String => {
+                a!(gen, "size_t {var_name}_mem_size = strlen({var_name}) + 1;");
+                a!(gen, "WASM_POINTER_VOID_C_TYPE {var_name}_wa_wasm_malloc_res = 0;");
+                a!(gen, "void *{var_name}_ha_wasm_malloc_res = NULL;");
+                i!(gen, "if (wasm_safe_malloc(proc, {var_name}_mem_size, &{var_name}_wa_wasm_malloc_res, &{var_name}_ha_wasm_malloc_res) != 0) {{");
+                a!(gen, "FATAL(\"wasm_safe_malloc failed\");");
+                o!(gen, "}}");
+                a!(gen, "memcpy({var_name}_ha_wasm_malloc_res, {var_name}, {var_name}_mem_size);");
+                a!(gen, "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t){var_name}_wa_wasm_malloc_res;");
+            }
             _ => {
                 println!(
                     "RefMode::{:?}, TypeInfo::{:?} not implemented yet",
@@ -832,6 +842,17 @@ fn gen_insert_result(
             }
         },
         RefMode::Pointer(_) => match type_info {
+            TypeInfo::Struct(s_name) => {
+                let struct_ = model.struct_by_name(s_name).unwrap();
+                let s_wasm_type = struct_.name_wasm_type.to_string();
+                a!(gen, "WASM_POINTER_VOID_C_TYPE {var_name}_wa_wasm_malloc_res = 0;");
+                a!(gen, "void *{var_name}_ha_wasm_malloc_res = NULL;");
+                i!(gen, "if (wasm_safe_malloc(proc, sizeof({s_wasm_type}), &{var_name}_wa_wasm_malloc_res, &{var_name}_ha_wasm_malloc_res) != 0) {{");
+                a!(gen, "FATAL(\"wasm_safe_malloc failed\");");
+                o!(gen, "}}");
+                a!(gen, "insert_{s_name}({var_name}_ha_wasm_malloc_res, {var_name});");
+                a!(gen, "args.data[{index}].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t){var_name}_wa_wasm_malloc_res;");
+            }
             _ => {
                 println!(
                     "RefMode::{:?}, TypeInfo::{:?} not implemented yet",
@@ -1086,7 +1107,7 @@ fn gen_arg_pointer(
         }
         TypeInfo::Userdata(_, _) => {
             a!(gen, "WASM_POINTER_VOID_C_TYPE {var_name}_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[{index}]);");
-            a!(gen, "WasmCallbackUserdataWrapper *{var_name} = malloc(sizeof(WasmCallbackUserdataWrapper));");
+            a!(gen, "WasmCallbackUserdataWrapper *{var_name} = calloc(1, sizeof(WasmCallbackUserdataWrapper));");
             a!(gen, "{var_name}->proc = proc;");
             a!(gen, "{var_name}->wasm_callback_index = callback_wasm;");
             a!(gen, "{var_name}->wa_wasm_userdata = {var_name}_wasm;");

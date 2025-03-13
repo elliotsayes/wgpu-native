@@ -8138,7 +8138,14 @@ void host_callback_wgpuAdapterRequestDevice(
 
     args.data[2].kind = WASM_INT_KIND;
     LOG_TRACE("host_callback_wgpuAdapterRequestDevice: inserting [Embedded<string>] message");
-    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message;
+    size_t message_mem_size = strlen(message) + 1;
+    WASM_POINTER_VOID_C_TYPE message_wa_wasm_malloc_res = 0;
+    void *message_ha_wasm_malloc_res = NULL;
+    if (wasm_safe_malloc(proc, message_mem_size, &message_wa_wasm_malloc_res, &message_ha_wasm_malloc_res) != 0) {
+        FATAL("wasm_safe_malloc failed");
+    }
+    memcpy(message_ha_wasm_malloc_res, message, message_mem_size);
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message_wa_wasm_malloc_res;
 
     args.data[3].kind = WASM_INT_KIND;
     args.data[3].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
@@ -8241,7 +8248,14 @@ void host_callback_wgpuDeviceCreateComputePipelineAsync(
 
     args.data[2].kind = WASM_INT_KIND;
     LOG_TRACE("host_callback_wgpuDeviceCreateComputePipelineAsync: inserting [Embedded<string>] message");
-    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message;
+    size_t message_mem_size = strlen(message) + 1;
+    WASM_POINTER_VOID_C_TYPE message_wa_wasm_malloc_res = 0;
+    void *message_ha_wasm_malloc_res = NULL;
+    if (wasm_safe_malloc(proc, message_mem_size, &message_wa_wasm_malloc_res, &message_ha_wasm_malloc_res) != 0) {
+        FATAL("wasm_safe_malloc failed");
+    }
+    memcpy(message_ha_wasm_malloc_res, message, message_mem_size);
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message_wa_wasm_malloc_res;
 
     args.data[3].kind = WASM_INT_KIND;
     args.data[3].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
@@ -8298,7 +8312,14 @@ void host_callback_wgpuDeviceCreateRenderPipelineAsync(
 
     args.data[2].kind = WASM_INT_KIND;
     LOG_TRACE("host_callback_wgpuDeviceCreateRenderPipelineAsync: inserting [Embedded<string>] message");
-    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message;
+    size_t message_mem_size = strlen(message) + 1;
+    WASM_POINTER_VOID_C_TYPE message_wa_wasm_malloc_res = 0;
+    void *message_ha_wasm_malloc_res = NULL;
+    if (wasm_safe_malloc(proc, message_mem_size, &message_wa_wasm_malloc_res, &message_ha_wasm_malloc_res) != 0) {
+        FATAL("wasm_safe_malloc failed");
+    }
+    memcpy(message_ha_wasm_malloc_res, message, message_mem_size);
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message_wa_wasm_malloc_res;
 
     args.data[3].kind = WASM_INT_KIND;
     args.data[3].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
@@ -8355,7 +8376,14 @@ void host_callback_wgpuInstanceRequestAdapter(
 
     args.data[2].kind = WASM_INT_KIND;
     LOG_TRACE("host_callback_wgpuInstanceRequestAdapter: inserting [Embedded<string>] message");
-    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message;
+    size_t message_mem_size = strlen(message) + 1;
+    WASM_POINTER_VOID_C_TYPE message_wa_wasm_malloc_res = 0;
+    void *message_ha_wasm_malloc_res = NULL;
+    if (wasm_safe_malloc(proc, message_mem_size, &message_wa_wasm_malloc_res, &message_ha_wasm_malloc_res) != 0) {
+        FATAL("wasm_safe_malloc failed");
+    }
+    memcpy(message_ha_wasm_malloc_res, message, message_mem_size);
+    args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)message_wa_wasm_malloc_res;
 
     args.data[3].kind = WASM_INT_KIND;
     args.data[3].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
@@ -8452,7 +8480,13 @@ void host_callback_wgpuShaderModuleGetCompilationInfo(
 
     args.data[1].kind = WASM_INT_KIND;
     LOG_TRACE("host_callback_wgpuShaderModuleGetCompilationInfo: inserting [Pointer<struct>] compilation_info");
-    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)compilation_info;
+    WASM_POINTER_VOID_C_TYPE compilation_info_wa_wasm_malloc_res = 0;
+    void *compilation_info_ha_wasm_malloc_res = NULL;
+    if (wasm_safe_malloc(proc, sizeof(WasmWGPUCompilationInfo), &compilation_info_wa_wasm_malloc_res, &compilation_info_ha_wasm_malloc_res) != 0) {
+        FATAL("wasm_safe_malloc failed");
+    }
+    insert_compilation_info(compilation_info_ha_wasm_malloc_res, compilation_info);
+    args.data[1].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)compilation_info_wa_wasm_malloc_res;
 
     args.data[2].kind = WASM_INT_KIND;
     args.data[2].of.WASM_VAL_INT_PROP = (WASM_INT_C_TYPE)(uintptr_t)wa_wasm_userdata;
@@ -8627,7 +8661,7 @@ wasm_trap_t *wasm_import_wgpuAdapterRequestDevice(
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[2]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
-    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    WasmCallbackUserdataWrapper *userdata = calloc(1, sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
@@ -8805,7 +8839,7 @@ wasm_trap_t *wasm_import_wgpuBufferMapAsync(
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[4]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[5]);
-    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    WasmCallbackUserdataWrapper *userdata = calloc(1, sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
@@ -10226,7 +10260,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateComputePipelineAsync(
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[2]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
-    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    WasmCallbackUserdataWrapper *userdata = calloc(1, sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
@@ -10330,7 +10364,7 @@ wasm_trap_t *wasm_import_wgpuDeviceCreateRenderPipelineAsync(
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[2]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
-    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    WasmCallbackUserdataWrapper *userdata = calloc(1, sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
@@ -10885,7 +10919,7 @@ wasm_trap_t *wasm_import_wgpuInstanceRequestAdapter(
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[2]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[3]);
-    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    WasmCallbackUserdataWrapper *userdata = calloc(1, sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
@@ -11175,7 +11209,7 @@ wasm_trap_t *wasm_import_wgpuQueueOnSubmittedWorkDone(
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[1]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[2]);
-    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    WasmCallbackUserdataWrapper *userdata = calloc(1, sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;
@@ -12674,7 +12708,7 @@ wasm_trap_t *wasm_import_wgpuShaderModuleGetCompilationInfo(
     WASM_POINTER_FUNCTION_C_TYPE callback_wasm = (WASM_POINTER_FUNCTION_C_TYPE)wasm_val_to_native_int(args->data[1]);
 
     WASM_POINTER_VOID_C_TYPE userdata_wasm = (WASM_POINTER_VOID_C_TYPE)wasm_val_to_native_int(args->data[2]);
-    WasmCallbackUserdataWrapper *userdata = malloc(sizeof(WasmCallbackUserdataWrapper));
+    WasmCallbackUserdataWrapper *userdata = calloc(1, sizeof(WasmCallbackUserdataWrapper));
     userdata->proc = proc;
     userdata->wasm_callback_index = callback_wasm;
     userdata->wa_wasm_userdata = userdata_wasm;

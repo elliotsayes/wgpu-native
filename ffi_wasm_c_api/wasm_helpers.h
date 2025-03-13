@@ -273,4 +273,14 @@ int wasm_safe_malloc(Proc *proc, size_t size, WASM_POINTER_VOID_C_TYPE *wasm_mal
     return 0;
 }
 
+int insert_compilation_info(
+    byte_t *wa_wasm_struct_offset,
+    WGPUCompilationInfo *ha_host_struct_ptr
+) {
+    /* TODO */
+    LOG_WARN("TODO: insert_compilation_info");
+
+    return 0;
+}
+
 #endif /* WASM_HELPERS_H */

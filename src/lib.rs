@@ -7,20 +7,21 @@ use conv::{
 use det::{
     callback::{
         BufferMapAsyncCallbackArgs, QueueOnSubmittedWorkDoneCallbackArgs,
-        QueuedBufferMapAsyncCallback, QueuedQueueOnSubmittedWorkDoneCallback, UserCallback,
+        QueuedBufferMapAsyncCallback, QueuedQueueOnSubmittedWorkDoneCallback,
+        UserCallbackQueueable,
     },
     error::{check_determinism_issue, handle_error_non_determinism, CoreError, DeterminismError},
     global::{
         OnSystemNonDeterminismErrorCallback, OnUnderqualifiedDeviceFailureCallback,
         DETERMINISM_EXTENSION_GLOBAL_STATE,
     },
-    polling::run_polling_strategy,
+    polling::{run_enqueue_strategy, run_poll_strategy},
+    scheduling::SchedulingStrategy,
     shader::validate_shader_source_wgsl,
-    validation::validate_instance_descriptor,
-    virtual_state::VirtualState,
+    validation::{validate_instance_descriptor, validate_request_adapter_options},
+    virtual_device::{VirtualConfig, VirtualDevice},
 };
 use future_handles::sync as future_handle;
-use log::warn;
 use parking_lot::Mutex;
 use smallvec::SmallVec;
 use std::{
@@ -30,7 +31,6 @@ use std::{
     fmt::Display,
     mem,
     num::NonZeroU64,
-    ptr::null_mut,
     sync::{atomic, Arc},
     thread,
 };
@@ -45,22 +45,15 @@ use wgc::{
 pub mod conv;
 pub mod det;
 pub mod logging;
+pub mod native;
 pub mod unimplemented;
 pub mod utils;
-
-pub mod native {
-    #![allow(non_upper_case_globals)]
-    #![allow(non_camel_case_types)]
-    #![allow(non_snake_case)]
-    #![allow(dead_code)]
-    include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
-}
 
 type ContextCore = wgc::global::Global;
 
 pub struct Context {
     pub core: ContextCore,
-    pub virtual_state: Mutex<VirtualState>,
+    pub virtual_device: Mutex<VirtualDevice>,
 }
 
 pub struct WGPUAdapterImpl {
@@ -109,6 +102,7 @@ struct BufferData {
 pub struct WGPUBufferImpl {
     context: Arc<Context>,
     id: id::BufferId,
+    device_id: id::DeviceId,
     error_sink: ErrorSink,
     data: BufferData,
 }
@@ -183,6 +177,7 @@ impl Drop for WGPUComputePipelineImpl {
 struct QueueId {
     context: Arc<Context>,
     id: id::QueueId,
+    device_id: id::DeviceId,
 }
 impl Drop for QueueId {
     fn drop(&mut self) {
@@ -416,6 +411,17 @@ impl Drop for WGPUTextureViewImpl {
             let context = &self.context;
             let _ = gfx_select!(self.id => context.core.texture_view_drop(self.id, false));
         }
+    }
+}
+
+fn make_poll_fn<'a>(
+    context: &'a Context,
+    device_id: id::DeviceId,
+    fn_name: &'static str,
+) -> impl FnOnce(wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>) -> bool + 'a {
+    move |maintain| match gfx_select!(device_id => context.core.device_poll(device_id, maintain)) {
+        Ok(_) => true,
+        Err(cause) => handle_error_fatal(cause, &fn_name),
     }
 }
 
@@ -659,7 +665,7 @@ fn handle_error(
 // wgpu-det.h functions
 
 #[no_mangle]
-pub unsafe extern "C" fn wgpuExtensionDeterminismConfigure(
+pub unsafe extern "C" fn wgpuExtensionDeterminismConfigureErrorCallbacks(
     non_determinism_error_callback: OnSystemNonDeterminismErrorCallback,
     underqualified_device_failure_callback: OnUnderqualifiedDeviceFailureCallback,
 ) {
@@ -668,33 +674,53 @@ pub unsafe extern "C" fn wgpuExtensionDeterminismConfigure(
     state.underqualified_device_failure_callback = underqualified_device_failure_callback;
 }
 
+#[no_mangle]
+pub unsafe extern "C" fn wgpuExtensionDeterminismConfigureVirtualDevice(
+    scheduling_strategy: SchedulingStrategy,
+) {
+    let mut state = DETERMINISM_EXTENSION_GLOBAL_STATE.lock();
+    state.virtual_config = Some(VirtualConfig {
+        scheduling_strategy,
+    });
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn wgpuExtensionDeterminismValidateVirtualDevice() {
+    todo!("wgpuExtensionDeterminismValidateVirtualDevice");
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn wgpuExtensionDeterminismReset() {
+    todo!("wgpuExtensionDeterminismReset");
+}
+
 // webgpu.h functions
 
 #[no_mangle]
 pub unsafe extern "C" fn wgpuCreateInstance(
     descriptor: Option<&native::WGPUInstanceDescriptor>,
 ) -> native::WGPUInstance {
-    let instance_desc = match descriptor {
-        Some(descriptor) => {
-            if !follow_chain!(validate_instance_descriptor(
-                (descriptor),
-                WGPUSType_InstanceExtras => native::WGPUInstanceExtras
-            )) {
-                warn!("Invalid instance descriptor");
-                return null_mut();
-            }
-            follow_chain!(map_instance_descriptor(
-                (descriptor),
-                WGPUSType_InstanceExtras => native::WGPUInstanceExtras
-            ))
-        }
+    let instance_desc: wgt::InstanceDescriptor = match descriptor {
+        Some(descriptor) => follow_chain!(map_instance_descriptor(
+            (descriptor),
+            WGPUSType_InstanceExtras => native::WGPUInstanceExtras
+        )),
         None => wgt::InstanceDescriptor::default(),
     };
+
+    if let Err(msg) = validate_instance_descriptor(&instance_desc) {
+        todo!("Invalid instance descriptor: {msg}");
+    }
 
     Arc::into_raw(Arc::new(WGPUInstanceImpl {
         context: Arc::new(Context {
             core: ContextCore::new("wgpu", instance_desc),
-            virtual_state: Mutex::new(VirtualState::new()),
+            virtual_device: Mutex::new(
+                match &DETERMINISM_EXTENSION_GLOBAL_STATE.lock().virtual_config {
+                    Some(config) => VirtualDevice::new_with_config(config.clone()),
+                    None => VirtualDevice::new(),
+                },
+            ),
         }),
     }))
 }
@@ -898,6 +924,7 @@ pub unsafe extern "C" fn wgpuAdapterRequestDevice(
                     queue: Arc::new(QueueId {
                         context: context.clone(),
                         id: queue_id,
+                        device_id,
                     }),
                     error_sink: Arc::new(Mutex::new(error_sink)),
                 })),
@@ -974,6 +1001,8 @@ pub unsafe extern "C" fn wgpuBufferDestroy(buffer: native::WGPUBuffer) {
     let _ = gfx_select!(buffer_id => context.core.buffer_destroy(buffer_id));
 }
 
+// Determinism TODO:
+// Handle non-determinism for pending operations
 #[no_mangle]
 pub unsafe extern "C" fn wgpuBufferGetConstMappedRange(
     buffer: native::WGPUBuffer,
@@ -1000,6 +1029,8 @@ pub unsafe extern "C" fn wgpuBufferGetConstMappedRange(
     buf.as_ptr()
 }
 
+// Determinism TODO:
+// Handle non-determinism for pending operations
 #[no_mangle]
 pub unsafe extern "C" fn wgpuBufferGetMappedRange(
     buffer: native::WGPUBuffer,
@@ -1052,20 +1083,24 @@ pub unsafe extern "C" fn wgpuBufferMapAsync(
     callback: native::WGPUBufferMapAsyncCallback,
     userdata: *mut std::ffi::c_void,
 ) {
-    let (buffer_id, context, error_sink) = {
+    let (buffer_id, device_id, context, error_sink) = {
         let buffer = buffer.as_ref().expect("invalid buffer");
-        (buffer.id, &buffer.context, &buffer.error_sink)
+        (
+            buffer.id,
+            buffer.device_id,
+            &buffer.context,
+            &buffer.error_sink,
+        )
     };
     let callback = callback.expect("invalid callback");
     let userdata = utils::Userdata::new(userdata);
 
     let (callback_args_future, callback_args_handle) =
         future_handle::create::<BufferMapAsyncCallbackArgs>();
-    let item = UserCallback::WGPUBufferMapAsyncCallback(QueuedBufferMapAsyncCallback::new(
-        Some(callback),
-        callback_args_future,
-    ));
-    context.virtual_state.lock().callbacks.enqueue(item);
+    let item = UserCallbackQueueable::WGPUBufferMapAsyncCallback(
+        QueuedBufferMapAsyncCallback::new(Some(callback), callback_args_future),
+    );
+    context.virtual_device.lock().state.callbacks.enqueue(item);
 
     let operation = wgc::resource::BufferMapOperation {
         host: match mode as native::WGPUMapMode {
@@ -1113,6 +1148,11 @@ pub unsafe extern "C" fn wgpuBufferMapAsync(
             "wgpuBufferMapAsync",
         );
     };
+
+    run_enqueue_strategy(
+        &mut context.virtual_device.lock(),
+        make_poll_fn(&context, device_id, "wgpuBufferMapAsync"),
+    );
 }
 
 #[no_mangle]
@@ -2039,6 +2079,7 @@ pub unsafe extern "C" fn wgpuDeviceCreateBuffer(
     Arc::into_raw(Arc::new(WGPUBufferImpl {
         context: context.clone(),
         id: buffer_id,
+        device_id,
         error_sink: error_sink.clone(),
         data: BufferData {
             usage: descriptor.usage,
@@ -2916,6 +2957,17 @@ pub unsafe extern "C" fn wgpuInstanceRequestAdapter(
         ),
     };
 
+    if let Err(err) = validate_request_adapter_options(&desc, &inputs) {
+        let message = CString::new(err).unwrap();
+        callback(
+            native::WGPURequestAdapterStatus_Error,
+            std::ptr::null_mut(),
+            message.as_ptr(),
+            userdata,
+        );
+        return;
+    };
+
     match context.core.request_adapter(&desc, inputs) {
         Ok(adapter_id) => {
             let message = CString::default();
@@ -3059,19 +3111,19 @@ pub unsafe extern "C" fn wgpuQueueOnSubmittedWorkDone(
     callback: native::WGPUQueueOnSubmittedWorkDoneCallback,
     userdata: *mut ::std::os::raw::c_void,
 ) {
-    let (queue_id, context) = {
+    let (queue_id, device_id, context) = {
         let queue = queue.as_ref().expect("invalid queue");
-        (queue.queue.id, &queue.queue.context)
+        (queue.queue.id, queue.queue.device_id, &queue.queue.context)
     };
     let callback = callback.expect("invalid callback");
     let userdata = utils::Userdata::new(userdata);
 
     let (callback_args_future, callback_args_handle) =
         future_handle::create::<QueueOnSubmittedWorkDoneCallbackArgs>();
-    let item = UserCallback::WGPUQueueOnSubmittedWorkDoneCallback(
+    let item = UserCallbackQueueable::WGPUQueueOnSubmittedWorkDoneCallback(
         QueuedQueueOnSubmittedWorkDoneCallback::new(Some(callback), callback_args_future),
     );
-    context.virtual_state.lock().callbacks.enqueue(item);
+    context.virtual_device.lock().state.callbacks.enqueue(item);
 
     let closure = wgc::device::queue::SubmittedWorkDoneClosure::from_rust(Box::new(move || {
         callback_args_handle.complete(QueueOnSubmittedWorkDoneCallbackArgs {
@@ -3085,6 +3137,11 @@ pub unsafe extern "C" fn wgpuQueueOnSubmittedWorkDone(
     {
         handle_error_fatal(cause, "wgpuQueueOnSubmittedWorkDone");
     };
+
+    run_enqueue_strategy(
+        &mut context.virtual_device.lock(),
+        make_poll_fn(&context, device_id, "wgpuQueueOnSubmittedWorkDone"),
+    );
 }
 
 #[no_mangle]
@@ -4482,10 +4539,10 @@ pub unsafe extern "C" fn wgpuDevicePoll(
         }
     };
 
-    run_polling_strategy(
-        &mut context.virtual_state.lock(),
-        maintain_requested,
+    run_poll_strategy(
+        &mut context.virtual_device.lock(),
         run_poll_fn,
+        maintain_requested,
     )
 }
 

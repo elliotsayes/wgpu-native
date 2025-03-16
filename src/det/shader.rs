@@ -28,42 +28,48 @@ mod tests {
         // #[test]
         // fn test_validate_drf() {
         let shader_drf = r#"
-        @group(0) @binding(0) var<storage, read_write> data: array<f32>;
+@group(0) @binding(0) var<storage, read_write> data: array<f32>;
 
-        @compute @workgroup_size(256, 1, 1) fn computeSomething(
-        @builtin(workgroup_id) blockIdx : vec3<u32>,
-        @builtin(num_workgroups) gridDim : vec3<u32>,
-        @builtin(local_invocation_id) threadIdx : vec3<u32>
-        ) {
-        if (gridDim.y != 1 || gridDim.z != 1) { return ; }
-        let i = blockIdx.x*256 + threadIdx.x;
-        data[i] = data[i] * 2.0;
-        }
-        "#;
+@compute @workgroup_size(256, 1, 1) fn computeSomething(
+@builtin(workgroup_id) blockIdx : vec3<u32>,
+@builtin(num_workgroups) gridDim : vec3<u32>,
+@builtin(local_invocation_id) threadIdx : vec3<u32>
+) {
+if (gridDim.y != 1 || gridDim.z != 1) { return ; }
+let i = blockIdx.x*256 + threadIdx.x;
+data[i] = data[i] * 2.0;
+}
+"#;
         assert!(validate_shader_source_wgsl(shader_drf).is_ok());
         // }
 
         // #[test]
         // fn test_validate_racy() {
         let shader_racy = r#"
-        // specify a global of floats array called `data`
-        @group(0) @binding(0) var<storage, read_write> data: array<f32>;
+// specify a global of floats array called `data`
+@group(0) @binding(0) var<storage, read_write> data: array<f32>;
 
-        @compute @workgroup_size(32) fn computeSomething(
-        @builtin(global_invocation_id) id: vec3<u32>
-        ) {
-        let i = id.x;
-        data[i + 1] = data[i] * 2.0;
-        }
-        "#;
-        assert!(validate_shader_source_wgsl(shader_racy).is_err());
+@compute @workgroup_size(32) fn computeSomething(
+@builtin(global_invocation_id) id: vec3<u32>
+) {
+let i = id.x;
+data[i + 1] = data[i] * 2.0;
+}
+"#;
+        assert!(matches!(
+            validate_shader_source_wgsl(shader_racy),
+            Err(DeterminismError::NonProvablySafeShaderSource(msg)) if msg.starts_with("Error proving DRF in WGSL kernels:")
+        ));
         // }
 
         // #[test]
         // fn test_validate_invalid() {
         let shader_invalid = r#"
-        iM nOt A vAlId ShAdEr
-        "#;
-        assert!(validate_shader_source_wgsl(shader_invalid).is_err());
+iM nOt A vAlId ShAdEr
+"#;
+        assert!(matches!(
+            validate_shader_source_wgsl(shader_invalid),
+            Err(DeterminismError::NonProvablySafeShaderSource(msg)) if msg.starts_with("Error parsing WGSL to JSON:")
+        ));
     }
 }

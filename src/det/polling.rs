@@ -1,15 +1,8 @@
-use super::virtual_state::VirtualState;
+use super::{scheduling::SchedulingStrategy, virtual_device::VirtualDevice};
 use pollster::FutureExt as _;
 
-#[derive(Clone, Copy)]
-pub enum PollingStrategy {
-    WaitAllAndCallbackAll,
-    // TODO: More optimized polling strategies?
-}
-
-fn wait_all_and_callback_all(
-    virtual_state: &mut VirtualState,
-    _maintain_requested: wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>,
+fn complete_all(
+    virtual_device: &mut VirtualDevice,
     run_poll_fn: impl FnOnce(wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>) -> bool,
 ) -> bool {
     // Ignore 'maintain_requested`, and complete all work regardless
@@ -20,25 +13,67 @@ fn wait_all_and_callback_all(
     // `queue_empty` should always be `true` here, or something went wrong.
     if !queue_empty {
         // TODO: Handle this correctly?
-        panic!("wgpuQueuePoll_wait_all_and_callback_all: queue_empty should always be true");
+        panic!("polling_complete_all: queue_empty should always be true");
     }
 
     // All callbacks should have had their work completed by now, so call them all
     // (in the same order they were enqueued)
-    virtual_state.callbacks.complete_all().block_on();
-    
+    virtual_device.state.callbacks.complete_all().block_on();
+
     // indicate that `queue_empty` is true
     true
 }
 
-pub fn run_polling_strategy(
-    virtual_state: &mut VirtualState,
-    maintain_requested: wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>,
+fn already_complete(
+    virtual_device: &mut VirtualDevice,
     run_poll_fn: impl FnOnce(wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>) -> bool,
 ) -> bool {
-    match virtual_state.polling_strategy {
-        PollingStrategy::WaitAllAndCallbackAll => {
-            wait_all_and_callback_all(virtual_state, maintain_requested, run_poll_fn)
-        },
+    // `has_items` should always be `false` here, or something went wrong.
+    if virtual_device.state.callbacks.has_items() {
+        // TODO: Handle this correctly?
+        panic!("polling_already_complete: has_items should always be false");
+    }
+
+    // Run `run_poll_fn` anyway...
+    let queue_empty = run_poll_fn(wgt::Maintain::Wait);
+
+    // `queue_empty` should always be `true` here, or something went wrong.
+    if !queue_empty {
+        // TODO: Handle this correctly?
+        panic!("polling_already_complete: queue_empty should always be true");
+    }
+
+    // indicate that `queue_empty` is true
+    true
+}
+
+pub fn run_enqueue_strategy(
+    virtual_device: &mut VirtualDevice,
+    run_poll_fn: impl FnOnce(wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>) -> bool,
+) -> bool {
+    match virtual_device.config.scheduling_strategy {
+        SchedulingStrategy::BeginImmediateCompleteImmediate => {
+            // Complete all work immediately, implicitly calling run_poll_fn
+            complete_all(virtual_device, run_poll_fn)
+        }
+        SchedulingStrategy::BeginImmediateCompleteOnPollAll => {
+            // We don't need to do anything extra when enqueuing since we wait until polling
+            true
+        }
+    }
+}
+
+pub fn run_poll_strategy(
+    virtual_device: &mut VirtualDevice,
+    run_poll_fn: impl FnOnce(wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>) -> bool,
+    _maintain_requested: wgt::Maintain<wgc::device::queue::WrappedSubmissionIndex>,
+) -> bool {
+    match virtual_device.config.scheduling_strategy {
+        SchedulingStrategy::BeginImmediateCompleteImmediate => {
+            already_complete(virtual_device, run_poll_fn)
+        }
+        SchedulingStrategy::BeginImmediateCompleteOnPollAll => {
+            complete_all(virtual_device, run_poll_fn)
+        }
     }
 }

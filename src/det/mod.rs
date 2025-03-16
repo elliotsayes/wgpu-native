@@ -4,6 +4,7 @@ pub mod error_check;
 pub mod faial;
 pub mod global;
 pub mod polling;
+pub mod scheduling;
 pub mod shader;
 pub mod validation;
-pub mod virtual_state;
+pub mod virtual_device;

@@ -59,23 +59,38 @@ impl Display for CoreError {
     }
 }
 
-// TODO: Review and describe these categories
-#[derive(Clone, Debug, DeriveError)]
+#[derive(Clone, Debug, DeriveError, PartialEq)]
 pub enum CategorizedError {
+    // The error is due to an unknown problem with the execution, e.g. a bug in the
+    // WebGPU implementation or GPU driver, or an invalid assumption in the execution model.
     Unknown,
-    Disallowed,
+
+    // The physical device provided by the system does not meet the requirements to create
+    // the environment required for deterministic execution. Further attempts to run the
+    // application in the same system configuration will also fail.
     UnderqualifiedDeviceFailure,
+
+    // The system produced a non-deterministic runtime error, resulting in a bad state.
+    // However, the problem may be transient and execution can be retried.
     SystemNonDeterministic,
+
+    // The error arose deterministically due to the sandboxed applications use of the WebGPU API.
+    // The error can be safely propagated to the application for it to handle.
     Deterministic,
 }
 
 impl Display for CategorizedError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "TODO: Implement Display for CategorizedError")
+        match self {
+            CategorizedError::Unknown => write!(f, "Unknown error"),
+            CategorizedError::UnderqualifiedDeviceFailure => write!(f, "Underqualified device failure"),
+            CategorizedError::SystemNonDeterministic => write!(f, "System non-deterministic"),
+            CategorizedError::Deterministic => write!(f, "Deterministic error"),
+        }
     }
 }
 
-#[derive(Clone, Debug, DeriveError)]
+#[derive(Clone, Debug, DeriveError, PartialEq)]
 pub enum DeterminismError {
     UnsupportedShaderLanguage(String),
     NonProvablySafeShaderSource(String),
@@ -83,14 +98,7 @@ pub enum DeterminismError {
 
 impl Display for DeterminismError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            DeterminismError::UnsupportedShaderLanguage(reason) => {
-                write!(f, "DeterminismError::UnsupportedShaderLanguage({reason})")
-            }
-            DeterminismError::NonProvablySafeShaderSource(reason) => {
-                write!(f, "DeterminismError::NonProvablySafeShaderSource({reason})")
-            }
-        }
+        write!(f, "{:?}", self)
     }
 }
 
@@ -106,9 +114,6 @@ pub fn check_determinism_issue(
         CategorizedError::Unknown => {
             warn!("Unknown error in {operation}: {root_error_dyn:?}")
         }
-        CategorizedError::Disallowed => {
-            panic!("Disallowed error in {operation}: {root_error_dyn:?}")
-        }
         CategorizedError::UnderqualifiedDeviceFailure => {
             handle_error_underqualified_device_failure(root_error_dyn, operation)
         }
@@ -123,8 +128,6 @@ pub fn check_determinism_issue(
     root_error_dyn
 }
 
-// This indicates that the generated error happened due to non-deterministic behavior
-// of the system, e.g. due to the physical GPU running out of resources
 pub fn handle_error_non_determinism(
     cause: Box<dyn Error + Send + Sync + 'static>,
     operation: &'static str,
@@ -145,8 +148,6 @@ pub fn handle_error_non_determinism(
     panic!("{message}");
 }
 
-// This indicates that the generated error happened due to the requirements
-// of the virtual device not being met by the system.
 fn handle_error_underqualified_device_failure(
     cause: Box<dyn Error + Send + Sync + 'static>,
     operation: &'static str,

@@ -232,6 +232,7 @@ pub fn map_origin3d(native: &native::WGPUOrigin3D) -> wgt::Origin3d {
     }
 }
 
+// TODO: Only allow `VULKAN` backend
 #[inline]
 pub fn map_instance_backend_flags(flags: native::WGPUInstanceBackend) -> wgt::Backends {
     if flags == native::WGPUInstanceBackend_All {
@@ -563,7 +564,7 @@ pub fn map_required_limits(
     wgt_limits
 }
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Clone, Debug, thiserror::Error)]
 pub enum ShaderParseError {
     #[cfg(feature = "spirv")]
     #[error(transparent)]

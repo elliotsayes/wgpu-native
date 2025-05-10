@@ -43,7 +43,8 @@ endif
 	run-example-push_constants run-example-push_constants-release \
 	example-capture-release example-compute-release example-triangle-release \
 	run-example-capture run-example-compute run-example-triangle \
-	run-example-capture-release run-example-compute-release run-example-triangle-release
+	run-example-capture-release run-example-compute-release run-example-triangle-release \
+	example-wasm-compute example-wasm-triangle
 
 package: lib-native lib-native-release
 	mkdir -p dist
@@ -95,6 +96,7 @@ package: lib-native lib-native-release
 clean:
 	cargo clean
 	rm -Rf examples/build
+	rm -Rf examples_wasm/build
 
 check:
 	cargo check --all
@@ -113,6 +115,9 @@ lib-native: Cargo.lock Cargo.toml Makefile $(WILDCARD_SOURCE)
 
 lib-native-release: Cargo.lock Cargo.toml Makefile $(WILDCARD_SOURCE)
 	cargo build --release $(EXTRA_BUILD_ARGS)
+
+ffi-wasm:
+	./ffi_wasm_c_api/gen.sh
 
 examples-debug: lib-native
 	cd examples && $(MKDIR_CMD) "build/Debug" && cd build/Debug && cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ../..
@@ -191,3 +196,15 @@ example-triangle-release: examples-release
 
 run-example-triangle-release: example-triangle-release
 	cd examples/triangle && "../build/RelWithDebInfo/triangle/triangle"
+
+# No need for `lib-native`, we are using emscripten built-in WebGPU API
+examples-wasm-debug:
+	cd examples_wasm && $(MKDIR_CMD) "build/Debug" && cd build/Debug && emcmake cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ../..
+
+example-wasm-compute: examples-wasm-debug
+	cd examples_wasm/build/Debug && cmake --build . --target compute
+	# Output file in examples_wasm/build/Debug/compute/compute.wasm
+
+example-wasm-triangle: examples-wasm-debug
+	cd examples_wasm/build/Debug && cmake --build . --target triangle_png
+	# Output file in examples_wasm/build/Debug/triangle_png/triangle_png.wasm

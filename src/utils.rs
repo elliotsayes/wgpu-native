@@ -1,7 +1,5 @@
 use std::{
-    borrow::Cow,
-    ffi::CStr,
-    path::{Path, PathBuf},
+    borrow::Cow, error, ffi::CStr, fmt::Display, path::{Path, PathBuf}
 };
 
 // A dummy wrapper that is `Send` + `Sync` to store userdata pointer
@@ -461,3 +459,31 @@ pub fn test_get_base_device_limits_from_adapter_limits() {
         );
     }
 }
+
+#[derive(Debug)]
+pub struct WrappedError {
+    pub source: Box<dyn error::Error + 'static>,
+}
+
+impl Display for WrappedError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        Display::fmt(&self.source, f)
+    }
+}
+
+impl std::error::Error for WrappedError {
+    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
+        Some(&*self.source)
+    }
+
+    fn description(&self) -> &str {
+        "description() is deprecated; use Display"
+    }
+
+    fn cause(&self) -> Option<&dyn error::Error> {
+        self.source()
+    }
+}
+
+unsafe impl Send for WrappedError {}
+unsafe impl Sync for WrappedError {}
